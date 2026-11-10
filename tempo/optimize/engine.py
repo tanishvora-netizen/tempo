@@ -7,6 +7,7 @@ starting-cash calibration (assumptions.py). The fan chart uses its own seed.
 import hashlib
 import json
 from dataclasses import dataclass, field
+from datetime import date
 
 import numpy as np
 
@@ -100,10 +101,10 @@ class Plan:
         """Value net of the backstop credit cost (what the optimizer maximizes)."""
         return self.value_cents() - round(CREDIT_COST * self.credit_drawn_cents())
 
-    def outflow_cum(self, as_of, horizon_days: int) -> np.ndarray:
+    def outflow_cum(self, as_of: date, horizon_days: int) -> np.ndarray:
         return plan_outflow_cum(self.chosen(), as_of, horizon_days)
 
-    def breaches(self, headroom: np.ndarray, as_of) -> np.ndarray:
+    def breaches(self, headroom: np.ndarray, as_of: date) -> np.ndarray:
         return breached(headroom, self.outflow_cum(as_of, headroom.shape[1]), self.credit_cum_cents)
 
     def plan_hash(self) -> str:
@@ -120,7 +121,7 @@ def solve_plan(
     bills: tuple[PlannableBill, ...],
     options: tuple[tuple[PaymentOption, ...], ...],
     headroom: np.ndarray,
-    as_of,
+    as_of: date,
     k: int,
     policy: str = "tempo",
 ) -> Plan:

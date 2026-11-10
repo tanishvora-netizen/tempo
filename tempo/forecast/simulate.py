@@ -90,6 +90,10 @@ def simulate(
     sigma = np.array([params[r.customer_id][1] for r in receipts])
     offset = np.array([r.issue_offset for r in receipts])
     amount = np.array([r.amount_cents for r in receipts], dtype=np.int64)
+    if np.any(sigma <= 0):
+        raise ValueError("every customer's log-scale sigma must be positive")
+    if n <= 0:
+        raise ValueError("n must be positive")
     z = rng.standard_normal(n)
     days = _days_to_pay(rng, mu, sigma, offset, z, sigma_macro)
     pay_day = np.floor(offset[None, :] + days)

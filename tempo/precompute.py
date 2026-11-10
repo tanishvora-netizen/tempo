@@ -15,9 +15,9 @@ import numpy as np
 from tempo.agent.negotiation import plan_offers
 from tempo.assumptions import EPSILON, N_EVAL_SCENARIOS, N_FAN_SCENARIOS, SEED, SEED_C, SEED_FAN
 from tempo.extract.eval import evaluate_extraction
-from tempo.extract.reconcile import sanity_problem
+from tempo.extract.reconcile import Reconciled, sanity_problem
 from tempo.forecast.simulate import WhatIf
-from tempo.models import Dataset, TermsRecord
+from tempo.models import Dataset, Decision, TermsRecord
 from tempo.optimize import baselines as bl
 from tempo.optimize.cash_value import CashValue, marginal_value_of_cash
 from tempo.optimize.certify import Certification
@@ -113,7 +113,7 @@ def solve_case(
     return Solved(inputs, plan, cert, cv, head_c, fan, time.perf_counter() - started)
 
 
-def decisions_for(s: Solved):
+def decisions_for(s: Solved) -> tuple[Decision, ...]:
     ds = s.inputs.dataset
     n = s.plan.n_scenarios or s.inputs.headroom_a.shape[0]
     ctx = ExplainContext(
@@ -281,7 +281,7 @@ def build_whatifs(dataset: Dataset, ingest_result: IngestResult, base: Solved) -
     return {"input_hash": input_hash(dataset.regime), "customers": top_customers(dataset), "presets": out}
 
 
-def suggested_terms(r, prior: TermsRecord | None) -> TermsRecord | None:
+def suggested_terms(r: Reconciled, prior: TermsRecord | None) -> TermsRecord | None:
     """What the reviewer is offered by default: the vendor's terms on file if a reading matches them, else the
     value the table proposed before the sanity/history check, else the first sane parser reading."""
     candidates = list(r.terms.regex_values)

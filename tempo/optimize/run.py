@@ -5,6 +5,7 @@ docs/RESULTS.md and the UI comes from the same code path.
 """
 
 from dataclasses import dataclass, field
+from datetime import date
 
 import numpy as np
 
@@ -41,7 +42,7 @@ class RunInputs:
     headroom_b: np.ndarray = field(repr=False)  # seed B, N_CERT_SCENARIOS
 
     @property
-    def as_of(self):
+    def as_of(self) -> date:
         return self.dataset.company.as_of
 
     @property

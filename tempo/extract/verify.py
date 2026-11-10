@@ -7,6 +7,7 @@ words normalized first); (3) the model's value must equal a value parsed from it
 not verified, and an unverified model value never reaches the plan.
 """
 
+from collections.abc import Callable
 from dataclasses import dataclass
 
 from tempo.extract.evidence import quote_in_source
@@ -98,7 +99,14 @@ def verify_extraction(ext: TermsExtraction, doc: InvoiceDocument) -> dict[str, F
     }
 
 
-def _check(group, value, quote, source, doc, reparse) -> FieldCheck:
+def _check(
+    group: str,
+    value: object | None,
+    quote: str | None,
+    source: str | None,
+    doc: InvoiceDocument,
+    reparse: Callable[[str], set],
+) -> FieldCheck:
     if value is None:
         return FieldCheck(group, None, quote, source, False, "no_value")
     if not quote_found(quote, source, doc):

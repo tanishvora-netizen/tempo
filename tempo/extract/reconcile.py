@@ -159,7 +159,9 @@ def _with_fee_sanity(
     return replace(terms, status="sanity_fail", value=None, reason=problem)
 
 
-def _table_row(regex_values, m_value, m_verified) -> tuple[str, TermsRecord | None, str]:
+def _table_row(
+    regex_values: tuple[TermsRecord, ...], m_value: TermsRecord | None, m_verified: bool
+) -> tuple[str, TermsRecord | None, str]:
     if len(regex_values) >= 2:
         return "ambiguous_document", None, "the document states more than one set of terms"
     if len(regex_values) == 1:

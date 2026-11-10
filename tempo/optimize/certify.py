@@ -9,6 +9,7 @@ Seed C is never used here.
 """
 
 from dataclasses import dataclass
+from datetime import date
 
 import numpy as np
 
@@ -51,7 +52,7 @@ def certify(
     options: tuple[tuple[PaymentOption, ...], ...],
     headroom_a: np.ndarray,
     headroom_b: np.ndarray,
-    as_of,
+    as_of: date,
     headroom_a_fallback: np.ndarray | None = None,
     epsilon: float = EPSILON,
     z: float = WILSON_Z_CERTIFY,
@@ -77,7 +78,7 @@ def certify(
 
 
 def _step(
-    plan: Plan, headroom_a: np.ndarray, headroom_b: np.ndarray, as_of, k: int, eps: float, z: float
+    plan: Plan, headroom_a: np.ndarray, headroom_b: np.ndarray, as_of: date, k: int, eps: float, z: float
 ) -> CertStep:
     in_sample = int(plan.breaches(headroom_a, as_of).sum())
     cert = int(plan.breaches(headroom_b, as_of).sum())

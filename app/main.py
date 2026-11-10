@@ -100,7 +100,7 @@ def get_state() -> Payload:
             "solver": b["solver"],
             "plan_hash": b["plan_hash"],
             "autonomy": s.autonomy,
-            "review_count": sum(r["needs_review"] for r in b["bills"]),
+            "review_count": sum(r["needs_review"] and r["bill_id"] not in s.overrides for r in b["bills"]),
             "assumptions": assumptions_catalog(),
             "synthetic": True,
         }
