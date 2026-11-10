@@ -21,16 +21,17 @@ def test_demo_path_works_and_stays_on_localhost(page: Page, live_server: str) ->
     expect(page.locator("#fan-canvas")).to_be_visible()
 
     page.goto(f"{live_server}/#/run")
-    first_row = page.get_by_role("button", name=re.compile("open details")).first
+    first_row = page.locator("tr[data-bill]").first
     first_row.click()
     expect(page.get_by_text(re.compile("Paid|Sent|Financed"), exact=False).first).to_be_visible()
+    page.keyboard.press("Escape")
 
     page.goto(f"{live_server}/#/whatif")
-    page.get_by_role("button", name=re.compile("days late")).first.click()
+    page.locator("[data-preset]").first.click()
     expect(page.locator("#wi-diff")).to_be_visible(timeout=10_000)
 
     page.goto(f"{live_server}/#/proof")
-    expect(page.get_by_text("greedy_discount", exact=False).first).to_be_visible()
+    expect(page.get_by_text("Smart spreadsheet", exact=False).first).to_be_visible()
 
     page.goto(f"{live_server}/#/review")
     expect(page.get_by_label("Bills needing review")).to_be_visible()

@@ -5,7 +5,6 @@ to docs/demo/tempo-demo.webm. The humans add the voiceover; nothing here calls a
 """
 
 import os
-import re
 import shutil
 import socket
 import subprocess
@@ -60,12 +59,12 @@ def walk(page: Page, base: str) -> None:
     page.wait_for_timeout(BEAT_MS * 2)
     page.goto(f"{base}/#/run")
     page.wait_for_timeout(BEAT_MS)
-    page.get_by_role("button", name=re.compile("open details")).first.click()
+    page.locator("tr[data-bill]").first.click()
     page.wait_for_timeout(BEAT_MS * 2)
     page.keyboard.press("Escape")
     page.goto(f"{base}/#/whatif")
     page.wait_for_timeout(BEAT_MS)
-    page.get_by_role("button", name=re.compile("14 days late")).first.click()
+    page.locator("[data-preset]").nth(1).click()
     page.wait_for_timeout(BEAT_MS * 3)
     page.goto(f"{base}/#/proof")
     page.wait_for_timeout(BEAT_MS * 2)
