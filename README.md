@@ -14,6 +14,14 @@ Target Balance moves cash to fit the bills. Tempo moves the bills to fit the cas
 
 **AI runs locally; the app makes no external API calls.** Invoice and cash data never leave the company: the term reader is an open-weights model served by Ollama on the laptop, and the hosted demo replays its committed outputs.
 
+## Keeping the live demo awake
+
+The live demo runs on Render's free plan, which puts the app to sleep after 15 minutes without traffic. The first visit after that takes up to a minute to wake it up.
+
+To avoid that, we use [UptimeRobot](https://uptimerobot.com) (free plan). It requests https://tempo-kor8.onrender.com every 5 minutes, so the app never sits idle long enough to sleep and loads right away for anyone who opens it. UptimeRobot also emails us if the site goes down. A GitHub Actions workflow (`.github/workflows/keepwarm.yml`) pings the same URL as a backup.
+
+If the site still takes a moment on first load, the free tier is waking it up. Presets are instant once it's awake; custom what-if scenarios solve live and take longer on the free plan's small CPU.
+
 ## The workflow it replaces
 
 Every week an AP lead exports open bills to Excel, eyeballs due dates, checks a separate 13-week cash forecast, and guesses which bills to pay early. Terms like "2/10 net 30" hide in PDFs and email threads. Discounts get missed, or get taken right before payroll and leave the account too thin. Asking a vendor for an early-pay discount is a one-off email nobody tracks.
