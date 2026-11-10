@@ -2,7 +2,7 @@
 // invoice text with highlighted evidence.
 import { html, icon, setHTML } from "./dom.js";
 import { longDate, money, moneyExact, perYear, sentence, shortDate, termsText } from "./format.js";
-import { chip, OPTION_LABEL, RAIL_LABEL, STATUS_LABEL, valueCell } from "./labels.js";
+import { chip, EXPECTED_NOTE, modelCheckText, OPTION_LABEL, RAIL_LABEL, STATUS_LABEL, valueCell } from "./labels.js";
 import { documentView, evidenceLegend, methodsText } from "./evidence.js";
 import { openDrawer } from "./drawer.js";
 import { errorBlock, loadingBlock } from "./states.js";
@@ -21,7 +21,7 @@ function decisionSection(b) {
         ["Rail", RAIL_LABEL[b.rail] ?? b.rail],
         ["Cash out", html`<span class="num" title="${moneyExact(b.cash_out_cents)}">${money(b.cash_out_cents)}</span>`],
         ["Value vs due date", valueCell(b.value_cents)],
-        ["Annualized return", html`<span class="num">${perYear(b.annualized_return)}</span>`],
+        ["Return", html`<span class="num" title="Return on the cash actually paid, per year">${perYear(b.annualized_return)}</span>`],
         ["Due date", html`<span class="num">${longDate(b.due_date)}</span>`],
       ].map(([k, v]) => html`<div class="bg-surface px-3 py-2"><p class="label">${k}</p><p class="text-sm">${v}</p></div>`)}
     </div>
@@ -33,7 +33,21 @@ function decisionSection(b) {
         ${b.binding_day ? html`<p class="mt-1 text-xs">The cash limit binds: paying earlier would add a breach on ${longDate(b.binding_day)}.</p>` : ""}
       </div>
     </div>
+    ${decisionNotes(b)}
   </section>`;
+}
+
+/** Arrival limits, RTP dependence, expected bills, and the textbook terms rate (footnote only). */
+function decisionNotes(b) {
+  const notes = [
+    b.arrives_after_due &&
+      html`<li class="text-review">Arrives ${longDate(b.arrival_date)}, after the ${longDate(b.due_date)} due date: no rail sent from today reaches the vendor sooner.</li>`,
+    b.rtp_dependent && html`<li>Relies on RTP from Ramp Checking; as standard ACH it would miss its date.</li>`,
+    b.expected && html`<li>Expected, issues ${longDate(b.issued_at)}. ${EXPECTED_NOTE}</li>`,
+    b.terms_rate !== null && b.terms_rate !== undefined && html`<li>Terms rate (textbook): ${perYear(b.terms_rate)}. The Return above is on the cash actually paid.</li>`,
+  ].filter(Boolean);
+  if (!notes.length) return "";
+  return html`<ul class="flex list-disc flex-col gap-1 pl-5 text-xs text-ink-2">${notes}</ul>`;
 }
 
 function optionRow(o, chosen) {
@@ -86,6 +100,7 @@ function evidenceSection(b) {
     <dl class="dl">
       <dt>Terms used</dt><dd><span class="font-medium">${r.accepted ? termsText(r.accepted) : b.terms}</span> ${chip(b.chip)}</dd>
       <dt>Reconciliation</dt><dd>${STATUS_LABEL[r.status] ?? sentence(r.status)}${r.reason && r.reason.toLowerCase() !== (STATUS_LABEL[r.status] ?? "").toLowerCase() ? html`<span class="text-ink-2">. ${sentence(r.reason)}.</span>` : ""}</dd>
+      <dt>Local model</dt><dd class="text-ink-2">${modelCheckText(r)}</dd>
       ${r.card_surcharge_bps ? html`<dt>Card surcharge</dt><dd class="num">${(r.card_surcharge_bps / 100).toFixed(2)}%</dd>` : ""}
       <dt>Accepts</dt><dd>${methodsText(r.accepted_methods)}</dd>
     </dl>

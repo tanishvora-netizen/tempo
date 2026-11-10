@@ -1,6 +1,6 @@
 // Plain-English labels for solver enums, and the shared status chip / money cell renderers.
 import { html, icon } from "./dom.js";
-import { money, moneyExact } from "./format.js";
+import { money, moneyExact, shortDate } from "./format.js";
 
 export const OPTION_LABEL = {
   BANK_DUE: "Pay on due date",
@@ -17,7 +17,7 @@ export const OPTION_SHORT = {
   CARD: "Card",
   CARD_EARLY: "Card, discount",
   FINANCE_EARLY: "Financed, discount",
-  LATE: "Late",
+  LATE: "Late by choice",
 };
 
 export const RAIL_LABEL = { RTP: "RTP", ACH: "ACH", CARD: "Card", FINANCE: "Financing" };
@@ -60,8 +60,41 @@ export function valueCell(cents) {
   return html`<span class="num ${cls}" title="${moneyExact(cents)}">${cents === 0 ? "$0" : money(cents, { signed: true })}</span>`;
 }
 
+/** Rail as an icon only (with an accessible name), for narrow layouts. */
+export function railIcon(rail) {
+  const name = RAIL_ICON[rail];
+  if (!name) return "";
+  return html`<span class="inline-flex text-ink-3" title="${RAIL_LABEL[rail] ?? rail}">${icon(name)}<span class="sr-only">${RAIL_LABEL[rail] ?? rail}</span></span>`;
+}
+
 export function optionCell(row) {
   const label = OPTION_SHORT[row.option] ?? row.option;
-  if (row.option === "LATE") return html`<span class="chip chip-risk">${icon("triangle-alert")}Late</span>`;
+  if (row.option === "LATE") return html`<span class="chip chip-risk">${icon("triangle-alert")}Late by choice</span>`;
   return html`<span>${label}</span>`;
 }
+
+/** Bill paid on time by Tempo's choice but arriving after the due date because no rail is fast enough. */
+export function arrivesLateChip(row) {
+  if (!row.arrives_after_due) return "";
+  return html`<span class="chip chip-review" title="Arrives ${shortDate(row.arrival_date)}, after the due date ${shortDate(row.due_date)}">${icon("clock")}Arrives after due date</span>`;
+}
+
+/** A recurring or PO-backed bill already in Bill Pay whose invoice is dated after the plan date. */
+export function expectedChip(row) {
+  if (!row.expected) return "";
+  return html`<span class="chip border-transparent bg-sunken" title="${EXPECTED_NOTE}">${icon("calendar")}Expected, issues ${shortDate(row.issued_at)}</span>`;
+}
+
+const MODEL_CHECK_FALLBACK = {
+  ok: "Quote found in the document and re-parsed to the same terms",
+  "no model output": "No model output for this document",
+};
+
+/** Plain-words model status: the server's model_check_label when present, never a raw provider error. */
+export function modelCheckText(source) {
+  if (source?.model_check_label) return source.model_check_label;
+  return MODEL_CHECK_FALLBACK[source?.model_check] ?? "Model reading not available";
+}
+
+export const EXPECTED_NOTE =
+  "Recurring or PO-backed bill already entered in Bill Pay; invoice and emails are dated when it issues (synthetic).";

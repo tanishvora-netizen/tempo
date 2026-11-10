@@ -46,7 +46,7 @@ const LEGEND = { regex: "Parser (rules)", model: "Local model quote", both: "Bot
 /** Legend for the highlight styles; pass kinds to show only the ones on screen. */
 export function evidenceLegend(kinds = ["regex", "model", "both"]) {
   return html`<div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-2">
-    ${kinds.map((k) => html`<span class="inline-flex items-center gap-1.5"><mark class="ev ev-${k}">2/10</mark>${LEGEND[k]}</span>`)}
+    ${kinds.map((k) => html`<span class="inline-flex items-center gap-1.5"><mark class="ev ev-${k}" aria-hidden="true">Aa</mark>${LEGEND[k]}</span>`)}
   </div>`;
 }
 

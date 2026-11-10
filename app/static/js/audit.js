@@ -61,11 +61,22 @@ function entriesTable(entries, highlightHash) {
   </table></div>`;
 }
 
+/** The new entry in words: what was approved (scope) and the plan it belongs to. */
 function newEntryNotice(entry) {
-  const m = entry.metrics ?? {};
+  const scope = entry.metrics?.scope ?? {};
+  const plan = entry.metrics?.plan ?? {};
   return html`<div class="callout items-start" role="status">${icon("circle-check", "icon mt-0.5 flex-none text-ink")}
-    <p><span class="font-medium text-ink">Approved by ${entry.approver}.</span> Entry ${short(entry.hash)} records plan ${short(entry.plan_hash)}
-    (value <span class="num">${money(m.value_vs_pay_on_due_cents, { signed: true })}</span>, breach <span class="num">${pct(m.breach_rate)}</span>, bound <span class="num">${pct(m.breach_upper)}</span>). Nothing was sent to Ramp.</p></div>`;
+    <div class="flex flex-col gap-1">
+      <p><span class="font-medium text-ink">Approved by ${entry.approver}</span> (attested name, not authenticated in this demo). Entry ${short(entry.hash)}.</p>
+      ${scope.bill_count !== undefined
+        ? html`<p>Covers <span class="num font-medium text-ink">${count(scope.bill_count)}</span> bills,
+            <span class="num" title="${moneyExact(scope.cash_out_cents)}">${money(scope.cash_out_cents)}</span> paid out,
+            value <span class="num" title="${moneyExact(scope.value_cents)}">${money(scope.value_cents, { signed: true })}</span>${scope.rtp_dependent_count ? html`; <span class="num">${count(scope.rtp_dependent_count)}</span> rely on RTP` : ""}.</p>`
+        : ""}
+      ${plan.breach_rate !== undefined
+        ? html`<p>Plan ${short(entry.plan_hash)}: breach <span class="num">${pct(plan.breach_rate)}</span>, bound <span class="num">${pct(plan.breach_upper)}</span>. Nothing was sent to Ramp.</p>`
+        : html`<p>Nothing was sent to Ramp.</p>`}
+    </div></div>`;
 }
 
 function requestView(r) {
@@ -103,7 +114,7 @@ function payloadView(p) {
   const c = p.counts;
   const stat = (label, value) => html`<div class="bg-surface px-3 py-2"><p class="label">${label}</p><p class="num font-semibold">${count(value)}</p></div>`;
   return html`<div class="flex flex-col gap-3">
-    <p class="callout">${icon("lock", "icon mt-0.5 flex-none")}${p.note}</p>
+    <p class="callout">${icon("lock", "icon mt-0.5 flex-none")}<span>${p.note}${p.scope ? html` <span class="font-medium text-ink">Scope: ${p.scope}.</span>` : ""}</span></p>
     <div class="grid grid-cols-6 gap-px overflow-hidden rounded-md border border-line bg-line max-[700px]:grid-cols-3">
       ${stat("Bills", c.bills)}${stat("Requests", c.requests)}${stat("PATCH", c.patch)}${stat("Hold", c.hold)}${stat("Release", c.release)}${stat("Auto-scheduled", c.auto_scheduled)}
     </div>

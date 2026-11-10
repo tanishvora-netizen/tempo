@@ -3,7 +3,7 @@
 // parsed back into terms, and a human Accept. Nothing is ever sent.
 import { html, icon, raw, esc, setHTML } from "./dom.js";
 import { count, longDate, money, moneyExact, pct, perYear, sentence, termsText } from "./format.js";
-import { STATUS_LABEL } from "./labels.js";
+import { modelCheckText, STATUS_LABEL } from "./labels.js";
 import { openDrawer } from "./drawer.js";
 import { emptyBlock, errorBlock, loadingBlock } from "./states.js";
 import * as api from "./api.js";
@@ -68,7 +68,7 @@ function listView(data) {
   const rest = offers.filter((o) => !o.tempo_takes_it);
   return html`<div class="flex flex-col gap-4">
     <p class="text-sm text-ink-2">Vendors without discount terms, ranked by what an accepted offer adds to the plan. Each offer is priced from your
-      <span class="num font-medium text-ink">${perYear(data.cost_of_cash, 2)}</span> cost of cash, then re-solved to confirm Tempo would take it.</p>
+      <span class="num font-medium text-ink">${perYear(data.cost_of_cash)}</span> cost of cash, then re-solved to confirm Tempo would take it.</p>
     ${ranked.length ? rankedTable(ranked, data.negotiated ?? {}) : html`<p class="callout">Tempo would not take any of the priced offers.</p>`}
     ${declinedList(rest)}
   </div>`;
@@ -81,8 +81,8 @@ function offerFacts(o) {
     ${fact("Offer", offerPct(o))}
     ${fact("Savings on this bill", money(o.savings_cents), moneyExact(o.savings_cents))}
     ${fact("Pay on", `${longDate(o.proposed_date)}`, `${count(o.days_early)} days before ${longDate(o.due_date)}`)}
-    ${fact("Annualized return", perYear(o.annualized_return))}
-    ${fact("Cost of cash", perYear(o.cost_of_cash, 2))}
+    ${fact("Return", perYear(o.annualized_return), "Return on the cash paid early, per year")}
+    ${fact("Cost of cash", perYear(o.cost_of_cash))}
   </div>
   <p class="callout ${o.tempo_takes_it ? "" : "callout-review"}">${icon(o.tempo_takes_it ? "circle-check" : "circle-alert", "icon mt-0.5 flex-none")}
     <span title="Plan value change if accepted: ${moneyExact(o.value_delta_cents)}">${o.verdict}</span></p>`;
@@ -124,7 +124,7 @@ function replyView(reply) {
       <dt>Read as</dt><dd class="font-medium">${reply.terms ? termsText(reply.terms) : "No terms"}</dd>
       <dt>Status</dt><dd>${ok ? html`<span class="chip chip-solid">${icon("badge-check")}${STATUS_LABEL[reply.status] ?? reply.status}</span>` : html`<span class="chip chip-review">${icon("circle-alert")}${STATUS_LABEL[reply.status] ?? reply.status}</span>`}</dd>
       <dt>Why</dt><dd class="text-ink-2">${sentence(reply.reason)}</dd>
-      <dt>Model check</dt><dd class="text-ink-2">${reply.model_check}</dd>
+      <dt>Local model</dt><dd class="text-ink-2">${modelCheckText(reply)}</dd>
     </dl>
     ${reply.terms
       ? html`<div class="flex items-center gap-3"><button type="button" class="btn btn-primary" data-accept-terms>${icon("check")}Accept these terms</button>

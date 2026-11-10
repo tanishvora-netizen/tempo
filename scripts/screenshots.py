@@ -7,15 +7,18 @@ Saves PNGs to docs/screenshots/ (overview-1440.png, ...). Also logs every networ
 and fails if any goes to a host other than the app's own origin (the app must make zero
 external calls), and reports browser console errors.
 
---mutate also exercises the state-changing flows: it records an approval (an audit entry)
-and accepts one Needs-review item (an in-memory override). Only use it against a throwaway
-server whose TEMPO_AUDIT_PATH points somewhere disposable.
+Every run starts with POST /api/reset so counts start clean (13 bills in Needs review).
+The default run is read-only. Run --mutate afterwards as a separate, final step: it records an
+approval (an audit entry) and accepts one Needs-review item, saving approve-dialog,
+audit-drawer-approved, and needs-review-accepted, then resets the demo state again. Only use
+--mutate against a throwaway server whose TEMPO_AUDIT_PATH points somewhere disposable.
 """
 
 from __future__ import annotations
 
 import argparse
 import sys
+import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
 from urllib.parse import urlparse
@@ -85,21 +88,35 @@ def close_drawer(page: Page) -> None:
     page.wait_for_selector(".drawer", state="detached", timeout=WAIT_MS)
 
 
-def capture_overview(page: Page, base: str, width: int, mutate: bool) -> None:
+def reset_server(base: str) -> None:
+    """POST /api/reset: clear review acceptances, negotiated terms, and autonomy (not the audit log)."""
+    request = urllib.request.Request(f"{base}/api/reset", method="POST", data=b"")
+    with urllib.request.urlopen(request, timeout=WAIT_MS / 1000) as response:
+        response.read()
+
+
+def capture_overview(page: Page, base: str, width: int) -> None:
     goto(page, base, "overview", "#fan-canvas")
     shoot(page, "overview", width)
-    if mutate:
-        page.click("[data-approve]")
-        page.wait_for_selector("dialog[open]", timeout=WAIT_MS)
-        page.fill('dialog [name="approver"]', APPROVER)
-        page.wait_for_timeout(SETTLE_MS)
-        shoot(page, "approve-dialog", width, full_page=False)
-        page.click("dialog [data-confirm]")
-    else:
-        page.click("[data-open-audit]")
+    page.click("[data-open-audit]")
     page.wait_for_selector(".drawer [data-plist] li", timeout=WAIT_MS)
     settle(page)
     shoot(page, "audit-drawer", width, full_page=False)
+    close_drawer(page)
+
+
+def capture_approval(page: Page, base: str, width: int) -> None:
+    """Mutating: record an approval for this week's run and show the new audit entry."""
+    goto(page, base, "overview", "#fan-canvas")
+    page.click("[data-approve]")
+    page.wait_for_selector("dialog[open]", timeout=WAIT_MS)
+    page.fill('dialog [name="approver"]', APPROVER)
+    page.wait_for_timeout(SETTLE_MS)
+    shoot(page, "approve-dialog", width, full_page=False)
+    page.click("dialog [data-confirm]")
+    page.wait_for_selector(".drawer [data-plist] li", timeout=WAIT_MS)
+    settle(page)
+    shoot(page, "audit-drawer-approved", width, full_page=False)
     close_drawer(page)
 
 
@@ -132,7 +149,7 @@ def capture_upload(page: Page, width: int) -> None:
     close_drawer(page)
 
 
-def capture_review(page: Page, base: str, width: int, accept: bool) -> None:
+def capture_review(page: Page, base: str, width: int) -> None:
     goto(page, base, "review", "[data-detail] [data-accept]")
     shoot(page, "needs-review", width)
     capture_upload(page, width)
@@ -141,8 +158,13 @@ def capture_review(page: Page, base: str, width: int, accept: bool) -> None:
         injection.first.click()
         settle(page)
         shoot(page, "needs-review-injection", width)
+
+
+def capture_review_accept(page: Page, base: str, width: int) -> None:
+    """Mutating: accept one Needs-review item and show the re-solve effect."""
+    goto(page, base, "review", "[data-detail] [data-accept]")
     target = page.locator("[data-item]", has_text="Sorrel Bay")
-    if accept and target.count():
+    if target.count():
         target.first.click()
         page.click("[data-detail] [data-accept]")
         page.wait_for_selector("[data-effect]", timeout=60_000)
@@ -190,14 +212,30 @@ def capture_negotiate(page: Page, base: str, width: int) -> None:
     close_drawer(page)
 
 
+def capture_read_only(page: Page, base: str, width: int) -> None:
+    capture_overview(page, base, width)
+    capture_run(page, base, width)
+    capture_review(page, base, width)
+    capture_whatif(page, base, width, live=width == max(VIEWPORTS))
+    capture_proof(page, base, width)
+    capture_negotiate(page, base, width)
+
+
+def capture_mutating(page: Page, base: str, width: int) -> None:
+    capture_approval(page, base, width)
+    capture_review_accept(page, base, width)
+
+
 def run(base: str, mutate: bool) -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     origin = f"{urlparse(base).scheme}://{urlparse(base).netloc}"
     log = Log(origin=origin)
+    capture = capture_mutating if mutate else capture_read_only
     with sync_playwright() as p:
         browser = p.chromium.launch()
         for width, height in VIEWPORTS.items():
             print(f"{width}x{height}")
+            reset_server(base)
             context = browser.new_context(
                 viewport={"width": width, "height": height}, reduced_motion="reduce", accept_downloads=False
             )
@@ -205,15 +243,10 @@ def run(base: str, mutate: bool) -> int:
             page.on("request", lambda r: log.requests.append(r.url))
             page.on("console", lambda m: log.console_errors.append(m.text) if m.type == "error" else None)
             page.on("pageerror", lambda e: log.console_errors.append(str(e)))
-            first = width == max(VIEWPORTS)
-            capture_overview(page, base, width, mutate)
-            capture_run(page, base, width)
-            capture_review(page, base, width, accept=mutate and first)
-            capture_whatif(page, base, width, live=first)
-            capture_proof(page, base, width)
-            capture_negotiate(page, base, width)
+            capture(page, base, width)
             context.close()
         browser.close()
+    reset_server(base)
     return report(log)
 
 

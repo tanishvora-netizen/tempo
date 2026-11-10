@@ -1,17 +1,18 @@
 // Payment run: every bill with its decision. Sortable columns, combinable filters, row -> side panel.
 import { $, $$, html, icon, onActivate, setHTML } from "./dom.js";
 import { count, money, moneyExact, perYear, shortDate } from "./format.js";
-import { chip, optionCell, railCell, valueCell } from "./labels.js";
+import { arrivesLateChip, chip, expectedChip, optionCell, railCell, railIcon, valueCell } from "./labels.js";
 import { openBillPanel } from "./billpanel.js";
 import { emptyBlock } from "./states.js";
-import { loadBills } from "./store.js";
+import { loadBills, loadState } from "./store.js";
 
 const FILTERS = [
   { id: "discount", label: "Discount taken", test: (b) => b.takes_discount },
   { id: "card", label: "Card", test: (b) => b.is_card },
-  { id: "review", label: "Needs review", test: (b) => b.needs_review },
+  { id: "review", label: "Needs review", test: (b) => b.needs_review && b.chip !== "Accepted by reviewer" },
   { id: "binding", label: "Held back by cash limit", test: (b) => Boolean(b.binding_day) },
-  { id: "late", label: "Late", test: (b) => b.is_late },
+  { id: "arrives_late", label: "Arrives after due date", test: (b) => Boolean(b.arrives_after_due) },
+  { id: "late", label: "Late by choice", test: (b) => b.is_late },
 ];
 
 const COLUMNS = [
@@ -22,7 +23,7 @@ const COLUMNS = [
   { id: "cash_out", label: "Cash leaves", key: (b) => b.cash_out_date },
   { id: "rail", label: "Rail", key: (b) => b.rail, narrowHide: true },
   { id: "value", label: "Value", key: (b) => b.value_cents, right: true },
-  { id: "return", label: "Return", key: (b) => b.annualized_return ?? -1, right: true },
+  { id: "return", label: "Return", key: (b) => b.annualized_return ?? -1, right: true, narrowHide: true },
   { id: "reason", label: "Why", key: (b) => b.reason, sortable: false, narrowHide: true },
 ];
 
@@ -65,17 +66,28 @@ function headerCell(col, sort) {
   </th>`;
 }
 
+const returnText = (b) => (b.annualized_return === null || b.annualized_return === undefined ? "\u2014" : perYear(b.annualized_return));
+
+/** Under 1200px the Rail, Return, and Why columns fold into the Decision and Value cells. */
+function decisionCell(b) {
+  return html`<td>
+    <div class="flex flex-wrap items-center gap-1.5"><span class="whitespace-nowrap">${optionCell(b)}</span><span class="min-[1201px]:hidden">${railIcon(b.rail)}</span>${arrivesLateChip(b)}</div>
+    <p class="max-w-[180px] truncate text-xs text-ink-2 min-[1201px]:hidden" title="${b.reason}">${b.reason}</p>
+  </td>`;
+}
+
 function row(b) {
   return html`<tr class="clickable" tabindex="0" data-bill="${b.bill_id}" aria-label="${b.vendor} ${b.invoice_number}, open details">
-    <td class="max-w-[220px] max-[1200px]:max-w-[170px]"><div class="truncate font-medium" title="${b.vendor}">${b.vendor}</div><div class="meta">${b.invoice_number}</div></td>
+    <td class="max-w-[220px] max-[1200px]:max-w-[150px]"><div class="truncate font-medium" title="${b.vendor}">${b.vendor}</div>
+      <div class="meta flex flex-wrap items-center gap-1.5">${b.invoice_number}${expectedChip(b)}</div></td>
     <td class="r num" title="${moneyExact(b.amount_cents)}">${money(b.amount_cents)}</td>
-    <td><div class="flex flex-wrap items-center gap-x-1.5 gap-y-0.5"><span class="whitespace-nowrap">${b.terms}</span>${chip(b.chip)}</div></td>
-    <td class="whitespace-nowrap">${optionCell(b)}</td>
+    <td><div class="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 min-[1201px]:flex-nowrap"><span class="whitespace-nowrap">${b.terms}</span>${chip(b.chip)}</div></td>
+    ${decisionCell(b)}
     <td class="num" title="Send ${shortDate(b.send_date)}">${shortDate(b.cash_out_date)}</td>
     <td class="max-[1200px]:hidden">${railCell(b.rail)}</td>
-    <td class="r">${valueCell(b.value_cents)}</td>
-    <td class="r num text-ink-2">${b.annualized_return === null ? "—" : perYear(b.annualized_return)}</td>
-    <td class="max-w-[300px] max-[1200px]:hidden"><p class="truncate text-ink-2" title="${b.reason}">${b.reason}</p></td>
+    <td class="r">${valueCell(b.value_cents)}<div class="meta num min-[1201px]:hidden">${b.annualized_return === null ? "" : returnText(b)}</div></td>
+    <td class="r num text-ink-2 max-[1200px]:hidden">${returnText(b)}</td>
+    <td class="max-[1200px]:hidden"><p class="max-w-[180px] truncate text-ink-2" title="${b.reason}">${b.reason}</p></td>
   </tr>`;
 }
 
@@ -88,12 +100,13 @@ function tableView(rows, view) {
   </table>`;
 }
 
-function toolbar(bills, view) {
+/** Filter counts; Needs review uses /api/state review_count so the badge, filter, and subhead agree. */
+function toolbar(bills, view, reviewCount) {
   const range = view.from || view.to;
   return html`<div class="flex flex-wrap items-center gap-2">
     <div class="flex flex-wrap items-center gap-1.5" role="group" aria-label="Filters (combine)">
       ${FILTERS.map((f) => {
-        const n = bills.filter(f.test).length;
+        const n = f.id === "review" ? reviewCount : bills.filter(f.test).length;
         return html`<button type="button" class="filter" data-filter="${f.id}" aria-pressed="${view.filters.has(f.id)}">${f.label}<span class="count num">${count(n)}</span></button>`;
       })}
       ${range
@@ -109,7 +122,7 @@ function toolbar(bills, view) {
 }
 
 function summary(rows, total) {
-  const amount = rows.reduce((s, b) => s + b.amount_cents, 0);
+  const amount = rows.reduce((s, b) => s + b.cash_out_cents, 0);
   const value = rows.reduce((s, b) => s + b.value_cents, 0);
   return html`<p class="text-sm text-ink-2" aria-live="polite">
     Showing <span class="num font-medium text-ink">${count(rows.length)}</span> of <span class="num">${count(total)}</span> bills,
@@ -151,7 +164,7 @@ function toggled(set, id) {
 }
 
 export async function render(main, params) {
-  const { bills } = await loadBills();
+  const [{ bills }, state] = await Promise.all([loadBills(), loadState()]);
   const ctx = { view: initialView(params) };
   const view = ctx.view;
   setHTML(
@@ -161,7 +174,7 @@ export async function render(main, params) {
         <h1 class="text-xl">Payment run</h1>
         <p class="text-sm text-ink-2">Every open bill, the day and rail Tempo chose, and why. Select a row to see the invoice and every option.</p>
       </div>
-      <div data-toolbar>${toolbar(bills, view)}</div>
+      <div data-toolbar>${toolbar(bills, view, state.review_count)}</div>
       <div data-summary></div>
       <section class="panel overflow-clip max-[1200px]:overflow-x-auto" data-table></section>
     </div>`,

@@ -78,11 +78,27 @@ function kpiStrip(state) {
     ${kpiCell({
       label: "Cost of cash",
       value: perYear(k.cost_of_cash),
-      title: `Yield on idle cash ${pct(yieldOnCash, 2)} plus the plan's value of an extra dollar ${pct(state.cash_value.annual_rate, 2)}/yr`,
-      sub: k.cost_of_cash_credit_bound ? "credit-bound estimate" : `${pct(yieldOnCash, 1)} yield + ${pct(state.cash_value.annual_rate, 1)} plan`,
+      title: `Yield on idle cash ${perYear(yieldOnCash)} plus the plan value of an extra dollar ${perYear(state.cash_value.annual_rate)}`,
+      sub: k.cost_of_cash_credit_bound ? "credit-bound estimate" : `${perYear(yieldOnCash)} yield + ${perYear(state.cash_value.annual_rate)} plan`,
       href: "#/proof?section=cash",
     })}
+    ${valueBreakdown(k)}
   </section>`;
+}
+
+/** The value tile as a sum the reader can check: discounts + rewards + yield - surcharges - fees. */
+function valueBreakdown(k) {
+  if (k.yield_cents === undefined) return "";
+  const term = (cents, label) => html`<span class="num font-medium text-ink" title="${moneyExact(cents)}">${moneyShort(cents)}</span> ${label}`;
+  const yieldPart = k.yield_cents < 0
+    ? html` − ${term(-k.yield_cents, "yield forgone on cash paid early")}`
+    : html` + ${term(k.yield_cents, "yield kept by paying later")}`;
+  const costs = (k.surcharge_cents ?? 0) + (k.fees_cents ?? 0);
+  return html`<p class="col-span-6 border-t border-line px-4 py-2 text-xs text-ink-2 max-[1180px]:col-span-3">
+    Value <span class="num font-medium text-ink" title="${moneyExact(k.value_vs_pay_on_due_cents)}">${moneyShort(k.value_vs_pay_on_due_cents, { signed: true })}</span>
+    = ${term(k.discounts_captured_cents, "discounts")} + ${term(k.card_rewards_cents, "card rewards")}${yieldPart}
+    − ${term(costs, "surcharges and fees")}
+  </p>`;
 }
 
 function legendItem(swatch, text) {
@@ -154,9 +170,7 @@ function riskPanel(state, evaluate, vendorsWithoutTerms) {
     </div>
     ${evaluate ? comparison(evaluate, k.epsilon) : ""}
     <div class="flex flex-col gap-1.5 border-t border-line px-4 py-3 text-sm">
-      ${k.late_count
-        ? html`<p class="flex items-center gap-2 risk">${icon("triangle-alert")}${count(k.late_count)} bills are paid late.</p>`
-        : html`<p class="flex items-center gap-2 text-ink-2">${icon("check", "icon text-ink-3")}No bill is paid late.</p>`}
+      ${latenessLines(k)}
       ${k.credit_drawn_cents
         ? html`<p class="flex items-center gap-2 risk">${icon("triangle-alert")}You need ${money(k.credit_drawn_cents)} of financing by ${shortDate(k.credit_first_date)}.</p>`
         : html`<p class="flex items-center gap-2 text-ink-2">${icon("check", "icon text-ink-3")}No emergency credit is needed.</p>`}
@@ -166,6 +180,18 @@ function riskPanel(state, evaluate, vendorsWithoutTerms) {
       <button type="button" class="btn btn-sm" data-negotiate>${icon("handshake")}Negotiate terms</button>
     </div>
   </section>`;
+}
+
+/** Late by choice (the LATE option) is separate from bills that cannot arrive by their due date. */
+function latenessLines(k) {
+  const arriving = k.arrive_after_due_count ?? 0;
+  const byChoice = k.late_count
+    ? html`<p class="flex items-start gap-2 risk">${icon("triangle-alert", "icon mt-0.5 flex-none")}<span>${count(k.late_count)} ${k.late_count === 1 ? "bill is" : "bills are"} paid late by choice.</span></p>`
+    : html`<p class="flex items-start gap-2 text-ink-2">${icon("check", "icon mt-0.5 flex-none text-ink-3")}<span>No bill is paid late${arriving ? " by choice" : ""}.</span></p>`;
+  if (!arriving) return byChoice;
+  return html`${byChoice}<p class="flex items-start gap-2 text-ink-2">${icon("info", "icon mt-0.5 flex-none text-ink-3")}<span>
+    <a class="font-medium text-ink underline decoration-line-strong underline-offset-2" href="#/run?filter=arrives_late">${count(arriving)} ${arriving === 1 ? "arrives" : "arrive"} after the due date</a>
+    because a bank payment sent today can't arrive sooner.</span></p>`;
 }
 
 function weekRows(state, bills) {
@@ -205,7 +231,7 @@ function weekTable(rows) {
 }
 
 function weekPanel(state, rows) {
-  const total = rows.reduce((s, b) => s + b.amount_cents, 0);
+  const total = rows.reduce((s, b) => s + b.cash_out_cents, 0);
   const value = rows.reduce((s, b) => s + b.value_cents, 0);
   const start = state.company.as_of;
   const end = addDays(start, RUN_WINDOW_DAYS - 1);
@@ -279,7 +305,7 @@ export async function render(main) {
     html`<div class="flex flex-col gap-4">
       <div>
         <h1 class="text-xl">Overview</h1>
-        <p class="text-sm text-ink-2">When and how to pay ${count(bills.length)} open bills, keeping cash above the ${moneyShort(state.company.buffer_cents)} buffer.</p>
+        <p class="text-sm text-ink-2">When and how to pay ${count(bills.length)} open bills, keeping cash above the ${money(state.company.buffer_cents)} buffer.</p>
       </div>
       ${kpiStrip(state)}
       <div class="grid grid-cols-12 gap-4">

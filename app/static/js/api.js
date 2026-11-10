@@ -66,6 +66,7 @@ export const simulateReply = (vendorId, kind) => request("POST", `${vendorPath(v
 export const acceptNegotiated = (vendorId, terms) => request("POST", `${vendorPath(vendorId)}/accept`, { terms });
 
 // Approval, audit chain, and Ramp payload preview (directive 8.3, 8.4). Ramp is never called.
-export const approvePlan = (approver, autonomy) => request("POST", "/api/plan/approve", { approver, autonomy });
+export const approvePlan = (approver, autonomy, billIds) =>
+  request("POST", "/api/plan/approve", { approver, autonomy, bill_ids: billIds });
 export const getAudit = () => request("GET", "/api/audit");
 export const getPayloadPreview = () => request("GET", "/api/ramp/payload-preview");

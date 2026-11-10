@@ -2,7 +2,7 @@
 // spans highlighted, the status, the reading in plain words, and why. Uploads never change the plan.
 import { html, icon, setHTML } from "./dom.js";
 import { money, sentence, termsText } from "./format.js";
-import { STATUS_LABEL } from "./labels.js";
+import { modelCheckText, STATUS_LABEL } from "./labels.js";
 import { evidenceLegend, highlight, methodsText } from "./evidence.js";
 import { openDrawer } from "./drawer.js";
 import { loadingBlock } from "./states.js";
@@ -44,7 +44,7 @@ function readingRows(r) {
     <dt>Status</dt><dd>${statusChip(r.status)}</dd>
     <dt>Why</dt><dd>${sentence(r.reason)}.</dd>
     <dt>Parser</dt><dd>${parser.length ? parser.join(" and ") : "Found no terms"}</dd>
-    <dt>Local model</dt><dd>${r.model_value ? termsText(r.model_value) : "No reading"}${r.model_check && r.model_check !== "ok" ? html`<span class="block text-xs text-ink-2">${sentence(r.model_check)}</span>` : ""}</dd>
+    <dt>Local model</dt><dd>${r.model_value ? termsText(r.model_value) : "No reading"}${r.model_check !== "ok" ? html`<span class="block text-xs text-ink-2">${modelCheckText(r)}</span>` : ""}</dd>
     ${fee ? html`<dt>Late fee</dt><dd>${fee}</dd>` : ""}
     <dt>Accepts</dt><dd>${methodsText(r.accepted_methods)}${r.card_surcharge_bps ? `; card surcharge ${(r.card_surcharge_bps / 100).toFixed(2)}%` : ""}</dd>
   </dl>`;

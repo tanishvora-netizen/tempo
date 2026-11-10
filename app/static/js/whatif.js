@@ -2,7 +2,7 @@
 // Presets are precomputed (instant, certified); custom runs solve live and are labeled as an
 // out-of-sample estimate on seed B that is not re-certified.
 import { $, $$, html, icon, setHTML } from "./dom.js";
-import { count, money, moneyExact, pct, seconds, shortDate } from "./format.js";
+import { count, dollarsField, money, moneyExact, parseDollars, pct, seconds, shortDate } from "./format.js";
 import { valueCell } from "./labels.js";
 import { fanChart, PALETTE, updateSeries } from "./charts.js";
 import { diffTable, riskMeter } from "./widgets.js";
@@ -39,7 +39,7 @@ function controls(presets) {
       <div class="flex flex-wrap items-end gap-4" data-mode-panel="shock" hidden>
         <label class="flex flex-col gap-1 text-xs text-ink-2">Unexpected payment today
           <span class="flex items-center gap-1.5"><span class="text-sm text-ink-2">$</span>
-            <input type="number" name="shock" min="1000" max="${MAX_SHOCK_DOLLARS}" step="1000" value="${DEFAULT_SHOCK_DOLLARS}" class="field w-40 num" inputmode="numeric">
+            <input type="text" name="shock" value="${dollarsField(DEFAULT_SHOCK_DOLLARS * 100)}" class="field w-40 num" inputmode="numeric">
           </span>
         </label>
       </div>
@@ -92,9 +92,22 @@ function resultSummary(base, result) {
       <p class="text-sm text-ink-2">Chance of dipping below the buffer: <span class="num font-medium ${over ? "risk" : "text-ink"}">${pct(rate)}</span>, upper bound <span class="num">${pct(upper)}</span>.</p>
       ${riskMeter({ rate, upper, target: base.epsilon })}
     </div>
-    ${k.late_count ? html`<p class="callout callout-risk">${icon("triangle-alert", "icon mt-0.5 flex-none")}<span><span class="num font-medium">${count(k.late_count)}</span> bills would be paid after their due date to stay above the buffer.</span></p>` : ""}
+    ${latenessNotice(k)}
     ${k.credit_drawn_cents ? html`<p class="callout callout-risk">${icon("triangle-alert", "icon mt-0.5 flex-none")}You would need ${money(k.credit_drawn_cents)} of financing by ${shortDate(k.credit_first_date)}.</p>` : ""}
   </div>`;
+}
+
+/** Late by choice (to stay above the buffer) is reported apart from bills that cannot arrive in time. */
+function latenessNotice(k) {
+  const byChoice = k.late_count ?? 0;
+  const arriving = k.arrive_after_due_count ?? 0;
+  if (!byChoice && !arriving) return "";
+  const parts = [
+    byChoice && html`<span class="num font-medium">${count(byChoice)}</span> ${byChoice === 1 ? "bill is" : "bills are"} paid late by choice to stay above the buffer`,
+    arriving && html`<span class="num font-medium">${count(arriving)}</span> ${arriving === 1 ? "arrives" : "arrive"} after the due date because no rail sent from today is faster`,
+  ].filter(Boolean);
+  const tone = byChoice ? "callout-risk" : "";
+  return html`<p class="callout ${tone} items-start">${icon(byChoice ? "triangle-alert" : "info", "icon mt-0.5 flex-none")}<span>${parts.length === 2 ? html`${parts[0]}; ${parts[1]}` : parts[0]}.</span></p>`;
 }
 
 function readRequest(form, mode) {
@@ -104,11 +117,11 @@ function readRequest(form, mode) {
     if (delay === 0) return { error: "Choose a delay of at least 1 day." };
     return { whatIf: { customer_id: form.customer.value, delay_days: delay } };
   }
-  const dollars = Number(form.shock.value);
-  if (!Number.isFinite(dollars) || dollars < 1 || dollars > MAX_SHOCK_DOLLARS) {
+  const cents = parseDollars(form.shock.value);
+  if (cents === null || cents < 100 || cents > MAX_SHOCK_DOLLARS * 100) {
     return { error: `Enter a payment between $1 and ${money(MAX_SHOCK_DOLLARS * 100)}.` };
   }
-  return { whatIf: { shock_cents: Math.round(dollars * 100) } };
+  return { whatIf: { shock_cents: cents } };
 }
 
 function setBusy(root, busy, startedAt) {
@@ -165,7 +178,7 @@ export async function render(main) {
       { label: "What-if", data: forecast.fan.after, style: { line: PALETTE.whatIf, fill: PALETTE.whatIfBand, width: 2, hidden: true } },
     ],
   });
-  wire(main, state, chart);
+  wire(main, state, chart, presets);
   return () => chart.destroy();
 }
 
@@ -201,33 +214,61 @@ async function execute(root, state, chart, whatIf, label) {
 }
 
 function customLabel(form, mode) {
-  if (mode === "shock") return `Unexpected ${money(Math.round(Number(form.shock.value) * 100))} payment today`;
+  if (mode === "shock") return `Unexpected ${money(parseDollars(form.shock.value))} payment today`;
   const name = form.customer.selectedOptions[0]?.textContent ?? "Customer";
   return `${name} pays ${form.delay.value} days late`;
 }
 
-function wire(root, state, chart) {
+function setMode(root, view, mode) {
+  view.mode = mode;
+  $$("[data-mode]", root).forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
+  $$("[data-mode-panel]", root).forEach((p) => (p.hidden = p.dataset.modePanel !== mode));
+}
+
+/** Make the form show exactly what a preset runs, so the controls and the result never disagree. */
+function syncFormToPreset(root, form, view, preset) {
+  const w = preset.what_if;
+  if (w.customer_id) {
+    setMode(root, view, "delay");
+    form.customer.value = w.customer_id;
+    form.delay.value = String(w.delay_days);
+    $("[data-delay-out]", root).textContent = `${w.delay_days} days`;
+  } else {
+    setMode(root, view, "shock");
+    form.shock.value = dollarsField(w.shock_cents);
+  }
+}
+
+function clearPresets(root) {
+  $$("[data-preset]", root).forEach((b) => b.setAttribute("aria-pressed", "false"));
+}
+
+function wire(root, state, chart, presets) {
   const form = $("[data-form]", root);
   const view = { mode: "delay" };
   $$("[data-mode]", root).forEach((btn) =>
     btn.addEventListener("click", () => {
-      view.mode = btn.dataset.mode;
-      $$("[data-mode]", root).forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
-      $$("[data-mode-panel]", root).forEach((p) => (p.hidden = p.dataset.modePanel !== view.mode));
+      setMode(root, view, btn.dataset.mode);
+      clearPresets(root);
     }),
   );
   form.delay.addEventListener("input", () => {
     $("[data-delay-out]", root).textContent = `${form.delay.value} days`;
+    clearPresets(root);
   });
+  form.customer.addEventListener("change", () => clearPresets(root));
+  form.shock.addEventListener("input", () => clearPresets(root));
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const { whatIf, error } = readRequest(form, view.mode);
-    $$("[data-preset]", root).forEach((b) => b.setAttribute("aria-pressed", "false"));
+    clearPresets(root);
     if (error) return showError(root, { message: error });
     execute(root, state, chart, whatIf, customLabel(form, view.mode));
   });
   $$("[data-preset]", root).forEach((btn) =>
     btn.addEventListener("click", () => {
+      const preset = presets.presets.find((p) => p.id === btn.dataset.preset);
+      if (preset) syncFormToPreset(root, form, view, preset);
       $$("[data-preset]", root).forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
       execute(root, state, chart, { preset_id: btn.dataset.preset }, btn.textContent);
     }),

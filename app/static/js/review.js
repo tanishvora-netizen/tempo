@@ -2,8 +2,8 @@
 // reason, suggested terms, and Accept or Edit. After a change the plan is re-solved and the
 // effect (value change and flipped decisions) is shown.
 import { $, $$, html, icon, setHTML } from "./dom.js";
-import { money, moneyExact, sentence, termsText } from "./format.js";
-import { STATUS_LABEL, valueCell } from "./labels.js";
+import { longDate, money, moneyExact, sentence, termsText } from "./format.js";
+import { EXPECTED_NOTE, modelCheckText, STATUS_LABEL, valueCell } from "./labels.js";
 import { documentView, evidenceLegend, highlight, sourceLabel } from "./evidence.js";
 import { emptyBlock, errorBlock } from "./states.js";
 import { invalidate, loadReview, loadState, STATE_CHANGED } from "./store.js";
@@ -11,11 +11,6 @@ import { uploadControl, wireUpload } from "./upload.js";
 import { diffTable } from "./widgets.js";
 import { reviewForm, readTerms, wireAnchorField } from "./reviewform.js";
 import * as api from "./api.js";
-
-const MODEL_CHECK = {
-  ok: "Quote found in the document and re-parsed to the same terms",
-  "no model output": "No model output for this document",
-};
 
 function listItem(item, selected, accepted) {
   return html`<li>
@@ -48,14 +43,14 @@ function readersView(item) {
   const regexTerms = r.regex_values?.length ? r.regex_values.map(termsText) : [];
   return html`<div class="grid grid-cols-2 gap-px overflow-hidden rounded-md border border-line bg-line max-[1180px]:grid-cols-1">
     <div class="flex flex-col gap-2 bg-surface p-4">
-      <h3 class="flex items-center gap-2 text-sm font-semibold"><mark class="ev ev-regex text-xs">2/10</mark>Parser (rules)</h3>
+      <h3 class="flex items-center gap-2 text-sm font-semibold"><mark class="ev ev-regex text-xs">Aa</mark>Parser (rules)</h3>
       <p class="text-sm">${regexTerms.length ? html`Read <span class="font-medium">${regexTerms.join(" and ")}</span>` : "Found no terms"}${regexTerms.length > 1 ? " (more than one set)" : ""}</p>
       ${quoteList(regexSpans, item.document)}
     </div>
     <div class="flex flex-col gap-2 bg-surface p-4">
-      <h3 class="flex items-center gap-2 text-sm font-semibold"><mark class="ev ev-model text-xs">2/10</mark>Local model</h3>
+      <h3 class="flex items-center gap-2 text-sm font-semibold"><mark class="ev ev-model text-xs">Aa</mark>Local model</h3>
       <p class="text-sm">${r.model_value ? html`Read <span class="font-medium">${termsText(r.model_value)}</span>` : "Gave no reading"}</p>
-      <p class="text-xs text-ink-2">${MODEL_CHECK[r.model_check] ?? r.model_check}</p>
+      <p class="text-xs text-ink-2">${modelCheckText(r)}</p>
       ${quoteList(modelSpans, item.document)}
     </div>
   </div>`;
@@ -104,7 +99,7 @@ function detailView(item, accepted) {
       <dt>Why it is here</dt><dd>${sentence(r.reason)}.</dd>
       ${item.prior_terms ? html`<dt>Terms on file</dt><dd>${termsText(item.prior_terms)}</dd>` : ""}
       ${r.overridden_in_email ? html`<dt>Email thread</dt><dd>A later vendor email changes the invoice's terms.</dd>` : ""}
-      ${r.provider_error ? html`<dt>Model</dt><dd class="text-ink-2">${r.provider_error}</dd>` : ""}
+      ${item.expected ? html`<dt>Expected bill</dt><dd>Issues ${longDate(item.issued_at)}. ${EXPECTED_NOTE}</dd>` : ""}
     </dl>
     <section class="flex flex-col gap-3 rounded-md border border-line-strong p-4" aria-labelledby="suggest-title">
       <div class="flex flex-wrap items-center justify-between gap-3">
@@ -137,8 +132,14 @@ async function submit(button, item, action, ctx) {
   try {
     const result = await action();
     ctx.accepted.add(item.bill_id);
-    invalidate("review", "state");
+    invalidate("review", "state", "bills");
     window.dispatchEvent(new CustomEvent(STATE_CHANGED)); // app.js refreshes the nav badge from /api/state
+    loadState()
+      .then((s) => {
+        const el = document.querySelector("[data-review-subhead]");
+        if (el) el.textContent = subhead(s.review_count);
+      })
+      .catch((err) => console.error(err));
     ctx.results.set(item.bill_id, result);
     ctx.select(item.bill_id);
     $("[data-effect]", ctx.detail)?.focus();
@@ -166,11 +167,17 @@ function wireDetail(item, ctx) {
   });
 }
 
+function subhead(count) {
+  if (!count) return "Nothing left to review. Accepted items stay listed with their effect.";
+  return `${count} ${count === 1 ? "bill" : "bills"} whose terms Tempo would not accept on its own. Check the quotes, then accept or edit the terms.`;
+}
+
+/** The count comes from /api/state review_count, the same number as the nav badge and the run filter. */
 function header(count) {
   return html`<div class="flex flex-wrap items-end justify-between gap-3">
     <div>
       <h1 class="text-xl">Needs review</h1>
-      <p class="text-sm text-ink-2">${count ? `${count} bills whose terms Tempo would not accept on its own. Check the quotes, then accept or edit the terms.` : "Bills whose terms Tempo would not accept on its own."}</p>
+      <p class="text-sm text-ink-2" data-review-subhead aria-live="polite">${subhead(count)}</p>
     </div>
     ${uploadControl()}
   </div>`;
@@ -187,7 +194,7 @@ export async function render(main) {
   setHTML(
     main,
     html`<div class="flex flex-col gap-4">
-      ${header(items.length)}
+      ${header(state.review_count)}
       <div class="grid grid-cols-[300px_minmax(0,1fr)] items-start gap-4 max-[1100px]:grid-cols-[240px_minmax(0,1fr)]">
         <nav class="panel sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto" aria-label="Bills needing review"><ul data-list></ul></nav>
         <section class="panel p-5" data-detail aria-live="polite"></section>

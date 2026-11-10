@@ -15,7 +15,9 @@ const POLICY = {
   deterministic_p50: ["Optimizer on the median", "Same optimizer on the median forecast only, no risk limit"],
   tempo: ["Tempo", "Chance-constrained optimizer, certified out of sample"],
   per_day_5pct: ["Per-day 5% limit", "Each day separately at 5%, not the 13 weeks jointly"],
-  bonferroni_per_day: ["Bonferroni per day", "Each day at 5% divided by the number of days"],
+  per_day_worst_case: ["Worst case per day", "Each day at 5% divided by 91 days; with 1,000 planning scenarios, the day's worst scenario"],
+  tempo_with_financing: ["Tempo with financing on", "Flex-style financing allowed; off in the headline because the fee is an assumption"],
+  tempo_ladder_from_eps_n: ["Tempo, ladder from K = 10", "Certification ladder starting at 5% of N; added after the headline results"],
 };
 
 function policyName(id) {
@@ -122,8 +124,23 @@ function certificationSection(state) {
 
 function ablationSection(ev, state) {
   const body = html`<div class="overflow-x-auto">${policyTable(ev.ablations, state.kpis.epsilon, "Joint versus per-day chance constraints")}</div>
-    <p class="border-t border-line px-4 py-3 text-sm text-ink-2">A per-day limit checks each day on its own, so the chance of a breach on some day adds up past the target. Bonferroni is safe but leaves money on the table. The joint constraint bounds the 13 weeks at once.</p>`;
+    <p class="border-t border-line px-4 py-3 text-sm text-ink-2">A per-day limit checks each day on its own, so the chance of a breach on some day adds up past the target. Guarding every day against its worst scenario is safe but gives up most of the value. The joint constraint bounds the 13 weeks at once.</p>`;
   return section("ablation", "Joint vs per-day risk limits", "Same scenarios (seed C)", body);
+}
+
+/** Robustness rows reported beside the headline, never instead of it. */
+function sensitivitySection(ev, state) {
+  const fin = ev.financing_sensitivity;
+  const ladder = ev.ladder_sensitivity;
+  const rows = [fin, ladder].filter(Boolean);
+  if (!rows.length) return "";
+  const notes = [
+    fin && html`<li>Financing on: <span class="num">${count(fin.financed_count)}</span> bills financed, <span class="num" title="${moneyExact(fin.financed_cents)}">${money(fin.financed_cents)}</span> repaid; certified: ${fin.certified ? "yes" : "no"}.</li>`,
+    ladder && html`<li>Ladder from K = ${ladder.k}: seed-B bound <span class="num">${pct(ladder.cert_upper)}</span> at z = ${ladder.z.toFixed(3)}; under the generator's true model <span class="num">${pct(ladder.true_breach_rate)}</span> (bound <span class="num ${ladder.true_breach_upper > state.kpis.epsilon ? "risk" : ""}">${pct(ladder.true_breach_upper)}</span>).</li>`,
+  ];
+  const body = html`<div class="overflow-x-auto">${policyTable(rows, state.kpis.epsilon, "Sensitivity checks on seed C")}</div>
+    <ul class="flex list-disc flex-col gap-1 border-t border-line py-3 pl-8 pr-4 text-sm text-ink-2">${notes}</ul>`;
+  return section("sensitivity", "Sensitivity checks", "Reported beside the headline plan, never instead of it", body);
 }
 
 function cashSection(cv, state) {
@@ -132,9 +149,9 @@ function cashSection(cv, state) {
     <dl class="dl">
       <dt>Plan value at today's cash</dt><dd class="num" title="${moneyExact(cv.base_objective_cents)}">${money(cv.base_objective_cents)}</dd>
       <dt>With ${money(cv.step_cents)} more cash</dt><dd class="num" title="${moneyExact(cv.bumped_objective_cents)}">${money(cv.bumped_objective_cents)}</dd>
-      <dt>Value of an extra dollar</dt><dd class="num">${(cv.lam * 100).toFixed(2)} cents over the horizon, about ${perYear(cv.annual_rate, 2)}</dd>
-      <dt>Yield on idle cash</dt><dd class="num">${perYear(yieldOnCash, 2)} (assumption)</dd>
-      <dt>Cost of cash</dt><dd class="num font-semibold">${perYear(cv.cost_of_cash, 2)}${cv.credit_bound ? html` <span class="chip chip-risk">credit-bound</span>` : ""}</dd>
+      <dt>Value of an extra dollar</dt><dd class="num">${(cv.lam * 100).toFixed(2)} cents over the horizon, about ${perYear(cv.annual_rate)}</dd>
+      <dt>Yield on idle cash</dt><dd class="num">${perYear(yieldOnCash)} (assumption)</dd>
+      <dt>Cost of cash</dt><dd class="num font-semibold">${perYear(cv.cost_of_cash)}${cv.credit_bound ? html` <span class="chip chip-risk">credit-bound</span>` : ""}</dd>
     </dl>
     <p class="text-xs text-ink-3">A MILP has no useful duals, so Tempo re-solves with more starting cash and takes the forward difference. Discounts are worth taking when their annualized return beats this rate.</p>
   </div>`;
@@ -158,7 +175,7 @@ function solverSection(solver) {
     <dl class="dl col-span-5 max-[1180px]:col-span-12">
       <dt>Status</dt><dd>${solver.status}</dd>
       <dt>MIP gap</dt><dd class="num">${pct(solver.mip_gap, 4)}</dd>
-      <dt>Solve time</dt><dd class="num">${seconds(solver.solve_seconds)} (whole case ${seconds(solver.case_seconds)})</dd>
+      <dt>Solve time</dt><dd class="tabular-nums">${seconds(solver.solve_seconds)} (whole case ${seconds(solver.case_seconds)})</dd>
       <dt>Nonzeros</dt><dd class="num">${count(solver.nonzeros)}</dd>
       <dt>Variables</dt><dd class="num">${count(solver.cols)}</dd>
       <dt>Days checked</dt><dd class="num">${count(solver.check_days)}</dd>
@@ -191,6 +208,7 @@ export async function render(main, params) {
       ${policiesSection(ev, state)}
       ${certificationSection(state)}
       ${ablationSection(ev, state)}
+      ${sensitivitySection(ev, state)}
       <div class="grid grid-cols-12 gap-4">
         <div class="col-span-5 max-[1180px]:col-span-12">${cashSection(cv, state)}</div>
         <div class="col-span-7 max-[1180px]:col-span-12">${solverSection(state.solver)}</div>

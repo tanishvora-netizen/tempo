@@ -3,19 +3,31 @@
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const SMALL_AMOUNT_CENTS = 10_000; // below $100, show cents
 const MINUS = "−";
+const HALF_DOLLAR_CENTS = 50;
 
 const whole = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 const cents2 = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-/** Table money: $1,234 (no decimals) unless the absolute amount is under $100. */
+/** Table money: whole dollars ($1,234); pair with moneyExact in a tooltip. Under 50 cents reads "<$1". */
 export function money(centsValue, { signed = false } = {}) {
   if (centsValue === null || centsValue === undefined) return "—";
   const abs = Math.abs(centsValue);
-  const body = abs < SMALL_AMOUNT_CENTS && abs !== 0 ? cents2.format(abs / 100) : whole.format(Math.round(abs / 100));
   const sign = centsValue < 0 ? MINUS : signed && centsValue > 0 ? "+" : "";
-  return `${sign}$${body}`;
+  if (abs > 0 && abs < HALF_DOLLAR_CENTS) return `${sign}<$1`;
+  return `${sign}$${whole.format(Math.round(abs / 100))}`;
+}
+
+/** Whole dollars for a form field: 2500000 cents -> "25,000". */
+export function dollarsField(centsValue) {
+  return whole.format(Math.round(centsValue / 100));
+}
+
+/** Parse a dollars field ("25,000" or "$25000") to cents, or null when it is not a number. */
+export function parseDollars(text) {
+  const cleaned = String(text).replace(/[$,\s]/g, "");
+  if (!/^\d+(\.\d{1,2})?$/.test(cleaned)) return null;
+  return Math.round(Number(cleaned) * 100);
 }
 
 /** Exact money with cents, for tooltips: $48,750.14 */
@@ -25,13 +37,13 @@ export function moneyExact(centsValue) {
   return `${sign}$${cents2.format(Math.abs(centsValue) / 100)}`;
 }
 
-/** KPI money: $48.8K, $1.48M. Use with a tooltip carrying moneyExact. */
+/** Headline money with one decimal: $41.0K, $1.6M (amounts under $1,000 in whole dollars). Pair with moneyExact. */
 export function moneyShort(centsValue, { signed = false } = {}) {
   if (centsValue === null || centsValue === undefined) return "—";
   const dollars = Math.abs(centsValue) / 100;
   const sign = centsValue < 0 ? MINUS : signed && centsValue > 0 ? "+" : "";
-  if (dollars >= 1_000_000) return `${sign}$${(dollars / 1_000_000).toFixed(2)}M`;
-  if (dollars >= 10_000) return `${sign}$${(dollars / 1_000).toFixed(1).replace(/\.0$/, "")}K`;
+  if (dollars >= 1_000_000) return `${sign}$${(dollars / 1_000_000).toFixed(1)}M`;
+  if (dollars >= 1_000) return `${sign}$${(dollars / 1_000).toFixed(1)}K`;
   return `${sign}$${whole.format(Math.round(dollars))}`;
 }
 
@@ -41,10 +53,10 @@ export function pct(fraction, digits = 2) {
   return `${(fraction * 100).toFixed(digits)}%`;
 }
 
-/** Annual rate from a fraction: 0.3724 -> "37.2%/yr". */
-export function perYear(fraction, digits = 1) {
+/** Annual rate from a fraction, always one decimal: 0.3724 -> "37.2%/yr". */
+export function perYear(fraction) {
   if (fraction === null || fraction === undefined) return "—";
-  return `${(fraction * 100).toFixed(digits)}%/yr`;
+  return `${(fraction * 100).toFixed(1)}%/yr`;
 }
 
 export function count(n) {
