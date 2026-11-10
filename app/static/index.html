@@ -3,13 +3,44 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tempo</title>
+  <title>Tempo: bill timing under a cash-risk limit</title>
+  <link rel="preload" href="/static/vendor/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/vendor/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/css/app.css">
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <script src="/static/vendor/chart.umd.min.js" defer></script>
+  <script type="module" src="/static/js/app.js"></script>
 </head>
-<body>
-  <main>
-    <h1>Tempo</h1>
-    <p>Bill timing under a cash-risk limit. The full interface is being built.</p>
-  </main>
-  <footer>Synthetic data. AI: local model (cached on the hosted demo).</footer>
+<body class="bg-page text-ink">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 btn">Skip to content</a>
+  <div class="flex min-h-screen">
+    <div class="w-[216px] flex-none border-r border-line bg-surface">
+    <nav aria-label="Primary" class="sticky top-0 flex h-screen flex-col px-3 py-4">
+      <a href="#/overview" class="mb-6 flex items-center gap-2 px-2" aria-label="Tempo home">
+        <svg width="22" height="22" viewBox="0 0 20 20" aria-hidden="true">
+          <rect width="20" height="20" rx="5" fill="#1c1c1a"/>
+          <path d="M10 15.5 13.6 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="10" cy="15.5" r="1.6" fill="#fff"/>
+        </svg>
+        <span class="text-[18px] font-semibold tracking-[-0.02em]">tempo</span>
+      </a>
+      <ul id="nav" class="flex flex-col gap-0.5"></ul>
+      <div class="mt-auto flex flex-col gap-0.5 border-t border-line pt-3">
+        <button type="button" class="nav-item w-full" data-open="negotiate"><span data-icon="handshake"></span>Negotiate terms</button>
+        <button type="button" class="nav-item w-full" data-open="audit"><span data-icon="scroll-text"></span>Audit log</button>
+      </div>
+    </nav>
+    </div>
+    <div class="flex min-w-0 flex-1 flex-col">
+      <header id="header" class="border-b border-line bg-surface"></header>
+      <div id="banner"></div>
+      <main id="main" tabindex="-1" class="mx-auto w-full max-w-[1280px] flex-1 px-6 py-5 outline-none max-[1100px]:px-4"></main>
+      <footer class="mx-auto w-full max-w-[1280px] px-6 pb-5 pt-2 text-xs text-ink-3 max-[1100px]:px-4">
+        Synthetic data. AI: local model (cached on the hosted demo).
+      </footer>
+    </div>
+  </div>
+  <div id="drawer-root"></div>
+  <div id="toast-root" class="pointer-events-none fixed bottom-4 left-1/2 z-50 -translate-x-1/2" aria-live="polite"></div>
 </body>
 </html>

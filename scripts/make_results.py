@@ -229,6 +229,9 @@ def main() -> None:
     OUT.write_text("\n".join(lines))
     print(f"wrote {OUT}")
     update_readme(bundle, proof)
+    tokens = demo_tokens(bundle, proof, whatifs)
+    render_demo_script(tokens)
+    update_submission(tokens)
 
 
 README = REPO / "README.md"
@@ -286,3 +289,74 @@ def update_readme(bundle: dict, proof: dict) -> None:
 
 if __name__ == "__main__":
     main()
+
+
+TEMPLATE = REPO / "docs" / "demo_script.template.md"
+DEMO_SCRIPT = REPO / "docs" / "DEMO_SCRIPT.md"
+SUBMISSION = REPO / "SUBMISSION.md"
+
+
+def demo_tokens(bundle: dict, proof: dict, whatifs: dict) -> dict[str, str]:
+    """Every number the demo script and submission quote, from the precomputed files."""
+    fitted = {r["policy"]: r for r in proof["policies"]}
+    true = {r["policy"]: r for r in proof["policies_true_model"]}
+    biggest = whatifs["customers"][0][0]
+    preset = next(
+        p
+        for p in whatifs["presets"]
+        if p["what_if"]["customer_id"] == biggest and p["what_if"]["delay_days"] == 14
+    )
+    rec = proof["extraction"]["holdout"]["reconciled"]
+    return {
+        "TEMPO_VALUE": usd(fitted["tempo"]["value_cents"]),
+        "TEMPO_BREACH": pct(fitted["tempo"]["breach_rate"]),
+        "TEMPO_BOUND": pct(fitted["tempo"]["breach_upper"]),
+        "TEMPO_TRUE_BREACH": pct(true["tempo"]["breach_rate"]),
+        "WEEKLY_VALUE": usd(fitted["weekly_run"]["value_cents"]),
+        "WEEKLY_BREACH": pct(fitted["weekly_run"]["breach_rate"]),
+        "GREEDY_VALUE": usd(fitted["greedy_discount"]["value_cents"]),
+        "GREEDY_BREACH": pct(fitted["greedy_discount"]["breach_rate"]),
+        "P05_BREACH": pct(fitted["greedy_p05"]["breach_rate"]),
+        "COST_OF_CASH": pct(bundle["cash_value"]["cost_of_cash"], 1) + "/yr",
+        "ROWS_NAIVE": f"{bundle['solver']['rows_naive']:,}",
+        "ROWS": f"{bundle['solver']['rows']:,}",
+        "SOLVE_S": f"{bundle['solver']['solve_seconds']:.2f}",
+        "PRESET_LABEL": preset["label"],
+        "FLIPS": str(len(preset["diff"])),
+        "REVIEW_COUNT": str(sum(r["needs_review"] for r in bundle["bills"])),
+        "COVERAGE": pct(rec["coverage"], 0),
+        "PRECISION": pct(rec["precision"], 1),
+    }
+
+
+def render(text: str, tokens: dict[str, str]) -> str:
+    for key, value in tokens.items():
+        text = text.replace(f"⟨{key}⟩", value)
+    if "⟨" in text:
+        raise ValueError("unfilled token in template: " + text[text.index("⟨") : text.index("⟨") + 30])
+    return text
+
+
+def render_demo_script(tokens: dict[str, str]) -> None:
+    DEMO_SCRIPT.write_text(render(TEMPLATE.read_text(), tokens))
+    print(f"wrote {DEMO_SCRIPT}")
+
+
+def update_submission(tokens: dict[str, str]) -> None:
+    start, end = "<!-- description:start -->", "<!-- description:end -->"
+    description = render(
+        "Tempo decides the best day and rail to pay every bill. It captures early-payment discounts and card "
+        "rewards while keeping the chance that cash dips below the company's buffer under 5%, certified on fresh "
+        "scenarios. AP teams still time payments by spreadsheet. Tempo reads terms from invoices and email threads "
+        "with a local model that only quotes; code verifies every quote and cross-checks a deterministic parser. "
+        "Uncertain bills go to a review queue, including a prompt-injection invoice. It forecasts 13 weeks of cash "
+        "from customer payment behavior and solves one chance-constrained MILP for all 212 bills. On 10,000 unseen "
+        "scenarios it earns ⟨TEMPO_VALUE⟩ over paying on due dates at a ⟨TEMPO_BREACH⟩ breach rate, while today's "
+        "weekly run breaches ⟨WEEKLY_BREACH⟩. Explanations, live what-ifs, a negotiation agent, a hash-chained "
+        "audit log, and Ramp API payload previews complete it. All data is synthetic; nothing is sent.",
+        tokens,
+    )
+    text = SUBMISSION.read_text()
+    i, j = text.index(start), text.index(end) + len(end)
+    SUBMISSION.write_text(text[:i] + start + "\n" + description + "\n" + end + text[j:])
+    print(f"updated {SUBMISSION} ({len(description.split())} words)")

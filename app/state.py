@@ -6,6 +6,7 @@ when a live re-solve needs it.
 """
 
 import json
+import logging
 import os
 import threading
 import time
@@ -23,12 +24,14 @@ from tempo.llm.cached_provider import CachedProvider
 from tempo.llm.provider import LLMProvider, ProviderError, get_provider
 from tempo.models import Dataset, TermsRecord
 from tempo.optimize.cash_value import CashValue
-from tempo.optimize.engine import Plan, option_sets
+from tempo.optimize.engine import Plan, option_sets, solve_plan
 from tempo.optimize.options import RailContext
+from tempo.optimize.run import prepare
 from tempo.pipeline import IngestResult, ingest, plannable_bills
 from tempo.precompute import OUT_DIR, input_hash
 
 REPO = Path(__file__).resolve().parents[1]
+log = logging.getLogger("tempo")
 DEFAULT_AUTONOMY = {"mode": "suggest", "threshold_cents": 2_500_000}
 IDLE_RESET_S = 30 * 60  # a public demo forgets one visitor's clicks after 30 idle minutes
 LIVE_CACHE_SIZE = 64
@@ -93,8 +96,20 @@ class AppState:
         options = option_sets(
             bills, RailContext(self.dataset.company.as_of, self.dataset.company.funding_account)
         )
-        rows = {r["bill_id"]: r["chosen_index"] for r in self.bundle["bills"]}
-        choice = tuple(rows[b.id] for b in bills)
+        rows = {r["bill_id"]: (r["chosen_index"], r["option"]) for r in self.bundle["bills"]}
+        choice = tuple(rows[b.id][0] for b in bills)
+        consistent = all(
+            rows[b.id][0] < len(opts) and opts[rows[b.id][0]].kind == rows[b.id][1]
+            for b, opts in zip(bills, options, strict=True)
+        )
+        if not consistent:  # committed results are from another build: solve once rather than misread them
+            log.warning("precomputed plan does not match current options; re-solving the base plan")
+            cert = self.bundle["certification"]
+            n = cert["n"]
+            inputs = prepare(self.dataset, self.ingest)
+            return solve_plan(
+                bills, options, inputs.headroom_a_fallback[:n], self.dataset.company.as_of, cert["k"]
+            )
         cert = self.bundle["certification"]
         horizon = self.dataset.company.horizon_days
         credit = np.array(self.bundle.get("credit_cum_cents", [0] * horizon), dtype=np.int64)

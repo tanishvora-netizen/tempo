@@ -13,7 +13,7 @@ Wiring this to Ramp's sandbox is one adapter that sends these requests.
 from datetime import date
 
 from tempo.assumptions import ACH_LEAD_BUSINESS_DAYS, ACH_LEAD_DISCOUNT_BUSINESS_DAYS
-from tempo.business_days import subtract_business_days
+from tempo.business_days import add_business_days, subtract_business_days
 
 BILLS = "/developer/v1/bills"
 REQUEST_PAYMENT_METHODS = frozenset(
@@ -44,11 +44,20 @@ def _patch(row: dict, auto: bool) -> dict:
     }
     notes = ["Only approved bills can be updated."]
     if row["rail"] == "RTP":
-        notes.append(
-            f"Planned as RTP from Ramp Checking. If Ramp routes standard ACH, send by "
-            f"{subtract_business_days(target, lead).isoformat()} instead."
-        )
+        notes.append(_ach_fallback_note(target, lead, date.fromisoformat(row["send_date"])))
     return {**_base(row, auto), "requests": [request], "notes": notes}
+
+
+def _ach_fallback_note(target: date, lead: int, planned_send: date) -> str:
+    """What to do if Ramp routes a planned RTP payment as standard ACH (never a date before the plan's send)."""
+    ach_send = subtract_business_days(target, lead)
+    if ach_send >= planned_send:
+        return f"Planned as RTP from Ramp Checking. If Ramp routes standard ACH, send by {ach_send.isoformat()} instead."
+    arrives = add_business_days(planned_send, lead)
+    return (
+        f"Planned as RTP from Ramp Checking. As standard ACH it would arrive {arrives.isoformat()}, after "
+        f"{target.isoformat()}, so confirm RTP before approving."
+    )
 
 
 def _base(row: dict, auto: bool) -> dict:

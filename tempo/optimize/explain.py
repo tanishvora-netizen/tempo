@@ -163,6 +163,12 @@ def _due_reason(ctx: ExplainContext, bill, opts, o, base_cum, base_breaches) -> 
             None,
         )
     early = max((x for x in opts if x.kind in EARLY_KINDS), key=lambda x: x.value_cents, default=None)
+    if early is None and bill.terms.discount_bps and bill.discount_deadline:
+        closed = (
+            f"{head}: the {terms_label(bill)} discount window closes {fmt_date(bill.discount_deadline)}, too "
+            f"soon for a payment to arrive in time from {fmt_date(o.send_date)}."
+        )
+        return closed, None
     if early is None:
         return _no_discount_reason(head, bill, opts, o), None
     r = annualized_discount_return(bill)

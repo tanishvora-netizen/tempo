@@ -20,8 +20,20 @@ def client(tmp_path_factory: pytest.TempPathFactory) -> Iterator[TestClient]:
 
 @pytest.mark.parametrize(
     "path",
-    ["/health", "/", "/api/state", "/api/bills", "/api/review", "/api/forecast", "/api/whatif/presets",
-     "/api/evaluate", "/api/cash-value", "/api/negotiate", "/api/audit", "/api/ramp/payload-preview"],
+    [
+        "/health",
+        "/",
+        "/api/state",
+        "/api/bills",
+        "/api/review",
+        "/api/forecast",
+        "/api/whatif/presets",
+        "/api/evaluate",
+        "/api/cash-value",
+        "/api/negotiate",
+        "/api/audit",
+        "/api/ramp/payload-preview",
+    ],
 )
 def test_get_routes_answer(client: TestClient, path: str) -> None:
     assert client.get(path).status_code == 200
@@ -63,7 +75,9 @@ def test_preset_what_if_is_instant_and_precomputed(client: TestClient) -> None:
 def test_custom_what_if_solves_live_and_labels_the_estimate(client: TestClient) -> None:
     customer = client.get("/api/whatif/presets").json()["data"]["customers"][0]["id"]
 
-    data = client.post("/api/optimize", json={"what_if": {"customer_id": customer, "delay_days": 10}}).json()["data"]
+    data = client.post("/api/optimize", json={"what_if": {"customer_id": customer, "delay_days": 10}}).json()[
+        "data"
+    ]
 
     assert data["source"] == "live"
     assert "not re-certified" in data["estimate"]["label"]
@@ -71,8 +85,12 @@ def test_custom_what_if_solves_live_and_labels_the_estimate(client: TestClient) 
 
 @pytest.mark.parametrize(
     "body",
-    [{"what_if": {}}, {"what_if": {"customer_id": "c", "delay_days": 999}}, {"what_if": {"shock_cents": -5}},
-     {"bogus": 1}],
+    [
+        {"what_if": {}},
+        {"what_if": {"customer_id": "c", "delay_days": 999}},
+        {"what_if": {"shock_cents": -5}},
+        {"bogus": 1},
+    ],
 )
 def test_bad_optimize_input_is_rejected(client: TestClient, body: dict) -> None:
     assert client.post("/api/optimize", json=body).status_code == 422
