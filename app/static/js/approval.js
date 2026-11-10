@@ -1,56 +1,16 @@
-// Approve this week's run: the autonomy setting on Overview, then a small dialog for the
-// approver's name. Approval writes a hash-chained audit entry; nothing is sent to Ramp.
+// Approve this week's run: the autonomy setting on Overview, then a dialog for the attested name.
+// Approval writes a hash-chained audit entry; nothing is sent to Ramp.
 import { $, $$, html, icon, setHTML } from "./dom.js";
-import { count, dollarsField, money, moneyExact, parseDollars } from "./format.js";
-import { approvePlan } from "./api.js";
+import { count, dollarsField, money, moneyExact, shortDate } from "./format.js";
+import { approvePlan, getPayloadPreview } from "./api.js";
 import { invalidate, STATE_CHANGED, ui } from "./store.js";
 import { openAuditDrawer } from "./drawers.js";
+import { autonomyFields, autoSummary, currentAutonomy, wireAutonomy } from "./autonomy.js";
 
-const VERIFIED_CHIPS = new Set(["Verified", "Model verified", "Accepted by reviewer"]);
-const DOLLARS_MAX = 2_000_000;
 const APPROVER_PATTERN = /^[\w .,'@-]{1,80}$/;
+const GATE_NOTE = "Ramp's own approval chain and vendor bank verification still gate payment; Tempo only sets date and rail.";
 
-function currentAutonomy(state) {
-  if (!ui.autonomy) ui.autonomy = { ...state.autonomy };
-  return ui.autonomy;
-}
-
-function qualifying(rows, thresholdCents) {
-  return rows.filter((b) => VERIFIED_CHIPS.has(b.chip) && b.amount_cents < thresholdCents);
-}
-
-function autoSummary(rows, autonomy) {
-  if (autonomy.mode !== "auto") return html`Every bill waits for your approval.`;
-  const q = qualifying(rows, autonomy.threshold_cents);
-  const total = q.reduce((s, b) => s + b.cash_out_cents, 0);
-  return html`<span class="num font-medium text-ink">${count(q.length)}</span> of this week's ${count(rows.length)} bills
-    (<span class="num" title="${moneyExact(total)}">${money(total)}</span>) would be scheduled without asking. The rest wait for approval.`;
-}
-
-function autonomyFields(autonomy, idPrefix) {
-  const dollars = dollarsField(autonomy.threshold_cents);
-  return html`<fieldset class="flex flex-col gap-2">
-    <legend class="label mb-1.5">Autonomy</legend>
-    <label class="flex items-start gap-2 text-sm">
-      <input type="radio" name="${idPrefix}-autonomy" value="suggest" class="mt-1" ${autonomy.mode !== "auto" ? html`checked` : ""}>
-      <span><span class="font-medium">Suggest only</span><span class="block text-xs text-ink-2">Tempo proposes; you approve every run.</span></span>
-    </label>
-    <label class="flex items-start gap-2 text-sm">
-      <input type="radio" name="${idPrefix}-autonomy" value="auto" class="mt-1" ${autonomy.mode === "auto" ? html`checked` : ""}>
-      <span class="flex flex-col gap-1.5">
-        <span class="font-medium">Auto-schedule Verified bills under</span>
-        <span class="flex items-center gap-1.5"><span class="text-ink-2">$</span>
-          <input type="text" inputmode="numeric" value="${dollars}" class="field w-28 num"
-            aria-label="Auto-schedule threshold in dollars" data-threshold ${autonomy.mode === "auto" ? "" : html`disabled`}>
-        </span>
-        <span class="text-xs text-ink-2">Verified means the parser and the model agree, or a reviewer accepted the terms.</span>
-      </span>
-    </label>
-    <p class="hidden text-xs risk" data-threshold-error role="alert"></p>
-  </fieldset>`;
-}
-
-export function approvalPanel(state, rows) {
+export function approvalPanel(state, rows, allBills) {
   const autonomy = currentAutonomy(state);
   return html`<aside class="flex w-[300px] flex-none flex-col gap-4 border-l border-line p-4 max-[1180px]:grid max-[1180px]:w-full max-[1180px]:grid-cols-2 max-[1180px]:gap-x-8 max-[1180px]:border-l-0 max-[1180px]:border-t" aria-labelledby="approve-title" data-approval>
     <div>
@@ -58,7 +18,7 @@ export function approvalPanel(state, rows) {
       <p class="mt-0.5 text-xs text-ink-2">Approval writes an audit entry and builds the Ramp bill updates. Nothing is sent.</p>
     </div>
     ${autonomyFields(autonomy, "panel")}
-    <p class="text-xs text-ink-2" data-auto-summary aria-live="polite">${autoSummary(rows, autonomy)}</p>
+    <p class="text-xs text-ink-2" data-auto-summary aria-live="polite">${autoSummary(rows, allBills, autonomy)}</p>
     <div class="mt-auto flex flex-col gap-2">
       <button type="button" class="btn btn-primary h-9 justify-center" data-approve>${icon("check")}Approve this week's run</button>
       <button type="button" class="btn btn-quiet btn-sm justify-center" data-open-audit>${icon("scroll-text")}View audit log</button>
@@ -66,42 +26,49 @@ export function approvalPanel(state, rows) {
   </aside>`;
 }
 
-function readThreshold(input, errorEl) {
-  const cents = parseDollars(input.value);
-  const valid = cents !== null && cents >= 100 && cents <= DOLLARS_MAX * 100;
-  errorEl.classList.toggle("hidden", valid);
-  errorEl.textContent = valid ? "" : `Enter a dollar amount between $1 and ${money(DOLLARS_MAX * 100)}.`;
-  return valid ? cents : null;
+/** The ACH date the payload preview uses for an RTP bill that can still meet its target by ACH. */
+function achDates(preview) {
+  const dates = new Map();
+  preview.bills.forEach((b) => {
+    const patch = b.requests.find((r) => r.method === "PATCH");
+    if (patch?.body?.payment_date) dates.set(b.bill_id, patch.body.payment_date);
+  });
+  return dates;
 }
 
-/** Keep ui.autonomy in sync with one set of autonomy fields; onChange runs after each valid change. */
-function wireAutonomy(root, idPrefix, onChange) {
-  const input = $("[data-threshold]", root);
-  const errorEl = $("[data-threshold-error]", root);
-  $$(`input[name="${idPrefix}-autonomy"]`, root).forEach((radio) =>
-    radio.addEventListener("change", () => {
-      ui.autonomy = { ...ui.autonomy, mode: radio.value };
-      input.disabled = radio.value !== "auto";
-      onChange();
-    }),
-  );
-  input.addEventListener("input", () => {
-    const cents = readThreshold(input, errorEl);
-    if (cents === null) return;
-    ui.autonomy = { ...ui.autonomy, threshold_cents: cents };
-    onChange();
-  });
-  input.addEventListener("blur", () => {
-    if (readThreshold(input, errorEl) !== null) input.value = dollarsField(ui.autonomy.threshold_cents);
-  });
-  return () => ui.autonomy.mode !== "auto" || readThreshold(input, errorEl) !== null;
+function rtpRow(b, dates) {
+  const action = b.rtp_dependent
+    ? html`<span class="text-review">Send by RTP in Ramp (Ramp's API cannot request RTP; ACH would arrive late)</span>`
+    : dates
+      ? html`ACH sent ${dates.has(b.bill_id) ? shortDate(dates.get(b.bill_id)) : "earlier"} instead, arriving in time`
+      : html`<span class="text-ink-3">Loading the ACH date</span>`;
+  return html`<li class="flex flex-col gap-0.5 py-1.5">
+    <span class="flex justify-between gap-3"><span class="font-medium">${b.vendor}</span>
+      <span class="num" title="${moneyExact(b.cash_out_cents)}">${money(b.cash_out_cents)}, send ${shortDate(b.send_date)}</span></span>
+    <span class="text-ink-2">${action}</span>
+  </li>`;
+}
+
+function rtpList(rtpRows, dates) {
+  return html`${rtpRows.map((b) => rtpRow(b, dates))}`;
 }
 
 function rtpNotice(rows) {
-  const k = rows.filter((b) => b.rtp_dependent).length;
-  if (!k) return "";
-  return html`<p class="callout callout-review items-start">${icon("zap", "icon mt-0.5 flex-none")}<span>
-    <span class="num font-medium">${count(k)}</span> ${k === 1 ? "bill relies" : "bills rely"} on RTP from Ramp Checking; as standard ACH ${k === 1 ? "it" : "they"} would miss ${k === 1 ? "its date" : "their dates"}.</span></p>`;
+  const rtpRows = rows.filter((b) => b.rail === "RTP");
+  if (!rtpRows.length) return "";
+  const manual = rtpRows.filter((b) => b.rtp_dependent).length;
+  const split =
+    manual === rtpRows.length
+      ? html`${rtpRows.length === 1 ? "it" : "all"} must be sent by RTP in Ramp.`
+      : manual === 0
+        ? html`all can go by ACH sent earlier instead.`
+        : html`<span class="num font-medium">${count(manual)}</span> must be sent by RTP in Ramp; the rest go by ACH sent earlier.`;
+  return html`<details class="group rounded-md border border-[#ecd9b0] bg-review-tint text-sm" data-rtp-details>
+    <summary class="flex items-start gap-2 px-3 py-2 text-review">${icon("zap", "icon mt-0.5 flex-none")}
+      <span class="flex-1"><span class="num font-medium">${count(rtpRows.length)}</span> ${rtpRows.length === 1 ? "bill relies" : "bills rely"} on RTP from Ramp Checking: ${split}
+      <span class="font-medium underline underline-offset-2">Show the list</span></span>${icon("chevron-down", "icon mt-0.5 flex-none transition-transform group-open:rotate-180")}</summary>
+    <ul class="max-h-48 divide-y divide-[#ecd9b0] overflow-y-auto border-t border-[#ecd9b0] bg-surface px-3 text-xs" data-rtp-list>${rtpList(rtpRows, null)}</ul>
+  </details>`;
 }
 
 function dialogMarkup(state, rows) {
@@ -123,6 +90,7 @@ function dialogMarkup(state, rows) {
     </label>
     ${autonomyFields(ui.autonomy, "dialog")}
     ${rtpNotice(rows)}
+    <p class="text-xs text-ink-2">${GATE_NOTE}</p>
     <p class="hidden text-sm risk" role="alert" data-dialog-error></p>
     <div class="flex justify-end gap-2 border-t border-line pt-4">
       <button type="button" class="btn" data-cancel>Cancel</button>
@@ -162,9 +130,22 @@ async function confirmApproval(dialog, rows, isAutonomyValid, onApproved) {
   }
 }
 
+/** Fill the RTP list's ACH dates from the payload preview (the same dates the Ramp requests would carry). */
+async function fillAchDates(dialog, rows) {
+  const list = $("[data-rtp-list]", dialog);
+  if (!list) return;
+  const rtpRows = rows.filter((b) => b.rail === "RTP");
+  try {
+    setHTML(list, rtpList(rtpRows, achDates(await getPayloadPreview())));
+  } catch (err) {
+    console.error(err);
+    setHTML(list, html`${rtpList(rtpRows, new Map())}<li class="py-1.5 text-ink-3">The payload preview did not load; ACH dates are in the Audit log.</li>`);
+  }
+}
+
 function openApproveDialog(state, rows, onApproved) {
   const dialog = document.createElement("dialog");
-  dialog.className = "modal m-auto w-[min(480px,calc(100vw-32px))] rounded-lg border border-line-strong bg-surface p-0 text-ink shadow-2xl";
+  dialog.className = "modal m-auto max-h-[calc(100vh-32px)] w-[min(520px,calc(100vw-32px))] overflow-y-auto rounded-lg border border-line-strong bg-surface p-0 text-ink shadow-2xl";
   dialog.setAttribute("aria-labelledby", "approve-dialog-title");
   setHTML(dialog, dialogMarkup(state, rows));
   document.body.append(dialog);
@@ -177,11 +158,12 @@ function openApproveDialog(state, rows, onApproved) {
   dialog.addEventListener("close", () => dialog.remove());
   dialog.showModal();
   dialog.querySelector('[name="approver"]').focus();
+  fillAchDates(dialog, rows);
 }
 
-export function wireApproval(root, state, rows) {
+export function wireApproval(root, state, rows, allBills) {
   const panel = $("[data-approval]", root);
-  const refresh = () => setHTML($("[data-auto-summary]", panel), autoSummary(rows, ui.autonomy));
+  const refresh = () => setHTML($("[data-auto-summary]", panel), autoSummary(rows, allBills, ui.autonomy));
   wireAutonomy(panel, "panel", refresh);
   const syncPanel = () => {
     $$('input[name="panel-autonomy"]', panel).forEach((r) => (r.checked = r.value === ui.autonomy.mode));

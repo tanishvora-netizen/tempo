@@ -9,8 +9,10 @@ export const PALETTE = {
   line: "#e4e2dc",
   data: "#41618c",
   dataBand: "rgba(65, 97, 140, 0.18)",
+  dataOuterBand: "rgba(65, 97, 140, 0.08)",
   before: "#8f8a7f",
   beforeBand: "rgba(143, 138, 127, 0.16)",
+  beforeOuterBand: "rgba(143, 138, 127, 0.07)",
   whatIf: "#1c1c1a",
   whatIfBand: "rgba(28, 28, 26, 0.10)",
   risk: "#b3261e",
@@ -38,8 +40,19 @@ function compactDollars(value) {
   return `${sign}$${Math.round(abs)}`;
 }
 
-function band(label, series, { line, fill, dash = [], width = 2, hidden = false }) {
+/** Pointwise 1st-99th percentile band, drawn first so it sits behind the 10th-90th band. */
+function outerBand(label, series, { outerFill, hidden = false }) {
+  if (!outerFill || !series.p1 || !series.p99) return [];
   return [
+    { label: `${label} P99`, data: toDollars(series.p99), borderWidth: 0, pointRadius: 0, fill: "+1", backgroundColor: outerFill, hidden, role: "outer" },
+    { label: `${label} P1`, data: toDollars(series.p1), borderWidth: 0, pointRadius: 0, fill: false, hidden, role: "outer" },
+  ];
+}
+
+function band(label, series, style) {
+  const { line, fill, dash = [], width = 2, hidden = false } = style;
+  return [
+    ...outerBand(label, series, style),
     { label: `${label} P90`, data: toDollars(series.p90), borderWidth: 0, pointRadius: 0, fill: "+1", backgroundColor: fill, hidden, role: "band" },
     { label: `${label} P10`, data: toDollars(series.p10), borderWidth: 0, pointRadius: 0, fill: false, hidden, role: "band" },
     { label: `${label} P50`, data: toDollars(series.p50), borderColor: line, borderWidth: width, borderDash: dash, pointRadius: 0, fill: false, hidden, role: "median" },
@@ -171,7 +184,7 @@ export function fanChart(canvas, { dates, series, bufferCents, markers = [], wor
           bodyFont: FONT,
           padding: 10,
           boxPadding: 4,
-          filter: (item) => !item.dataset.hidden && item.raw !== null && item.dataset.role !== "band",
+          filter: (item) => !item.dataset.hidden && item.raw !== null && item.dataset.role !== "band" && item.dataset.role !== "outer",
           callbacks: { title: (items) => longDate(dates[items[0].dataIndex]), label: tooltipLabel },
         },
       },

@@ -7,13 +7,16 @@ import { openDrawer } from "./drawer.js";
 import { errorBlock, loadingBlock } from "./states.js";
 import * as api from "./api.js";
 
+// Buckets come from tempo/ramp/payloads.py; "auto" is the auto-scheduled flag, not a bucket.
 const PAYLOAD_FILTERS = [
   ["all", "All bills"],
-  ["requests", "With API requests"],
+  ["patch", "Date set by API"],
+  ["manual_rtp", "Send by RTP in Ramp"],
   ["hold", "Holds"],
+  ["no_api_lever", "No API lever"],
   ["auto", "Auto-scheduled"],
-  ["none", "No API lever"],
 ];
+const RESET_NOTE = "Hosted demo: this log resets when the instance restarts.";
 const HASH_SHORT = 12;
 
 const short = (hash) => (hash ? hash.slice(0, HASH_SHORT) : "—");
@@ -87,11 +90,13 @@ function requestView(r) {
 function matches(b, filter, query) {
   const q = query.trim().toLowerCase();
   if (q && !b.vendor.toLowerCase().includes(q) && !b.invoice_number.toLowerCase().includes(q)) return false;
-  if (filter === "requests") return b.requests.length > 0;
-  if (filter === "hold") return b.requests.some((r) => r.path.endsWith("/hold"));
+  if (filter === "all") return true;
   if (filter === "auto") return b.auto_scheduled;
-  if (filter === "none") return b.requests.length === 0;
-  return true;
+  return b.bucket === filter;
+}
+
+function filterCount(bills, id) {
+  return bills.filter((b) => matches(b, id, "")).length;
 }
 
 function payloadRows(bills) {
@@ -115,12 +120,12 @@ function payloadView(p) {
   const stat = (label, value) => html`<div class="bg-surface px-3 py-2"><p class="label">${label}</p><p class="num font-semibold">${count(value)}</p></div>`;
   return html`<div class="flex flex-col gap-3">
     <p class="callout">${icon("lock", "icon mt-0.5 flex-none")}<span>${p.note}${p.scope ? html` <span class="font-medium text-ink">Scope: ${p.scope}.</span>` : ""}</span></p>
-    <div class="grid grid-cols-6 gap-px overflow-hidden rounded-md border border-line bg-line max-[700px]:grid-cols-3">
-      ${stat("Bills", c.bills)}${stat("Requests", c.requests)}${stat("PATCH", c.patch)}${stat("Hold", c.hold)}${stat("Release", c.release)}${stat("Auto-scheduled", c.auto_scheduled)}
+    <div class="grid grid-cols-7 gap-px overflow-hidden rounded-md border border-line bg-line max-[900px]:grid-cols-4">
+      ${stat("Bills", c.bills)}${stat("Requests", c.requests)}${stat("PATCH", c.patch)}${stat("Send by RTP in Ramp", c.manual_rtp ?? 0)}${stat("Hold", c.hold)}${stat("Release", c.release)}${stat("Auto-scheduled", c.auto_scheduled)}
     </div>
     <div class="flex flex-wrap items-center gap-2">
       <div class="flex flex-wrap gap-1.5" role="group" aria-label="Filter the payload">${PAYLOAD_FILTERS.map(
-        ([id, label], i) => html`<button type="button" class="filter" data-pfilter="${id}" aria-pressed="${i === 0}">${label}</button>`,
+        ([id, label], i) => html`<button type="button" class="filter" data-pfilter="${id}" aria-pressed="${i === 0}">${label}<span class="count num">${count(filterCount(p.bills, id))}</span></button>`,
       )}</div>
       <input type="search" class="field ml-auto w-48" placeholder="Search vendor" aria-label="Search the payload by vendor or invoice" data-psearch>
     </div>
@@ -184,7 +189,7 @@ export function openAuditDrawer({ entry = null } = {}) {
   );
   const auditEl = $("[data-audit]", body);
   const payloadEl = $("[data-payload]", body);
-  fill(auditEl, api.getAudit, (a) => setHTML(auditEl, html`<div class="flex flex-col gap-3">${chainStatus(a.chain)}${entriesTable(a.entries, entry?.hash)}</div>`), "the audit log");
+  fill(auditEl, api.getAudit, (a) => setHTML(auditEl, html`<div class="flex flex-col gap-3">${chainStatus(a.chain)}${entriesTable(a.entries, entry?.hash)}<p class="text-xs text-ink-3">${RESET_NOTE}</p></div>`), "the audit log");
   fill(payloadEl, api.getPayloadPreview, (p) => {
     setHTML(payloadEl, payloadView(p));
     wirePayload(payloadEl, p);

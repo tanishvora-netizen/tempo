@@ -52,8 +52,9 @@ function policyRow(p, epsilon) {
     <td class="r num max-[1200px]:hidden">${count(p.card_count)}</td>
     <td class="r num ${over ? "risk" : ""}">${pct(p.breach_rate)}</td>
     <td class="r num ${over ? "risk font-medium" : ""}">${pct(p.breach_upper)}</td>
-    <td class="r num" title="${moneyExact(p.worst_p10_balance_cents)}">${money(p.worst_p10_balance_cents)} <span class="text-ink-3">${shortDate(p.worst_p10_date)}</span></td>
+    <td class="r num" title="${moneyExact(p.worst_p10_balance_cents)}">${money(p.worst_p10_balance_cents)}<div class="meta">${shortDate(p.worst_p10_date)}</div></td>
     <td class="r num ${p.late_count ? "risk" : "text-ink-3"}">${count(p.late_count)}</td>
+    <td class="r num ${p.arrive_after_due_count ? "text-review" : "text-ink-3"}">${count(p.arrive_after_due_count ?? 0)}</td>
     <td class="r num ${p.credit_drawn_cents ? "risk" : "text-ink-3"}">${money(p.credit_drawn_cents)}</td>
   </tr>`;
 }
@@ -64,16 +65,31 @@ function policyTable(policies, epsilon, caption) {
     <thead><tr>
       <th scope="col">Policy</th><th scope="col" class="r">Value vs pay on due</th><th scope="col" class="r max-[1200px]:hidden">Discounts</th><th scope="col" class="r max-[1200px]:hidden">Card</th>
       <th scope="col" class="r">Breach rate</th><th scope="col" class="r">95% bound</th><th scope="col" class="r">Lowest P10 cash</th>
-      <th scope="col" class="r">Late</th><th scope="col" class="r">Credit drawn</th>
+      <th scope="col" class="r !whitespace-normal leading-tight">Late by choice</th><th scope="col" class="r !whitespace-normal leading-tight">Arrives after due</th><th scope="col" class="r !whitespace-normal leading-tight">Credit drawn</th>
     </tr></thead>
     <tbody>${policies.map((p) => policyRow(p, epsilon))}</tbody>
   </table>`;
 }
 
+/** The three scorings of the same plans: fitted forecast (headline), true payment model, doubled common factor. */
+function scoredPolicies(ev, which) {
+  if (which === "true") return ev.policies_true_model;
+  if (which === "stress") return ev.policies_macro_stress?.policies ?? ev.policies;
+  return ev.policies;
+}
+
+const MODEL_CAPTION = {
+  fitted: "fitted forecast model",
+  true: "generator's true payment model",
+  stress: "common timing factor doubled",
+};
+
 function policiesSection(ev, state) {
+  const stress = ev.policies_macro_stress;
   const toggle = html`<div class="seg" role="group" aria-label="Which payment model scores the policies">
-    <button type="button" data-model="fitted" aria-pressed="true">Fitted forecast model</button>
-    <button type="button" data-model="true" aria-pressed="false">Generator's true model</button>
+    <button type="button" data-model="fitted" aria-pressed="true">Fitted</button>
+    <button type="button" data-model="true" aria-pressed="false">True model</button>
+    ${stress ? html`<button type="button" data-model="stress" aria-pressed="false">Common factor doubled</button>` : ""}
   </div>`;
   const body = html`<div data-policy-table class="overflow-x-auto">${policyTable(ev.policies, state.kpis.epsilon, "Policies scored on seed C")}</div>
     <div class="grid grid-cols-12 gap-4 border-t border-line p-4">
@@ -85,6 +101,7 @@ function policiesSection(ev, state) {
       <div class="col-span-4 flex flex-col gap-2 text-sm text-ink-2 max-[1180px]:col-span-12">
         <p>Scored on <span class="num font-medium text-ink">${count(ev.policies[0]?.n_scenarios)}</span> fresh scenarios (seed C = <span class="num">${ev.seed_c}</span>) that no decision ever saw.</p>
         <p>The true-model view re-scores the same plans when customers follow the data generator's payment behavior instead of the fitted forecast: a robustness check on the forecast itself.</p>
+        ${stress ? html`<p>The stress view doubles the common timing factor that makes customers pay late together (sigma ${stress.sigma_macro}), with the plans unchanged.</p>` : ""}
       </div>
     </div>`;
   return section("policies", "Policies on fresh scenarios", "Value against paying every bill on its due date, and the chance of dropping below the buffer", body, toggle);
@@ -186,7 +203,7 @@ function solverSection(solver) {
 }
 
 function drawBreach(ev, state, which) {
-  const policies = which === "true" ? ev.policies_true_model : ev.policies;
+  const policies = scoredPolicies(ev, which);
   return breachChart($("#breach-canvas"), {
     labels: policies.map((p) => twoLines(policyName(p.policy))),
     rates: policies.map((p) => p.breach_rate),
@@ -221,8 +238,8 @@ export async function render(main, params) {
     btn.addEventListener("click", () => {
       const which = btn.dataset.model;
       $$("[data-model]", main).forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
-      const policies = which === "true" ? ev.policies_true_model : ev.policies;
-      setHTML($("[data-policy-table]", main), policyTable(policies, state.kpis.epsilon, `Policies scored on seed C (${which === "true" ? "true" : "fitted"} model)`));
+      const policies = scoredPolicies(ev, which);
+      setHTML($("[data-policy-table]", main), policyTable(policies, state.kpis.epsilon, `Policies scored on seed C (${MODEL_CAPTION[which]})`));
       chart.destroy();
       chart = drawBreach(ev, state, which);
     }),

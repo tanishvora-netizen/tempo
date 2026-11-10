@@ -115,6 +115,8 @@ def capture_approval(page: Page, base: str, width: int) -> None:
     page.click("[data-approve]")
     page.wait_for_selector("dialog[open]", timeout=WAIT_MS)
     page.fill('dialog [name="approver"]', APPROVER)
+    if page.locator("dialog [data-rtp-details] summary").count():
+        page.click("dialog [data-rtp-details] summary")  # expand the RTP list for the screenshot
     page.wait_for_timeout(SETTLE_MS)
     shoot(page, "approve-dialog", width, full_page=False)
     page.click("dialog [data-confirm]")

@@ -52,7 +52,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.6949522919603623,
+      "solve_seconds": 0.6705204169848002,
       "value_cents": 3415866
      }
     ],
@@ -1525,7 +1525,7 @@
    "label": "Bluefin Marine Outfitters pays 7 days late",
    "plan_hash": "86bbb878bb6ebf55de45d0f80ad264625329feef01c38eaf2712dfc54b77c849",
    "solver": {
-    "case_seconds": 2.1105183330364525,
+    "case_seconds": 1.9894840830238536,
     "check_days": 61,
     "cols": 730,
     "mip_gap": 0.0,
@@ -1533,7 +1533,7 @@
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.6949522919603623,
+    "solve_seconds": 0.6705204169848002,
     "status": "optimal"
    },
    "what_if": {
@@ -1579,7 +1579,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.35450604098150507,
+      "solve_seconds": 0.34509495802922174,
       "value_cents": 2626783
      }
     ],
@@ -3205,7 +3205,7 @@
    "label": "Bluefin Marine Outfitters pays 14 days late",
    "plan_hash": "9f104f609d49c18a8549cd186b0df27614c04286802f78c1a6fe66c35268ba2a",
    "solver": {
-    "case_seconds": 2.2333017499768175,
+    "case_seconds": 2.0888353750342503,
     "check_days": 61,
     "cols": 732,
     "mip_gap": 9.821900019889234e-05,
@@ -3213,7 +3213,7 @@
     "rows": 631,
     "rows_naive": 18413,
     "scenario_rows": 232,
-    "solve_seconds": 0.35450604098150507,
+    "solve_seconds": 0.34509495802922174,
     "status": "optimal"
    },
    "what_if": {
@@ -3259,7 +3259,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 10.031035916996188,
+      "solve_seconds": 10.029820125026163,
       "value_cents": -1912332
      }
     ],
@@ -5684,15 +5684,15 @@
    "label": "Bluefin Marine Outfitters pays 30 days late",
    "plan_hash": "f82900402a0cc3a964165e710836e4ba3e9346a9447dd62fd03bd319f67076be",
    "solver": {
-    "case_seconds": 21.997019000002183,
+    "case_seconds": 21.935205916990526,
     "check_days": 61,
     "cols": 730,
-    "mip_gap": 0.001018651573053382,
+    "mip_gap": 0.000894719117810308,
     "nonzeros": 2348,
     "rows": 631,
     "rows_naive": 18413,
     "scenario_rows": 232,
-    "solve_seconds": 10.031035916996188,
+    "solve_seconds": 10.029820125026163,
     "status": "time_limit"
    },
    "what_if": {
@@ -5738,7 +5738,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.6202342920005322,
+      "solve_seconds": 0.6264150419738144,
       "value_cents": 3388069
      }
     ],
@@ -7109,7 +7109,7 @@
    "label": "Copperline Rail Systems pays 7 days late",
    "plan_hash": "0346e1c7206106a3555db682987a53dcdf00a2c2de4c07ebf9f5010b21d194a0",
    "solver": {
-    "case_seconds": 2.0028525419766083,
+    "case_seconds": 2.0276782500441186,
     "check_days": 61,
     "cols": 729,
     "mip_gap": 8.028171799295148e-05,
@@ -7117,7 +7117,7 @@
     "rows": 626,
     "rows_naive": 18413,
     "scenario_rows": 227,
-    "solve_seconds": 0.6202342920005322,
+    "solve_seconds": 0.6264150419738144,
     "status": "optimal"
    },
    "what_if": {
@@ -7163,7 +7163,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 2.073202792031225,
+      "solve_seconds": 2.0603792080073617,
       "value_cents": 2635917
      }
     ],
@@ -8755,7 +8755,7 @@
    "label": "Copperline Rail Systems pays 14 days late",
    "plan_hash": "0910dd5c6ac2a38736a14504f8c683927e9c70178f83491f5d5dc35039cc1259",
    "solver": {
-    "case_seconds": 5.152278124995064,
+    "case_seconds": 5.0684573340113275,
     "check_days": 61,
     "cols": 730,
     "mip_gap": 9.674052711065153e-05,
@@ -8763,7 +8763,7 @@
     "rows": 626,
     "rows_naive": 18413,
     "scenario_rows": 227,
-    "solve_seconds": 2.073202792031225,
+    "solve_seconds": 2.0603792080073617,
     "status": "optimal"
    },
    "what_if": {
@@ -8809,7 +8809,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 1.1207121670013294,
+      "solve_seconds": 1.1124262909870595,
       "value_cents": -1859702
      }
     ],
@@ -11047,7 +11047,7 @@
    "label": "Copperline Rail Systems pays 30 days late",
    "plan_hash": "0f3c0003ef7b35302df23b093330418b4596230352866181f238f35ec65e049c",
    "solver": {
-    "case_seconds": 3.3372181660379283,
+    "case_seconds": 3.301068458997179,
     "check_days": 61,
     "cols": 730,
     "mip_gap": 3.303064149767328e-05,
@@ -11055,7 +11055,7 @@
     "rows": 626,
     "rows_naive": 18413,
     "scenario_rows": 227,
-    "solve_seconds": 1.1207121670013294,
+    "solve_seconds": 1.1124262909870595,
     "status": "optimal"
    },
    "what_if": {
@@ -11101,7 +11101,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 1.0009679580107331,
+      "solve_seconds": 1.0005751670105383,
       "value_cents": 4114291
      }
     ],
@@ -12165,7 +12165,7 @@
    "label": "Greywater Agricultural Equipment pays 7 days late",
    "plan_hash": "41ca8ece5177d5cbaab68d6585bc13b8e17d21ffc2b27586ea7ad875bfe9289b",
    "solver": {
-    "case_seconds": 2.4450655420077965,
+    "case_seconds": 2.427470833004918,
     "check_days": 61,
     "cols": 728,
     "mip_gap": 9.673598680118902e-05,
@@ -12173,7 +12173,7 @@
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 1.0009679580107331,
+    "solve_seconds": 1.0005751670105383,
     "status": "optimal"
    },
    "what_if": {
@@ -12219,7 +12219,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 1.085401542019099,
+      "solve_seconds": 1.0745784160098992,
       "value_cents": 3932381
      }
     ],
@@ -13454,7 +13454,7 @@
    "label": "Greywater Agricultural Equipment pays 14 days late",
    "plan_hash": "edc3b55f4795d3f29c00be5c03078687e0237f9b3987aedc18093863fc4cd7a9",
    "solver": {
-    "case_seconds": 2.875442082993686,
+    "case_seconds": 2.8412757919868454,
     "check_days": 61,
     "cols": 728,
     "mip_gap": 9.943085372421799e-05,
@@ -13462,7 +13462,7 @@
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 1.085401542019099,
+    "solve_seconds": 1.0745784160098992,
     "status": "optimal"
    },
    "what_if": {
@@ -13508,7 +13508,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.3916968749836087,
+      "solve_seconds": 0.3867227499722503,
       "value_cents": 3901868
      }
     ],
@@ -14692,7 +14692,7 @@
    "label": "Greywater Agricultural Equipment pays 30 days late",
    "plan_hash": "d83288850d86de55b18b928cd93c001efb6771aa9e2ecf6dfabd7694673487ac",
    "solver": {
-    "case_seconds": 1.698273792047985,
+    "case_seconds": 1.657200167013798,
     "check_days": 61,
     "cols": 729,
     "mip_gap": 8.560002542437653e-05,
@@ -14700,7 +14700,7 @@
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.3916968749836087,
+    "solve_seconds": 0.3867227499722503,
     "status": "optimal"
    },
    "what_if": {
@@ -14746,7 +14746,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.9572025000234134,
+      "solve_seconds": 0.9483547909767367,
       "value_cents": 3613004
      }
     ],
@@ -16066,7 +16066,7 @@
    "label": "Unexpected $100,000 payment today",
    "plan_hash": "2081427692fd218a59e68e4be39e802b42c3b9cdb7aca26129a17bae9c79397e",
    "solver": {
-    "case_seconds": 2.8622679580003023,
+    "case_seconds": 2.823662124981638,
     "check_days": 61,
     "cols": 728,
     "mip_gap": 6.0337602725757855e-05,
@@ -16074,7 +16074,7 @@
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.9572025000234134,
+    "solve_seconds": 0.9483547909767367,
     "status": "optimal"
    },
    "what_if": {
@@ -16120,7 +16120,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.5066302920458838,
+      "solve_seconds": 0.5352565409848467,
       "value_cents": 3053453
      }
     ],
@@ -17559,7 +17559,7 @@
    "label": "Unexpected $250,000 payment today",
    "plan_hash": "dbd0669027e34c62b5e82a1a89c5741a06daedf9b68bd3d4a9da2da1f7cde972",
    "solver": {
-    "case_seconds": 2.2713779160403647,
+    "case_seconds": 2.2873262500506826,
     "check_days": 61,
     "cols": 728,
     "mip_gap": 0.0,
@@ -17567,7 +17567,7 @@
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.5066302920458838,
+    "solve_seconds": 0.5352565409848467,
     "status": "optimal"
    },
    "what_if": {

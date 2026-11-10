@@ -37,13 +37,17 @@ export function moneyExact(centsValue) {
   return `${sign}$${cents2.format(Math.abs(centsValue) / 100)}`;
 }
 
-/** Headline money with one decimal: $41.0K, $1.6M (amounts under $1,000 in whole dollars). Pair with moneyExact. */
+/**
+ * Headline money with one decimal: $41.0K, $1.6M (amounts under $1,000 in whole dollars). Pair with moneyExact.
+ * Exact round settings such as the $500,000 buffer read without the decimal: $500K, $3M.
+ */
 export function moneyShort(centsValue, { signed = false } = {}) {
   if (centsValue === null || centsValue === undefined) return "—";
-  const dollars = Math.abs(centsValue) / 100;
+  const abs = Math.abs(centsValue);
+  const dollars = abs / 100;
   const sign = centsValue < 0 ? MINUS : signed && centsValue > 0 ? "+" : "";
-  if (dollars >= 1_000_000) return `${sign}$${(dollars / 1_000_000).toFixed(1)}M`;
-  if (dollars >= 1_000) return `${sign}$${(dollars / 1_000).toFixed(1)}K`;
+  if (dollars >= 1_000_000) return `${sign}$${(dollars / 1_000_000).toFixed(abs % 100_000_000 === 0 ? 0 : 1)}M`;
+  if (dollars >= 1_000) return `${sign}$${(dollars / 1_000).toFixed(abs % 100_000 === 0 ? 0 : 1)}K`;
   return `${sign}$${whole.format(Math.round(dollars))}`;
 }
 
@@ -94,6 +98,17 @@ export function daysBetween(aIso, bIso) {
   const a = parts(aIso);
   const b = parts(bIso);
   return Math.round((Date.UTC(b.y, b.m - 1, b.d) - Date.UTC(a.y, a.m - 1, a.d)) / 86_400_000);
+}
+
+/** ISO 8601 week of a date, e.g. "2026-W46" (weeks start Monday; week 1 holds the year's first Thursday). */
+export function isoWeek(iso) {
+  const { y, m, d } = parts(iso);
+  const date = new Date(Date.UTC(y, m - 1, d));
+  const weekday = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - weekday);
+  const yearStart = Date.UTC(date.getUTCFullYear(), 0, 1);
+  const week = Math.ceil(((date.getTime() - yearStart) / 86_400_000 + 1) / 7);
+  return `${date.getUTCFullYear()}-W${week}`;
 }
 
 export function addDays(iso, days) {

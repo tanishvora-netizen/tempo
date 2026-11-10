@@ -124,7 +124,8 @@ function fanPanel(forecast) {
       <canvas id="fan-canvas" role="img" aria-label="Fan chart of end-of-day cash with a pointwise 10th to 90th percentile band, the median, and the buffer line"></canvas>
     </div>
     <div class="flex flex-wrap gap-x-5 gap-y-1 border-t border-line px-4 py-2.5 text-xs text-ink-2">
-      ${legendItem(band(PALETTE.dataBand), "Pointwise 10th–90th percentile")}
+      ${legendItem(band(PALETTE.dataOuterBand), "1st–99th percentile, pointwise")}
+      ${legendItem(band(PALETTE.dataBand), "10th–90th percentile, pointwise")}
       ${legendItem(line(PALETTE.data), "Tempo plan, median")}
       ${legendItem(line(PALETTE.before, true), "Pay every bill on its due date, median")}
       ${legendItem(line(PALETTE.ink3, true), "Buffer")}
@@ -230,7 +231,7 @@ function weekTable(rows) {
   </table>`;
 }
 
-function weekPanel(state, rows) {
+function weekPanel(state, rows, bills) {
   const total = rows.reduce((s, b) => s + b.cash_out_cents, 0);
   const value = rows.reduce((s, b) => s + b.value_cents, 0);
   const start = state.company.as_of;
@@ -250,7 +251,7 @@ function weekPanel(state, rows) {
       </div>
       <div class="max-h-[420px] overflow-y-auto">${rows.length ? weekTable(rows) : html`<p class="p-6 text-center text-sm text-ink-2">No bills go out this week.</p>`}</div>
     </div>
-    ${approvalPanel(state, rows)}
+    ${approvalPanel(state, rows, bills)}
   </section>`;
 }
 
@@ -267,8 +268,8 @@ function wireFan(main, forecast, state) {
     markers,
     worst: { date: state.kpis.worst_p10_date, text: `Lowest P10 ${moneyShort(state.kpis.worst_p10_balance_cents)}, ${shortDate(state.kpis.worst_p10_date)}` },
     series: [
-      { label: "Pay on due date", data: fan.before, style: { line: PALETTE.before, fill: PALETTE.beforeBand, dash: [5, 4], width: 1.5 } },
-      { label: "Tempo plan", data: fan.after, style: { line: PALETTE.data, fill: PALETTE.dataBand } },
+      { label: "Pay on due date", data: fan.before, style: { line: PALETTE.before, fill: PALETTE.beforeBand, outerFill: PALETTE.beforeOuterBand, dash: [5, 4], width: 1.5 } },
+      { label: "Tempo plan", data: fan.after, style: { line: PALETTE.data, fill: PALETTE.dataBand, outerFill: PALETTE.dataOuterBand } },
     ],
   });
   applyVisibility(chart, (ds) => fanVisible(ds, DEFAULT_FAN_VIEW), { animate: false });
@@ -311,12 +312,12 @@ export async function render(main) {
       <div class="grid grid-cols-12 gap-4">
         ${fanPanel(forecast)}
         ${riskPanel(state, evaluate, vendorsWithoutDiscount(bills))}
-        ${weekPanel(state, rows)}
+        ${weekPanel(state, rows, bills)}
       </div>
     </div>`,
   );
   const chart = wireFan(main, forecast, state);
-  wireApproval(main, state, rows);
+  wireApproval(main, state, rows, bills);
   $$("[data-bill]", main).forEach((tr) => onActivate(tr, () => openBillPanel(tr.dataset.bill)));
   $("[data-negotiate]", main).addEventListener("click", () => openNegotiateDrawer());
   return () => chart.destroy();

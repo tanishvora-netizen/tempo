@@ -28,9 +28,10 @@ const COLUMNS = [
 ];
 
 const DESC_FIRST = new Set(["amount", "value", "return"]);
+const DEFAULT_SORT = "value"; // biggest wins first
 
 function initialView(params) {
-  const sortId = COLUMNS.some((c) => c.id === params.sort) ? params.sort : "cash_out";
+  const sortId = COLUMNS.some((c) => c.id === params.sort) ? params.sort : DEFAULT_SORT;
   return {
     filters: new Set(FILTERS.some((f) => f.id === params.filter) ? [params.filter] : []),
     sort: { id: sortId, dir: DESC_FIRST.has(sortId) ? "desc" : "asc" },

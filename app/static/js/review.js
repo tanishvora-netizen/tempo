@@ -15,7 +15,7 @@ import * as api from "./api.js";
 function listItem(item, selected, accepted) {
   return html`<li>
     <button type="button" class="flex w-full flex-col gap-0.5 border-b border-line px-4 py-3 text-left transition-colors ${selected ? "bg-sunken shadow-[inset_3px_0_0_var(--color-ink)]" : "hover:bg-[#faf9f6]"}"
-      data-item="${item.bill_id}" aria-current="${selected ? "true" : "false"}">
+      data-item="${item.bill_id}" data-status="${item.status}" data-tag="${item.tag ?? ""}" aria-current="${selected ? "true" : "false"}">
       <span class="flex items-center justify-between gap-2">
         <span class="truncate font-medium">${item.vendor}</span>
         <span class="num text-sm" title="${moneyExact(item.amount_cents)}">${money(item.amount_cents)}</span>
@@ -183,6 +183,13 @@ function header(count) {
   </div>`;
 }
 
+/** After choosing from the list: keep focus on the chosen item (the list was re-rendered) and bring the
+ * detail's top into view if the page was scrolled past it. */
+function keepInView(main, detail, billId) {
+  main.querySelector(`[data-item="${CSS.escape(billId)}"]`)?.focus({ preventScroll: true });
+  if (detail.getBoundingClientRect().top < 0) detail.scrollIntoView({ block: "start" });
+}
+
 export async function render(main) {
   const [review, state] = await Promise.all([loadReview(), loadState()]);
   const items = review.items;
@@ -207,14 +214,15 @@ export async function render(main) {
     results: new Map(),
     select: null,
   };
-  ctx.select = (id) => {
+  ctx.select = (id, { fromList = false } = {}) => {
     const item = items.find((i) => i.bill_id === id) ?? items[0];
     setHTML($("[data-list]", main), html`${items.map((i) => listItem(i, i.bill_id === item.bill_id, ctx.accepted.has(i.bill_id)))}`);
-    $$("[data-item]", main).forEach((btn) => btn.addEventListener("click", () => ctx.select(btn.dataset.item)));
+    $$("[data-item]", main).forEach((btn) => btn.addEventListener("click", () => ctx.select(btn.dataset.item, { fromList: true })));
     setHTML(ctx.detail, detailView(item, ctx.accepted.has(item.bill_id)));
     const result = ctx.results.get(item.bill_id);
     if (result) setHTML($("[data-effect-slot]", ctx.detail), effectPanel(result, state.kpis.value_vs_pay_on_due_cents));
     wireDetail(item, ctx);
+    if (fromList) keepInView(main, ctx.detail, item.bill_id);
   };
   wireUpload(main);
   try {

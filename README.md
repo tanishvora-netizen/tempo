@@ -65,7 +65,7 @@ Breach = any end-of-day balance below the $500,000 buffer in 13 weeks, measured 
 
 - Certified with N = 200, K = 4 on a separate 10,000-scenario set (Bonferroni-corrected Wilson bound).
 - Sensitivity (disclosed in DECISIONS.md): a certification ladder that starts at K = 10 instead of the pre-registered K = 4 gives $49,384 at 4.16% (bound 4.50%): close to the smart spreadsheet's value, but certified.
-- Solver: 630 rows instead of 18,413, 0.95 s, gap 0.009%.
+- Solver: 630 rows instead of 18,413, 0.91 s, gap 0.009%.
 - Extraction (synthetic, held-out split): Tempo auto-accepts 89% of invoices' terms at 100.0% precision and routes the rest to Needs review.
 
 Full tables, certification steps, ablations, what-ifs, and the extraction eval: [docs/RESULTS.md](docs/RESULTS.md).

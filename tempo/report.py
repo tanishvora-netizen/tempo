@@ -13,7 +13,7 @@ from tempo.assumptions import (
     SEED_C,
     WILSON_Z_REPORT,
 )
-from tempo.business_days import subtract_business_days
+from tempo.business_days import next_business_day, subtract_business_days
 from tempo.extract.reconcile import Reconciled
 from tempo.models import Decision, PaymentOption
 from tempo.optimize.baselines import annualized_discount_return
@@ -33,15 +33,17 @@ STATUS_CHIPS = {
 }
 
 
-def rtp_dependent(bill: PlannableBill, o: PaymentOption) -> bool:
-    """True if the plan needs RTP: as standard ACH from the planned send date it would arrive too late."""
+def rtp_dependent(bill: PlannableBill, o: PaymentOption, as_of: date | None) -> bool:
+    """True if only RTP can meet the target: an ACH that arrives on time would have to be sent before today (or
+    before the invoice exists). Other RTP-planned payments can be sent earlier as ACH instead."""
     if o.rail != "RTP":
         return False
+    earliest = next_business_day(max(as_of or bill.issued_at, bill.issued_at))
     target = bill.discount_deadline if o.takes_discount and bill.discount_deadline else bill.due_date
     lead = ACH_LEAD_DISCOUNT_BUSINESS_DAYS if o.takes_discount else ACH_LEAD_BUSINESS_DAYS
     if bill.is_new_vendor:
         lead = ACH_LEAD_NEW_VENDOR_BUSINESS_DAYS
-    return subtract_business_days(target, lead) < o.send_date
+    return subtract_business_days(target, lead) < earliest
 
 
 def chip(status: str) -> str:
@@ -104,7 +106,7 @@ def _row(bill: PlannableBill, opts, c: int, d: Decision, r: Reconciled | None, a
         "is_late": o.kind == "LATE",
         "arrives_after_due": o.arrival_date > bill.due_date,
         "expected": as_of is not None and bill.issued_at > as_of,
-        "rtp_dependent": rtp_dependent(bill, o),
+        "rtp_dependent": rtp_dependent(bill, o, as_of),
         "arrival_date": o.arrival_date.isoformat(),
         "terms_rate": annualized_discount_return(bill) if o.takes_discount else None,
         "reason": d.reason,

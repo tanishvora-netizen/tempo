@@ -53,14 +53,30 @@ function controls(presets) {
   </section>`;
 }
 
-function compareRow(label, before, after, fmt, { tone = "value" } = {}) {
+function compareRow(label, before, after, fmt, { tone = "value", total = false } = {}) {
   const delta = after - before;
   let deltaText = "";
   if (tone === "value") deltaText = valueCell(delta);
   if (tone === "rate") deltaText = html`<span class="num ${delta > 0 ? "risk" : "text-ink-2"}">${delta > 0 ? "+" : delta < 0 ? "−" : ""}${Math.abs(delta * 100).toFixed(2)} pts</span>`;
   if (tone === "balance") deltaText = html`<span class="num ${delta < 0 ? "risk" : "text-ink-2"}">${money(delta, { signed: true })}</span>`;
-  return html`<tr><td class="text-ink-2">${label}</td>
+  const rule = total ? "border-t border-line-strong font-semibold" : "";
+  return html`<tr class="${rule}"><td class="${total ? "text-ink" : "text-ink-2"}">${label}</td>
     <td class="r num text-ink-2">${fmt(before)}</td><td class="r num font-medium">${fmt(after)}</td><td class="r">${deltaText}</td></tr>`;
+}
+
+const wholeDollars = (cents) => Math.round(cents / 100);
+
+/** Value minus discounts and rewards, in the same whole dollars the rows show, so the rows add up. */
+function otherCents(k) {
+  return (wholeDollars(k.value_vs_pay_on_due_cents) - wholeDollars(k.discounts_captured_cents) - wholeDollars(k.card_rewards_cents)) * 100;
+}
+
+function valueRows(base, k, exact) {
+  return html`
+    ${compareRow("Discounts captured", base.discounts_captured_cents, k.discounts_captured_cents, exact)}
+    ${compareRow("Card rewards", base.card_rewards_cents, k.card_rewards_cents, exact)}
+    ${compareRow("Yield, surcharges and fees", otherCents(base), otherCents(k), exact)}
+    ${compareRow("Value vs paying on due date", base.value_vs_pay_on_due_cents, k.value_vs_pay_on_due_cents, exact, { total: true })}`;
 }
 
 function resultSummary(base, result) {
@@ -81,9 +97,7 @@ function resultSummary(base, result) {
     <table class="tbl">
       <thead><tr><th scope="col">Measure</th><th scope="col" class="r">Current plan</th><th scope="col" class="r">What-if plan</th><th scope="col" class="r">Change</th></tr></thead>
       <tbody>
-        ${compareRow("Value vs paying on due date", base.value_vs_pay_on_due_cents, k.value_vs_pay_on_due_cents, exact)}
-        ${compareRow("Discounts captured", base.discounts_captured_cents, k.discounts_captured_cents, exact)}
-        ${compareRow("Card rewards", base.card_rewards_cents, k.card_rewards_cents, exact)}
+        ${valueRows(base, k, exact)}
         ${compareRow("Chance below buffer", base.breach_rate, rate, (x) => pct(x), { tone: "rate" })}
         ${compareRow("Lowest cash (P10)", base.worst_p10_balance_cents, k.worst_p10_balance_cents, exact, { tone: "balance" })}
       </tbody>
