@@ -8,7 +8,7 @@ Target Balance moves cash to fit the bills. Tempo moves the bills to fit the cas
 
 ![Tempo overview](docs/screenshots/overview-1440.png)
 
-- Live demo: _see PROGRESS.md (deployed by the team on Render)_
+- Live demo: https://tempo-kor8.onrender.com
 - Demo video: _see SUBMISSION.md_
 - Team Hopeful (BBS x Ramp Hackathon, Round 2): Tanish Vora, Anthony Olakangil, Namith Tatipigari
 

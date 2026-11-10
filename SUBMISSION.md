@@ -3,7 +3,7 @@
 Form: https://forms.gle/FxUVTm6Z75f121ov5 (the team submits; nothing here is sent automatically).
 
 - **Repository:** https://github.com/tanishvora-netizen/tempo
-- **Live demo:** _paste the Render URL from PROGRESS.md once deployed_
+- **Live demo:** https://tempo-kor8.onrender.com
 - **Demo video:** _upload docs/demo/tempo-demo.webm with voiceover and paste the link here_
 - **Team:** Tanish Vora, Anthony Olakangil, Namith Tatipigari
 
