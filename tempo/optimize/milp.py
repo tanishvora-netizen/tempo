@@ -32,6 +32,7 @@ from tempo.models import PaymentOption
 from tempo.optimize.cash import day_index
 
 CENTS = 100.0
+CREDIT_TOLERANCE = 0.01  # dollars: below one cent, phase-1 credit is numerical noise
 NODE_LIMIT = 200_000  # branch-and-bound nodes: bounds effort independently of CPU speed (council C1, R3)
 
 
@@ -128,22 +129,12 @@ def solve(
     ub[: layout.n_x] = 1
     ub[layout.z_start :] = 1
     a = rows.matrix(n_cols)
+    constraints = LinearConstraint(a, rows.lb, rows.ub)
+    g_cols = slice(layout.g_col(0), layout.g_col(0) + layout.n_d)
     started = time.perf_counter()
-    res = milp(
-        objective,
-        constraints=LinearConstraint(a, rows.lb, rows.ub),
-        integrality=integrality,
-        bounds=Bounds(lb, ub),
-        options={
-            "time_limit": time_limit,
-            "mip_rel_gap": mip_rel_gap,
-            "node_limit": NODE_LIMIT,
-            "disp": False,
-        },
-    )
+    ub[g_cols] = _minimum_credit(constraints, integrality, lb, ub, layout, time_limit)
+    res = _run(objective, constraints, integrality, Bounds(lb, ub), time_limit, mip_rel_gap)
     elapsed = time.perf_counter() - started
-    if res.x is None or res.status not in (0, 1):
-        raise SolverError(f"HiGHS returned status {res.status}: {res.message}")
     stats = MilpStats(
         status="optimal" if res.status == 0 else "time_limit",
         mip_gap=None if getattr(res, "mip_gap", None) is None else float(res.mip_gap),
@@ -159,6 +150,39 @@ def solve(
     return MilpResult(
         _choices(res.x, layout, len(bill_options)), _credit(res.x, layout, horizon), -float(res.fun), stats
     )
+
+
+def _run(objective, constraints, integrality, bounds, time_limit: float, mip_rel_gap: float):
+    res = milp(
+        objective,
+        constraints=constraints,
+        integrality=integrality,
+        bounds=bounds,
+        options={
+            "time_limit": time_limit,
+            "mip_rel_gap": mip_rel_gap,
+            "node_limit": NODE_LIMIT,
+            "disp": False,
+        },
+    )
+    if res.x is None or res.status not in (0, 1):
+        raise SolverError(f"HiGHS returned status {res.status}: {res.message}")
+    return res
+
+
+def _minimum_credit(constraints, integrality, lb, ub, layout: "_Layout", time_limit: float) -> float:
+    """Phase 1 of a lexicographic solve: the least backstop credit any plan needs (dollars).
+
+    The backstop exists only to keep the model feasible. Priced in the objective alone, a few cents of credit
+    can unlock a large early payment, so credit would be used to buy value. Phase 1 minimizes credit; phase 2
+    maximizes value with credit capped at that minimum (plus one cent of numerical tolerance), and any credit
+    left over is exactly what feasibility requires.
+    """
+    phase1 = np.zeros(len(lb))
+    phase1[layout.g_col(layout.n_d - 1)] = 1.0
+    res = _run(phase1, constraints, integrality, Bounds(lb, ub), time_limit, 0.0)
+    needed = float(res.fun)
+    return 0.0 if needed < CREDIT_TOLERANCE else needed + CREDIT_TOLERANCE
 
 
 class _Rows:

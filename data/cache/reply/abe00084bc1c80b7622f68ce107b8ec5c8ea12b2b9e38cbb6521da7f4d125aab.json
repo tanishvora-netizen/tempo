@@ -1,0 +1,11 @@
+{
+ "created_at": "2026-11-10T12:05:42+00:00",
+ "error": null,
+ "key": "abe00084bc1c80b7622f68ce107b8ec5c8ea12b2b9e38cbb6521da7f4d125aab",
+ "model": "qwen3:8b",
+ "prompt_version": "v1",
+ "provider": "ollama",
+ "raw": "{\n  \"terms_quote\": \"Thanks, but we are not able to offer an early-payment discount on this invoice. Terms stay net 30.\",\n  \"terms_source\": \"<reply-decline-69a9e794@vendor>\",\n  \"discount_pct\": null,\n  \"discount_days\": null,\n  \"net_days\": 30,\n  \"anchor\": \"invoice_date\",\n  \"prox_day\": null,\n  \"late_fee_quote\": null,\n  \"late_fee_source\": null,\n  \"late_fee_kind\": null,\n  \"late_fee_value\": null,\n  \"methods_quote\": null,\n  \"methods_source\": null,\n  \"accepted_methods\": [],\n  \"surcharge_quote\": null,\n  \"surcharge_source\": null,\n  \"card_surcharge_pct\": null,\n  \"card_discount_quote\": null,\n  \"card_discount_source\": null,\n  \"card_discount_allowed\": null,\n  \"terms_overridden_in_email\": true\n}",
+ "schema_version": "terms-v2",
+ "task": "reply"
+}

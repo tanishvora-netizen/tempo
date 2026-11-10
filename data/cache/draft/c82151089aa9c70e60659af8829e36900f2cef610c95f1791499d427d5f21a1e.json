@@ -1,0 +1,11 @@
+{
+ "created_at": "2026-11-10T12:01:48+00:00",
+ "error": null,
+ "key": "c82151089aa9c70e60659af8829e36900f2cef610c95f1791499d427d5f21a1e",
+ "model": "qwen3:8b",
+ "prompt_version": "v1",
+ "provider": "ollama",
+ "raw": "{\n  \"subject_template\": \"Early Payment Offer for {INVOICE_NO} with {VENDOR}\",\n  \"body_template\": \"Dear {VENDOR}, we're pleased to offer you a {DISC_PCT} discount on {INVOICE_NO} if paid by {PAY_BY}. This will save you {SAVINGS} and allow instant payment via RTP to your bank account. Please confirm acceptance by replying to this email. Thank you for your partnership. Sincerely, Accounts Payable\"\n}",
+ "schema_version": "terms-v2",
+ "task": "draft"
+}

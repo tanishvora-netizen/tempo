@@ -121,3 +121,16 @@ def test_check_days_include_drops_and_option_days() -> None:
     days = check_days(headroom, np.array([1]))
 
     assert days.tolist() == [0, 1, 2, 3]
+
+
+def test_backstop_credit_is_never_used_to_buy_value() -> None:
+    # Paying early needs $1 more than the cash allows; it would earn $500. Paying on the due date fits.
+    # A priced backstop alone would draw $1 of credit to take the discount; the lexicographic solve must not.
+    bill = (_opt("b0", "BANK_DUE", 10, 1_000_000, 0), _opt("b0", "BANK_EARLY", 3, 980_000, 50_000))
+    headroom = np.full((3, 20), 5_000_000, dtype=np.int64)
+    headroom[:, 3:10] = 979_900
+
+    result = solve((bill,), headroom, AS_OF, 0, credit_cost=0.5)
+
+    assert result.credit_cum_cents.max() == 0
+    assert result.choice == (0,)
