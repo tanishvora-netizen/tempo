@@ -1,0 +1,11 @@
+{
+ "created_at": "2026-11-10T13:07:05+00:00",
+ "error": null,
+ "key": "2598055ba9e6ea0994a72d9741a377ffc317e285f93b6c5db9b65a9660e6d59e",
+ "model": "qwen3:8b",
+ "prompt_version": "v1",
+ "provider": "ollama",
+ "raw": "{\n  \"terms_quote\": \"0.5% 10 days, net 59\",\n  \"terms_source\": \"<reply-counter-3ce68511@vendor>\",\n  \"discount_pct\": 0.5,\n  \"discount_days\": 10,\n  \"net_days\": 59,\n  \"anchor\": null,\n  \"prox_day\": null,\n  \"late_fee_quote\": null,\n  \"late_fee_source\": null,\n  \"late_fee_kind\": null,\n  \"late_fee_value\": null,\n  \"methods_quote\": null,\n  \"methods_source\": null,\n  \"accepted_methods\": [],\n  \"surcharge_quote\": null,\n  \"surcharge_source\": null,\n  \"card_surcharge_pct\": null,\n  \"card_discount_quote\": null,\n  \"card_discount_source\": null,\n  \"card_discount_allowed\": false,\n  \"terms_overridden_in_email\": false\n}",
+ "schema_version": "terms-v2",
+ "task": "reply"
+}

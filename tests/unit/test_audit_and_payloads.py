@@ -87,3 +87,44 @@ def test_payload_preview_holds_review_bills_and_releases_accepted_ones() -> None
 
     assert preview["counts"]["hold"] >= 1
     assert preview["counts"]["release"] == 1
+
+
+def test_rtp_dependent_bills_get_no_patch_and_rtp_patches_use_an_ach_safe_date() -> None:
+    bundle = json.loads((OUT_DIR / "bundle.json").read_text())
+    rows = bundle["bills"]
+
+    preview = payment_run(rows, set(), {"mode": "suggest"}, "hash")
+
+    by_id = {r["bill_id"]: r for r in rows}
+    for action in preview["bills"]:
+        row = by_id[action["bill_id"]]
+        if row["rail"] == "RTP" and row["rtp_dependent"] and not row["needs_review"]:
+            assert action["bucket"] == "manual_rtp" and action["requests"] == []
+        for req in action["requests"]:
+            if req["method"] == "PATCH":
+                assert req["body"]["payment_date"] <= row["send_date"]
+    assert preview["counts"]["manual_rtp"] >= 1
+
+
+def test_auto_threshold_sums_a_vendors_bills_in_the_same_week() -> None:
+    from tempo.ramp.payloads import auto_scheduled_ids
+
+    base = {"chip": "Verified", "needs_review": False, "vendor_id": "v1", "send_date": "2026-11-16"}
+    rows = [
+        {**base, "bill_id": "a", "amount_cents": 1_500_000},
+        {**base, "bill_id": "b", "amount_cents": 1_500_000},
+    ]
+
+    split = auto_scheduled_ids(rows, {"mode": "auto", "threshold_cents": 2_500_000})
+    single = auto_scheduled_ids(rows[:1], {"mode": "auto", "threshold_cents": 2_500_000})
+
+    assert split == set()  # $15K + $15K from one vendor in one week is $30K, over the $25K threshold
+    assert single == {"a"}
+
+
+def test_audit_entry_records_the_plan_as_of_date(tmp_path: Path) -> None:
+    log = tmp_path / "audit.jsonl"
+
+    entry = append(log, "cfo", {"mode": "suggest"}, "p", "i", {}, plan_as_of="2026-11-10")
+
+    assert entry["plan_as_of"] == "2026-11-10" and verify_chain(log).ok

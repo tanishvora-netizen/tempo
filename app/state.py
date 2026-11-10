@@ -64,6 +64,17 @@ class AppState:
             self.autonomy = dict(DEFAULT_AUTONOMY)
             self.touched_at = time.monotonic()
 
+    def touch(self) -> None:
+        """Record a change, so idle reset never wipes a visitor's recent action."""
+        self.touched_at = time.monotonic()
+
+    def current_plan(self) -> tuple[list[dict], str]:
+        """The plan the user is looking at: the precomputed one, or the live re-solve after review edits."""
+        if not self.overrides:
+            return self.bundle["bills"], self.bundle["plan_hash"]
+        result = self.solve_live(None, dict(self.overrides))
+        return result.payload["bills"], result.payload["plan_hash"]
+
     def reset_if_idle(self) -> None:
         if (
             self.overrides or self.negotiated or self.approved_ids

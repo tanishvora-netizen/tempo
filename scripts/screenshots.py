@@ -72,6 +72,10 @@ def settle(page: Page) -> None:
 
 def shoot(page: Page, name: str, width: int, *, full_page: bool = True) -> Path:
     path = OUT_DIR / f"{name}-{width}.png"
+    if full_page:
+        # A full-page capture draws sticky elements (the left nav) at the current scroll offset; start at the top.
+        page.evaluate("window.scrollTo(0, 0)")
+        page.wait_for_timeout(SETTLE_MS)
     page.screenshot(path=str(path), full_page=full_page)
     print(f"  saved {path.relative_to(ROOT)}")
     return path
@@ -153,7 +157,7 @@ def capture_review(page: Page, base: str, width: int) -> None:
     goto(page, base, "review", "[data-detail] [data-accept]")
     shoot(page, "needs-review", width)
     capture_upload(page, width)
-    injection = page.locator("[data-item]", has_text="Westbrook")
+    injection = page.locator('[data-item][data-tag="injection"]')  # by tag, never by invoice number
     if injection.count():
         injection.first.click()
         settle(page)
@@ -164,6 +168,8 @@ def capture_review_accept(page: Page, base: str, width: int) -> None:
     """Mutating: accept one Needs-review item and show the re-solve effect."""
     goto(page, base, "review", "[data-detail] [data-accept]")
     target = page.locator("[data-item]", has_text="Sorrel Bay")
+    if not target.count():
+        target = page.locator("[data-item]")
     if target.count():
         target.first.click()
         page.click("[data-detail] [data-accept]")

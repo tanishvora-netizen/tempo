@@ -150,6 +150,7 @@ def post_review(bill_id: str, body: ReviewAction, request: Request) -> Payload:
         overrides = {**s.overrides, bill_id: terms}
         if body.action == "accept" and not s.overrides and item["effect"]:
             s.overrides = overrides
+            s.touch()
             return Payload(
                 data={
                     "source": "precomputed",
@@ -161,6 +162,7 @@ def post_review(bill_id: str, body: ReviewAction, request: Request) -> Payload:
         THROTTLE.check(request)
         result = s.solve_live(None, overrides)
         s.overrides = overrides
+        s.touch()
     return Payload(data={"source": "live", "bill_id": bill_id, "terms": terms.__dict__, **result.payload})
 
 
@@ -278,6 +280,7 @@ def post_accept_terms(vendor_id: str, body: NegotiatedTerms) -> Payload:
             **s.negotiated,
             vendor_id: {"terms": terms.__dict__ if terms else None, "source": "NEGOTIATED"},
         }
+        s.touch()
     return Payload(data={"vendor_id": vendor_id, "negotiated": s.negotiated[vendor_id]})
 
 
@@ -286,7 +289,8 @@ def post_approve(body: ApproveRequest) -> Payload:
     """Record the CFO's approval in the append-only, hash-chained audit log. Nothing is sent to Ramp."""
     s = state()
     autonomy = body.autonomy.model_dump()
-    rows = {r["bill_id"]: r for r in s.bundle["bills"]}
+    plan_rows, plan_hash = s.current_plan()
+    rows = {r["bill_id"]: r for r in plan_rows}
     ids = sorted(set(body.bill_ids)) if body.bill_ids is not None else sorted(rows)
     unknown = [i for i in ids if i not in rows]
     if unknown:
@@ -309,11 +313,18 @@ def post_approve(body: ApproveRequest) -> Payload:
         s.autonomy = autonomy
         try:
             entry = audit.append(
-                s.audit_path, body.approver, autonomy, s.bundle["plan_hash"], s.bundle["input_hash"], metrics
+                s.audit_path,
+                body.approver,
+                autonomy,
+                plan_hash,
+                s.bundle["input_hash"],
+                metrics,
+                plan_as_of=s.dataset.company.as_of.isoformat(),
             )
         except ValueError as exc:
             raise HTTPException(status_code=409, detail=str(exc)) from exc
         s.approved_ids = set(ids)
+        s.touch()
     return Payload(data={"entry": entry, "chain": audit.verify_chain(s.audit_path).__dict__})
 
 
@@ -326,10 +337,10 @@ def get_audit() -> Payload:
 @app.get("/api/ramp/payload-preview", response_model=Payload)
 def get_payload_preview() -> Payload:
     s = state()
-    rows = s.bundle["bills"]
+    rows, plan_hash = s.current_plan()
     if s.approved_ids:
         rows = [r for r in rows if r["bill_id"] in s.approved_ids]
-    preview = payment_run(rows, set(s.overrides), s.autonomy, s.bundle["plan_hash"])
+    preview = payment_run(rows, set(s.overrides), s.autonomy, plan_hash)
     return Payload(
         data={**preview, "scope": "last approval" if s.approved_ids else "whole plan (not yet approved)"}
     )

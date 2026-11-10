@@ -115,17 +115,22 @@ def late_fee_cents(bill: PlannableBill) -> int:
     return apply_rate(bill.total_cents, bps_to_rate(bps))
 
 
+def earliest_send(bill: PlannableBill, ctx: RailContext) -> date:
+    """No payment goes out before today or before the invoice exists (expected bills issue later)."""
+    return next_business_day(max(ctx.as_of, bill.issued_at))
+
+
 def _bank_leg(bill: PlannableBill, ctx: RailContext, target: date, discount_window: bool) -> _BankLeg:
     """Latest business-day send that arrives by `target`; if that is already past, send on the first business
     day from the as-of date and arrive when the rail allows (possibly after `target`)."""
     if ctx.funding_account == "ramp_checking" and bill.rtp_eligible:
-        send = max(previous_business_day(target), next_business_day(ctx.as_of))
+        send = max(previous_business_day(target), earliest_send(bill, ctx))
         return _BankLeg("RTP", send, send, RTP_FEE_CENTS)
     lead = ACH_LEAD_DISCOUNT_BUSINESS_DAYS if discount_window else ACH_LEAD_BUSINESS_DAYS
     if bill.is_new_vendor:
         lead = ACH_LEAD_NEW_VENDOR_BUSINESS_DAYS
     fee = 0 if ctx.funding_account == "ramp_checking" else ACH_FEE_CENTS
-    send = max(subtract_business_days(target, lead), next_business_day(ctx.as_of))
+    send = max(subtract_business_days(target, lead), earliest_send(bill, ctx))
     return _BankLeg("ACH", send, add_business_days(send, lead), fee)
 
 
@@ -156,14 +161,16 @@ def build_options(bill: PlannableBill, ctx: RailContext) -> tuple[PaymentOption,
     if _discount_open(bill, ctx):
         options += _discount_options(bill, ctx, base_send)
     if bill.accepts_card:
-        options.append(_card(bill, "CARD", _charge_day(bill.due_date, ctx), bill.total_cents, base_send))
+        options.append(
+            _card(bill, "CARD", _charge_day(bill, bill.due_date, ctx), bill.total_cents, base_send)
+        )
     options.append(_late(bill, ctx, base_send))
     return tuple(options)
 
 
-def _charge_day(target: date, ctx: RailContext) -> date:
-    """Card charges are scheduled on business days too, never before the as-of date."""
-    return max(previous_business_day(target), next_business_day(ctx.as_of))
+def _charge_day(bill: PlannableBill, target: date, ctx: RailContext) -> date:
+    """Card charges are scheduled on business days too, never before today or the invoice date."""
+    return max(previous_business_day(target), earliest_send(bill, ctx))
 
 
 def _discount_open(bill: PlannableBill, ctx: RailContext) -> bool:
@@ -200,9 +207,9 @@ def _discount_options(bill: PlannableBill, ctx: RailContext, base_send: date) ->
             )
         )
     charge = previous_business_day(deadline)
-    if bill.accepts_card and bill.card_discount_allowed and charge >= ctx.as_of:
+    if bill.accepts_card and bill.card_discount_allowed and charge >= earliest_send(bill, ctx):
         out.append(_card(bill, "CARD_EARLY", charge, paid, base_send))
-    if ctx.finance_enabled and charge >= ctx.as_of:
+    if ctx.finance_enabled and charge >= earliest_send(bill, ctx):
         repay = charge + timedelta(days=FINANCE_TERM_DAYS)
         fee = apply_rate(paid, FINANCE_FEE_PER_30_DAYS * FINANCE_TERM_DAYS / 30)
         out.append(

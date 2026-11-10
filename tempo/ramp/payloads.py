@@ -34,30 +34,45 @@ REQUEST_PAYMENT_METHODS = frozenset(
 PATCH_FIELDS = frozenset({"payment_date", "payment_method"})
 
 
-def _patch(row: dict, auto: bool) -> dict:
+def _target_and_lead(row: dict) -> tuple[date, int]:
     target = date.fromisoformat(row["discount_deadline"] if row["takes_discount"] else row["due_date"])
-    lead = ACH_LEAD_DISCOUNT_BUSINESS_DAYS if row["takes_discount"] else ACH_LEAD_BUSINESS_DAYS
+    return target, ACH_LEAD_DISCOUNT_BUSINESS_DAYS if row["takes_discount"] else ACH_LEAD_BUSINESS_DAYS
+
+
+def _patch(row: dict, auto: bool) -> dict:
+    """PATCH payment_date and payment_method for a bank payment Ramp's API can express.
+
+    Ramp's request enum has no RTP, so a payment planned as RTP is previewed as the ACH that meets the same
+    target: sent earlier by the ACH lead time. Payments with no such ACH date are handled by `_manual_rtp`.
+    """
+    send = date.fromisoformat(row["send_date"])
+    notes = ["Only approved bills can be updated."]
+    if row["rail"] == "RTP":
+        target, lead = _target_and_lead(row)
+        ach_send = subtract_business_days(target, lead)
+        notes.append(
+            f"Planned as RTP from Ramp Checking on {send.isoformat()}; the API can only request ACH, so this "
+            f"sends ACH on {ach_send.isoformat()} ({(send - ach_send).days} days earlier) to arrive by "
+            f"{target.isoformat()}."
+        )
+        send = ach_send
     request = {
         "method": "PATCH",
         "path": f"{BILLS}/{row['bill_id']}",
-        "body": {"payment_date": row["send_date"], "payment_method": "ACH"},
+        "body": {"payment_date": send.isoformat(), "payment_method": "ACH"},
     }
-    notes = ["Only approved bills can be updated."]
-    if row["rail"] == "RTP":
-        notes.append(_ach_fallback_note(target, lead, date.fromisoformat(row["send_date"])))
-    return {**_base(row, auto), "requests": [request], "notes": notes}
+    return {**_base(row, auto), "requests": [request], "notes": notes, "bucket": "patch"}
 
 
-def _ach_fallback_note(target: date, lead: int, planned_send: date) -> str:
-    """What to do if Ramp routes a planned RTP payment as standard ACH (never a date before the plan's send)."""
-    ach_send = subtract_business_days(target, lead)
-    if ach_send >= planned_send:
-        return f"Planned as RTP from Ramp Checking. If Ramp routes standard ACH, send by {ach_send.isoformat()} instead."
-    arrives = add_business_days(planned_send, lead)
-    return (
-        f"Planned as RTP from Ramp Checking. As standard ACH it would arrive {arrives.isoformat()}, after "
-        f"{target.isoformat()}, so confirm RTP before approving."
+def _manual_rtp(row: dict) -> dict:
+    """No ACH date can meet the target from today: the payment must be sent by RTP in Ramp; no API request."""
+    target, lead = _target_and_lead(row)
+    arrives = add_business_days(date.fromisoformat(row["send_date"]), lead)
+    note = (
+        f"Send by RTP from Ramp Checking on {row['send_date']} in Ramp. Ramp's API cannot request RTP, and a "
+        f"standard ACH sent today would arrive {arrives.isoformat()}, after {target.isoformat()}."
     )
+    return {**_base(row, False), "requests": [], "notes": [note], "bucket": "manual_rtp"}
 
 
 def _base(row: dict, auto: bool) -> dict:
@@ -79,10 +94,18 @@ def bill_actions(row: dict, accepted_review: bool, auto: bool) -> dict:
             "path": f"{BILLS}/{row['bill_id']}/hold",
             "body": {"reason": f"Tempo: terms need review ({row.get('review_reason') or row['status']})"},
         }
-        return {**_base(row, False), "requests": [req], "notes": ["Held until a person confirms the terms."]}
+        return {
+            **_base(row, False),
+            "requests": [req],
+            "notes": ["Held until a person confirms the terms."],
+            "bucket": "hold",
+        }
     release = []
     if accepted_review:
         release = [{"method": "POST", "path": f"{BILLS}/{row['bill_id']}/release", "body": {}}]
+    if row["rail"] == "RTP" and row.get("rtp_dependent"):
+        action = _manual_rtp(row)
+        return {**action, "requests": release}
     if row["rail"] in ("RTP", "ACH"):
         action = _patch(row, auto)
         return {**action, "requests": release + action["requests"]}
@@ -92,21 +115,41 @@ def bill_actions(row: dict, accepted_review: bool, auto: bool) -> dict:
         if row["rail"] == "CARD"
         else "Flex-style financing has no public API; arrange it in Ramp."
     )
-    return {**_base(row, auto), "requests": release, "notes": [note]}
+    return {**_base(row, auto), "requests": release, "notes": [note], "bucket": "no_api_lever"}
+
+
+def auto_scheduled_ids(rows: list[dict], autonomy: dict) -> set[str]:
+    """Verified bills under the threshold, where the threshold applies to each vendor's total in a week (so an
+    invoice split into small pieces does not slip under it). Ramp's own approval chain and vendor bank
+    verification still gate every payment; Tempo only sets date and rail."""
+    if autonomy.get("mode") != "auto":
+        return set()
+    threshold = int(autonomy.get("threshold_cents", 0))
+    weekly: dict[tuple[str, int, int], int] = {}
+    for r in rows:
+        year, week, _ = date.fromisoformat(r["send_date"]).isocalendar()
+        weekly[(r["vendor_id"], year, week)] = weekly.get((r["vendor_id"], year, week), 0) + r["amount_cents"]
+    ok = set()
+    for r in rows:
+        year, week, _ = date.fromisoformat(r["send_date"]).isocalendar()
+        if (
+            r["chip"] == "Verified"
+            and not r["needs_review"]
+            and weekly[(r["vendor_id"], year, week)] < threshold
+        ):
+            ok.add(r["bill_id"])
+    return ok
 
 
 def payment_run(rows: list[dict], accepted: set[str], autonomy: dict, plan_hash: str) -> dict:
     """The full preview: one entry per bill, plus counts. Never sent."""
-    threshold = int(autonomy.get("threshold_cents", 0))
-    auto_mode = autonomy.get("mode") == "auto"
-    actions = []
-    for row in rows:
-        auto = auto_mode and row["chip"] == "Verified" and row["amount_cents"] < threshold
-        actions.append(bill_actions(row, row["bill_id"] in accepted, auto))
+    auto_ids = auto_scheduled_ids(rows, autonomy)
+    actions = [bill_actions(row, row["bill_id"] in accepted, row["bill_id"] in auto_ids) for row in rows]
     requests = [r for a in actions for r in a["requests"]]
     return {
         "sent": False,
-        "note": "Preview only. Tempo never calls Ramp's API.",
+        "note": "Preview only. Tempo never calls Ramp's API. Ramp's own bill approval chain and vendor bank "
+        "verification still gate payment; Tempo only sets date and rail.",
         "plan_hash": plan_hash,
         "autonomy": autonomy,
         "counts": {
@@ -116,6 +159,7 @@ def payment_run(rows: list[dict], accepted: set[str], autonomy: dict, plan_hash:
             "hold": sum(r["path"].endswith("/hold") for r in requests),
             "release": sum(r["path"].endswith("/release") for r in requests),
             "auto_scheduled": sum(a["auto_scheduled"] for a in actions),
+            "manual_rtp": sum(a.get("bucket") == "manual_rtp" for a in actions),
         },
         "bills": actions,
     }

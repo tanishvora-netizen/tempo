@@ -69,6 +69,16 @@ def pay_on_due_plan(inputs: RunInputs) -> Plan:
     return bl.pay_on_due(inputs.bills, inputs.options, inputs.horizon)
 
 
+STRESS_SIGMA_MACRO = 0.30  # twice the assumed common factor (council C4, quant)
+
+
+def macro_stress(base: "Solved", plans: dict[str, Plan]) -> dict:
+    """Every policy on seed C with the common timing factor doubled: tests the SIGMA_MACRO assumption."""
+    scen = base.inputs.forecast.scenarios(N_EVAL_SCENARIOS, SEED_C, sigma_macro=STRESS_SIGMA_MACRO)
+    res = evaluate_all(plans, base.inputs.forecast.headroom(scen), base.inputs)
+    return {"sigma_macro": STRESS_SIGMA_MACRO, "policies": [policy_view(res[p]) for p in POLICY_ORDER]}
+
+
 SENSITIVITY_LADDER = (10, 8, 6, 4, 3, 2, 1, 0)  # starts at K = EPSILON * N for N = 200
 
 
@@ -264,6 +274,7 @@ def build_proof(dataset: Dataset, ingest_result: IngestResult, base: Solved) -> 
         "seed_c": SEED_C,
         "policies": [policy_view(fitted[p]) for p in POLICY_ORDER],
         "policies_true_model": [policy_view(true_res[p]) for p in POLICY_ORDER],
+        "policies_macro_stress": macro_stress(base, plans),
         "ablations": [
             policy_view(abl_res[p])
             for p in ("tempo", "per_day_5pct", "per_day_worst_case", "deterministic_p50")

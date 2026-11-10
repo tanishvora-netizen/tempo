@@ -26,14 +26,14 @@ def pct(x: float | None, digits: int = 2) -> str:
 
 def policy_table(rows: list[dict], label: str) -> list[str]:
     out = [
-        "| Policy | Value vs pay on due | Discounts taken | Card | Breach rate | 95% upper bound | Worst P10 balance | LATE | Credit drawn |",
-        "|---|---:|---:|---:|---:|---:|---:|---:|---:|",
+        "| Policy | Value vs pay on due | Discounts taken | Card | Breach rate | 95% upper bound | Worst P10 balance | Late by choice | Arrives after due | Credit drawn |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for r in rows:
         out.append(
             f"| `{r['policy']}` | {usd(r['value_cents'])} | {r['discount_count']} | {r['card_count']} | "
             f"{pct(r['breach_rate'])} | {pct(r['breach_upper'])} | {usd(r['worst_p10_balance_cents'])} "
-            f"({r['worst_p10_date']}) | {r['late_count']} | {usd(r['credit_drawn_cents'])} |"
+            f"({r['worst_p10_date']}) | {r['late_count']} | {r.get('arrive_after_due_count', 0)} | {usd(r['credit_drawn_cents'])} |"
         )
     return [f"**{label}**", "", *out, ""]
 
@@ -115,10 +115,26 @@ def main() -> None:
     lines += policy_table(
         proof["policies_true_model"], "Seed C under the generator's true payment model (robustness)"
     )
+    stress = proof["policies_macro_stress"]
+    lines += [
+        "The true-model check swaps in each customer's real days-to-pay law; it keeps the assumed common factor "
+        "(SIGMA_MACRO) and the no-pay rate. The stress test below doubles the common factor instead.",
+        "",
+    ]
+    lines += policy_table(
+        stress["policies"],
+        f"Seed C with the common timing factor doubled (SIGMA_MACRO = {stress['sigma_macro']})",
+    )
+    lines += [
+        '"Late by choice" counts bills the plan deliberately pays late (with the late fee and a relationship '
+        'penalty). "Arrives after due" counts bills whose earliest possible bank payment from the as-of date '
+        "lands after the due date (ACH lead time); no late fee is modeled for those few days (ASSUMPTION).",
+        "",
+    ]
     lines += [
         '`greedy_p05` is the "smart spreadsheet": it takes a discount only when its return beats the cost of cash '
-        "and the pointwise P5 balance path stays above the buffer. Checking each day separately is not enough to "
-        "bound the chance of a breach on any day.",
+        "and the pointwise P5 balance path stays above the buffer. Checking each day separately does not bound the "
+        "chance of a breach on any day, so it cannot certify its own risk.",
         "",
         "## Ablation: joint vs per-day chance constraints",
         "",
@@ -323,6 +339,7 @@ def demo_tokens(bundle: dict, proof: dict, whatifs: dict) -> dict[str, str]:
         if p["what_if"]["customer_id"] == biggest and p["what_if"]["delay_days"] == 14
     )
     rec = proof["extraction"]["holdout"]["reconciled"]
+    stress = {r["policy"]: r for r in proof["policies_macro_stress"]["policies"]}
     dataset = load_dataset("demo")
     injection = next(i for i in dataset.invoices if i.tag == "injection")
     vendor = next(v.name for v in dataset.vendors if v.id == injection.vendor_id)
@@ -348,11 +365,27 @@ def demo_tokens(bundle: dict, proof: dict, whatifs: dict) -> dict[str, str]:
         "SOLVE_S": f"{bundle['solver']['solve_seconds']:.2f}",
         "PRESET_LABEL": preset["label"],
         "FLIPS": str(len(preset["diff"])),
+        "P05_GAP": usd(fitted["greedy_p05"]["value_cents"] - fitted["tempo"]["value_cents"]),
+        "LADDER_TRUE": pct(proof["ladder_sensitivity"]["true_breach_rate"]),
+        "STRESS_TEMPO": pct(stress["tempo"]["breach_rate"]),
+        "STRESS_GREEDY": pct(stress["greedy_discount"]["breach_rate"]),
+        "ACCEPTED_CORRECT": str(rec["correct"]),
+        "ACCEPTED_N": str(rec["answered"]),
+        "MANUAL_RTP": str(manual_rtp_this_week(bundle)),
         "PRESET_LATE": str(preset["kpis"]["late_count"]),
         "REVIEW_COUNT": str(sum(r["needs_review"] for r in bundle["bills"])),
         "COVERAGE": pct(rec["coverage"], 0),
         "PRECISION": pct(rec["precision"], 1),
     }
+
+
+def manual_rtp_this_week(bundle: dict) -> int:
+    """Bills in the first week's run that can only meet their date by RTP (no API request is possible)."""
+    from datetime import date, timedelta
+
+    as_of = date.fromisoformat(bundle["company"]["as_of"])
+    week = [r for r in bundle["bills"] if date.fromisoformat(r["send_date"]) < as_of + timedelta(days=7)]
+    return sum(r["rail"] == "RTP" and r["rtp_dependent"] and not r["needs_review"] for r in week)
 
 
 def render(text: str, tokens: dict[str, str]) -> str:

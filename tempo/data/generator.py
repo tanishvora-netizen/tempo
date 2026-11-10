@@ -111,15 +111,25 @@ def _base_bills(rng: np.random.Generator, profiles: tuple[VendorProfile, ...]) -
 def _assign_tags(rng: np.random.Generator, bases: list[_BaseBill]) -> list[HardCaseTag]:
     tags: list[HardCaseTag | None] = [None] * len(bases)
 
-    def pick(tag: HardCaseTag, count: int, eligible) -> None:
-        pool = [i for i, b in enumerate(bases) if tags[i] is None and eligible(b.profile)]
+    def pick(tag: HardCaseTag, count: int, eligible, already_issued: bool = False) -> None:
+        pool = [
+            i
+            for i, b in enumerate(bases)
+            if tags[i] is None and eligible(b.profile) and (not already_issued or b.issued_at <= AS_OF)
+        ]
         for i in rng.choice(pool, size=min(count, len(pool)), replace=False):
             tags[int(i)] = tag
 
     def standard(p: VendorProfile) -> bool:
         return p.terms.anchor == "invoice_date" and not p.date_style_numbers and p.terms.discount_bps != 50
 
-    pick("injection", HARD_CASE_COUNTS["injection"], lambda p: standard(p) and p.terms.discount_bps == 200 and not p.vendor.is_new)
+    # The showcased injection invoice is already issued at the as-of date (council C4, judge).
+    pick(
+        "injection",
+        HARD_CASE_COUNTS["injection"],
+        lambda p: standard(p) and p.terms.discount_bps == 200 and not p.vendor.is_new,
+        already_issued=True,
+    )
     pick("footer_conflict", HARD_CASE_COUNTS["footer_conflict"], lambda p: standard(p) and p.terms.discount_bps is None and p.terms.net_days == 30)
     pick("email_override", HARD_CASE_COUNTS["email_override"], lambda p: standard(p) and not p.vendor.is_new)
     pick("prose_terms", HARD_CASE_COUNTS["prose_terms"], lambda p: standard(p) and p.terms.discount_bps is not None)

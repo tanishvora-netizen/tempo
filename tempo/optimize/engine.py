@@ -11,7 +11,7 @@ from datetime import date
 
 import numpy as np
 
-from tempo.assumptions import CREDIT_COST, N_OPT_SCENARIOS
+from tempo.assumptions import CREDIT_COST, N_OPT_SCENARIOS, SIGMA_MACRO
 from tempo.forecast.fit import PoolFit, fit_days_to_pay
 from tempo.forecast.simulate import Receipt, ScenarioSet, WhatIf, receipts_from, simulate
 from tempo.models import Dataset, PaymentOption
@@ -32,7 +32,11 @@ class Forecast:
     what_if: WhatIf | None
 
     def scenarios(
-        self, n: int, seed: int, params: dict[str, tuple[float, float]] | None = None
+        self,
+        n: int,
+        seed: int,
+        params: dict[str, tuple[float, float]] | None = None,
+        sigma_macro: float = SIGMA_MACRO,
     ) -> ScenarioSet:
         return simulate(
             self.receipts,
@@ -40,6 +44,7 @@ class Forecast:
             self.horizon_days,
             n,
             seed,
+            sigma_macro=sigma_macro,
             what_if=self.what_if,
         )
 

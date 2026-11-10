@@ -6,55 +6,55 @@
  "rows": [
   {
    "starting_cash_cents": 300000000,
-   "pay_on_due_breach": 0.0622,
-   "greedy_breach": 0.208,
+   "pay_on_due_breach": 0.0619,
+   "greedy_breach": 0.213,
    "tempo_certified": true,
-   "tempo_value_share_of_greedy": 0.1009019245036069,
+   "tempo_value_share_of_greedy": -0.06296526782544049,
    "meets_directive": false,
    "meets_fallback": false
   },
   {
    "starting_cash_cents": 320000000,
-   "pay_on_due_breach": 0.0418,
-   "greedy_breach": 0.1563,
+   "pay_on_due_breach": 0.0417,
+   "greedy_breach": 0.1602,
    "tempo_certified": true,
-   "tempo_value_share_of_greedy": 0.3990165110096847,
+   "tempo_value_share_of_greedy": 0.40014698545438304,
    "meets_directive": false,
    "meets_fallback": false
   },
   {
    "starting_cash_cents": 340000000,
-   "pay_on_due_breach": 0.0261,
-   "greedy_breach": 0.1136,
+   "pay_on_due_breach": 0.0259,
+   "greedy_breach": 0.1172,
    "tempo_certified": true,
-   "tempo_value_share_of_greedy": 0.6166505248836328,
+   "tempo_value_share_of_greedy": 0.6166815809775157,
    "meets_directive": false,
    "meets_fallback": false
   },
   {
    "starting_cash_cents": 360000000,
    "pay_on_due_breach": 0.0158,
-   "greedy_breach": 0.0776,
+   "greedy_breach": 0.0803,
    "tempo_certified": true,
-   "tempo_value_share_of_greedy": 0.7801960665763944,
+   "tempo_value_share_of_greedy": 0.7787032347398967,
    "meets_directive": false,
    "meets_fallback": true
   },
   {
    "starting_cash_cents": 380000000,
-   "pay_on_due_breach": 0.0093,
-   "greedy_breach": 0.0513,
+   "pay_on_due_breach": 0.0092,
+   "greedy_breach": 0.0531,
    "tempo_certified": true,
-   "tempo_value_share_of_greedy": 0.8863268640717372,
+   "tempo_value_share_of_greedy": 0.8839886166711712,
    "meets_directive": false,
    "meets_fallback": true
   },
   {
    "starting_cash_cents": 400000000,
    "pay_on_due_breach": 0.0057,
-   "greedy_breach": 0.0343,
+   "greedy_breach": 0.0353,
    "tempo_certified": true,
-   "tempo_value_share_of_greedy": 0.9512472521894075,
+   "tempo_value_share_of_greedy": 0.9488053031352607,
    "meets_directive": false,
    "meets_fallback": false
   }

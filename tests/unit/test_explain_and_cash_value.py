@@ -113,3 +113,18 @@ def test_ordinals() -> None:
         "21st",
         "22nd",
     ]
+
+
+def test_no_option_is_sent_before_the_invoice_exists() -> None:
+    from dataclasses import replace as dc_replace
+
+    bill = dc_replace(
+        _bill(200),
+        issued_at=date(2026, 11, 20),
+        due_date=date(2026, 12, 20),
+        discount_deadline=date(2026, 11, 30),
+    )
+
+    options = build_options(bill, RailContext(AS_OF))
+
+    assert all(o.send_date >= bill.issued_at for o in options)

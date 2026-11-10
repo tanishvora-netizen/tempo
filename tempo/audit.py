@@ -54,6 +54,7 @@ def append(
     input_hash: str,
     metrics: dict,
     now: datetime | None = None,
+    plan_as_of: str | None = None,
 ) -> dict:
     """Append one approval entry, linked to the current head. Refuses to append to a broken chain."""
     status = verify_chain(path)
@@ -63,6 +64,7 @@ def append(
         raise ValueError(f"audit log is full ({MAX_ENTRIES} entries)")
     entry = {
         "timestamp": (now or datetime.now(UTC)).isoformat(timespec="seconds"),
+        "plan_as_of": plan_as_of,
         "approver": approver,
         "autonomy": autonomy,
         "plan_hash": plan_hash,

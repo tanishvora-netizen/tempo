@@ -15,7 +15,7 @@ import numpy as np
 from tempo.assumptions import CARD_CASHBACK, DAYS_IN_YEAR
 from tempo.models import Decision, FixedOutflow, PaymentOption
 from tempo.money import format_usd
-from tempo.optimize.baselines import EARLY_KINDS, annualized_discount_return
+from tempo.optimize.baselines import EARLY_KINDS
 from tempo.optimize.cash import plan_outflow_cum, slack
 from tempo.optimize.engine import Plan
 from tempo.optimize.options import PlannableBill
@@ -143,6 +143,13 @@ def _early_reason(ctx: ExplainContext, bill: PlannableBill, o: PaymentOption) ->
 
 def _card_reason(o: PaymentOption) -> str:
     float_days = (o.cash_out_date - o.send_date).days
+    if o.surcharge_cents > o.rewards_cents:
+        net = format_usd(o.surcharge_cents - o.rewards_cents)
+        return (
+            f"Paid by card {fmt_date(o.send_date)} to keep cash above the buffer: the surcharge costs {net} more than "
+            f"the {pct(CARD_CASHBACK)} cashback, but cash leaves {fmt_date(o.cash_out_date)} with the statement "
+            f"(+{float_days} days)."
+        )
     surcharge = f", minus a {format_usd(o.surcharge_cents)} surcharge" if o.surcharge_cents else ""
     return (
         f"Paid by card {fmt_date(o.send_date)}: {pct(CARD_CASHBACK)} cashback{surcharge}; cash leaves "
@@ -173,7 +180,7 @@ def _due_reason(ctx: ExplainContext, bill, opts, o, base_cum, base_breaches) -> 
         return f"{head}. This is the earliest a bank payment can arrive; no discount is offered.", None
     if early is None:
         return _no_discount_reason(head, bill, opts, o), None
-    r = annualized_discount_return(bill)
+    r = cash_return(early, (bill.due_date - early.arrival_date).days)
     if early.value_cents <= o.value_cents:
         return (
             f"{head}: the {terms_label(bill)} discount ({pct(r, 1)}/yr) is worth less than paying on the due date "

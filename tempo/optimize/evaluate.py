@@ -24,6 +24,7 @@ class PolicyResult:
     worst_p10_balance_cents: int
     worst_p10_date: date
     late_count: int
+    arrive_after_due_count: int
     credit_drawn_cents: int
     discount_count: int
     card_count: int
@@ -52,6 +53,9 @@ def evaluate(
         worst_p10_balance_cents=round(p10[worst]),
         worst_p10_date=as_of + timedelta(days=worst),
         late_count=sum(o.kind == "LATE" for o in chosen),
+        arrive_after_due_count=sum(
+            o.kind != "LATE" and o.arrival_date > b.due_date for b, o in zip(plan.bills, chosen, strict=True)
+        ),
         credit_drawn_cents=plan.credit_drawn_cents(),
         discount_count=sum(o.takes_discount for o in chosen),
         card_count=sum(o.rail == "CARD" for o in chosen),
@@ -67,8 +71,8 @@ def balance_fan(
     else:
         s = slack(headroom, plan.outflow_cum(as_of, headroom.shape[1]), plan.credit_cum_cents)
     bal = s + buffer_cents
-    p10, p50, p90 = np.percentile(bal, [10, 50, 90], axis=0)
-    return {"p10": _ints(p10), "p50": _ints(p50), "p90": _ints(p90)}
+    p1, p10, p50, p90, p99 = np.percentile(bal, [1, 10, 50, 90, 99], axis=0)
+    return {"p1": _ints(p1), "p10": _ints(p10), "p50": _ints(p50), "p90": _ints(p90), "p99": _ints(p99)}
 
 
 def _ints(a: np.ndarray) -> list[int]:

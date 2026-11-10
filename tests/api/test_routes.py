@@ -159,3 +159,18 @@ def test_pdf_upload_reads_terms_and_rejects_non_pdfs(client: TestClient) -> None
     assert ok.status_code == 200
     assert ok.json()["data"]["terms"]["discount_bps"] == 100
     assert bad.status_code == 422
+
+
+def test_an_approval_survives_the_idle_reset(client: TestClient) -> None:
+    from app.main import STATE
+
+    s = STATE["app"]
+    s.touched_at -= 31 * 60  # the server looks idle
+    bill_ids = [r["bill_id"] for r in client.get("/api/bills").json()["data"]["bills"][:3]]
+
+    approved = client.post("/api/plan/approve", json={"approver": "Dana Ortiz", "bill_ids": bill_ids})
+    preview = client.get("/api/ramp/payload-preview").json()["data"]
+
+    assert approved.status_code == 200
+    assert preview["scope"] == "last approval"
+    assert preview["counts"]["bills"] == 3
