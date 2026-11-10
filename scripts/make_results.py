@@ -132,6 +132,19 @@ def main() -> None:
         "Off in the headline (council C2): the fee is an assumption and Flex has no public API.",
         "",
     ]
+    lad = proof["ladder_sensitivity"]
+    lines += [
+        "## Sensitivity: certification ladder starting at K = EPSILON * N",
+        "",
+        "The pre-registered ladder starts at K = 4 of 200 (2%), so the headline plan certifies with a wide margin. "
+        "Starting at K = 10 (5% of 200) and stepping down, with Bonferroni over all nine rungs "
+        f"(z = {lad['z']:.3f}), seed B certifies K = {lad['k']} (bound {pct(lad['cert_upper'])}). This row was "
+        "added after the headline results were seen and is reported beside them, never instead of them "
+        f"(docs/DECISIONS.md). Under the generator's true model: {pct(lad['true_breach_rate'])} "
+        f"(bound {pct(lad['true_breach_upper'])}).",
+        "",
+    ]
+    lines += policy_table([lad], "Seed C")
     fin = proof["financing_sensitivity"]
     lines += policy_table(
         [fin],
@@ -317,6 +330,10 @@ def demo_tokens(bundle: dict, proof: dict, whatifs: dict) -> dict[str, str]:
         "GREEDY_VALUE": usd(fitted["greedy_discount"]["value_cents"]),
         "GREEDY_BREACH": pct(fitted["greedy_discount"]["breach_rate"]),
         "P05_BREACH": pct(fitted["greedy_p05"]["breach_rate"]),
+        "P05_BOUND": pct(fitted["greedy_p05"]["breach_upper"]),
+        "P05_TRUE": pct(true["greedy_p05"]["breach_rate"]),
+        "LADDER_VALUE": usd(proof["ladder_sensitivity"]["value_cents"]),
+        "LADDER_BREACH": pct(proof["ladder_sensitivity"]["breach_rate"]),
         "COST_OF_CASH": pct(bundle["cash_value"]["cost_of_cash"], 1) + "/yr",
         "ROWS_NAIVE": f"{bundle['solver']['rows_naive']:,}",
         "ROWS": f"{bundle['solver']['rows']:,}",

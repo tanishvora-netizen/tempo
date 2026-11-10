@@ -1,4 +1,4 @@
-BUILD STATUS: IN PROGRESS (phase P4/P5; P6 next)
+BUILD STATUS: IN PROGRESS (phase P6)
 
 # Tempo build progress
 
@@ -8,7 +8,7 @@ BUILD STATUS: IN PROGRESS (phase P4/P5; P6 next)
 2. **Keep it awake for judging week (pick one).** Upgrade the service to the $7/mo `0.5c-512mb` plan (0.5 CPU, no sleep; recommended: custom what-ifs solve live and the free plan's 0.1 CPU is slow), or set the GitHub repo variable `TEMPO_URL` (Settings → Secrets and variables → Actions → Variables) so `.github/workflows/keepwarm.yml` pings it, and add a free UptimeRobot 5-minute monitor on `<url>/health`.
 3. Optional skill (not installed tonight): `npx skills add anthropics/skills@webapp-testing` (201.6K installs) for Playwright-driven web app testing. It overlaps ECC `e2e-testing`, so it is not needed for the build.
 
-## What works end to end (as of 03:45 PT)
+## What works end to end (as of 04:00 PT)
 - Synthetic dataset (`data/demo`, `data/ample`): 212 bills, 40 vendors, 25 customers, hard-case invoices with ground truth. Starting cash calibrated by the pre-registered rule ($3.6M, fallback rule; see DECISIONS.md and RESULTS.md).
 - Extraction: deterministic parser (205+ tests), local model (qwen3:8b via Ollama) with quote verification, reconciliation table, Needs review; cache build running in the background (`logs/build_cache.log`).
 - Forecast: censored, partially pooled lognormal with a common factor; fan chart data.
@@ -16,11 +16,15 @@ BUILD STATUS: IN PROGRESS (phase P4/P5; P6 next)
 - API: every route in directive 8.2 (FastAPI), live re-solve for custom what-ifs and review edits, precomputed presets.
 - P5: negotiation agent (break-even pricing, optimizer-verified offers, number guard, reply parsing), hash-chained audit log, Ramp payload preview (never sent).
 - Councils: C1 and C2 recorded in `docs/council/`, all rulings applied.
+- UI: five screens, Negotiate and Audit drawers, Approve dialog, PDF upload (in progress), 22 screenshots; e2e demo path passes with zero external requests.
+- Extraction cache complete (212 invoices, qwen3:8b; 2 cached failures route to the parser path).
+- Fresh-clone check: runtime requirements only, every route and asset served.
+- Final numbers (seed C, fitted model): Tempo $41,036 at 2.24% (bound 2.50%); weekly run $34,189 at 10.1%; greedy $52,596 at 7.69%; true model: Tempo 2.74%.
 
 ## In flight
-- UI (subagent): `app/static/` vanilla ES modules + Tailwind, design system in `design-system/tempo/MASTER.md`, screenshots in `docs/screenshots/`.
-- Security review (subagent).
-- Extraction cache build (local model): when done, run the final sequence below.
+- Negotiation cache (local model drafts and reply parses), precompute re-run with the ladder sensitivity, then `make results`.
+- UI subagent: PDF upload panel, review badge refresh, then re-shoot all screenshots once precompute is final.
+- Next: C3 (UI council), demo video, C4 (red team), definition-of-done checks.
 
 ## Final sequence once the cache build finishes
 ```bash

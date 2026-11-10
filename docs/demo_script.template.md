@@ -30,7 +30,7 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Live final: `ma
 
 **Click:** Proof.
 
-> "Every number here is out of sample: 10,000 fresh scenarios that no decision saw. A separate 10,000 decide certification, with a Bonferroni correction because we test up to six plans. The smart-spreadsheet rule, which checks the 5th percentile day by day, still breaches above 5%. That's why the constraint has to be joint. And here's the same table under the generator's true payment model: our honest check on model error."
+> "Every number here is out of sample: 10,000 fresh scenarios that no decision saw. A separate 10,000 decide certification, with a Bonferroni correction because we test up to six plans. The smart-spreadsheet rule, which checks the 5th percentile day by day, lands at ⟨P05_BREACH⟩ with an upper bound of ⟨P05_BOUND⟩, and ⟨P05_TRUE⟩ under the true model. It can't certify itself, because per-day checks don't bound the chance of a breach on any day. That's why the constraint has to be joint. And here's the same table under the generator's true payment model: our honest check on model error."
 
 ## 2:20 to 3:50: Namith (the AI layer, controls, Ramp)
 
@@ -56,7 +56,7 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Live final: `ma
 
 ## Judge Q&A
 
-1. **Why not greedy?** Greedy picks bills one at a time in due-date order, so it can't see that two early payments together sink payroll day. Greedy on the median breaches ⟨GREEDY_BREACH⟩. Even the smart spreadsheet that checks each day's 5th percentile breaches ⟨P05_BREACH⟩, because per-day checks don't bound the chance of a breach on any day. The joint MILP does.
+1. **Why not greedy?** Greedy picks bills one at a time in due-date order, so it can't see that two early payments together sink payroll day. Greedy on the median breaches ⟨GREEDY_BREACH⟩. The smart spreadsheet that checks each day's 5th percentile lands at ⟨P05_BREACH⟩ (bound ⟨P05_BOUND⟩; ⟨P05_TRUE⟩ under the true model): close to the line, uncertifiable, and it has no way to know its own risk. Our headline ladder is deliberately conservative (it certifies at ⟨TEMPO_BREACH⟩). Starting the certification ladder at K = 10 instead certifies a plan worth ⟨LADDER_VALUE⟩ at ⟨LADDER_BREACH⟩, as much as the spreadsheet, but with a guarantee. It's in RESULTS.md as a disclosed sensitivity.
 2. **How do you know the 95% holds?** Three seeds: A optimizes, B certifies with a one-sided Wilson bound (Bonferroni z = 2.394 for up to six tries), and C reports. On C: ⟨TEMPO_BREACH⟩, bound ⟨TEMPO_BOUND⟩. That covers sampling error. Model error is the main weakness, so we also report under the generator's true model: ⟨TEMPO_TRUE_BREACH⟩.
 3. **What if the model is wrong?** It can't move money on its own. Every value must match a verbatim quote re-parsed by code and agree with the parser. Disagreements, unverifiable values, insane values, and changes from terms on file go to Needs review, and bills in review never take a discount. On the held-out split we auto-accept ⟨COVERAGE⟩ at ⟨PRECISION⟩ precision.
 4. **Why a local model?** We may not be allowed external APIs, and invoices and cash positions are sensitive. A local 8B model is enough for locate-and-quote when code does the verification. A hosted adapter exists but refuses to run unless explicitly enabled.
