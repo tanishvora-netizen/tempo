@@ -287,6 +287,11 @@ def update_readme(bundle: dict, proof: dict) -> None:
             "",
             f"- Certified with N = {cert['n']}, K = {cert['k']} on a separate 10,000-scenario set "
             f"(Bonferroni-corrected Wilson bound).",
+            f"- Sensitivity (disclosed in DECISIONS.md): a certification ladder that starts at K = 10 instead of "
+            f"the pre-registered K = 4 gives {usd(proof['ladder_sensitivity']['value_cents'])} at "
+            f"{pct(proof['ladder_sensitivity']['breach_rate'])} "
+            f"(bound {pct(proof['ladder_sensitivity']['breach_upper'])}): close to the smart spreadsheet's "
+            "value, but certified.",
             f"- Solver: {solver['rows']:,} rows instead of {solver['rows_naive']:,}, {solver['solve_seconds']:.2f} s, "
             f"gap {pct(solver['mip_gap'], 3)}.",
             f"- Extraction (synthetic, held-out split): Tempo auto-accepts {pct(rec['coverage'], 0)} of invoices' terms "
