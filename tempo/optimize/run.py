@@ -11,6 +11,7 @@ import numpy as np
 from tempo.assumptions import (
     EPSILON,
     FALLBACK_N,
+    FINANCE_ENABLED,
     N_CERT_SCENARIOS,
     N_OPT_SCENARIOS,
     SEED_A,
@@ -54,10 +55,12 @@ def prepare(
     what_if: WhatIf | None = None,
     overrides: dict[str, TermsRecord] | None = None,
     cash_delta_cents: int = 0,
+    finance_enabled: bool = FINANCE_ENABLED,
 ) -> RunInputs:
     """Resolve bills and options and draw the optimizer (A) and certification (B) scenarios."""
     bills = plannable_bills(dataset, ingest_result, overrides)
-    options = option_sets(bills, RailContext(dataset.company.as_of, dataset.company.funding_account))
+    ctx = RailContext(dataset.company.as_of, dataset.company.funding_account, finance_enabled)
+    options = option_sets(bills, ctx)
     forecast = build_forecast(dataset, what_if, cash_delta_cents)
     fallback = forecast.headroom(forecast.scenarios(FALLBACK_N, SEED_A))
     head_a = fallback[:N_OPT_SCENARIOS]
@@ -90,16 +93,20 @@ def baseline_plans(inputs: RunInputs, cost_of_cash: float = YIELD_ON_CASH) -> di
     }
 
 
-def ablation_plans(inputs: RunInputs, fan_headroom: np.ndarray) -> dict[str, Plan]:
-    """Per-day chance constraints instead of Tempo's joint one (evaluated on seed C in RESULTS.md)."""
-    n_days = inputs.horizon
+def ablation_plans(inputs: RunInputs) -> dict[str, Plan]:
+    """Per-day chance constraints instead of Tempo's joint one, planned on the 1,000 seed-A scenarios.
+
+    "per_day_worst_case" is Bonferroni at 0.05 / 91 days per day, which at 1,000 scenarios reduces to the
+    pointwise minimum (council C2, quant).
+    """
+    head = inputs.headroom_a_fallback
     b, o, a = inputs.bills, inputs.options, inputs.as_of
     return {
-        "per_day_5pct": bl.path_plan(b, o, bl.quantile_path(fan_headroom, EPSILON), a, "per_day_5pct"),
-        "bonferroni_per_day": bl.path_plan(
-            b, o, bl.quantile_path(fan_headroom, EPSILON / n_days), a, "bonferroni_per_day"
+        "per_day_5pct": bl.path_plan(b, o, bl.quantile_path(head, EPSILON), a, "per_day_5pct"),
+        "per_day_worst_case": bl.path_plan(
+            b, o, bl.quantile_path(head, EPSILON / inputs.horizon), a, "per_day_worst_case"
         ),
-        "deterministic_p50": bl.path_plan(b, o, bl.quantile_path(fan_headroom, 0.5), a, "deterministic_p50"),
+        "deterministic_p50": bl.path_plan(b, o, bl.quantile_path(head, 0.5), a, "deterministic_p50"),
     }
 
 

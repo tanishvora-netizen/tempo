@@ -206,3 +206,34 @@ def test_prose_terms_verified_through_number_words() -> None:
     r = reconcile(inv, _vendor(), ext)
 
     assert r.terms.status == "verified"
+
+
+@pytest.mark.parametrize(
+    ("footer", "reason"),
+    [
+        ("Late payments are subject to a 20% monthly finance charge.", "late fee"),
+        ("A 40% surcharge applies to credit card payments.", "surcharge"),
+    ],
+)
+def test_late_fee_and_surcharge_sanity_rules_send_the_bill_to_review(footer: str, reason: str) -> None:
+    inv = _invoice({"header": "Terms: 2/10 Net 30", "footer": footer})
+
+    r = reconcile(inv, _vendor(), None)
+
+    assert r.terms.status == "sanity_fail"
+    assert reason in r.terms.reason
+
+
+def test_reasonable_late_fee_and_surcharge_pass() -> None:
+    inv = _invoice(
+        {
+            "header": "Terms: 2/10 Net 30",
+            "footer": "A 3% surcharge applies to credit card payments. "
+            "Late payments are subject to a 1.5% monthly finance charge.",
+        }
+    )
+
+    r = reconcile(inv, _vendor(), None)
+
+    assert r.terms.status == "regex_only"
+    assert r.card_surcharge_bps == 300

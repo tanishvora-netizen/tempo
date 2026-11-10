@@ -1,0 +1,11 @@
+{
+ "created_at": "2026-11-10T11:26:35+00:00",
+ "error": null,
+ "key": "dfb83df702d2dc9f92634a33c2636bd89230b41aae862c383262b20e3504dd83",
+ "model": "qwen3:8b",
+ "prompt_version": "v1",
+ "provider": "ollama",
+ "raw": "{\n  \"terms_quote\": \"Due within 30 days\",\n  \"terms_source\": \"header\",\n  \"discount_pct\": null,\n  \"discount_days\": null,\n  \"net_days\": 30,\n  \"anchor\": \"invoice_date\",\n  \"prox_day\": null,\n  \"late_fee_quote\": null,\n  \"late_fee_source\": null,\n  \"late_fee_kind\": null,\n  \"late_fee_value\": null,\n  \"methods_quote\": \"We accept ACH, check.\",\n  \"methods_source\": \"payment_box\",\n  \"accepted_methods\": [\"ACH\", \"CHECK\"],\n  \"surcharge_quote\": null,\n  \"surcharge_source\": null,\n  \"card_surcharge_pct\": null,\n  \"card_discount_quote\": null,\n  \"card_discount_source\": null,\n  \"card_discount_allowed\": false,\n  \"terms_overridden_in_email\": false\n}",
+ "schema_version": "terms-v2",
+ "task": "extract"
+}

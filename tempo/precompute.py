@@ -6,7 +6,7 @@ hash mismatch it serves them anyway with a visible "results from build <hash>" b
 
 import hashlib
 import time
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
@@ -14,8 +14,10 @@ import numpy as np
 
 from tempo.assumptions import EPSILON, N_EVAL_SCENARIOS, N_FAN_SCENARIOS, SEED, SEED_C, SEED_FAN
 from tempo.extract.eval import evaluate_extraction
+from tempo.extract.reconcile import sanity_problem
 from tempo.forecast.simulate import WhatIf
 from tempo.models import Dataset, TermsRecord
+from tempo.optimize import baselines as bl
 from tempo.optimize.cash_value import CashValue, marginal_value_of_cash
 from tempo.optimize.certify import Certification
 from tempo.optimize.engine import Plan, true_params
@@ -49,15 +51,40 @@ MARKER_COUNT = 8
 
 
 def input_hash(regime: str = "demo") -> str:
-    """sha256 over the committed dataset, assumptions.py, every model-cache entry, and the seed."""
+    """sha256 over the committed dataset, assumptions.py, the cache manifest, the sorted cache entry names
+    (each name is the hash of its prompt, schema, and document), and the seed."""
     h = hashlib.sha256()
-    for path in (REPO / "data" / regime / "dataset.json", REPO / "tempo" / "assumptions.py"):
-        h.update(path.read_bytes())
-    for path in sorted((REPO / "data" / "cache").glob("*/*.json")):
+    cache = REPO / "data" / "cache"
+    for path in (
+        REPO / "data" / regime / "dataset.json",
+        REPO / "tempo" / "assumptions.py",
+        cache / "manifest.json",
+    ):
+        h.update(path.read_bytes() if path.exists() else b"missing")
+    for path in sorted(cache.glob("*/*.json")):
         h.update(path.name.encode())
-        h.update(path.read_bytes())
     h.update(str(SEED).encode())
     return h.hexdigest()[:16]
+
+
+def pay_on_due_plan(inputs: RunInputs) -> Plan:
+    return bl.pay_on_due(inputs.bills, inputs.options, inputs.horizon)
+
+
+def financing_sensitivity(dataset: Dataset, ingest_result: IngestResult) -> dict:
+    """Tempo with the Flex-style option on (assumed fee, capped line), evaluated on seed C like the headline."""
+    inputs = prepare(dataset, ingest_result, finance_enabled=True)
+    plan, cert = run_tempo(inputs)
+    head_c = inputs.forecast.headroom(inputs.forecast.scenarios(N_EVAL_SCENARIOS, SEED_C))
+    res = evaluate(plan, head_c, inputs.as_of, dataset.company.buffer_cents)
+    financed = [o for o in plan.chosen() if o.rail == "FINANCE"]
+    return {
+        **policy_view(res),
+        "policy": "tempo_with_financing",
+        "certified": cert.passed,
+        "financed_count": len(financed),
+        "financed_cents": sum(o.cash_out_cents for o in financed),
+    }
 
 
 @dataclass(frozen=True)
@@ -154,7 +181,7 @@ def markers(plan: Plan) -> list[dict]:
 
 
 def build_bundle(dataset: Dataset, ingest_result: IngestResult, base: Solved) -> dict:
-    pay_on_due = baseline_plans(base.inputs)["pay_on_due"]
+    pay_on_due = pay_on_due_plan(base.inputs)
     decisions = decisions_for(base)
     c = dataset.company
     return {
@@ -175,6 +202,7 @@ def build_bundle(dataset: Dataset, ingest_result: IngestResult, base: Solved) ->
         },
         **plan_summary(base, pay_on_due),
         "markers": markers(base.plan),
+        "credit_cum_cents": [int(x) for x in base.plan.credit_cum_cents],
         "bills": bill_rows(base.plan, decisions, ingest_result.reconciled),
         "fixed_outflows": [
             {
@@ -194,7 +222,7 @@ def build_proof(dataset: Dataset, ingest_result: IngestResult, base: Solved) -> 
     fitted = evaluate_all(plans, base.headroom_c, base.inputs)
     truth_scen = base.inputs.forecast.scenarios(N_EVAL_SCENARIOS, SEED_C, params=true_params(dataset))
     true_res = evaluate_all(plans, base.inputs.forecast.headroom(truth_scen), base.inputs)
-    abl = {**ablation_plans(base.inputs, base.fan_headroom), "tempo": base.plan}
+    abl = {**ablation_plans(base.inputs), "tempo": base.plan}
     abl_res = evaluate_all(abl, base.headroom_c, base.inputs)
     return {
         "input_hash": input_hash(dataset.regime),
@@ -203,8 +231,9 @@ def build_proof(dataset: Dataset, ingest_result: IngestResult, base: Solved) -> 
         "policies_true_model": [policy_view(true_res[p]) for p in POLICY_ORDER],
         "ablations": [
             policy_view(abl_res[p])
-            for p in ("tempo", "per_day_5pct", "bonferroni_per_day", "deterministic_p50")
+            for p in ("tempo", "per_day_5pct", "per_day_worst_case", "deterministic_p50")
         ],
+        "financing_sensitivity": financing_sensitivity(dataset, ingest_result),
         "extraction": evaluate_extraction(dataset, ingest_result.reconciled, ingest_result.extractions),
     }
 
@@ -237,7 +266,7 @@ def build_whatifs(dataset: Dataset, ingest_result: IngestResult, base: Solved) -
     out = []
     for preset_id, label, wi in what_if_presets(dataset):
         s = solve_case(dataset, ingest_result, wi)
-        pay_on_due = baseline_plans(s.inputs)["pay_on_due"]
+        pay_on_due = pay_on_due_plan(s.inputs)
         decisions = decisions_for(s)
         out.append(
             {
@@ -258,8 +287,6 @@ def build_whatifs(dataset: Dataset, ingest_result: IngestResult, base: Solved) -
 def suggested_terms(r, prior: TermsRecord | None) -> TermsRecord | None:
     """What the reviewer is offered by default: the vendor's terms on file if a reading matches them, else the
     value the table proposed before the sanity/history check, else the first sane parser reading."""
-    from tempo.extract.reconcile import sanity_problem
-
     candidates = list(r.terms.regex_values)
     if r.terms.model_value is not None:
         candidates.append(r.terms.model_value)
@@ -284,7 +311,7 @@ def build_review_effects(dataset: Dataset, ingest_result: IngestResult, base: So
         out.append(
             {
                 "bill_id": inv.id,
-                "suggested": suggestion.__dict__,
+                "suggested": asdict(suggestion),
                 "value_delta_cents": s.plan.value_cents() - base.plan.value_cents(),
                 "diff": diff_plans(base.plan, s.plan, decisions_for(s)),
                 "plan_hash": s.plan.plan_hash(),

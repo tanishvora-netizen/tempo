@@ -7,20 +7,19 @@ optimizer's scenarios: if they exceed K, the cash constraint binds and we name t
 breach. Otherwise the solve stopped within its optimality gap.
 """
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 from datetime import date, timedelta
 
 import numpy as np
 
-from tempo.assumptions import CARD_CASHBACK
+from tempo.assumptions import CARD_CASHBACK, DAYS_IN_YEAR
 from tempo.models import Decision, FixedOutflow, PaymentOption
 from tempo.money import format_usd
-from tempo.optimize.baselines import annualized_discount_return
+from tempo.optimize.baselines import EARLY_KINDS, annualized_discount_return
 from tempo.optimize.cash import plan_outflow_cum, slack
 from tempo.optimize.engine import Plan
 from tempo.optimize.options import PlannableBill
 
-EARLY_KINDS = ("BANK_EARLY", "CARD_EARLY", "FINANCE_EARLY")
 METHOD_FOR_RAIL = {"RTP": "ACH", "ACH": "ACH", "CARD": "CARD", "FINANCE": "FINANCE"}
 
 
@@ -43,10 +42,28 @@ def pct(x: float, digits: int = 1) -> str:
     return f"{x * 100:.{digits}f}%".replace(".0%", "%")
 
 
+def ordinal(n: int) -> str:
+    """1 -> 1st, 2 -> 2nd, 3 -> 3rd, 11 -> 11th, 22 -> 22nd."""
+    suffix = "th" if 11 <= n % 100 <= 13 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
+
+
+def cash_return(o: PaymentOption, days_early: int) -> float:
+    """Annualized return on the cash actually paid: (discount / cash paid) * 365 / days early.
+
+    The discount applies to the subtotal only, so this is lower than the headline d / (1 - d) * 365 / (N - D)
+    whenever the invoice carries tax or freight (council C2, controller).
+    """
+    paid = o.cash_out_cents - o.fee_cents - o.surcharge_cents
+    if days_early <= 0 or paid <= 0:
+        return 0.0
+    return o.discount_cents / paid * DAYS_IN_YEAR / days_early
+
+
 def terms_label(bill: PlannableBill) -> str:
     t = bill.terms
     if t.anchor == "prox":
-        return f"Net {t.prox_day}th prox"
+        return f"Net {ordinal(t.prox_day or 0)} prox"
     base = f"net {t.net_days}" if t.net_days is not None else "net"
     eom = " EOM" if t.anchor == "eom" else ""
     if t.discount_bps:
@@ -103,23 +120,24 @@ def _reason(
 
 
 def _early_reason(ctx: ExplainContext, bill: PlannableBill, o: PaymentOption) -> str:
-    t = bill.terms
     early_days = (bill.due_date - o.arrival_date).days
-    r = annualized_discount_return(bill)
-    head = f"{t.discount_bps / 100:g}% for paying {early_days} days early, about {pct(r, 0)}/yr"
+    r = cash_return(o, early_days)
+    saves = f"saves {format_usd(o.discount_cents)} ({bill.terms.discount_bps / 100:g}% of the subtotal)"
     if o.kind == "FINANCE_EARLY":
+        net = o.discount_cents - o.fee_cents
         return (
-            f"Financed at the discount deadline {fmt_date(o.send_date)}: {head}; a Flex-style fee of "
-            f"{format_usd(o.fee_cents)} and you repay {fmt_date(o.cash_out_date)}, so cash stays in the account."
+            f"Financed {fmt_date(o.send_date)} so the vendor is paid by the discount deadline: {saves}, minus an "
+            f"assumed Flex-style fee of {format_usd(o.fee_cents)}, net {format_usd(net)}; you repay "
+            f"{fmt_date(o.cash_out_date)}."
         )
     if o.kind == "CARD_EARLY":
         return (
-            f"Paid early by card {fmt_date(o.send_date)}: {head}, plus {pct(CARD_CASHBACK)} cashback; cash leaves "
+            f"Paid early by card {fmt_date(o.send_date)}: {saves} plus {pct(CARD_CASHBACK)} cashback; cash leaves "
             f"{fmt_date(o.cash_out_date)} with the statement."
         )
     return (
-        f"Paid early {fmt_date(o.send_date)} by {o.rail}: {head}, beats your {pct(ctx.cost_of_cash, 0)}/yr "
-        f"cost of cash."
+        f"Paid early {fmt_date(o.send_date)} by {o.rail}: {saves} for paying {early_days} days early, a "
+        f"{pct(r, 1)}/yr return on the cash, vs your {pct(ctx.cost_of_cash, 1)}/yr cost of cash."
     )
 
 
@@ -134,6 +152,11 @@ def _card_reason(o: PaymentOption) -> str:
 
 def _due_reason(ctx: ExplainContext, bill, opts, o, base_cum, base_breaches) -> tuple[str, date | None]:
     head = f"Paid on the due date {fmt_date(bill.due_date)} by {o.rail}"
+    if o.arrival_date > bill.due_date:
+        head = (
+            f"Sent {fmt_date(o.send_date)} by {o.rail}, arriving {fmt_date(o.arrival_date)}, after the "
+            f"{fmt_date(bill.due_date)} due date (ACH needs business days from today)"
+        )
     if bill.terms.discount_bps and not bill.discount_usable:
         return (
             f"{head}: the discount terms are in Needs review, so no discount is taken until someone confirms them.",
@@ -188,7 +211,7 @@ def _binding_reason(
 
 
 def _cum_of(o: PaymentOption, as_of: date, horizon: int) -> np.ndarray:
-    return plan_outflow_cum((replace(o),), as_of, horizon)
+    return plan_outflow_cum((o,), as_of, horizon)
 
 
 def _day_label(d: date, fixed: tuple[FixedOutflow, ...]) -> str:

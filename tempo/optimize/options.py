@@ -31,7 +31,12 @@ from tempo.assumptions import (
     RTP_FEE_CENTS,
     YIELD_ON_CASH,
 )
-from tempo.business_days import subtract_business_days
+from tempo.business_days import (
+    add_business_days,
+    next_business_day,
+    previous_business_day,
+    subtract_business_days,
+)
 from tempo.models import LateFeeRecord, PaymentOption, TermsRecord
 from tempo.money import apply_rate, bps_to_rate
 
@@ -72,7 +77,8 @@ class RailContext:
 @dataclass(frozen=True)
 class _BankLeg:
     rail: str
-    send: date
+    send: date  # a business day: Ramp rolls unavailable payment dates forward, which could miss a deadline
+    arrival: date
     fee_cents: int
 
 
@@ -109,27 +115,39 @@ def late_fee_cents(bill: PlannableBill) -> int:
     return apply_rate(bill.total_cents, bps_to_rate(bps))
 
 
-def _bank_leg(bill: PlannableBill, ctx: RailContext, arrival: date, discount_window: bool) -> _BankLeg:
+def _bank_leg(bill: PlannableBill, ctx: RailContext, target: date, discount_window: bool) -> _BankLeg:
+    """Latest business-day send that arrives by `target`; if that is already past, send on the first business
+    day from the as-of date and arrive when the rail allows (possibly after `target`)."""
     if ctx.funding_account == "ramp_checking" and bill.rtp_eligible:
-        return _BankLeg("RTP", arrival, RTP_FEE_CENTS)
+        send = max(previous_business_day(target), next_business_day(ctx.as_of))
+        return _BankLeg("RTP", send, send, RTP_FEE_CENTS)
     lead = ACH_LEAD_DISCOUNT_BUSINESS_DAYS if discount_window else ACH_LEAD_BUSINESS_DAYS
     if bill.is_new_vendor:
         lead = ACH_LEAD_NEW_VENDOR_BUSINESS_DAYS
     fee = 0 if ctx.funding_account == "ramp_checking" else ACH_FEE_CENTS
-    return _BankLeg("ACH", subtract_business_days(arrival, lead), fee)
+    send = max(subtract_business_days(target, lead), next_business_day(ctx.as_of))
+    return _BankLeg("ACH", send, add_business_days(send, lead), fee)
+
+
+def _on_time(leg: _BankLeg, target: date) -> bool:
+    return leg.arrival <= target
 
 
 def build_options(bill: PlannableBill, ctx: RailContext) -> tuple[PaymentOption, ...]:
-    """All feasible options for one bill; BANK_DUE and LATE always exist."""
+    """All feasible options for one bill; BANK_DUE and LATE always exist.
+
+    BANK_DUE's arrival can fall after the due date only when the as-of date leaves too little ACH lead time;
+    the option keeps its true arrival date so the UI and explanations can say so.
+    """
     due_leg = _bank_leg(bill, ctx, bill.due_date, discount_window=False)
-    base_send = max(due_leg.send, ctx.as_of)
+    base_send = due_leg.send
     base = _option(
         bill,
         "BANK_DUE",
         due_leg.rail,
-        base_send,
-        bill.due_date,
-        base_send,
+        due_leg.send,
+        due_leg.arrival,
+        due_leg.send,
         bill.total_cents,
         base_send,
         rail_fee=due_leg.fee_cents,
@@ -138,9 +156,14 @@ def build_options(bill: PlannableBill, ctx: RailContext) -> tuple[PaymentOption,
     if _discount_open(bill, ctx):
         options += _discount_options(bill, ctx, base_send)
     if bill.accepts_card:
-        options.append(_card(bill, "CARD", bill.due_date, bill.total_cents, base_send))
+        options.append(_card(bill, "CARD", _charge_day(bill.due_date, ctx), bill.total_cents, base_send))
     options.append(_late(bill, ctx, base_send))
     return tuple(options)
+
+
+def _charge_day(target: date, ctx: RailContext) -> date:
+    """Card charges are scheduled on business days too, never before the as-of date."""
+    return max(previous_business_day(target), next_business_day(ctx.as_of))
 
 
 def _discount_open(bill: PlannableBill, ctx: RailContext) -> bool:
@@ -153,43 +176,47 @@ def _discount_open(bill: PlannableBill, ctx: RailContext) -> bool:
 
 
 def _discount_options(bill: PlannableBill, ctx: RailContext, base_send: date) -> list[PaymentOption]:
+    """Options that take the discount; each must reach the vendor by the discount deadline."""
     deadline = bill.discount_deadline
-    assert deadline is not None
+    if deadline is None:
+        return []
     paid = discounted_amount(bill)
+    discount = bill.total_cents - paid
     out: list[PaymentOption] = []
     leg = _bank_leg(bill, ctx, deadline, discount_window=True)
-    if leg.send >= ctx.as_of:
+    if _on_time(leg, deadline):
         out.append(
             _option(
                 bill,
                 "BANK_EARLY",
                 leg.rail,
                 leg.send,
-                deadline,
+                leg.arrival,
                 leg.send,
                 paid,
                 base_send,
                 rail_fee=leg.fee_cents,
-                discount=bill.total_cents - paid,
+                discount=discount,
             )
         )
-    if bill.accepts_card and bill.card_discount_allowed:
-        out.append(_card(bill, "CARD_EARLY", deadline, paid, base_send))
-    if ctx.finance_enabled:
-        repay = deadline + timedelta(days=FINANCE_TERM_DAYS)
+    charge = previous_business_day(deadline)
+    if bill.accepts_card and bill.card_discount_allowed and charge >= ctx.as_of:
+        out.append(_card(bill, "CARD_EARLY", charge, paid, base_send))
+    if ctx.finance_enabled and charge >= ctx.as_of:
+        repay = charge + timedelta(days=FINANCE_TERM_DAYS)
         fee = apply_rate(paid, FINANCE_FEE_PER_30_DAYS * FINANCE_TERM_DAYS / 30)
         out.append(
             _option(
                 bill,
                 "FINANCE_EARLY",
                 "FINANCE",
-                deadline,
-                deadline,
+                charge,
+                charge,
                 repay,
                 paid + fee,
                 base_send,
                 fee_in_cash=fee,
-                discount=bill.total_cents - paid,
+                discount=discount,
             )
         )
     return out
@@ -214,17 +241,15 @@ def _card(bill: PlannableBill, kind: str, charge_day: date, amount: int, base_se
 
 
 def _late(bill: PlannableBill, ctx: RailContext, base_send: date) -> PaymentOption:
-    arrival = bill.due_date + timedelta(days=LATE_DAYS)
-    leg = _bank_leg(bill, ctx, arrival, discount_window=False)
+    leg = _bank_leg(bill, ctx, bill.due_date + timedelta(days=LATE_DAYS), discount_window=False)
     fee = late_fee_cents(bill)
-    send = max(leg.send, ctx.as_of)
     return _option(
         bill,
         "LATE",
         leg.rail,
-        send,
-        arrival,
-        send,
+        leg.send,
+        leg.arrival,
+        leg.send,
         bill.total_cents + fee,
         base_send,
         rail_fee=leg.fee_cents,

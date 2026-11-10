@@ -62,6 +62,7 @@ def main() -> None:
     calib = json.loads(CALIBRATION.read_text())
     k, cert, solver, cv = bundle["kpis"], bundle["certification"], bundle["solver"], bundle["cash_value"]
     pol = {r["policy"]: r for r in proof["policies"]}
+    true_pol = {r["policy"]: r for r in proof["policies_true_model"]}
     tempo, greedy, weekly = pol["tempo"], pol["greedy_discount"], pol["weekly_run"]
     ev = proof["extraction"]
     lines = [
@@ -72,15 +73,19 @@ def main() -> None:
         "",
         "## Headline",
         "",
-        f"- Tempo captures **{usd(tempo['value_cents'])}** over 13 weeks versus paying every bill on its due date, "
-        f"with an out-of-sample buffer-breach probability of **{pct(tempo['breach_rate'])}** "
-        f"(one-sided 95% upper bound {pct(tempo['breach_upper'])}) against a {pct(k['epsilon'], 0)} target.",
-        f"- Today's weekly AP run captures {usd(weekly['value_cents'])} and breaches the buffer in "
+        f"- Tempo captures **{usd(tempo['value_cents'])}** over 13 weeks versus paying every bill on its due date. "
+        f"Under the fitted forecast model, its chance of any end-of-day balance below the buffer is "
+        f"**{pct(tempo['breach_rate'])}** (one-sided 95% upper bound {pct(tempo['breach_upper'])}) against a "
+        f"{pct(k['epsilon'], 0)} target, on {cert['reported']['n']:,} fresh scenarios (seed C) no decision saw. "
+        f"Under the generator's true payment model it is {pct(true_pol['tempo']['breach_rate'])} "
+        f"(bound {pct(true_pol['tempo']['breach_upper'])}).",
+        f"- Today's weekly AP run captures {usd(weekly['value_cents'])} and breaches in "
         f"{pct(weekly['breach_rate'])} of scenarios. Greedy discount-taking on the median forecast captures "
         f"{usd(greedy['value_cents'])} but breaches in {pct(greedy['breach_rate'])}. Tempo keeps "
-        f"{tempo['value_cents'] / greedy['value_cents'] * 100:.0f}% of greedy's value at about a third of its risk.",
-        f"- Reported on {cert['reported']['n']:,} fresh scenarios (seed C = {cert['reported']['seed']}) that no "
-        f"decision ever saw.",
+        f"{tempo['value_cents'] / greedy['value_cents'] * 100:.0f}% of greedy's value at "
+        f"{tempo['breach_rate'] / greedy['breach_rate'] * 100:.0f}% of its risk.",
+        "- Certification covers sampling error, not model error: seeds B and C are drawn from the same fitted "
+        "forecast. The true-model column below is the check on the model itself.",
         "",
         "## Certification (seed B decides, seed C reports)",
         "",
@@ -117,6 +122,22 @@ def main() -> None:
         "",
     ]
     lines += policy_table(proof["ablations"], "Seed C")
+    lines += [
+        "`per_day_5pct` keeps each day's balance above the buffer in 95% of scenarios separately; "
+        "`per_day_worst_case` is Bonferroni at 0.05 / 91 per day, which at 1,000 planning scenarios reduces to "
+        "the pointwise minimum. Both are planned on the same 1,000 seed-A scenarios.",
+        "",
+        "## Sensitivity: Flex-style financing on",
+        "",
+        "Off in the headline (council C2): the fee is an assumption and Flex has no public API.",
+        "",
+    ]
+    fin = proof["financing_sensitivity"]
+    lines += policy_table(
+        [fin],
+        f"Seed C, financing on ({fin['financed_count']} bills financed, "
+        f"{usd(fin['financed_cents'])} repaid; certified: {'yes' if fin['certified'] else 'no'})",
+    )
     lines += [
         "## Solver",
         "",

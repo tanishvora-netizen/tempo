@@ -5,11 +5,10 @@ due date is the earliest one any candidate reading implies (or the vendor's term
 """
 
 from dataclasses import dataclass, replace
-from datetime import timedelta
 
-from tempo.assumptions import EOM_ROLL_AFTER_25TH
+from tempo.assumptions import EOM_ROLL_AFTER_25TH, MAX_NET_DAYS
 from tempo.extract.due_dates import discount_deadline, due_date
-from tempo.extract.reconcile import Reconciled, reconcile
+from tempo.extract.reconcile import Reconciled, reconcile, sanity_problem
 from tempo.llm.provider import LLMProvider, ProviderError, extraction_call
 from tempo.llm.schemas import TermsExtraction
 from tempo.models import Dataset, Invoice, TermsRecord, Vendor
@@ -34,7 +33,7 @@ def ingest(dataset: Dataset, provider: LLMProvider | None) -> IngestResult:
     for inv in dataset.invoices:
         vendor = vendors[inv.vendor_id]
         ext, err = _extract(provider, inv, vendor, dataset.company.domain)
-        errors += err is not None
+        errors += err is not None and provider is not None
         extractions[inv.id] = ext
         reconciled[inv.id] = reconcile(inv, vendor, ext, err)
     name = provider.name if provider is not None else "none"
@@ -56,6 +55,9 @@ def planning_terms(
 ) -> tuple[TermsRecord, bool]:
     """Terms the plan uses and whether its discount may be taken (only for accepted or human-approved terms)."""
     if override is not None:
+        problem = sanity_problem(override)
+        if problem:
+            raise ValueError(f"reviewer terms fail the sanity rules: {problem}")
         return override, True
     if r.terms.value is not None:
         return r.terms.value, True
@@ -71,7 +73,9 @@ def _conservative_terms(r: Reconciled, vendor: Vendor) -> TermsRecord:
 
 
 def _valid_net(t: TermsRecord) -> bool:
-    return (t.anchor == "prox" and bool(t.prox_day)) or (t.net_days is not None and 0 <= t.net_days <= 120)
+    return (t.anchor == "prox" and bool(t.prox_day)) or (
+        t.net_days is not None and 0 <= t.net_days <= MAX_NET_DAYS
+    )
 
 
 def plannable_bills(
@@ -126,10 +130,3 @@ def _earliest_due(inv: Invoice, r: Reconciled, vendor: Vendor, default: TermsRec
         replace(c, discount_bps=None, discount_days=None) for c in r.terms.regex_values if _valid_net(c)
     ]
     return min(options, key=lambda t: (due_date(inv.issued_at, t, EOM_ROLL_AFTER_25TH), repr(t)))
-
-
-def days_between(a, b) -> int:
-    return (b - a).days
-
-
-__all__ = ["IngestResult", "ingest", "plannable_bills", "planning_terms", "timedelta"]

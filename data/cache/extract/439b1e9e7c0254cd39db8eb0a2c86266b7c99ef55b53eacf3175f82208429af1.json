@@ -1,0 +1,11 @@
+{
+ "created_at": "2026-11-10T11:27:48+00:00",
+ "error": null,
+ "key": "439b1e9e7c0254cd39db8eb0a2c86266b7c99ef55b53eacf3175f82208429af1",
+ "model": "qwen3:8b",
+ "prompt_version": "v1",
+ "provider": "ollama",
+ "raw": "{\n  \"terms_quote\": \"2/10 Net 30\",\n  \"terms_source\": \"payment_box\",\n  \"discount_pct\": 2,\n  \"discount_days\": 10,\n  \"net_days\": 30,\n  \"anchor\": \"invoice_date\",\n  \"prox_day\": null,\n  \"late_fee_quote\": null,\n  \"late_fee_source\": null,\n  \"late_fee_kind\": null,\n  \"late_fee_value\": null,\n  \"methods_quote\": \"ACH: account ending 9794\",\n  \"methods_source\": \"payment_box\",\n  \"accepted_methods\": [\"ACH\"],\n  \"surcharge_quote\": null,\n  \"surcharge_source\": null,\n  \"card_surcharge_pct\": null,\n  \"card_discount_quote\": null,\n  \"card_discount_source\": null,\n  \"card_discount_allowed\": false,\n  \"terms_overridden_in_email\": false\n}",
+ "schema_version": "terms-v2",
+ "task": "extract"
+}

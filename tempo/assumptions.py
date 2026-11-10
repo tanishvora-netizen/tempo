@@ -41,7 +41,14 @@ CARD_SURCHARGE_SANITY_MAX = 0.04  # fraction. ASSUMPTION: anything above is trea
 FINANCE_FEE_PER_30_DAYS = 0.01  # fraction per 30 days. ASSUMPTION: a Flex-style fee for illustration only;
 #   Ramp's Flex pricing is not public, so this is never presented as Ramp's price.
 FINANCE_TERM_DAYS = 30  # days. ASSUMPTION: shortest Flex-style repayment term (30/60/90 offered).
-FINANCE_ENABLED = True  # bool. ASSUMPTION: the company has a Flex-style line enabled.
+FINANCE_ENABLED = (
+    False  # bool. ASSUMPTION: off for the headline (council C2): the fee is assumed and Flex has
+)
+#   no public API. RESULTS.md reports a sensitivity run with it on.
+FINANCE_LINE_LIMIT_CENTS = 50_000_000  # cents ($500,000). ASSUMPTION: cap on principal financed within any
+#   30-day window when financing is on.
+CARD_LIMIT_PER_CYCLE_CENTS = 50_000_000  # cents ($500,000). ASSUMPTION: card charges allowed per monthly
+#   statement cycle (card credit sits outside the cash constraint, so it needs its own cap; council C2).
 
 # --- Rails (Ramp Help Center; see docs/SOURCES.md) ---------------------------------------------
 
@@ -54,6 +61,10 @@ ACH_LEAD_DISCOUNT_BUSINESS_DAYS = 4  # business days. ASSUMPTION: the 4-day uppe
 ACH_LEAD_NEW_VENDOR_BUSINESS_DAYS = 5  # business days. SOURCED: new vendors can take up to 5.
 RTP_FEE_CENTS = 0  # cents. SOURCED: RTP is free per Ramp's Help Center, only from Ramp Checking, 24/7.
 RTP_VENDOR_SHARE = 0.70  # fraction of vendors whose bank receives RTP. ASSUMPTION.
+RTP_ASSURED = (
+    True  # bool. ASSUMPTION: paying from Ramp Checking, RTP-eligible vendors are paid by RTP. Ramp's
+)
+#   request enum has no RTP, so the payload preview also shows the ACH-safe fallback send date.
 
 # --- Late payment -------------------------------------------------------------------------------
 

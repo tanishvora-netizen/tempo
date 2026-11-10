@@ -32,6 +32,7 @@ from tempo.models import PaymentOption
 from tempo.optimize.cash import day_index
 
 CENTS = 100.0
+NODE_LIMIT = 200_000  # branch-and-bound nodes: bounds effort independently of CPU speed (council C1, R3)
 
 
 class SolverError(RuntimeError):
@@ -93,18 +94,27 @@ def solve(
     k: int,
     *,
     reduced: bool = True,
+    capacity: tuple[tuple[tuple[int, ...], int], ...] = (),
     credit_cost: float = CREDIT_COST,
     time_limit: float = SOLVER_TIME_LIMIT_S,
     mip_rel_gap: float = SOLVER_MIP_REL_GAP,
 ) -> MilpResult:
-    """Solve the chance-constrained plan with at most `k` unprotected scenarios."""
+    """Solve the chance-constrained plan with at most `k` unprotected scenarios.
+
+    `capacity` adds credit limits: each (flat option indices, cap in cents) row says
+    sum of c[o] x[o] over those options <= cap (card charges per statement cycle, financed principal per window).
+    """
     n_scen, horizon = headroom_cents.shape
+    if not 0 <= k < n_scen:
+        raise ValueError(f"k must be in [0, {n_scen}), got {k}")
     layout = _layout(bill_options, headroom_cents, as_of)
     r_d = headroom_cents[:, layout.days].astype(float) / CENTS
     rows = _Rows()
     _assignment_rows(rows, layout, len(bill_options))
     _recurrence_rows(rows, layout)
     _monotone_rows(rows, layout)
+    for idx, cap in capacity:
+        rows.add({int(j): layout.opts[j].cash_out_cents / CENTS for j in idx}, -np.inf, cap / CENTS)
     n_z, scenario_rows = (_reduced_rows if reduced else _full_rows)(rows, layout, r_d, k, bill_options)
     n_cols = layout.z_start + n_z
     if n_z:
@@ -126,7 +136,12 @@ def solve(
         constraints=LinearConstraint(a, rows.lb, rows.ub),
         integrality=integrality,
         bounds=Bounds(lb, ub),
-        options={"time_limit": time_limit, "mip_rel_gap": mip_rel_gap, "disp": False},
+        options={
+            "time_limit": time_limit,
+            "mip_rel_gap": mip_rel_gap,
+            "node_limit": NODE_LIMIT,
+            "disp": False,
+        },
     )
     elapsed = time.perf_counter() - started
     if res.x is None or res.status not in (0, 1):

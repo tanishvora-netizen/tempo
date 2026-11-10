@@ -14,6 +14,7 @@ from tempo.assumptions import CREDIT_COST, N_OPT_SCENARIOS
 from tempo.forecast.fit import PoolFit, fit_days_to_pay
 from tempo.forecast.simulate import Receipt, ScenarioSet, WhatIf, receipts_from, simulate
 from tempo.models import Dataset, PaymentOption
+from tempo.optimize.capacity import capacity_groups
 from tempo.optimize.cash import CashPosition, breached, cash_position, plan_outflow_cum
 from tempo.optimize.milp import MilpStats, solve
 from tempo.optimize.options import PlannableBill, RailContext, build_options
@@ -33,7 +34,12 @@ class Forecast:
         self, n: int, seed: int, params: dict[str, tuple[float, float]] | None = None
     ) -> ScenarioSet:
         return simulate(
-            self.receipts, params or self.fit.params(), self.horizon_days, n, seed, what_if=self.what_if
+            self.receipts,
+            self.fit.params() if params is None else params,
+            self.horizon_days,
+            n,
+            seed,
+            what_if=self.what_if,
         )
 
     def headroom(self, scen: ScenarioSet) -> np.ndarray:
@@ -51,7 +57,7 @@ def build_forecast(dataset: Dataset, what_if: WhatIf | None = None, cash_delta_c
         what_if,
     )
     return Forecast(
-        fit_days_to_pay(dataset.customers),
+        fit_days_to_pay(dataset.customers, c.as_of),
         receipts_from(dataset.customers, c.as_of),
         cash,
         c.horizon_days,
@@ -118,8 +124,8 @@ def solve_plan(
     k: int,
     policy: str = "tempo",
 ) -> Plan:
-    """Solve the chance-constrained MILP on the given optimizer scenarios."""
-    result = solve(options, headroom, as_of, k)
+    """Solve the chance-constrained MILP on the given optimizer scenarios, within the credit caps."""
+    result = solve(options, headroom, as_of, k, capacity=capacity_groups(options))
     return Plan(
         policy, bills, options, result.choice, result.credit_cum_cents, k, headroom.shape[0], result.stats
     )

@@ -4,7 +4,7 @@ SAA is optimistic: a plan that protects all but K of N = 200 sampled scenarios b
 ones. So we solve with K = 4, 3, 2, 1, 0 and test each plan on 10,000 fresh seed-B scenarios, stopping at
 the first pass. The test uses a one-sided Wilson upper bound with a Bonferroni-adjusted z (0.05 split over
 the 6 possible steps, z = 2.394), because the ladder tests several plans. If K = 0 still fails, one fallback
-solve with N = 1,000 and K = 5. If that fails too, the best plan ships with the miss shown in red.
+solve with N = 1,000 and K = 5. If that fails too, the plan with the lowest seed-B bound ships with the miss shown in red.
 Seed C is never used here.
 """
 
@@ -39,10 +39,11 @@ class Certification:
     z: float
     steps: tuple[CertStep, ...]
     passed: bool
+    shipped_index: int = -1  # which step's plan ships: the passing one, else the one with the lowest bound
 
     @property
     def final(self) -> CertStep:
-        return self.steps[-1]
+        return self.steps[self.shipped_index]
 
 
 def certify(
@@ -58,19 +59,21 @@ def certify(
 ) -> tuple[Plan, Certification]:
     """Walk the K ladder (then the fallback) until a plan passes on seed B; return it with the record."""
     steps: list[CertStep] = []
-    best: Plan | None = None
+    tried: list[Plan] = []
     attempts = [(headroom_a[:N_OPT_SCENARIOS], k) for k in ladder]
     if headroom_a_fallback is not None:
         attempts.append((headroom_a_fallback[:FALLBACK_N], FALLBACK_K))
+    if not attempts:
+        raise ValueError("the K ladder is empty")
     for headroom, k in attempts:
         plan = solve_plan(bills, options, headroom, as_of, k)
         step = _step(plan, headroom, headroom_b, as_of, k, epsilon, z)
         steps.append(step)
-        best = plan
+        tried.append(plan)
         if step.passed:
             return plan, Certification(epsilon, z, tuple(steps), True)
-    assert best is not None
-    return best, Certification(epsilon, z, tuple(steps), False)
+    safest = min(range(len(steps)), key=lambda i: (steps[i].cert_upper, -steps[i].value_cents))
+    return tried[safest], Certification(epsilon, z, tuple(steps), False, safest)
 
 
 def _step(

@@ -17,9 +17,14 @@ Sanity: 0 < discount <= 5%, discount_days < net_days, net_days in [0, 120], prox
 discount needs a net term.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
-from tempo.assumptions import MAX_DISCOUNT, MAX_NET_DAYS
+from tempo.assumptions import (
+    CARD_SURCHARGE_SANITY_MAX,
+    LATE_FEE_SANITY_MAX_BPS_PER_MONTH,
+    MAX_DISCOUNT,
+    MAX_NET_DAYS,
+)
 from tempo.extract.regex_parser import BlockParse, parse_block
 from tempo.extract.verify import FieldCheck, as_record, verify_extraction
 from tempo.llm.schemas import TermsExtraction
@@ -92,15 +97,19 @@ def reconcile(
     regex_values = _distinct_terms(auth_parses)
     invoice_values = _distinct_terms(block_parses)
     checks = verify_extraction(extraction, doc) if extraction is not None else {}
-    terms = decide_terms(regex_values, checks.get("terms"), vendor.prior_terms)
+    late_fee = _late_fee(block_parses, checks.get("late_fee"))
+    surcharge = _surcharge(block_parses, checks.get("surcharge"))
+    terms = _with_fee_sanity(
+        decide_terms(regex_values, checks.get("terms"), vendor.prior_terms), late_fee, surcharge
+    )
     overridden = override is not None and bool(invoice_values) and set(invoice_values) != set(regex_values)
     all_parses = {**block_parses, **({override.id: auth_parses[override.id]} if override else {})}
     return Reconciled(
         bill_id=invoice.id,
         terms=terms,
-        late_fee=_late_fee(block_parses, checks.get("late_fee")),
+        late_fee=late_fee if fee_problem(late_fee, 0) is None else None,
         accepted_methods=_methods(block_parses, checks.get("methods")),
-        card_surcharge_bps=_surcharge(block_parses, checks.get("surcharge")),
+        card_surcharge_bps=surcharge,
         card_discount_allowed=_card_discount(block_parses, checks.get("card_discount")),
         overridden_in_email=overridden,
         authoritative_source=override.id if override else "invoice",
@@ -125,6 +134,29 @@ def decide_terms(
         elif prior is not None and as_record(prior) != value:
             status, value, reason = "history_mismatch", None, "differs from the vendor's terms on file"
     return TermsDecision(status, value, proposed, regex_values, m_value, model, reason)  # type: ignore[arg-type]
+
+
+def fee_problem(late_fee: LateFeeRecord | None, surcharge_bps: int) -> str | None:
+    """Sanity rules for the other fields: late fee <= 3% per month, card surcharge <= 4%."""
+    if (
+        late_fee is not None
+        and late_fee.kind == "pct_month"
+        and (late_fee.pct_month_bps or 0) > LATE_FEE_SANITY_MAX_BPS_PER_MONTH
+    ):
+        return f"late fee {late_fee.pct_month_bps / 100:g}%/month exceeds 3%/month"
+    if surcharge_bps > CARD_SURCHARGE_SANITY_MAX * BPS_PER_UNIT:
+        return f"card surcharge {surcharge_bps / 100:g}% exceeds 4%"
+    return None
+
+
+def _with_fee_sanity(
+    terms: TermsDecision, late_fee: LateFeeRecord | None, surcharge_bps: int
+) -> TermsDecision:
+    """An accepted bill whose late fee or surcharge fails sanity goes to review too (directive 7.4)."""
+    problem = fee_problem(late_fee, surcharge_bps)
+    if problem is None or terms.status not in ACCEPTED:
+        return terms
+    return replace(terms, status="sanity_fail", value=None, reason=problem)
 
 
 def _table_row(regex_values, m_value, m_verified) -> tuple[str, TermsRecord | None, str]:
