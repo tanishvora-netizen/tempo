@@ -2,8 +2,9 @@
 
 Field names and enums follow docs/ramp_api_snapshot.md (retrieved 2026-11-10):
 - bank rails: PATCH /developer/v1/bills/{bill_id} with payment_date (the send date) and payment_method "ACH"
-  (Ramp's request enum has no RTP; RTP is expected when paying from Ramp Checking, so the preview also gives
-  the ACH-safe fallback send date). Only approved bills can be updated.
+  (Ramp's request enum has no RTP). An RTP-planned payment that an ACH can still deliver on time is previewed
+  as that earlier ACH; one that only RTP can deliver gets no request and a "send by RTP in Ramp" note.
+  Only approved bills can be updated.
 - bills in Needs review: POST /developer/v1/bills/{bill_id}/hold (beta); a reviewer-accepted bill gets
   POST /developer/v1/bills/{bill_id}/release (beta).
 - card bills: no API lever (payment_date applies to non-card bills); Flex-style financing: no public API.
@@ -12,8 +13,8 @@ Wiring this to Ramp's sandbox is one adapter that sends these requests.
 
 from datetime import date
 
-from tempo.assumptions import ACH_LEAD_BUSINESS_DAYS, ACH_LEAD_DISCOUNT_BUSINESS_DAYS
-from tempo.business_days import add_business_days, subtract_business_days
+from tempo.business_days import add_business_days, business_days_between, subtract_business_days
+from tempo.optimize.options import ach_lead
 
 BILLS = "/developer/v1/bills"
 REQUEST_PAYMENT_METHODS = frozenset(
@@ -35,8 +36,9 @@ PATCH_FIELDS = frozenset({"payment_date", "payment_method"})
 
 
 def _target_and_lead(row: dict) -> tuple[date, int]:
+    """The arrival target and the ACH lead time, from the same rule the option builder uses."""
     target = date.fromisoformat(row["discount_deadline"] if row["takes_discount"] else row["due_date"])
-    return target, ACH_LEAD_DISCOUNT_BUSINESS_DAYS if row["takes_discount"] else ACH_LEAD_BUSINESS_DAYS
+    return target, ach_lead(row["takes_discount"], bool(row.get("new_vendor")))
 
 
 def _patch(row: dict, auto: bool) -> dict:
@@ -52,8 +54,9 @@ def _patch(row: dict, auto: bool) -> dict:
         ach_send = subtract_business_days(target, lead)
         notes.append(
             f"Planned as RTP from Ramp Checking on {send.isoformat()}; the API can only request ACH, so this "
-            f"sends ACH on {ach_send.isoformat()} ({(send - ach_send).days} days earlier) to arrive by "
-            f"{target.isoformat()}."
+            f"sends ACH on {ach_send.isoformat()} ({business_days_between(ach_send, send)} business days earlier) to "
+            f"arrive by {target.isoformat()}. Cash leaves earlier than in the certified plan; the buffer risk "
+            "was not re-certified for that shift."
         )
         send = ach_send
     request = {

@@ -260,7 +260,8 @@ def main() -> None:
     OUT.write_text("\n".join(lines))
     print(f"wrote {OUT}")
     update_readme(bundle, proof)
-    tokens = demo_tokens(bundle, proof, whatifs)
+    review_effects = json.loads((PRE / "review_effects.json").read_text())
+    tokens = demo_tokens(bundle, proof, whatifs, review_effects)
     render_demo_script(tokens)
     update_submission(tokens)
 
@@ -307,7 +308,8 @@ def update_readme(bundle: dict, proof: dict) -> None:
             f"the pre-registered K = 4 gives {usd(proof['ladder_sensitivity']['value_cents'])} at "
             f"{pct(proof['ladder_sensitivity']['breach_rate'])} "
             f"(bound {pct(proof['ladder_sensitivity']['breach_upper'])}): close to the smart spreadsheet's "
-            "value, but certified.",
+            f"value, certified under the fitted model only (true model {pct(proof['ladder_sensitivity']['true_breach_rate'])}, "
+            f"bound {pct(proof['ladder_sensitivity']['true_breach_upper'])}).",
             f"- Solver: {solver['rows']:,} rows instead of {solver['rows_naive']:,}, {solver['solve_seconds']:.2f} s, "
             f"gap {pct(solver['mip_gap'], 3)}.",
             f"- Extraction (synthetic, held-out split): Tempo auto-accepts {pct(rec['coverage'], 0)} of invoices' terms "
@@ -328,7 +330,7 @@ DEMO_SCRIPT = REPO / "docs" / "DEMO_SCRIPT.md"
 SUBMISSION = REPO / "SUBMISSION.md"
 
 
-def demo_tokens(bundle: dict, proof: dict, whatifs: dict) -> dict[str, str]:
+def demo_tokens(bundle: dict, proof: dict, whatifs: dict, review_effects: dict) -> dict[str, str]:
     """Every number the demo script and submission quote, from the precomputed files."""
     fitted = {r["policy"]: r for r in proof["policies"]}
     true = {r["policy"]: r for r in proof["policies_true_model"]}
@@ -374,10 +376,31 @@ def demo_tokens(bundle: dict, proof: dict, whatifs: dict) -> dict[str, str]:
         "ACCEPTED_N": str(rec["answered"]),
         "MANUAL_RTP": str(manual_rtp_this_week(bundle)),
         "PRESET_LATE": str(preset["kpis"]["late_count"]),
+        "PRESET_AFTER": str(preset["kpis"]["arrive_after_due_count"]),
+        "STRESS_POD": pct(stress["pay_on_due"]["breach_rate"]),
+        "WEEK_BILLS": str(week_bill_count(bundle)),
+        "INJECTION_DELTA": injection_delta(bundle, dataset, review_effects),
         "REVIEW_COUNT": str(sum(r["needs_review"] for r in bundle["bills"])),
         "COVERAGE": pct(rec["coverage"], 0),
         "PRECISION": pct(rec["precision"], 1),
     }
+
+
+def week_bill_count(bundle: dict) -> int:
+    from datetime import date, timedelta
+
+    as_of = date.fromisoformat(bundle["company"]["as_of"])
+    return sum(date.fromisoformat(r["send_date"]) < as_of + timedelta(days=7) for r in bundle["bills"])
+
+
+def injection_delta(bundle: dict, dataset, review_effects: dict) -> str:
+    """The value change from accepting the injection invoice's real terms (from the precomputed effects)."""
+    inj = next(i for i in dataset.invoices if i.tag == "injection")
+    effect = next((e for e in review_effects.get("effects", []) if e["bill_id"] == inj.id), None)
+    if effect is None:
+        return "no change"
+    delta = effect["value_delta_cents"]
+    return ("+" if delta >= 0 else "") + usd(delta)
 
 
 def manual_rtp_this_week(bundle: dict) -> int:

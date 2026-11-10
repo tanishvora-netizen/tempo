@@ -6,9 +6,6 @@ from dataclasses import asdict
 from datetime import date, timedelta
 
 from tempo.assumptions import (
-    ACH_LEAD_BUSINESS_DAYS,
-    ACH_LEAD_DISCOUNT_BUSINESS_DAYS,
-    ACH_LEAD_NEW_VENDOR_BUSINESS_DAYS,
     EPSILON,
     SEED_C,
     WILSON_Z_REPORT,
@@ -22,7 +19,7 @@ from tempo.optimize.certify import Certification
 from tempo.optimize.engine import Plan
 from tempo.optimize.evaluate import PolicyResult
 from tempo.optimize.explain import terms_label
-from tempo.optimize.options import PlannableBill
+from tempo.optimize.options import PlannableBill, ach_lead
 from tempo.serde import to_jsonable
 
 STATUS_CHIPS = {
@@ -40,9 +37,7 @@ def rtp_dependent(bill: PlannableBill, o: PaymentOption, as_of: date | None) -> 
         return False
     earliest = next_business_day(max(as_of or bill.issued_at, bill.issued_at))
     target = bill.discount_deadline if o.takes_discount and bill.discount_deadline else bill.due_date
-    lead = ACH_LEAD_DISCOUNT_BUSINESS_DAYS if o.takes_discount else ACH_LEAD_BUSINESS_DAYS
-    if bill.is_new_vendor:
-        lead = ACH_LEAD_NEW_VENDOR_BUSINESS_DAYS
+    lead = ach_lead(o.takes_discount, bill.is_new_vendor)
     return subtract_business_days(target, lead) < earliest
 
 
@@ -107,6 +102,7 @@ def _row(bill: PlannableBill, opts, c: int, d: Decision, r: Reconciled | None, a
         "arrives_after_due": o.arrival_date > bill.due_date,
         "expected": as_of is not None and bill.issued_at > as_of,
         "rtp_dependent": rtp_dependent(bill, o, as_of),
+        "new_vendor": bill.is_new_vendor,
         "arrival_date": o.arrival_date.isoformat(),
         "terms_rate": annualized_discount_return(bill) if o.takes_discount else None,
         "reason": d.reason,

@@ -45,3 +45,12 @@ def add_business_days(send: date, n: int) -> date:
     for _ in range(n):
         d = next_business_day(d + timedelta(days=1))
     return d
+
+
+def business_days_between(start: date, end: date) -> int:
+    """Business days in (start, end]: how many business days `end` is after `start`."""
+    count, d = 0, start
+    while d < end:
+        d += timedelta(days=1)
+        count += is_business_day(d)
+    return count

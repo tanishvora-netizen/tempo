@@ -21,6 +21,7 @@
    "issued_at": "2026-10-13",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -102,6 +103,7 @@
    "issued_at": "2026-10-13",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -169,6 +171,7 @@
    "issued_at": "2026-10-13",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -236,6 +239,7 @@
    "issued_at": "2026-10-13",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -303,6 +307,7 @@
    "issued_at": "2026-10-13",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -370,6 +375,7 @@
    "issued_at": "2026-10-13",
    "method": "ACH",
    "needs_review": true,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -451,6 +457,7 @@
    "issued_at": "2026-10-14",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -518,6 +525,7 @@
    "issued_at": "2026-10-14",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -599,6 +607,7 @@
    "issued_at": "2026-10-14",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -680,6 +689,7 @@
    "issued_at": "2026-10-14",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -747,6 +757,7 @@
    "issued_at": "2026-10-15",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -814,6 +825,7 @@
    "issued_at": "2026-10-15",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -895,6 +907,7 @@
    "issued_at": "2026-10-16",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -962,6 +975,7 @@
    "issued_at": "2026-10-16",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -1043,6 +1057,7 @@
    "issued_at": "2026-10-16",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -1124,6 +1139,7 @@
    "issued_at": "2026-10-17",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -1205,6 +1221,7 @@
    "issued_at": "2026-10-17",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -1272,6 +1289,7 @@
    "issued_at": "2026-10-17",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -1339,6 +1357,7 @@
    "issued_at": "2026-10-18",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -1420,6 +1439,7 @@
    "issued_at": "2026-10-18",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -1487,6 +1507,7 @@
    "issued_at": "2026-10-18",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -1554,6 +1575,7 @@
    "issued_at": "2026-10-18",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -1621,6 +1643,7 @@
    "issued_at": "2026-10-19",
    "method": "ACH",
    "needs_review": true,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -1688,6 +1711,7 @@
    "issued_at": "2026-10-20",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -1769,6 +1793,7 @@
    "issued_at": "2026-10-20",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -1836,6 +1861,7 @@
    "issued_at": "2026-10-22",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -1903,6 +1929,7 @@
    "issued_at": "2026-10-22",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -1984,6 +2011,7 @@
    "issued_at": "2026-10-23",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -2051,6 +2079,7 @@
    "issued_at": "2026-10-24",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -2118,6 +2147,7 @@
    "issued_at": "2026-10-24",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -2185,6 +2215,7 @@
    "issued_at": "2026-10-25",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -2266,6 +2297,7 @@
    "issued_at": "2026-10-26",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -2347,6 +2379,7 @@
    "issued_at": "2026-10-26",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -2414,6 +2447,7 @@
    "issued_at": "2026-10-27",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -2481,6 +2515,7 @@
    "issued_at": "2026-10-27",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -2562,6 +2597,7 @@
    "issued_at": "2026-10-28",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -2629,6 +2665,7 @@
    "issued_at": "2026-10-28",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -2696,6 +2733,7 @@
    "issued_at": "2026-10-28",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -2763,6 +2801,7 @@
    "issued_at": "2026-10-28",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -2830,6 +2869,7 @@
    "issued_at": "2026-10-29",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -2911,6 +2951,7 @@
    "issued_at": "2026-10-29",
    "method": "ACH",
    "needs_review": true,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -2978,6 +3019,7 @@
    "issued_at": "2026-10-29",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -3045,6 +3087,7 @@
    "issued_at": "2026-10-30",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -3112,6 +3155,7 @@
    "issued_at": "2026-10-30",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -3193,6 +3237,7 @@
    "issued_at": "2026-10-30",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -3260,6 +3305,7 @@
    "issued_at": "2026-10-30",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -3341,6 +3387,7 @@
    "issued_at": "2026-10-30",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -3408,6 +3455,7 @@
    "issued_at": "2026-10-31",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -3489,6 +3537,7 @@
    "issued_at": "2026-10-31",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -3570,6 +3619,7 @@
    "issued_at": "2026-11-01",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -3651,6 +3701,7 @@
    "issued_at": "2026-11-01",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -3718,6 +3769,7 @@
    "issued_at": "2026-11-01",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -3799,6 +3851,7 @@
    "issued_at": "2026-11-01",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -3880,6 +3933,7 @@
    "issued_at": "2026-11-01",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -3989,6 +4043,7 @@
    "issued_at": "2026-11-03",
    "method": "CARD",
    "needs_review": true,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -4070,6 +4125,7 @@
    "issued_at": "2026-11-03",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -4151,6 +4207,7 @@
    "issued_at": "2026-11-03",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -4218,6 +4275,7 @@
    "issued_at": "2026-11-04",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -4285,6 +4343,7 @@
    "issued_at": "2026-11-04",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -4366,6 +4425,7 @@
    "issued_at": "2026-11-05",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -4447,6 +4507,7 @@
    "issued_at": "2026-11-05",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -4528,6 +4589,7 @@
    "issued_at": "2026-11-05",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -4609,6 +4671,7 @@
    "issued_at": "2026-11-06",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -4690,6 +4753,7 @@
    "issued_at": "2026-11-07",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -4771,6 +4835,7 @@
    "issued_at": "2026-11-07",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -4852,6 +4917,7 @@
    "issued_at": "2026-11-09",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -4919,6 +4985,7 @@
    "issued_at": "2026-11-10",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -4986,6 +5053,7 @@
    "issued_at": "2026-11-10",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -5053,6 +5121,7 @@
    "issued_at": "2026-11-10",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -5120,6 +5189,7 @@
    "issued_at": "2026-11-10",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -5187,6 +5257,7 @@
    "issued_at": "2026-11-10",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -5268,6 +5339,7 @@
    "issued_at": "2026-11-11",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -5335,6 +5407,7 @@
    "issued_at": "2026-11-11",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -5416,6 +5489,7 @@
    "issued_at": "2026-11-11",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -5497,6 +5571,7 @@
    "issued_at": "2026-11-12",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -5578,6 +5653,7 @@
    "issued_at": "2026-11-12",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -5659,6 +5735,7 @@
    "issued_at": "2026-11-12",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -5740,6 +5817,7 @@
    "issued_at": "2026-11-13",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -5821,6 +5899,7 @@
    "issued_at": "2026-11-13",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -5902,6 +5981,7 @@
    "issued_at": "2026-11-13",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -5983,6 +6063,7 @@
    "issued_at": "2026-11-13",
    "method": "CARD",
    "needs_review": true,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -6064,6 +6145,7 @@
    "issued_at": "2026-11-14",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -6145,6 +6227,7 @@
    "issued_at": "2026-11-14",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -6226,6 +6309,7 @@
    "issued_at": "2026-11-14",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -6293,6 +6377,7 @@
    "issued_at": "2026-11-14",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -6374,6 +6459,7 @@
    "issued_at": "2026-11-14",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -6455,6 +6541,7 @@
    "issued_at": "2026-11-14",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -6564,6 +6651,7 @@
    "issued_at": "2026-11-14",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -6645,6 +6733,7 @@
    "issued_at": "2026-11-15",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -6726,6 +6815,7 @@
    "issued_at": "2026-11-15",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -6835,6 +6925,7 @@
    "issued_at": "2026-11-15",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -6916,6 +7007,7 @@
    "issued_at": "2026-11-16",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -7025,6 +7117,7 @@
    "issued_at": "2026-11-16",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -7106,6 +7199,7 @@
    "issued_at": "2026-11-16",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -7187,6 +7281,7 @@
    "issued_at": "2026-11-17",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -7254,6 +7349,7 @@
    "issued_at": "2026-11-17",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -7335,6 +7431,7 @@
    "issued_at": "2026-11-17",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -7402,6 +7499,7 @@
    "issued_at": "2026-11-18",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -7483,6 +7581,7 @@
    "issued_at": "2026-11-18",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -7564,6 +7663,7 @@
    "issued_at": "2026-11-19",
    "method": "ACH",
    "needs_review": true,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -7645,6 +7745,7 @@
    "issued_at": "2026-11-20",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -7726,6 +7827,7 @@
    "issued_at": "2026-11-20",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -7793,6 +7895,7 @@
    "issued_at": "2026-11-21",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -7874,6 +7977,7 @@
    "issued_at": "2026-11-22",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -7955,6 +8059,7 @@
    "issued_at": "2026-11-23",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -8022,6 +8127,7 @@
    "issued_at": "2026-11-25",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -8103,6 +8209,7 @@
    "issued_at": "2026-11-25",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -8184,6 +8291,7 @@
    "issued_at": "2026-11-25",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -8265,6 +8373,7 @@
    "issued_at": "2026-11-26",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -8332,6 +8441,7 @@
    "issued_at": "2026-11-26",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -8413,6 +8523,7 @@
    "issued_at": "2026-11-26",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -8494,6 +8605,7 @@
    "issued_at": "2026-11-26",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -8575,6 +8687,7 @@
    "issued_at": "2026-11-26",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -8656,6 +8769,7 @@
    "issued_at": "2026-11-26",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -8723,6 +8837,7 @@
    "issued_at": "2026-11-27",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -8804,6 +8919,7 @@
    "issued_at": "2026-11-28",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -8885,6 +9001,7 @@
    "issued_at": "2026-11-28",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -8952,6 +9069,7 @@
    "issued_at": "2026-11-28",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -9033,6 +9151,7 @@
    "issued_at": "2026-11-28",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -9114,6 +9233,7 @@
    "issued_at": "2026-11-28",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -9195,6 +9315,7 @@
    "issued_at": "2026-11-29",
    "method": "CARD",
    "needs_review": true,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -9276,6 +9397,7 @@
    "issued_at": "2026-11-29",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -9357,6 +9479,7 @@
    "issued_at": "2026-11-29",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -9438,6 +9561,7 @@
    "issued_at": "2026-11-30",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD_EARLY",
    "options": [
     {
@@ -9547,6 +9671,7 @@
    "issued_at": "2026-11-30",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -9628,6 +9753,7 @@
    "issued_at": "2026-11-30",
    "method": "ACH",
    "needs_review": true,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -9695,6 +9821,7 @@
    "issued_at": "2026-11-30",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD_EARLY",
    "options": [
     {
@@ -9804,6 +9931,7 @@
    "issued_at": "2026-11-30",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -9885,6 +10013,7 @@
    "issued_at": "2026-12-01",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -9952,6 +10081,7 @@
    "issued_at": "2026-12-01",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -10061,6 +10191,7 @@
    "issued_at": "2026-12-01",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -10142,6 +10273,7 @@
    "issued_at": "2026-12-02",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -10223,6 +10355,7 @@
    "issued_at": "2026-12-03",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -10304,6 +10437,7 @@
    "issued_at": "2026-12-03",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -10385,6 +10519,7 @@
    "issued_at": "2026-12-05",
    "method": "ACH",
    "needs_review": true,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -10452,6 +10587,7 @@
    "issued_at": "2026-12-05",
    "method": "ACH",
    "needs_review": true,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -10519,6 +10655,7 @@
    "issued_at": "2026-12-06",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -10586,6 +10723,7 @@
    "issued_at": "2026-12-06",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -10667,6 +10805,7 @@
    "issued_at": "2026-12-07",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -10734,6 +10873,7 @@
    "issued_at": "2026-12-08",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -10801,6 +10941,7 @@
    "issued_at": "2026-12-09",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -10868,6 +11009,7 @@
    "issued_at": "2026-12-09",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -10949,6 +11091,7 @@
    "issued_at": "2026-12-09",
    "method": "ACH",
    "needs_review": true,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -11016,6 +11159,7 @@
    "issued_at": "2026-12-09",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -11083,6 +11227,7 @@
    "issued_at": "2026-12-10",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -11164,6 +11309,7 @@
    "issued_at": "2026-12-10",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -11245,6 +11391,7 @@
    "issued_at": "2026-12-10",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -11326,6 +11473,7 @@
    "issued_at": "2026-12-10",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -11407,6 +11555,7 @@
    "issued_at": "2026-12-10",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -11488,6 +11637,7 @@
    "issued_at": "2026-12-11",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -11569,6 +11719,7 @@
    "issued_at": "2026-12-11",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -11650,6 +11801,7 @@
    "issued_at": "2026-12-11",
    "method": "ACH",
    "needs_review": true,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -11717,6 +11869,7 @@
    "issued_at": "2026-12-12",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -11798,6 +11951,7 @@
    "issued_at": "2026-12-12",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -11879,6 +12033,7 @@
    "issued_at": "2026-12-12",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -11960,6 +12115,7 @@
    "issued_at": "2026-12-12",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -12069,6 +12225,7 @@
    "issued_at": "2026-12-12",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -12136,6 +12293,7 @@
    "issued_at": "2026-12-13",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -12217,6 +12375,7 @@
    "issued_at": "2026-12-13",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD_EARLY",
    "options": [
     {
@@ -12326,6 +12485,7 @@
    "issued_at": "2026-12-13",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -12393,6 +12553,7 @@
    "issued_at": "2026-12-13",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -12474,6 +12635,7 @@
    "issued_at": "2026-12-13",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -12555,6 +12717,7 @@
    "issued_at": "2026-12-13",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -12636,6 +12799,7 @@
    "issued_at": "2026-12-14",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -12717,6 +12881,7 @@
    "issued_at": "2026-12-14",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -12826,6 +12991,7 @@
    "issued_at": "2026-12-15",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -12907,6 +13073,7 @@
    "issued_at": "2026-12-15",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -12988,6 +13155,7 @@
    "issued_at": "2026-12-15",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -13069,6 +13237,7 @@
    "issued_at": "2026-12-16",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -13150,6 +13319,7 @@
    "issued_at": "2026-12-16",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -13231,6 +13401,7 @@
    "issued_at": "2026-12-16",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -13312,6 +13483,7 @@
    "issued_at": "2026-12-17",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -13393,6 +13565,7 @@
    "issued_at": "2026-12-20",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -13474,6 +13647,7 @@
    "issued_at": "2026-12-21",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -13555,6 +13729,7 @@
    "issued_at": "2026-12-21",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -13636,6 +13811,7 @@
    "issued_at": "2026-12-22",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -13717,6 +13893,7 @@
    "issued_at": "2026-12-23",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -13784,6 +13961,7 @@
    "issued_at": "2026-12-23",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -13865,6 +14043,7 @@
    "issued_at": "2026-12-24",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -13946,6 +14125,7 @@
    "issued_at": "2026-12-25",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -14027,6 +14207,7 @@
    "issued_at": "2026-12-25",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD_EARLY",
    "options": [
     {
@@ -14136,6 +14317,7 @@
    "issued_at": "2026-12-25",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -14217,6 +14399,7 @@
    "issued_at": "2026-12-25",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -14298,6 +14481,7 @@
    "issued_at": "2026-12-26",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -14379,6 +14563,7 @@
    "issued_at": "2026-12-26",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -14460,6 +14645,7 @@
    "issued_at": "2026-12-27",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -14541,6 +14727,7 @@
    "issued_at": "2026-12-27",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD_EARLY",
    "options": [
     {
@@ -14650,6 +14837,7 @@
    "issued_at": "2026-12-28",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -14731,6 +14919,7 @@
    "issued_at": "2026-12-28",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -14812,6 +15001,7 @@
    "issued_at": "2026-12-28",
    "method": "ACH",
    "needs_review": true,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -14879,6 +15069,7 @@
    "issued_at": "2026-12-28",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -14960,6 +15151,7 @@
    "issued_at": "2026-12-28",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -15041,6 +15233,7 @@
    "issued_at": "2026-12-29",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -15122,6 +15315,7 @@
    "issued_at": "2026-12-30",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -15203,6 +15397,7 @@
    "issued_at": "2026-12-30",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_DUE",
    "options": [
     {
@@ -15270,6 +15465,7 @@
    "issued_at": "2026-12-31",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -15351,6 +15547,7 @@
    "issued_at": "2026-12-31",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": true,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -15432,6 +15629,7 @@
    "issued_at": "2027-01-02",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -15513,6 +15711,7 @@
    "issued_at": "2027-01-02",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -15594,6 +15793,7 @@
    "issued_at": "2027-01-05",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -15675,6 +15875,7 @@
    "issued_at": "2027-01-05",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -15742,6 +15943,7 @@
    "issued_at": "2027-01-06",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -15823,6 +16025,7 @@
    "issued_at": "2027-01-06",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -15904,6 +16107,7 @@
    "issued_at": "2027-01-06",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -15985,6 +16189,7 @@
    "issued_at": "2027-01-06",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -16052,6 +16257,7 @@
    "issued_at": "2027-01-07",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -16119,6 +16325,7 @@
    "issued_at": "2027-01-07",
    "method": "ACH",
    "needs_review": true,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -16186,6 +16393,7 @@
    "issued_at": "2027-01-08",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -16267,6 +16475,7 @@
    "issued_at": "2027-01-08",
    "method": "CARD",
    "needs_review": false,
+   "new_vendor": false,
    "option": "CARD",
    "options": [
     {
@@ -16348,6 +16557,7 @@
    "issued_at": "2027-01-08",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -16429,6 +16639,7 @@
    "issued_at": "2027-01-08",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_DUE",
    "options": [
     {
@@ -16510,6 +16721,7 @@
    "issued_at": "2027-01-09",
    "method": "ACH",
    "needs_review": false,
+   "new_vendor": false,
    "option": "BANK_EARLY",
    "options": [
     {
@@ -16571,7 +16783,7 @@
    "vendor_id": "ven_018"
   }
  ],
- "built_at": "2026-11-10T13:14:30+00:00",
+ "built_at": "2026-11-10T13:25:18+00:00",
  "cash_value": {
   "annual_rate": 0.1390625934065934,
   "base_objective_cents": 4114291,
@@ -16608,7 +16820,7 @@
     "k": 4,
     "n": 200,
     "passed": true,
-    "solve_seconds": 0.9051886249799281,
+    "solve_seconds": 0.9025359580409713,
     "value_cents": 4114291
    }
   ],
@@ -17936,7 +18148,7 @@
   "name": "cached"
  },
  "solver": {
-  "case_seconds": 2.475967167003546,
+  "case_seconds": 2.478001207986381,
   "check_days": 61,
   "cols": 728,
   "mip_gap": 9.211793720943892e-05,
@@ -17944,7 +18156,7 @@
   "rows": 630,
   "rows_naive": 18413,
   "scenario_rows": 231,
-  "solve_seconds": 0.9051886249799281,
+  "solve_seconds": 0.9025359580409713,
   "status": "optimal"
  }
 }

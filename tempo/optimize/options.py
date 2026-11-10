@@ -115,6 +115,13 @@ def late_fee_cents(bill: PlannableBill) -> int:
     return apply_rate(bill.total_cents, bps_to_rate(bps))
 
 
+def ach_lead(discount_window: bool, new_vendor: bool) -> int:
+    """Business days a standard ACH needs: 5 for new vendors, 4 into a discount window, else 3."""
+    if new_vendor:
+        return ACH_LEAD_NEW_VENDOR_BUSINESS_DAYS
+    return ACH_LEAD_DISCOUNT_BUSINESS_DAYS if discount_window else ACH_LEAD_BUSINESS_DAYS
+
+
 def earliest_send(bill: PlannableBill, ctx: RailContext) -> date:
     """No payment goes out before today or before the invoice exists (expected bills issue later)."""
     return next_business_day(max(ctx.as_of, bill.issued_at))
@@ -126,9 +133,7 @@ def _bank_leg(bill: PlannableBill, ctx: RailContext, target: date, discount_wind
     if ctx.funding_account == "ramp_checking" and bill.rtp_eligible:
         send = max(previous_business_day(target), earliest_send(bill, ctx))
         return _BankLeg("RTP", send, send, RTP_FEE_CENTS)
-    lead = ACH_LEAD_DISCOUNT_BUSINESS_DAYS if discount_window else ACH_LEAD_BUSINESS_DAYS
-    if bill.is_new_vendor:
-        lead = ACH_LEAD_NEW_VENDOR_BUSINESS_DAYS
+    lead = ach_lead(discount_window, bill.is_new_vendor)
     fee = 0 if ctx.funding_account == "ramp_checking" else ACH_FEE_CENTS
     send = max(subtract_business_days(target, lead), earliest_send(bill, ctx))
     return _BankLeg("ACH", send, add_business_days(send, lead), fee)

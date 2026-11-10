@@ -51,6 +51,7 @@ class AppState:
     overrides: dict[str, TermsRecord] = field(default_factory=dict)
     negotiated: dict[str, dict] = field(default_factory=dict)
     approved_ids: set[str] = field(default_factory=set)
+    override_result: tuple | None = None
     autonomy: dict = field(default_factory=lambda: dict(DEFAULT_AUTONOMY))
     lock: threading.Lock = field(default_factory=threading.Lock)
     touched_at: float = field(default_factory=time.monotonic)
@@ -61,6 +62,7 @@ class AppState:
             self.overrides = {}
             self.negotiated = {}
             self.approved_ids = set()
+            self.override_result = None
             self.autonomy = dict(DEFAULT_AUTONOMY)
             self.touched_at = time.monotonic()
 
@@ -68,12 +70,16 @@ class AppState:
         """Record a change, so idle reset never wipes a visitor's recent action."""
         self.touched_at = time.monotonic()
 
-    def current_plan(self) -> tuple[list[dict], str]:
-        """The plan the user is looking at: the precomputed one, or the live re-solve after review edits."""
+    def current_plan(self) -> tuple[list[dict], str, dict]:
+        """Rows, plan hash, and KPIs of the plan the user is looking at: the precomputed one, or the re-solve
+        after review edits (kept in `override_result` so approval never re-solves twice). Call under `lock`."""
         if not self.overrides:
-            return self.bundle["bills"], self.bundle["plan_hash"]
-        result = self.solve_live(None, dict(self.overrides))
-        return result.payload["bills"], result.payload["plan_hash"]
+            return self.bundle["bills"], self.bundle["plan_hash"], self.bundle["kpis"]
+        key = self._key(None, self.overrides)
+        if self.override_result is None or self.override_result[0] != key:
+            self.override_result = (key, self.solve_live(None, dict(self.overrides)))
+        payload = self.override_result[1].payload
+        return payload["bills"], payload["plan_hash"], payload["kpis"]
 
     def reset_if_idle(self) -> None:
         if (

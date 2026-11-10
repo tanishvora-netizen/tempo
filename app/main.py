@@ -285,31 +285,31 @@ def post_accept_terms(vendor_id: str, body: NegotiatedTerms) -> Payload:
 
 
 @app.post("/api/plan/approve", response_model=Payload)
-def post_approve(body: ApproveRequest) -> Payload:
+def post_approve(body: ApproveRequest, request: Request) -> Payload:
     """Record the CFO's approval in the append-only, hash-chained audit log. Nothing is sent to Ramp."""
     s = state()
     autonomy = body.autonomy.model_dump()
-    plan_rows, plan_hash = s.current_plan()
-    rows = {r["bill_id"]: r for r in plan_rows}
-    ids = sorted(set(body.bill_ids)) if body.bill_ids is not None else sorted(rows)
-    unknown = [i for i in ids if i not in rows]
-    if unknown:
-        raise HTTPException(status_code=422, detail=f"{len(unknown)} unknown bill ids")
-    scope = {
-        "bill_count": len(ids),
-        "cash_out_cents": sum(rows[i]["cash_out_cents"] for i in ids),
-        "value_cents": sum(rows[i]["value_cents"] for i in ids),
-        "rtp_dependent_count": sum(rows[i]["rtp_dependent"] for i in ids),
-        "bill_ids_sha256": hashlib.sha256(",".join(ids).encode()).hexdigest(),
-        "approver_authenticated": False,
-    }
-    metrics = {
-        "scope": scope,
-        "plan": {
-            k: s.bundle["kpis"][k] for k in ("value_vs_pay_on_due_cents", "breach_rate", "breach_upper")
-        },
-    }
     with s.lock:
+        if s.overrides and s.override_result is None:
+            THROTTLE.check(request)
+        plan_rows, plan_hash, plan_kpis = s.current_plan()
+        rows = {r["bill_id"]: r for r in plan_rows}
+        ids = sorted(set(body.bill_ids)) if body.bill_ids is not None else sorted(rows)
+        unknown = [i for i in ids if i not in rows]
+        if unknown:
+            raise HTTPException(status_code=422, detail=f"{len(unknown)} unknown bill ids")
+        scope = {
+            "bill_count": len(ids),
+            "cash_out_cents": sum(rows[i]["cash_out_cents"] for i in ids),
+            "value_cents": sum(rows[i]["value_cents"] for i in ids),
+            "rtp_dependent_count": sum(rows[i]["rtp_dependent"] for i in ids),
+            "bill_ids_sha256": hashlib.sha256(",".join(ids).encode()).hexdigest(),
+            "approver_authenticated": False,
+        }
+        metrics = {
+            "scope": scope,
+            "plan": {k: plan_kpis[k] for k in ("value_vs_pay_on_due_cents", "breach_rate", "breach_upper")},
+        }
         s.autonomy = autonomy
         try:
             entry = audit.append(
@@ -337,7 +337,8 @@ def get_audit() -> Payload:
 @app.get("/api/ramp/payload-preview", response_model=Payload)
 def get_payload_preview() -> Payload:
     s = state()
-    rows, plan_hash = s.current_plan()
+    with s.lock:
+        rows, plan_hash, _ = s.current_plan()
     if s.approved_ids:
         rows = [r for r in rows if r["bill_id"] in s.approved_ids]
     preview = payment_run(rows, set(s.overrides), s.autonomy, plan_hash)
