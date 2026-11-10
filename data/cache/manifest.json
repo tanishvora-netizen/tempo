@@ -1,10 +1,12 @@
 {
- "entries": 212,
+ "entries": 312,
  "failures": 2,
  "models": {
-  "qwen3:8b": 212
+  "qwen3:8b": 312
  },
  "tasks": {
-  "extract": 212
+  "draft": 20,
+  "extract": 212,
+  "reply": 80
  }
 }

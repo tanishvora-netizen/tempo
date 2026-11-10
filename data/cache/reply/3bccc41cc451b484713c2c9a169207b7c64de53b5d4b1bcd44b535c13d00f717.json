@@ -1,0 +1,11 @@
+{
+ "created_at": "2026-11-10T12:16:53+00:00",
+ "error": null,
+ "key": "3bccc41cc451b484713c2c9a169207b7c64de53b5d4b1bcd44b535c13d00f717",
+ "model": "qwen3:8b",
+ "prompt_version": "v1",
+ "provider": "ollama",
+ "raw": "{\n  \"terms_quote\": \"Let me check with our controller about the early payment and get back to you next week.\",\n  \"terms_source\": \"<reply-ambiguous-2e590aac@vendor>\",\n  \"discount_pct\": null,\n  \"discount_days\": null,\n  \"net_days\": null,\n  \"anchor\": null,\n  \"prox_day\": null,\n  \"late_fee_quote\": null,\n  \"late_fee_source\": null,\n  \"late_fee_kind\": null,\n  \"late_fee_value\": null,\n  \"methods_quote\": null,\n  \"methods_source\": null,\n  \"accepted_methods\": [],\n  \"surcharge_quote\": null,\n  \"surcharge_source\": null,\n  \"card_surcharge_pct\": null,\n  \"card_discount_quote\": null,\n  \"card_discount_source\": null,\n  \"card_discount_allowed\": null,\n  \"terms_overridden_in_email\": false\n}",
+ "schema_version": "terms-v2",
+ "task": "reply"
+}
