@@ -23,7 +23,9 @@ def test_demo_path_works_and_stays_on_localhost(page: Page, live_server: str) ->
     page.goto(f"{live_server}/#/run")
     first_row = page.locator("tr[data-bill]").first
     first_row.click()
-    expect(page.get_by_text(re.compile("Paid|Sent|Financed"), exact=False).first).to_be_visible()
+    expect(page.locator('section[aria-labelledby="bp-decision"]')).to_contain_text(
+        re.compile("Paid|Sent|Financed")
+    )
     page.keyboard.press("Escape")
 
     page.goto(f"{live_server}/#/whatif")
