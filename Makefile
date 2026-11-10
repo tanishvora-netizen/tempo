@@ -2,7 +2,7 @@ PY ?= .venv/bin/python
 PORT ?= 8000
 TAILWIND := ./node_modules/.bin/tailwindcss
 
-.PHONY: setup data cache precompute dev test lint format results e2e demo-video verify-live demo css vendor
+.PHONY: setup data cache cache-negotiation precompute dev test lint format results e2e demo-video verify-live demo css vendor
 
 setup:
 	python3.12 -m venv .venv
@@ -14,6 +14,9 @@ data:
 
 cache:
 	$(PY) scripts/build_cache.py --concurrency 2
+
+cache-negotiation:
+	$(PY) scripts/build_cache.py --concurrency 2 --negotiation
 
 precompute:
 	$(PY) scripts/precompute.py

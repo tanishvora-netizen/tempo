@@ -1,4 +1,4 @@
-"""Append-only, hash-chained audit log of plan approvals (JSONL).
+"""Append-only, hash-chained (tamper-evident, not tamper-proof) audit log of plan approvals (JSONL).
 
 Each entry stores: timestamp, approver, autonomy mode, plan hash, input hash, metrics, and the hash of the
 previous entry. Its own hash is sha256 over its canonical JSON (without the hash field). `verify_chain`
@@ -7,11 +7,13 @@ recomputes every link, so editing, deleting, or reordering any entry breaks the 
 
 import hashlib
 import json
+import os
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
 GENESIS = "0" * 64
+MAX_ENTRIES = 1_000  # a public demo log is capped so it cannot be spammed without bound
 
 
 @dataclass(frozen=True)
@@ -57,6 +59,8 @@ def append(
     status = verify_chain(path)
     if not status.ok:
         raise ValueError(f"audit chain is broken at entry {status.first_bad}; refusing to append")
+    if status.entries >= MAX_ENTRIES:
+        raise ValueError(f"audit log is full ({MAX_ENTRIES} entries)")
     entry = {
         "timestamp": (now or datetime.now(UTC)).isoformat(timespec="seconds"),
         "approver": approver,
@@ -70,4 +74,6 @@ def append(
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a") as fh:
         fh.write(json.dumps(entry, sort_keys=True) + "\n")
+        fh.flush()
+        os.fsync(fh.fileno())
     return entry

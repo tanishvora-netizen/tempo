@@ -17,11 +17,11 @@ from app.schemas import (
     ReviewAction,
     TermsInput,
 )
+from app.security import SecurityHeaders, Throttle
 from app.state import AppState, load_state
 from tempo import audit
 from tempo.agent.negotiation import Offer, draft_email, parse_reply
 from tempo.forecast.simulate import WhatIf
-from tempo.live import live_solve
 from tempo.models import TermsRecord
 from tempo.ramp.payloads import payment_run
 from tempo.serde import from_jsonable
@@ -39,16 +39,33 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(title="Tempo", version="0.1.0", lifespan=lifespan)
+app.add_middleware(SecurityHeaders)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+THROTTLE = Throttle()
 
 
 def state() -> AppState:
-    return STATE["app"]
+    """The shared demo state; it resets itself after IDLE_RESET_S without changes (council-free hygiene for a
+    public no-auth demo: one visitor's clicks should not linger for the next)."""
+    s = STATE["app"]
+    s.reset_if_idle()
+    return s
 
 
 @app.exception_handler(ValueError)
 async def value_error(_: Request, exc: ValueError) -> JSONResponse:
-    return JSONResponse(status_code=422, content={"error": "invalid input", "detail": str(exc)})
+    log.warning("rejected input: %s", exc)
+    return JSONResponse(
+        status_code=422, content={"error": "invalid input", "detail": "the request could not be used"}
+    )
+
+
+@app.post("/api/reset", response_model=Payload)
+def post_reset() -> Payload:
+    """Clear review acceptances, negotiated terms, and the autonomy setting (the audit log is append-only)."""
+    s = STATE["app"]
+    s.reset()
+    return Payload(data={"reset": True})
 
 
 @app.get("/health")
@@ -112,7 +129,7 @@ def get_review() -> Payload:
 
 
 @app.post("/api/review/{bill_id}", response_model=Payload)
-def post_review(bill_id: str, body: ReviewAction) -> Payload:
+def post_review(bill_id: str, body: ReviewAction, request: Request) -> Payload:
     s = state()
     items = {
         i["bill_id"]: i
@@ -136,7 +153,8 @@ def post_review(bill_id: str, body: ReviewAction) -> Payload:
                     "effect": item["effect"],
                 }
             )
-        result = live_solve(s.dataset, s.ingest, s.base_plan, s.cash_value, overrides=overrides)
+        THROTTLE.check(request)
+        result = s.solve_live(None, overrides)
         s.overrides = overrides
     return Payload(data={"source": "live", "bill_id": bill_id, "terms": terms.__dict__, **result.payload})
 
@@ -164,7 +182,7 @@ def get_presets() -> Payload:
 
 
 @app.post("/api/optimize", response_model=Payload)
-def post_optimize(body: OptimizeRequest) -> Payload:
+def post_optimize(body: OptimizeRequest, request: Request) -> Payload:
     s = state()
     wi = body.what_if
     if wi is None:
@@ -179,7 +197,9 @@ def post_optimize(body: OptimizeRequest) -> Payload:
         raise HTTPException(status_code=404, detail="unknown customer")
     what_if = WhatIf(wi.customer_id, wi.delay_days, wi.shock_cents, wi.shock_day)
     with s.lock:
-        result = live_solve(s.dataset, s.ingest, s.base_plan, s.cash_value, what_if, dict(s.overrides))
+        if not s.is_cached(what_if, s.overrides):
+            THROTTLE.check(request)
+        result = s.solve_live(what_if, dict(s.overrides))
     return Payload(data={"source": "live", **result.payload})
 
 

@@ -20,7 +20,7 @@ from tempo.economics import annualized_return, break_even_discount
 from tempo.extract.reconcile import decide_terms
 from tempo.extract.regex_parser import parse_block
 from tempo.extract.verify import as_record, verify_extraction
-from tempo.llm.provider import LLMProvider, ProviderError, draft_call, reply_call
+from tempo.llm.provider import LLMProvider, ModelCall, ProviderError, draft_call, reply_call
 from tempo.models import EmailMessage, InvoiceDocument, TermsRecord
 from tempo.money import BPS_PER_UNIT, apply_rate, ceil_to_step, format_usd
 from tempo.optimize.engine import Plan, solve_plan
@@ -187,10 +187,23 @@ def simulated_reply(o: Offer, kind: str) -> str:
     return "Let me check with our controller about the early payment and get back to you next week."
 
 
+def reply_message(o: Offer, kind: str) -> tuple[str, str, str]:
+    """(message id, sender, text) of a simulated reply; shared with scripts/build_cache.py so keys match."""
+    return (
+        f"<reply-{kind}-{o.bill_id[:8]}@vendor>",
+        f"billing@{o.vendor_id}.example",
+        simulated_reply(o, kind),
+    )
+
+
+def reply_model_call(o: Offer, kind: str) -> ModelCall:
+    message_id, sender, text = reply_message(o, kind)
+    return reply_call(message_id, sender, text)
+
+
 def parse_reply(provider: LLMProvider | None, o: Offer, kind: str) -> dict:
     """Parse a reply with the parser and the model, cross-checked exactly like invoices; never auto-applied."""
-    text = simulated_reply(o, kind)
-    message_id = f"<reply-{kind}-{o.bill_id[:8]}@vendor>"
+    message_id, _sender, text = reply_message(o, kind)
     doc = InvoiceDocument(
         (),
         (
@@ -203,7 +216,7 @@ def parse_reply(provider: LLMProvider | None, o: Offer, kind: str) -> dict:
     check, model_note = None, "no model"
     if provider is not None:
         try:
-            ext = provider.parse_reply(reply_call(message_id, f"billing@{o.vendor_id}.example", text))
+            ext = provider.parse_reply(reply_model_call(o, kind))
             check = verify_extraction(ext, doc)["terms"]
             model_note = check.reason
         except ProviderError as exc:

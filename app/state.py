@@ -8,6 +8,8 @@ when a live re-solve needs it.
 import json
 import os
 import threading
+import time
+from collections import OrderedDict
 from dataclasses import dataclass, field
 from functools import cached_property
 from pathlib import Path
@@ -15,8 +17,10 @@ from pathlib import Path
 import numpy as np
 
 from tempo.data.store import load_dataset
+from tempo.forecast.simulate import WhatIf
+from tempo.live import LiveResult, live_solve
 from tempo.llm.cached_provider import CachedProvider
-from tempo.llm.provider import LLMProvider, get_provider
+from tempo.llm.provider import LLMProvider, ProviderError, get_provider
 from tempo.models import Dataset, TermsRecord
 from tempo.optimize.cash_value import CashValue
 from tempo.optimize.engine import Plan, option_sets
@@ -25,6 +29,9 @@ from tempo.pipeline import IngestResult, ingest, plannable_bills
 from tempo.precompute import OUT_DIR, input_hash
 
 REPO = Path(__file__).resolve().parents[1]
+DEFAULT_AUTONOMY = {"mode": "suggest", "threshold_cents": 2_500_000}
+IDLE_RESET_S = 30 * 60  # a public demo forgets one visitor's clicks after 30 idle minutes
+LIVE_CACHE_SIZE = 64
 
 
 @dataclass
@@ -40,8 +47,40 @@ class AppState:
     offers: dict = field(default_factory=dict)
     overrides: dict[str, TermsRecord] = field(default_factory=dict)
     negotiated: dict[str, dict] = field(default_factory=dict)
-    autonomy: dict = field(default_factory=lambda: {"mode": "suggest", "threshold_cents": 2_500_000})
+    autonomy: dict = field(default_factory=lambda: dict(DEFAULT_AUTONOMY))
     lock: threading.Lock = field(default_factory=threading.Lock)
+    touched_at: float = field(default_factory=time.monotonic)
+    _live_cache: OrderedDict = field(default_factory=OrderedDict)
+
+    def reset(self) -> None:
+        with self.lock:
+            self.overrides = {}
+            self.negotiated = {}
+            self.autonomy = dict(DEFAULT_AUTONOMY)
+            self.touched_at = time.monotonic()
+
+    def reset_if_idle(self) -> None:
+        if (self.overrides or self.negotiated) and time.monotonic() - self.touched_at > IDLE_RESET_S:
+            self.reset()
+
+    def _key(self, what_if: WhatIf | None, overrides: dict[str, TermsRecord]) -> tuple:
+        return (what_if, tuple(sorted(overrides.items())))
+
+    def is_cached(self, what_if: WhatIf | None, overrides: dict[str, TermsRecord]) -> bool:
+        return self._key(what_if, overrides) in self._live_cache
+
+    def solve_live(self, what_if: WhatIf | None, overrides: dict[str, TermsRecord]) -> LiveResult:
+        """Live re-solve with a small LRU cache (identical requests are answered instantly)."""
+        key = self._key(what_if, overrides)
+        if key in self._live_cache:
+            self._live_cache.move_to_end(key)
+            return self._live_cache[key]
+        result = live_solve(self.dataset, self.ingest, self.base_plan, self.cash_value, what_if, overrides)
+        self._live_cache[key] = result
+        if len(self._live_cache) > LIVE_CACHE_SIZE:
+            self._live_cache.popitem(last=False)
+        self.touched_at = time.monotonic()
+        return result
 
     @property
     def hash_ok(self) -> bool:
@@ -71,7 +110,10 @@ class AppState:
 
     def live_provider(self) -> LLMProvider:
         """Provider for live calls (drafting, reply parsing): the local model if reachable, else the cache."""
-        return get_provider()
+        try:
+            return get_provider()
+        except ProviderError:
+            return CachedProvider()
 
 
 def _read(name: str) -> dict:

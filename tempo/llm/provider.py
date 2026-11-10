@@ -178,7 +178,7 @@ def get_provider() -> LLMProvider:
     if choice == "anthropic":
         from tempo.llm.anthropic_provider import AnthropicProvider
 
-        return AnthropicProvider()
+        return AnthropicProvider()  # raises ProviderUnavailable unless explicitly allowed with a key
     ollama = OllamaProvider()
     if choice == "ollama" or ollama.is_available():
         return ollama

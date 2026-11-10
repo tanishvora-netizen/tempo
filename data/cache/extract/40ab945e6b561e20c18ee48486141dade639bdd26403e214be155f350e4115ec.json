@@ -1,0 +1,11 @@
+{
+ "created_at": "2026-11-10T11:38:07+00:00",
+ "error": null,
+ "key": "40ab945e6b561e20c18ee48486141dade639bdd26403e214be155f350e4115ec",
+ "model": "qwen3:8b",
+ "prompt_version": "v1",
+ "provider": "ollama",
+ "raw": "{\n  \"terms_quote\": \"1/15, n45\",\n  \"terms_source\": \"payment_box\",\n  \"discount_pct\": 1,\n  \"discount_days\": 15,\n  \"net_days\": 45,\n  \"anchor\": \"invoice_date\",\n  \"prox_day\": null,\n  \"late_fee_quote\": null,\n  \"late_fee_source\": null,\n  \"late_fee_kind\": null,\n  \"late_fee_value\": null,\n  \"methods_quote\": \"ACH, check, credit card (Visa, Mastercard, Amex)\",\n  \"methods_source\": \"payment_box\",\n  \"accepted_methods\": [\"ACH\", \"CHECK\", \"CARD\"],\n  \"surcharge_quote\": null,\n  \"surcharge_source\": null,\n  \"card_surcharge_pct\": null,\n  \"card_discount_quote\": \"Early-payment discount applies to card payments\",\n  \"card_discount_source\": \"payment_box\",\n  \"card_discount_allowed\": true,\n  \"terms_overridden_in_email\": false\n}",
+ "schema_version": "terms-v2",
+ "task": "extract"
+}

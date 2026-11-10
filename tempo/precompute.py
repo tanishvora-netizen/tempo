@@ -52,17 +52,13 @@ MARKER_COUNT = 8
 
 
 def input_hash(regime: str = "demo") -> str:
-    """sha256 over the committed dataset, assumptions.py, the cache manifest, the sorted cache entry names
-    (each name is the hash of its prompt, schema, and document), and the seed."""
+    """sha256 over the committed dataset, assumptions.py, the extraction cache entry names (each name is the hash
+    of its prompt, schema, and document), and the seed. Offer drafts and reply parses do not change the plan, so
+    they are not part of the hash."""
     h = hashlib.sha256()
-    cache = REPO / "data" / "cache"
-    for path in (
-        REPO / "data" / regime / "dataset.json",
-        REPO / "tempo" / "assumptions.py",
-        cache / "manifest.json",
-    ):
-        h.update(path.read_bytes() if path.exists() else b"missing")
-    for path in sorted(cache.glob("*/*.json")):
+    for path in (REPO / "data" / regime / "dataset.json", REPO / "tempo" / "assumptions.py"):
+        h.update(path.read_bytes())
+    for path in sorted((REPO / "data" / "cache" / "extract").glob("*.json")):
         h.update(path.name.encode())
     h.update(str(SEED).encode())
     return h.hexdigest()[:16]
