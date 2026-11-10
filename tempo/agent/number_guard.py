@@ -15,6 +15,7 @@ from tempo.llm.schemas import OfferTemplate
 PLACEHOLDERS = ("VENDOR", "INVOICE_NO", "AMOUNT", "DISC_PCT", "SAVINGS", "PAY_BY", "NET_DAYS")
 _PLACEHOLDER = re.compile(r"\{([A-Z_]+)\}")
 _NUMBER = re.compile(r"\d+(?:[.,]\d+)*")
+MISSTATED_SAVINGS = re.compile(r"\bsav(?:e|es|ing)\s+you\b|\byour\s+savings\b", re.IGNORECASE)
 NUMBER_WORDS = frozenset(
     "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen "
     "seventeen eighteen nineteen twenty thirty forty fifty sixty seventy eighty ninety hundred thousand million "
@@ -53,6 +54,8 @@ def template_problems(t: OfferTemplate) -> list[str]:
         unknown = sorted(set(_PLACEHOLDER.findall(text)) - set(PLACEHOLDERS))
         if unknown:
             problems.append(f"{name} uses unknown placeholders: {', '.join(unknown)}")
+    if MISSTATED_SAVINGS.search(t.subject_template + " " + t.body_template):
+        problems.append("says the discount saves the vendor money; the buyer saves, the vendor is paid early")
     if "{DISC_PCT}" not in t.body_template or "{PAY_BY}" not in t.body_template:
         problems.append("body must state {DISC_PCT} and {PAY_BY}")
     return problems

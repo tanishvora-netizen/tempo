@@ -20,13 +20,14 @@ from pydantic import BaseModel, ValidationError
 from tempo.llm.schemas import SCHEMA_VERSION, OfferTemplate, TermsExtraction
 from tempo.models import Invoice
 
-PROMPT_VERSION = "v1"
+PROMPT_VERSION = "v1"  # extraction and reply parsing
+PROMPT_VERSIONS: dict[str, str] = {"extract": "v1", "draft": "v3", "reply": "v1"}
 PROMPTS_DIR = Path(__file__).parent / "prompts"
 REPO_ROOT = Path(__file__).resolve().parents[2]
 Task = Literal["extract", "draft", "reply"]
 PROMPT_FILES: dict[Task, str] = {
     "extract": "extract_v1.md",
-    "draft": "draft_offer_v1.md",
+    "draft": "draft_offer_v3.md",
     "reply": "parse_reply_v1.md",
 }
 
@@ -60,7 +61,7 @@ class ModelCall:
 
     def key(self) -> str:
         """Cache key: sha256(prompt_version | schema_version | document text), prefixed by task."""
-        raw = f"{self.task}-{PROMPT_VERSION}|{SCHEMA_VERSION}|{self.payload}"
+        raw = f"{self.task}-{PROMPT_VERSIONS[self.task]}|{SCHEMA_VERSION}|{self.payload}"
         return hashlib.sha256(raw.encode()).hexdigest()
 
     def messages(self) -> list[dict[str, str]]:

@@ -1,0 +1,11 @@
+{
+ "created_at": "2026-11-10T12:21:22+00:00",
+ "error": null,
+ "key": "62850a168be5498cc0736f1a8661cbc8bb7c908cf9fa2056e0a02f235f4831c7",
+ "model": "qwen3:8b",
+ "prompt_version": "v1",
+ "provider": "ollama",
+ "raw": "{\n  \"subject_template\": \"Early payment offer for invoice {INVOICE_NO}\",\n  \"body_template\": \"Hello {VENDOR},\\n\\nWe would like to pay invoice {INVOICE_NO} for {AMOUNT} early, on {PAY_BY}, rather than on its net {NET_DAYS} due date, in exchange for a {DISC_PCT} early-payment discount ({SAVINGS} off the invoice). The payment would reach your bank instantly by RTP, with no fee to you.\\n\\nIf this works for you, a short reply is all we need.\\n\\nThank you,\\nAccounts Payable\"\n}",
+ "schema_version": "terms-v2",
+ "task": "draft"
+}

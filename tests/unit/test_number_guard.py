@@ -54,3 +54,15 @@ def test_unknown_placeholder_is_rejected() -> None:
 def test_fallback_template_itself_is_clean() -> None:
     assert template_problems(FALLBACK) == []
     assert guard(None, VALUES).used_fallback
+
+
+def test_offer_that_says_it_saves_the_vendor_money_is_rejected() -> None:
+    wrong = OfferTemplate(
+        subject_template="Offer {INVOICE_NO}",
+        body_template="Take {DISC_PCT} off; this will save you {SAVINGS} if paid by {PAY_BY}.",
+    )
+
+    out = guard(wrong, VALUES)
+
+    assert out.used_fallback
+    assert any("saves the vendor" in p for p in out.problems)
