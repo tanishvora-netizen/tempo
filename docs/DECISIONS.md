@@ -137,3 +137,10 @@ The `render.yaml` blueprint pins Python 3.12.8 because the newest default can la
   - ui-ux-pro-max generated the design system, refined by the frontend-design skill.
   - The find-skills results were reviewed (nothing new installed).
 - A five-member council of read-only reviewer agents (quant, controller, Ramp engineer, designer, judge) red-teamed each gate. Every verdict and ruling is in `docs/council/`.
+
+## Rulings after C2 (P4 to P6)
+- Ruling: Security review findings fixed before judges click: per-IP throttle (6 per minute) and an LRU cache on live re-solves; shared demo state (review acceptances, negotiated terms, autonomy) resets after 30 idle minutes and via `POST /api/reset`; CSP and security headers; generic error bodies; audit log capped at 1,000 entries and fsynced, described as tamper-evident (not tamper-proof); the hosted-model adapter refuses unless explicitly enabled | a public no-auth demo on 0.1 CPU is shared by every visitor | Low.
+- Ruling: Built two cut-line items because the schedule allowed: the hosted-model adapter (`tempo/llm/anthropic_provider.py`, gated) and PDF upload (`POST /api/extract/upload`, pypdf in memory, 2 MB / 10 pages, never changes the plan) | both were optional; neither is on the demo path | Low.
+- Ruling: Demo script, submission description, and README results are rendered by `make results` from the precomputed files | numbers in prose can never drift from RESULTS.md | None.
+- Ruling: UI design calls (frontend-design over ui-ux-pro-max's proposal): IBM Plex Sans with tabular numerals, warm off-white page #F5F4F0, white panels with #E4E2DC borders, ink #1C1C1A, one cobalt accent #2E4BB8 only on commit actions, green #1D7A45 and red #B3261E only for money gained or at risk, ochre #875200 only for Needs review; rejected the generated blue/amber scheme and Fira fonts (`design-system/tempo/MASTER.md`) | directive 9.1 direction; avoids the generic AI-fintech look | Low.
+- Ruling: Live re-solves keep the base plan's certified K and report a seed-B estimate labeled "not re-certified"; presets carry full certification | a full ladder per click is too slow on the host (C1, judge) | Low.
