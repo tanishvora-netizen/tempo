@@ -16,6 +16,7 @@ from tempo.pipeline import ingest
 from tempo.precompute import (
     OUT_DIR,
     build_bundle,
+    build_offers,
     build_proof,
     build_review_effects,
     build_whatifs,
@@ -42,6 +43,7 @@ def main() -> None:
         ("proof", build_proof),
         ("whatifs", build_whatifs),
         ("review_effects", build_review_effects),
+        ("offers", build_offers),
     ):
         t = time.perf_counter()
         write(name, build(dataset, ingest_result, base))

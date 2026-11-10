@@ -13,3 +13,4 @@ test-results/
 playwright-report/
 .setup.log
 logs/
+data/audit/

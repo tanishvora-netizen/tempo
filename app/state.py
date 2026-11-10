@@ -37,7 +37,9 @@ class AppState:
     review_effects: dict
     current_hash: str
     provider_label: str
+    offers: dict = field(default_factory=dict)
     overrides: dict[str, TermsRecord] = field(default_factory=dict)
+    negotiated: dict[str, dict] = field(default_factory=dict)
     autonomy: dict = field(default_factory=lambda: {"mode": "suggest", "threshold_cents": 2_500_000})
     lock: threading.Lock = field(default_factory=threading.Lock)
 
@@ -63,6 +65,10 @@ class AppState:
     def cash_value(self) -> CashValue:
         return CashValue(**self.bundle["cash_value"])
 
+    @property
+    def audit_path(self) -> Path:
+        return Path(os.environ.get("TEMPO_AUDIT_PATH", str(REPO / "data" / "audit" / "audit.jsonl")))
+
     def live_provider(self) -> LLMProvider:
         """Provider for live calls (drafting, reply parsing): the local model if reachable, else the cache."""
         return get_provider()
@@ -85,6 +91,7 @@ def load_state() -> AppState:
         proof=_read("proof"),
         whatifs=_read("whatifs"),
         review_effects=_read("review_effects"),
+        offers=_read("offers"),
         current_hash=input_hash("demo"),
         provider_label=label,
     )

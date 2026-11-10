@@ -59,3 +59,21 @@ class Payload(BaseModel):
 class ErrorBody(BaseModel):
     error: str
     detail: str | None = None
+
+
+class AutonomyInput(Strict):
+    mode: Literal["suggest", "auto"] = "suggest"
+    threshold_cents: int = Field(default=2_500_000, ge=0, le=100_000_000)
+
+
+class ApproveRequest(Strict):
+    approver: str = Field(min_length=1, max_length=80, pattern=r"^[\w .,'@-]+$")
+    autonomy: AutonomyInput = AutonomyInput()
+
+
+class ReplyRequest(Strict):
+    kind: Literal["accept", "counter", "decline", "ambiguous"]
+
+
+class NegotiatedTerms(Strict):
+    terms: TermsInput

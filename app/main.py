@@ -8,11 +8,23 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.schemas import OptimizeRequest, Payload, ReviewAction, TermsInput
+from app.schemas import (
+    ApproveRequest,
+    NegotiatedTerms,
+    OptimizeRequest,
+    Payload,
+    ReplyRequest,
+    ReviewAction,
+    TermsInput,
+)
 from app.state import AppState, load_state
+from tempo import audit
+from tempo.agent.negotiation import Offer, draft_email, parse_reply
 from tempo.forecast.simulate import WhatIf
 from tempo.live import live_solve
 from tempo.models import TermsRecord
+from tempo.ramp.payloads import payment_run
+from tempo.serde import from_jsonable
 from tempo.views import assumptions_catalog, bill_detail, review_items
 
 STATIC_DIR = Path(__file__).parent / "static"
@@ -179,6 +191,94 @@ def get_evaluate() -> Payload:
 @app.get("/api/cash-value", response_model=Payload)
 def get_cash_value() -> Payload:
     return Payload(data=state().bundle["cash_value"])
+
+
+@app.get("/api/negotiate", response_model=Payload)
+def get_offers() -> Payload:
+    s = state()
+    return Payload(data={**s.offers, "negotiated": s.negotiated})
+
+
+def _offer_raw(vendor_id: str) -> dict:
+    raw = next((o for o in state().offers.get("offers", []) if o["vendor_id"] == vendor_id), None)
+    if raw is None:
+        raise HTTPException(status_code=404, detail="no offer for this vendor")
+    return raw
+
+
+def _offer(vendor_id: str) -> Offer:
+    return from_jsonable(Offer, _offer_raw(vendor_id))
+
+
+@app.post("/api/negotiate/{vendor_id}", response_model=Payload)
+def post_offer(vendor_id: str) -> Payload:
+    """Draft the offer email: the model writes placeholders only; code fills and guards every number."""
+    text, source = draft_email(state().live_provider(), _offer(vendor_id))
+    email = {
+        "subject": text.subject,
+        "body": text.body,
+        "source": source,
+        "used_fallback": text.used_fallback,
+        "problems": list(text.problems),
+    }
+    return Payload(data={"offer": _offer_raw(vendor_id), "email": email, "sent": False})
+
+
+@app.post("/api/negotiate/{vendor_id}/reply", response_model=Payload)
+def post_reply(vendor_id: str, body: ReplyRequest) -> Payload:
+    """Simulate a vendor reply and parse it; terms are written only after a person clicks Accept."""
+    return Payload(data=parse_reply(state().live_provider(), _offer(vendor_id), body.kind))
+
+
+@app.post("/api/negotiate/{vendor_id}/accept", response_model=Payload)
+def post_accept_terms(vendor_id: str, body: NegotiatedTerms) -> Payload:
+    _offer(vendor_id)
+    terms = _terms_from(body.terms)
+    s = state()
+    with s.lock:
+        s.negotiated = {
+            **s.negotiated,
+            vendor_id: {"terms": terms.__dict__ if terms else None, "source": "NEGOTIATED"},
+        }
+    return Payload(data={"vendor_id": vendor_id, "negotiated": s.negotiated[vendor_id]})
+
+
+@app.post("/api/plan/approve", response_model=Payload)
+def post_approve(body: ApproveRequest) -> Payload:
+    """Record the CFO's approval in the append-only, hash-chained audit log. Nothing is sent to Ramp."""
+    s = state()
+    autonomy = body.autonomy.model_dump()
+    metrics = {
+        k: s.bundle["kpis"][k]
+        for k in (
+            "value_vs_pay_on_due_cents",
+            "breach_rate",
+            "breach_upper",
+            "discounts_captured_count",
+            "card_count",
+        )
+    }
+    with s.lock:
+        s.autonomy = autonomy
+        try:
+            entry = audit.append(
+                s.audit_path, body.approver, autonomy, s.bundle["plan_hash"], s.bundle["input_hash"], metrics
+            )
+        except ValueError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+    return Payload(data={"entry": entry, "chain": audit.verify_chain(s.audit_path).__dict__})
+
+
+@app.get("/api/audit", response_model=Payload)
+def get_audit() -> Payload:
+    path = state().audit_path
+    return Payload(data={"entries": audit.read_entries(path), "chain": audit.verify_chain(path).__dict__})
+
+
+@app.get("/api/ramp/payload-preview", response_model=Payload)
+def get_payload_preview() -> Payload:
+    s = state()
+    return Payload(data=payment_run(s.bundle["bills"], set(s.overrides), s.autonomy, s.bundle["plan_hash"]))
 
 
 def _terms_from(t: TermsInput | None) -> TermsRecord | None:

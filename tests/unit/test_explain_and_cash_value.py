@@ -20,8 +20,26 @@ AS_OF = date(2026, 11, 10)
 def _bill(discount_bps: int, net: int = 30) -> PlannableBill:
     terms = TermsRecord(discount_bps, 10, net, "invoice_date")
     return PlannableBill(
-        "b1", "v1", "Vendor", "INV-1", date(2026, 11, 9), 1_000_000, 0, 0, 1_000_000, terms, date(2026, 12, 9),
-        date(2026, 11, 19), None, False, 0, False, True, False, True, "verified",
+        "b1",
+        "v1",
+        "Vendor",
+        "INV-1",
+        date(2026, 11, 9),
+        1_000_000,
+        0,
+        0,
+        1_000_000,
+        terms,
+        date(2026, 12, 9),
+        date(2026, 11, 19),
+        None,
+        False,
+        0,
+        False,
+        True,
+        False,
+        True,
+        "verified",
     )
 
 
@@ -56,8 +74,9 @@ def test_demo_plan_reasons_name_the_binding_day_when_cash_binds() -> None:
     ds = load_dataset("demo")
     inputs = prepare(ds, ingest(ds, CachedProvider()))
     plan = solve_plan(inputs.bills, inputs.options, inputs.headroom_a, inputs.as_of, 4)
-    ctx = ExplainContext(plan, inputs.headroom_a, inputs.as_of, ds.company.buffer_cents, EPSILON, 0.09,
-                         ds.fixed_outflows)
+    ctx = ExplainContext(
+        plan, inputs.headroom_a, inputs.as_of, ds.company.buffer_cents, EPSILON, 0.09, ds.fixed_outflows
+    )
 
     decisions = explain_all(ctx)
 
@@ -83,5 +102,14 @@ def test_cash_value_is_small_when_cash_is_ample_and_credit_bound_when_impossible
 
 def test_ordinals() -> None:
     assert [ordinal(n) for n in (1, 2, 3, 4, 10, 11, 12, 13, 21, 22)] == [
-        "1st", "2nd", "3rd", "4th", "10th", "11th", "12th", "13th", "21st", "22nd"
+        "1st",
+        "2nd",
+        "3rd",
+        "4th",
+        "10th",
+        "11th",
+        "12th",
+        "13th",
+        "21st",
+        "22nd",
     ]

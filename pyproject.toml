@@ -11,7 +11,7 @@ extend-exclude = ["node_modules", ".venv", "data", ".claude", "tooling"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
-ignore = ["RUF001", "RUF002", "RUF003", "E501"]  # line length is owned by `ruff format`
+ignore = ["RUF001", "RUF002", "RUF003", "E501", "SIM905"]  # line length is owned by `ruff format`
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

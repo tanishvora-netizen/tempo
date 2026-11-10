@@ -1,0 +1,11 @@
+{
+ "created_at": "2026-11-10T11:32:32+00:00",
+ "error": null,
+ "key": "f27156717da8961ee60d948e37494bafbb6cb919902563e746f1d619f9dcecbd",
+ "model": "qwen3:8b",
+ "prompt_version": "v1",
+ "provider": "ollama",
+ "raw": "{\n  \"terms_quote\": \"Payable on receipt\",\n  \"terms_source\": \"payment_box\",\n  \"discount_pct\": null,\n  \"discount_days\": null,\n  \"net_days\": 0,\n  \"anchor\": \"receipt\",\n  \"prox_day\": null,\n  \"late_fee_quote\": null,\n  \"late_fee_source\": null,\n  \"late_fee_kind\": null,\n  \"late_fee_value\": null,\n  \"methods_quote\": \"ACH, credit card (Visa, Mastercard, Amex). A 3% surcharge applies to credit card payments.\",\n  \"methods_source\": \"payment_box\",\n  \"accepted_methods\": [\"ACH\", \"CARD\"],\n  \"surcharge_quote\": \"A 3% surcharge applies to credit card payments.\",\n  \"surcharge_source\": \"payment_box\",\n  \"card_surcharge_pct\": 3,\n  \"card_discount_quote\": null,\n  \"card_discount_source\": null,\n  \"card_discount_allowed\": false,\n  \"terms_overridden_in_email\": false\n}",
+ "schema_version": "terms-v2",
+ "task": "extract"
+}

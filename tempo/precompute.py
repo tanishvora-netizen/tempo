@@ -12,6 +12,7 @@ from pathlib import Path
 
 import numpy as np
 
+from tempo.agent.negotiation import plan_offers
 from tempo.assumptions import EPSILON, N_EVAL_SCENARIOS, N_FAN_SCENARIOS, SEED, SEED_C, SEED_FAN
 from tempo.extract.eval import evaluate_extraction
 from tempo.extract.reconcile import sanity_problem
@@ -318,3 +319,13 @@ def build_review_effects(dataset: Dataset, ingest_result: IngestResult, base: So
             }
         )
     return {"input_hash": input_hash(dataset.regime), "effects": out}
+
+
+def build_offers(dataset: Dataset, ingest_result: IngestResult, base: Solved) -> dict:
+    """Priced and optimizer-verified early-payment offers for vendors with no discount terms."""
+    offers = plan_offers(base.inputs, base.plan, base.cash_value.cost_of_cash)
+    return {
+        "input_hash": input_hash(dataset.regime),
+        "cost_of_cash": base.cash_value.cost_of_cash,
+        "offers": [asdict(o) for o in offers],
+    }
