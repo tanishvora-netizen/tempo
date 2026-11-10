@@ -147,3 +147,15 @@ def test_negotiation_routes(client: TestClient) -> None:
     assert reply["needs_human_accept"] is True
     assert bad.status_code == 422
     assert client.post("/api/negotiate/ven_999").status_code == 404
+
+
+def test_pdf_upload_reads_terms_and_rejects_non_pdfs(client: TestClient) -> None:
+    from tests.unit.test_upload import make_pdf
+
+    pdf = make_pdf(["Invoice #Z-9", "Payment terms: 1/10 Net 30"])
+    ok = client.post("/api/extract/upload", files={"file": ("inv.pdf", pdf, "application/pdf")})
+    bad = client.post("/api/extract/upload", files={"file": ("x.pdf", b"not a pdf", "application/pdf")})
+
+    assert ok.status_code == 200
+    assert ok.json()["data"]["terms"]["discount_bps"] == 100
+    assert bad.status_code == 422

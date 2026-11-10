@@ -3,10 +3,12 @@
 import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
+from typing import Annotated
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.concurrency import run_in_threadpool
 
 from app.schemas import (
     ApproveRequest,
@@ -21,6 +23,8 @@ from app.security import SecurityHeaders, Throttle
 from app.state import AppState, load_state
 from tempo import audit
 from tempo.agent.negotiation import Offer, draft_email, parse_reply
+from tempo.extract.upload import MAX_BYTES as MAX_UPLOAD_BYTES
+from tempo.extract.upload import UploadRejected, read_upload
 from tempo.forecast.simulate import WhatIf
 from tempo.models import TermsRecord
 from tempo.ramp.payloads import payment_run
@@ -157,6 +161,19 @@ def post_review(bill_id: str, body: ReviewAction, request: Request) -> Payload:
         result = s.solve_live(None, overrides)
         s.overrides = overrides
     return Payload(data={"source": "live", "bill_id": bill_id, "terms": terms.__dict__, **result.payload})
+
+
+@app.post("/api/extract/upload", response_model=Payload)
+async def post_upload(request: Request, file: Annotated[UploadFile, File()]) -> Payload:
+    """Read terms from an uploaded invoice PDF (in memory, never stored; never changes the plan)."""
+    THROTTLE.check(request)
+    data = await file.read(MAX_UPLOAD_BYTES + 1)
+    s = state()
+    try:
+        result = await run_in_threadpool(read_upload, data, s.live_provider(), s.dataset.company.as_of)
+    except UploadRejected as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    return Payload(data={**result, "filename": (file.filename or "upload.pdf")[:120]})
 
 
 @app.get("/api/forecast", response_model=Payload)
