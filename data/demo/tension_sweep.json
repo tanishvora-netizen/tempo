@@ -1,0 +1,55 @@
+{
+ "rule": "highest cash with greedy >= 15%, pay_on_due <= 2%, Tempo certified",
+ "seed": 22261139,
+ "chosen_cents": null,
+ "rows": [
+  {
+   "starting_cash_cents": 400000000,
+   "greedy_breach_seed_c": 0.0355,
+   "pay_on_due_breach_seed_c": 0.0057,
+   "tempo_certified": true,
+   "tempo_breach_seed_c": 0.0205,
+   "meets_all": false
+  },
+  {
+   "starting_cash_cents": 380000000,
+   "greedy_breach_seed_c": 0.0532,
+   "pay_on_due_breach_seed_c": 0.0098,
+   "tempo_certified": true,
+   "tempo_breach_seed_c": 0.0214,
+   "meets_all": false
+  },
+  {
+   "starting_cash_cents": 360000000,
+   "greedy_breach_seed_c": 0.0792,
+   "pay_on_due_breach_seed_c": 0.0165,
+   "tempo_certified": true,
+   "tempo_breach_seed_c": 0.0218,
+   "meets_all": false
+  },
+  {
+   "starting_cash_cents": 340000000,
+   "greedy_breach_seed_c": 0.1099,
+   "pay_on_due_breach_seed_c": 0.0251,
+   "tempo_certified": true,
+   "tempo_breach_seed_c": 0.0222,
+   "meets_all": false
+  },
+  {
+   "starting_cash_cents": 320000000,
+   "greedy_breach_seed_c": 0.1552,
+   "pay_on_due_breach_seed_c": 0.04,
+   "tempo_certified": true,
+   "tempo_breach_seed_c": 0.0242,
+   "meets_all": false
+  },
+  {
+   "starting_cash_cents": 300000000,
+   "greedy_breach_seed_c": 0.2092,
+   "pay_on_due_breach_seed_c": 0.062,
+   "tempo_certified": true,
+   "tempo_breach_seed_c": 0.0296,
+   "meets_all": false
+  }
+ ]
+}

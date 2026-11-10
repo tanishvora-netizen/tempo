@@ -25,7 +25,8 @@ def _demo_inputs():
 
 @pytest.mark.slow
 def test_tension_on_the_demo_seed() -> None:
-    """Directive section 6, with the pre-registered fallback thresholds (docs/DECISIONS.md): on seed C,
+    """Directive section 6, with the thresholds actually used (docs/DECISIONS.md: the final sweep found no
+    starting cash with greedy >= 15% and pay_on_due <= 2%, so the pre-registered fallback stands): on seed C,
     pay_on_due <= 2%, greedy_discount is unsafe (> EPSILON), and Tempo passes certification while keeping
     at least 60% of greedy's value."""
     inputs = _demo_inputs()
