@@ -1,0 +1,14 @@
+.env
+.tempo_local_model
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+node_modules/
+.claude/skills/
+.agents/
+.claude/settings.local.json
+.claude/hooks/.keep_going_count
+test-results/
+playwright-report/
+.setup.log

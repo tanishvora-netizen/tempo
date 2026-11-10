@@ -1,0 +1,11 @@
+# Runtime dependencies (Render installs only this file). Pinned to the versions verified in .venv.
+fastapi==0.162.2
+starlette==1.10.0
+uvicorn==0.54.0
+pydantic==2.14.3
+numpy==2.5.4
+scipy==1.18.1
+pypdf==7.0.0
+python-multipart==0.0.33
+ollama==0.6.3
+httpx==0.28.1

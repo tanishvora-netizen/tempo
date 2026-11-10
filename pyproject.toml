@@ -1,0 +1,22 @@
+[project]
+name = "tempo"
+version = "0.1.0"
+description = "Tempo: chance-constrained bill timing for AP teams (BBS x Ramp Hackathon, Team Hopeful)"
+requires-python = ">=3.12"
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+extend-exclude = ["node_modules", ".venv", "data", ".claude", "tooling"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "e2e: Playwright end-to-end tests (need a browser; excluded from CI)",
+    "slow: tests that solve many MILPs (still run in CI)",
+]
+addopts = "-q"

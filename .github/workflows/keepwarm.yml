@@ -1,0 +1,24 @@
+name: keepwarm
+
+# Pings the hosted demo so the free Render instance stays awake during judging.
+# Set the repository variable TEMPO_URL (Settings > Secrets and variables > Actions > Variables).
+# Skips cleanly when TEMPO_URL is empty. GitHub may delay or drop scheduled runs.
+on:
+  schedule:
+    - cron: "7,21,35,49 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping /health
+        env:
+          TEMPO_URL: ${{ vars.TEMPO_URL }}
+        run: |
+          if [ -z "$TEMPO_URL" ]; then
+            echo "vars.TEMPO_URL is not set; skipping."
+            exit 0
+          fi
+          curl -fsS --max-time 90 "$TEMPO_URL/health"

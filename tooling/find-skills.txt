@@ -1,0 +1,1888 @@
+### npx skills find "fastapi"
+
+[38;5;102mInstall with[0m npx skills add <owner/repo@skill>
+
+[38;5;145mfastapi/fastapi@fastapi[0m [36m14.9K installs[0m
+[38;5;102m└ https://skills.sh/fastapi/fastapi/fastapi[0m
+
+[38;5;145mwshobson/agents@fastapi-templates[0m [36m26.5K installs[0m
+[38;5;102m└ https://skills.sh/wshobson/agents/fastapi-templates[0m
+
+[38;5;145mmindrally/skills@fastapi-python[0m [36m14K installs[0m
+[38;5;102m└ https://skills.sh/mindrally/skills/fastapi-python[0m
+
+[38;5;145maffaan-m/ecc@fastapi-patterns[0m [36m8.4K installs[0m
+[38;5;102m└ https://skills.sh/affaan-m/ecc/fastapi-patterns[0m
+
+[38;5;145mjeffallan/claude-skills@fastapi-expert[0m [36m6.4K installs[0m
+[38;5;102m└ https://skills.sh/jeffallan/claude-skills/fastapi-expert[0m
+
+[38;5;145mjezweb/claude-skills@fastapi[0m [36m2K installs[0m
+[38;5;102m└ https://skills.sh/jezweb/claude-skills/fastapi[0m
+
+[38;5;145mauth0/agent-skills@auth0-fastapi-api[0m [36m461 installs[0m
+[38;5;102m└ https://skills.sh/auth0/agent-skills/auth0-fastapi-api[0m
+
+[38;5;145mthebushidocollective/han@fastapi-async-patterns[0m [36m958 installs[0m
+[38;5;102m└ https://skills.sh/thebushidocollective/han/fastapi-async-patterns[0m
+
+[38;5;145mmindrally/skills@fastapi-microservices-serverless[0m [36m749 installs[0m
+[38;5;102m└ https://skills.sh/mindrally/skills/fastapi-microservices-serverless[0m
+
+[38;5;145maj-geddes/useful-ai-prompts@fastapi-development[0m [36m624 installs[0m
+[38;5;102m└ https://skills.sh/aj-geddes/useful-ai-prompts/fastapi-development[0m
+
+[38;5;145mmanutej/luxor-claude-marketplace@fastapi-microservices-development[0m [36m590 installs[0m
+[38;5;102m└ https://skills.sh/manutej/luxor-claude-marketplace/fastapi-microservices-development[0m
+
+[38;5;145msickn33/agentic-awesome-skills@python-fastapi-development[0m [36m564 installs[0m
+[38;5;102m└ https://skills.sh/sickn33/agentic-awesome-skills/python-fastapi-development[0m
+
+[38;5;145mmartinholovsky/claude-skills-generator@fastapi[0m [36m264 installs[0m
+[38;5;102m└ https://skills.sh/martinholovsky/claude-skills-generator/fastapi[0m
+
+[38;5;145mposthog/skills@integration-fastapi[0m [36m93 installs[0m
+[38;5;102m└ https://skills.sh/posthog/skills/integration-fastapi[0m
+
+[38;5;145mmanutej/luxor-claude-marketplace@fastapi-development[0m [36m452 installs[0m
+[38;5;102m└ https://skills.sh/manutej/luxor-claude-marketplace/fastapi-development[0m
+
+[38;5;145mmanutej/luxor-claude-marketplace@FastAPI Customer Support Tech Enablement[0m [36m423 installs[0m
+[38;5;102m└ https://skills.sh/manutej/luxor-claude-marketplace/fastapi-customer-support-tech-enablement[0m
+
+[38;5;145mexistential-birds/beagle@fastapi-code-review[0m [36m387 installs[0m
+[38;5;102m└ https://skills.sh/existential-birds/beagle/fastapi-code-review[0m
+
+[38;5;145msuperloglabs/skills@otel-fastapi-style[0m [36m379 installs[0m
+[38;5;102m└ https://skills.sh/superloglabs/skills/otel-fastapi-style[0m
+
+[38;5;145mbobmatnyc/claude-mpm-skills@fastapi-local-dev[0m [36m358 installs[0m
+[38;5;102m└ https://skills.sh/bobmatnyc/claude-mpm-skills/fastapi-local-dev[0m
+
+[38;5;145mfarmage/opencode-skills@fastapi-expert[0m [36m328 installs[0m
+[38;5;102m└ https://skills.sh/farmage/opencode-skills/fastapi-expert[0m
+
+[38;5;145msickn33/agentic-awesome-skills@fastapi-templates[0m [36m282 installs[0m
+[38;5;102m└ https://skills.sh/sickn33/agentic-awesome-skills/fastapi-templates[0m
+
+[38;5;145mfull-stack-skills/python-skills@fastapi[0m [36m136 installs[0m
+[38;5;102m└ https://skills.sh/full-stack-skills/python-skills/fastapi[0m
+
+[38;5;145mmartinholovsky/claude-skills-generator@fastapi-expert[0m [36m265 installs[0m
+[38;5;102m└ https://skills.sh/martinholovsky/claude-skills-generator/fastapi-expert[0m
+
+[38;5;145mfastapi-practices/skills@fba[0m [36m472 installs[0m
+[38;5;102m└ https://skills.sh/fastapi-practices/skills/fba[0m
+
+[38;5;145mrebyteai-template/rebyte-skills@fastapi-backend-template[0m [36m219 installs[0m
+[38;5;102m└ https://skills.sh/rebyteai-template/rebyte-skills/fastapi-backend-template[0m
+
+[38;5;145mitechmeat/llm-code@fastapi[0m [36m99 installs[0m
+[38;5;102m└ https://skills.sh/itechmeat/llm-code/fastapi[0m
+
+[38;5;145mofershap/fastapi-best-practices@fastapi-best-practices[0m [36m127 installs[0m
+[38;5;102m└ https://skills.sh/ofershap/fastapi-best-practices/fastapi-best-practices[0m
+
+[38;5;145mfastapi/typer@typer[0m [36m340 installs[0m
+[38;5;102m└ https://skills.sh/fastapi/typer/typer[0m
+
+[38;5;145migorwarzocha/opencode-workflows@security-fastapi[0m [36m144 installs[0m
+[38;5;102m└ https://skills.sh/igorwarzocha/opencode-workflows/security-fastapi[0m
+
+[38;5;145meyadsibai/ltk@FastAPI[0m [36m61 installs[0m
+[38;5;102m└ https://skills.sh/eyadsibai/ltk/fastapi[0m
+
+[38;5;145msickn33/agentic-awesome-skills@fastapi-router-py[0m [36m114 installs[0m
+[38;5;102m└ https://skills.sh/sickn33/agentic-awesome-skills/fastapi-router-py[0m
+
+[38;5;145mrmyndharis/antigravity-skills@fastapi-pro[0m [36m112 installs[0m
+[38;5;102m└ https://skills.sh/rmyndharis/antigravity-skills/fastapi-pro[0m
+
+[38;5;145myoulaitech/youlai-skills@fastapi[0m [36m53 installs[0m
+[38;5;102m└ https://skills.sh/youlaitech/youlai-skills/fastapi[0m
+
+[38;5;145mclaude-dev-suite/claude-dev-suite@fastapi[0m [36m51 installs[0m
+[38;5;102m└ https://skills.sh/claude-dev-suite/claude-dev-suite/fastapi[0m
+
+[38;5;145mfastapi/sqlmodel@sqlmodel[0m [36m184 installs[0m
+[38;5;102m└ https://skills.sh/fastapi/sqlmodel/sqlmodel[0m
+
+[38;5;145mdavila7/claude-code-templates@fastapi-endpoint[0m [36m86 installs[0m
+[38;5;102m└ https://skills.sh/davila7/claude-code-templates/fastapi-endpoint[0m
+
+[38;5;145meyadsibai/ltk@FastAPI Testing[0m [36m85 installs[0m
+[38;5;102m└ https://skills.sh/eyadsibai/ltk/fastapi-testing[0m
+
+[38;5;145mjosiahsiegel/claude-plugin-marketplace@python-fastapi[0m [36m81 installs[0m
+[38;5;102m└ https://skills.sh/josiahsiegel/claude-plugin-marketplace/python-fastapi[0m
+
+[38;5;145mtondevrel/scientific-agent-skills@fastapi-streamlit[0m [36m80 installs[0m
+[38;5;102m└ https://skills.sh/tondevrel/scientific-agent-skills/fastapi-streamlit[0m
+
+[38;5;145mhieutrtr/ai1-skills@fastapi-patterns[0m [36m74 installs[0m
+[38;5;102m└ https://skills.sh/hieutrtr/ai1-skills/fastapi-patterns[0m
+
+[38;5;145mrebyteai-template/rebyte-skills@fastapi-fullstack[0m [36m70 installs[0m
+[38;5;102m└ https://skills.sh/rebyteai-template/rebyte-skills/fastapi-fullstack[0m
+
+[38;5;145miktakahiro/python-fastapi-ddd-skill@python-fastapi-ddd-skill[0m [36m46 installs[0m
+[38;5;102m└ https://skills.sh/iktakahiro/python-fastapi-ddd-skill/python-fastapi-ddd-skill[0m
+
+[38;5;145mmajesticlabs-dev/majestic-marketplace@fastapi-coder[0m [36m67 installs[0m
+[38;5;102m└ https://skills.sh/majesticlabs-dev/majestic-marketplace/fastapi-coder[0m
+
+[38;5;145mshyxin/skills@fastapi-starlette-admin[0m [36m64 installs[0m
+[38;5;102m└ https://skills.sh/shyxin/skills/fastapi-starlette-admin[0m
+
+[38;5;145mthelobbi/claude@fastapi-patterns[0m [36m56 installs[0m
+[38;5;102m└ https://skills.sh/thelobbi/claude/fastapi-patterns[0m
+
+[38;5;145mjeremylongshore/tons-of-skills-marketplace@fastapi-ml-endpoint[0m [36m52 installs[0m
+[38;5;102m└ https://skills.sh/jeremylongshore/tons-of-skills-marketplace/fastapi-ml-endpoint[0m
+
+[38;5;145mautohandai/community-skills@python-fastapi-patterns[0m [36m48 installs[0m
+[38;5;102m└ https://skills.sh/autohandai/community-skills/python-fastapi-patterns[0m
+
+[38;5;145mfirst-fluke/fullstack-starter@fastapi-router-creator[0m [36m46 installs[0m
+[38;5;102m└ https://skills.sh/first-fluke/fullstack-starter/fastapi-router-creator[0m
+
+[38;5;145mrafaelkamimura/claude-tools@fastapi-clean-architecture[0m [36m45 installs[0m
+[38;5;102m└ https://skills.sh/rafaelkamimura/claude-tools/fastapi-clean-architecture[0m
+
+[38;5;145mmicrosoft/azure-skills@python-appservice-deploy[0m [36m324.6K installs[0m
+[38;5;102m└ https://skills.sh/microsoft/azure-skills/python-appservice-deploy[0m
+
+[38;5;145mstarchild-ai-agent/official-skills@preview-dev[0m [36m4K installs[0m
+[38;5;102m└ https://skills.sh/starchild-ai-agent/official-skills/preview-dev[0m
+
+[38;5;145mastronomer/agents@airflow-plugins[0m [36m622 installs[0m
+[38;5;102m└ https://skills.sh/astronomer/agents/airflow-plugins[0m
+
+[38;5;145mmrgoonie/claudekit-skills@backend-development[0m [36m2.3K installs[0m
+[38;5;102m└ https://skills.sh/mrgoonie/claudekit-skills/backend-development[0m
+
+[38;5;145mgetsentry/sentry-agent-skills@sentry-python-sdk[0m [36m346 installs[0m
+[38;5;102m└ https://skills.sh/getsentry/sentry-agent-skills/sentry-python-sdk[0m
+
+[38;5;145malirezarezvani/claude-skills@senior-fullstack[0m [36m1.4K installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/senior-fullstack[0m
+
+[38;5;145mappwrite/skills@appwrite-python[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/appwrite/skills/appwrite-python[0m
+
+[38;5;145msickn33/agentic-awesome-skills@python-pro[0m [36m894 installs[0m
+[38;5;102m└ https://skills.sh/sickn33/agentic-awesome-skills/python-pro[0m
+
+[38;5;145mmindrally/skills@microservices[0m [36m749 installs[0m
+[38;5;102m└ https://skills.sh/mindrally/skills/microservices[0m
+
+[38;5;145mmindrally/skills@viewcomfy-api-rules[0m [36m686 installs[0m
+[38;5;102m└ https://skills.sh/mindrally/skills/viewcomfy-api-rules[0m
+
+[38;5;145mmindrally/skills@serverless[0m [36m682 installs[0m
+[38;5;102m└ https://skills.sh/mindrally/skills/serverless[0m
+
+[38;5;145malirezarezvani/claude-skills@spec-to-repo[0m [36m578 installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/spec-to-repo[0m
+
+[38;5;145msugarforever/01coder-agent-skills@Python Security Scan[0m [36m549 installs[0m
+[38;5;102m└ https://skills.sh/sugarforever/01coder-agent-skills/python-security-scan[0m
+
+[38;5;145mvintasoftware/django-ai-plugins@cdrf-expert[0m [36m544 installs[0m
+[38;5;102m└ https://skills.sh/vintasoftware/django-ai-plugins/cdrf-expert[0m
+
+[38;5;145mgetsentry/sentry-agent-skills@sentry-python-setup[0m [36m102 installs[0m
+[38;5;102m└ https://skills.sh/getsentry/sentry-agent-skills/sentry-python-setup[0m
+
+[38;5;145mbobmatnyc/claude-mpm-skills@asyncio[0m [36m494 installs[0m
+[38;5;102m└ https://skills.sh/bobmatnyc/claude-mpm-skills/asyncio[0m
+
+[38;5;145mmanutej/luxor-claude-marketplace@pydantic[0m [36m477 installs[0m
+[38;5;102m└ https://skills.sh/manutej/luxor-claude-marketplace/pydantic[0m
+
+[38;5;145mbobmatnyc/claude-mpm-skills@celery[0m [36m470 installs[0m
+[38;5;102m└ https://skills.sh/bobmatnyc/claude-mpm-skills/celery[0m
+
+[38;5;145maj-geddes/useful-ai-prompts@Model Deployment[0m [36m425 installs[0m
+[38;5;102m└ https://skills.sh/aj-geddes/useful-ai-prompts/model-deployment[0m
+
+[38;5;145msecondsky/claude-skills@model-deployment[0m [36m393 installs[0m
+[38;5;102m└ https://skills.sh/secondsky/claude-skills/model-deployment[0m
+
+[38;5;145msiviter-xyz/dot-agent@backend-engineer[0m [36m349 installs[0m
+[38;5;102m└ https://skills.sh/siviter-xyz/dot-agent/backend-engineer[0m
+
+[38;5;145mdatabricks/databricks-agent-skills@databricks-apps-python[0m [36m340 installs[0m
+[38;5;102m└ https://skills.sh/databricks/databricks-agent-skills/databricks-apps-python[0m
+
+[38;5;145mmoizibnyousaf/ai-agent-skills@python-development[0m [36m310 installs[0m
+[38;5;102m└ https://skills.sh/moizibnyousaf/ai-agent-skills/python-development[0m
+
+[38;5;145mpatricio0312rev/skills@project-scaffolder[0m [36m285 installs[0m
+[38;5;102m└ https://skills.sh/patricio0312rev/skills/project-scaffolder[0m
+
+[38;5;145maliyun/alibabacloud-aiops-skills@alibabacloud-ecs-code-deploy[0m [36m275 installs[0m
+[38;5;102m└ https://skills.sh/aliyun/alibabacloud-aiops-skills/alibabacloud-ecs-code-deploy[0m
+
+[38;5;145mtencentcloudbase/skills@cloudbase-agent[0m [36m266 installs[0m
+[38;5;102m└ https://skills.sh/tencentcloudbase/skills/cloudbase-agent[0m
+
+[38;5;145malinaqi/maggy@supabase-python[0m [36m264 installs[0m
+[38;5;102m└ https://skills.sh/alinaqi/maggy/supabase-python[0m
+
+[38;5;145myonatangross/orchestkit@python-backend[0m [36m236 installs[0m
+[38;5;102m└ https://skills.sh/yonatangross/orchestkit/python-backend[0m
+
+[38;5;145magentera/agently-skills@agently-runtime[0m [36m224 installs[0m
+[38;5;102m└ https://skills.sh/agentera/agently-skills/agently-runtime[0m
+
+[38;5;145mjorgealves/agent_skills@python-async-advisor[0m [36m208 installs[0m
+[38;5;102m└ https://skills.sh/jorgealves/agent_skills/python-async-advisor[0m
+
+[38;5;145mjamditis/claude-skills-journalism@api-hardening[0m [36m182 installs[0m
+[38;5;102m└ https://skills.sh/jamditis/claude-skills-journalism/api-hardening[0m
+
+[38;5;145mjorgealves/agent_skills@python-package-migrator[0m [36m173 installs[0m
+[38;5;102m└ https://skills.sh/jorgealves/agent_skills/python-package-migrator[0m
+
+[38;5;145msalmanferozkhan/cloud-and-fast-api@chainlit[0m [36m103 installs[0m
+[38;5;102m└ https://skills.sh/salmanferozkhan/cloud-and-fast-api/chainlit[0m
+
+[38;5;145mveniceai/skills@venice-errors[0m [36m140 installs[0m
+[38;5;102m└ https://skills.sh/veniceai/skills/venice-errors[0m
+
+[38;5;145mspeakeasy-api/sdk-generation-skills@extract-openapi-from-code[0m [36m137 installs[0m
+[38;5;102m└ https://skills.sh/speakeasy-api/sdk-generation-skills/extract-openapi-from-code[0m
+
+[38;5;145mdj-bolt/django-bolt@django-bolt[0m [36m132 installs[0m
+[38;5;102m└ https://skills.sh/dj-bolt/django-bolt/django-bolt[0m
+
+[38;5;145mfull-stack-skills/docker-skills@docker-dockerfile[0m [36m129 installs[0m
+[38;5;102m└ https://skills.sh/full-stack-skills/docker-skills/docker-dockerfile[0m
+
+[38;5;145mollygarden/opentelemetry-agent-skills@otel-python[0m [36m121 installs[0m
+[38;5;102m└ https://skills.sh/ollygarden/opentelemetry-agent-skills/otel-python[0m
+
+[38;5;145mc0x12c/ai-toolkit@python-best-practices[0m [36m116 installs[0m
+[38;5;102m└ https://skills.sh/c0x12c/ai-toolkit/python-best-practices[0m
+
+[38;5;145m404kidwiz/claude-supercode-skills@python-pro[0m [36m115 installs[0m
+[38;5;102m└ https://skills.sh/404kidwiz/claude-supercode-skills/python-pro[0m
+
+[38;5;145mc0x12c/ai-toolkit@python-testing-strategies[0m [36m114 installs[0m
+[38;5;102m└ https://skills.sh/c0x12c/ai-toolkit/python-testing-strategies[0m
+
+[38;5;145moimiragieo/agent-studio@python-backend-expert[0m [36m114 installs[0m
+[38;5;102m└ https://skills.sh/oimiragieo/agent-studio/python-backend-expert[0m
+
+[38;5;145mc0x12c/ai-toolkit@python-api-endpoint-creator[0m [36m111 installs[0m
+[38;5;102m└ https://skills.sh/c0x12c/ai-toolkit/python-api-endpoint-creator[0m
+
+[38;5;145msecurityreviewai/secure-coding-skill@secure-coding[0m [36m111 installs[0m
+[38;5;102m└ https://skills.sh/securityreviewai/secure-coding-skill/secure-coding[0m
+
+[38;5;145msilvainfm/claude-skills@reflex-dev[0m [36m106 installs[0m
+[38;5;102m└ https://skills.sh/silvainfm/claude-skills/reflex-dev[0m
+
+[38;5;145mitechmeat/llm-code@open-meteo[0m [36m99 installs[0m
+[38;5;102m└ https://skills.sh/itechmeat/llm-code/open-meteo[0m
+
+[38;5;145m404kidwiz/claude-supercode-skills@django-developer[0m [36m98 installs[0m
+[38;5;102m└ https://skills.sh/404kidwiz/claude-supercode-skills/django-developer[0m
+
+[38;5;145mmathews-tom/armory@api-docs-generator[0m [36m97 installs[0m
+[38;5;102m└ https://skills.sh/mathews-tom/armory/api-docs-generator[0m
+
+[38;5;145mfull-stack-skills/document-skills@api-doc-generator[0m [36m93 installs[0m
+[38;5;102m└ https://skills.sh/full-stack-skills/document-skills/api-doc-generator[0m
+
+[38;5;145malexander-danilenko/cortex-claude-code-plugins@documentation[0m [36m86 installs[0m
+[38;5;102m└ https://skills.sh/alexander-danilenko/cortex-claude-code-plugins/documentation[0m
+
+[38;5;145msales-skills/sales@sales-apollo[0m [36m82 installs[0m
+[38;5;102m└ https://skills.sh/sales-skills/sales/sales-apollo[0m
+
+### npx skills find "pytest"
+
+[38;5;102mInstall with[0m npx skills add <owner/repo@skill>
+
+[38;5;145mgithub/awesome-copilot@pytest-coverage[0m [36m13K installs[0m
+[38;5;102m└ https://skills.sh/github/awesome-copilot/pytest-coverage[0m
+
+[38;5;145mmanutej/luxor-claude-marketplace@pytest-patterns[0m [36m858 installs[0m
+[38;5;102m└ https://skills.sh/manutej/luxor-claude-marketplace/pytest-patterns[0m
+
+[38;5;145mmicrosoft/debugpy@pytest[0m [36m70 installs[0m
+[38;5;102m└ https://skills.sh/microsoft/debugpy/pytest[0m
+
+[38;5;145mgentleman-programming/gentleman-skills@pytest[0m [36m291 installs[0m
+[38;5;102m└ https://skills.sh/gentleman-programming/gentleman-skills/pytest[0m
+
+[38;5;145mpluginagentmarketplace/custom-plugin-python@Pytest Testing[0m [36m547 installs[0m
+[38;5;102m└ https://skills.sh/pluginagentmarketplace/custom-plugin-python/pytest-testing[0m
+
+[38;5;145mlambdatest/agent-skills@pytest-skill[0m [36m436 installs[0m
+[38;5;102m└ https://skills.sh/lambdatest/agent-skills/pytest-skill[0m
+
+[38;5;145mlaurigates/claude-plugins@pytest-advanced[0m [36m384 installs[0m
+[38;5;102m└ https://skills.sh/laurigates/claude-plugins/pytest-advanced[0m
+
+[38;5;145mexistential-birds/beagle@pytest-code-review[0m [36m232 installs[0m
+[38;5;102m└ https://skills.sh/existential-birds/beagle/pytest-code-review[0m
+
+[38;5;145mjorgealves/agent_skills@pytest-optimizer[0m [36m212 installs[0m
+[38;5;102m└ https://skills.sh/jorgealves/agent_skills/pytest-optimizer[0m
+
+[38;5;145mfull-stack-skills/testing-skills@pytest[0m [36m80 installs[0m
+[38;5;102m└ https://skills.sh/full-stack-skills/testing-skills/pytest[0m
+
+[38;5;145meyadsibai/ltk@Pytest[0m [36m78 installs[0m
+[38;5;102m└ https://skills.sh/eyadsibai/ltk/pytest[0m
+
+[38;5;145mimankulov/skills@pytest[0m [36m63 installs[0m
+[38;5;102m└ https://skills.sh/imankulov/skills/pytest[0m
+
+[38;5;145mhieutrtr/ai1-skills@pytest-patterns[0m [36m121 installs[0m
+[38;5;102m└ https://skills.sh/hieutrtr/ai1-skills/pytest-patterns[0m
+
+[38;5;145mgithub/copilot-cli-for-beginners@pytest-gen[0m [36m23 installs[0m
+[38;5;102m└ https://skills.sh/github/copilot-cli-for-beginners/pytest-gen[0m
+
+[38;5;145mathola/claude-night-market@pytest-config[0m [36m100 installs[0m
+[38;5;102m└ https://skills.sh/athola/claude-night-market/pytest-config[0m
+
+[38;5;145mnaodeng/awesome-qa-skills@api-test-pytest[0m [36m93 installs[0m
+[38;5;102m└ https://skills.sh/naodeng/awesome-qa-skills/api-test-pytest[0m
+
+[38;5;145m0xdarkmatter/claude-mods@python-pytest-ops[0m [36m88 installs[0m
+[38;5;102m└ https://skills.sh/0xdarkmatter/claude-mods/python-pytest-ops[0m
+
+[38;5;145mpartme-ai/full-stack-skills@pytest[0m [36m42 installs[0m
+[38;5;102m└ https://skills.sh/partme-ai/full-stack-skills/pytest[0m
+
+[38;5;145moimiragieo/agent-studio@comprehensive-unit-testing-with-pytest[0m [36m76 installs[0m
+[38;5;102m└ https://skills.sh/oimiragieo/agent-studio/comprehensive-unit-testing-with-pytest[0m
+
+[38;5;145mwaldencui/claude-code-django@pytest-django-patterns[0m [36m66 installs[0m
+[38;5;102m└ https://skills.sh/waldencui/claude-code-django/pytest-django-patterns[0m
+
+[38;5;145m0xdarkmatter/claude-mods@python-pytest-patterns[0m [36m59 installs[0m
+[38;5;102m└ https://skills.sh/0xdarkmatter/claude-mods/python-pytest-patterns[0m
+
+[38;5;145m89jobrien/steve@tdd-pytest[0m [36m57 installs[0m
+[38;5;102m└ https://skills.sh/89jobrien/steve/tdd-pytest[0m
+
+[38;5;145mcodeatcode/oss-ai-skills@pytest[0m [36m28 installs[0m
+[38;5;102m└ https://skills.sh/codeatcode/oss-ai-skills/pytest[0m
+
+[38;5;145mclaude-dev-suite/claude-dev-suite@pytest[0m [36m26 installs[0m
+[38;5;102m└ https://skills.sh/claude-dev-suite/claude-dev-suite/pytest[0m
+
+[38;5;145mmajesticlabs-dev/majestic-marketplace@pytest-coder[0m [36m50 installs[0m
+[38;5;102m└ https://skills.sh/majesticlabs-dev/majestic-marketplace/pytest-coder[0m
+
+[38;5;145mthebushidocollective/han@pytest-fixtures[0m [36m49 installs[0m
+[38;5;102m└ https://skills.sh/thebushidocollective/han/pytest-fixtures[0m
+
+[38;5;145mthebushidocollective/han@pytest-plugins[0m [36m47 installs[0m
+[38;5;102m└ https://skills.sh/thebushidocollective/han/pytest-plugins[0m
+
+[38;5;145mjeremylongshore/tons-of-skills-marketplace@pytest-test-generator[0m [36m41 installs[0m
+[38;5;102m└ https://skills.sh/jeremylongshore/tons-of-skills-marketplace/pytest-test-generator[0m
+
+[38;5;145mcfircoo/claude-code-toolkit@pytest-best-practices[0m [36m35 installs[0m
+[38;5;102m└ https://skills.sh/cfircoo/claude-code-toolkit/pytest-best-practices[0m
+
+[38;5;145mpramoddutta/qaskills@pytest-patterns[0m [36m28 installs[0m
+[38;5;102m└ https://skills.sh/pramoddutta/qaskills/pytest-patterns[0m
+
+[38;5;145mlitestar-org/litestar-skills@pytest-databases[0m [36m26 installs[0m
+[38;5;102m└ https://skills.sh/litestar-org/litestar-skills/pytest-databases[0m
+
+[38;5;145mnathan-gage/python-skills@python-pytest[0m [36m25 installs[0m
+[38;5;102m└ https://skills.sh/nathan-gage/python-skills/python-pytest[0m
+
+[38;5;145mdvf/opinionated-django@dj-pytest[0m [36m24 installs[0m
+[38;5;102m└ https://skills.sh/dvf/opinionated-django/dj-pytest[0m
+
+[38;5;145mwshobson/agents@python-testing-patterns[0m [36m40K installs[0m
+[38;5;102m└ https://skills.sh/wshobson/agents/python-testing-patterns[0m
+
+[38;5;145maffaan-m/ecc@django-tdd[0m [36m12.3K installs[0m
+[38;5;102m└ https://skills.sh/affaan-m/ecc/django-tdd[0m
+
+[38;5;145maffaan-m/ecc@django-verification[0m [36m11.6K installs[0m
+[38;5;102m└ https://skills.sh/affaan-m/ecc/django-verification[0m
+
+[38;5;145mwshobson/agents@temporal-python-testing[0m [36m11.3K installs[0m
+[38;5;102m└ https://skills.sh/wshobson/agents/temporal-python-testing[0m
+
+[38;5;145mjeffallan/claude-skills@python-pro[0m [36m9.1K installs[0m
+[38;5;102m└ https://skills.sh/jeffallan/claude-skills/python-pro[0m
+
+[38;5;145maffaan-m/ecc@fastapi-patterns[0m [36m8.4K installs[0m
+[38;5;102m└ https://skills.sh/affaan-m/ecc/fastapi-patterns[0m
+
+[38;5;145mdotnet/skills@assertion-quality[0m [36m4.3K installs[0m
+[38;5;102m└ https://skills.sh/dotnet/skills/assertion-quality[0m
+
+[38;5;145mamelnagdy/guard-skills@test-guard[0m [36m4.3K installs[0m
+[38;5;102m└ https://skills.sh/amelnagdy/guard-skills/test-guard[0m
+
+[38;5;145mlivekit/agent-skills@testing-livekit-agents[0m [36m473 installs[0m
+[38;5;102m└ https://skills.sh/livekit/agent-skills/testing-livekit-agents[0m
+
+[38;5;145mcrewaiinc/skills@test-crewai-project[0m [36m1.2K installs[0m
+[38;5;102m└ https://skills.sh/crewaiinc/skills/test-crewai-project[0m
+
+[38;5;145mmindrally/skills@python-testing[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/mindrally/skills/python-testing[0m
+
+[38;5;145malirezarezvani/claude-skills@tdd-guide[0m [36m1K installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/tdd-guide[0m
+
+[38;5;145msecondsky/claude-skills@api-testing[0m [36m910 installs[0m
+[38;5;102m└ https://skills.sh/secondsky/claude-skills/api-testing[0m
+
+[38;5;145mlaurigates/claude-plugins@python-testing[0m [36m463 installs[0m
+[38;5;102m└ https://skills.sh/laurigates/claude-plugins/python-testing[0m
+
+[38;5;145mcodspeedhq/codspeed@codspeed-setup-harness[0m [36m449 installs[0m
+[38;5;102m└ https://skills.sh/codspeedhq/codspeed/codspeed-setup-harness[0m
+
+[38;5;145msickn33/agentic-awesome-skills@python-testing-patterns[0m [36m391 installs[0m
+[38;5;102m└ https://skills.sh/sickn33/agentic-awesome-skills/python-testing-patterns[0m
+
+[38;5;145mbobmatnyc/claude-mpm-skills@testing-anti-patterns[0m [36m381 installs[0m
+[38;5;102m└ https://skills.sh/bobmatnyc/claude-mpm-skills/testing-anti-patterns[0m
+
+[38;5;145mlevnikolaevich/claude-code-skills@ln-743-test-infrastructure[0m [36m378 installs[0m
+[38;5;102m└ https://skills.sh/levnikolaevich/claude-code-skills/ln-743-test-infrastructure[0m
+
+[38;5;145mevoscientist/evoskills@experiment-iterative-coder[0m [36m303 installs[0m
+[38;5;102m└ https://skills.sh/evoscientist/evoskills/experiment-iterative-coder[0m
+
+[38;5;145mstreamlit/streamlit@assessing-external-test-risk[0m [36m56 installs[0m
+[38;5;102m└ https://skills.sh/streamlit/streamlit/assessing-external-test-risk[0m
+
+[38;5;145mflorianbruniaux/claude-code-ultimate-guide@rtk-optimizer[0m [36m273 installs[0m
+[38;5;102m└ https://skills.sh/florianbruniaux/claude-code-ultimate-guide/rtk-optimizer[0m
+
+[38;5;145mglebis/claude-skills@tdd[0m [36m260 installs[0m
+[38;5;102m└ https://skills.sh/glebis/claude-skills/tdd[0m
+
+[38;5;145malinaqi/maggy@python[0m [36m246 installs[0m
+[38;5;102m└ https://skills.sh/alinaqi/maggy/python[0m
+
+[38;5;145mcuriositech/some_claude_skills@test-automation-expert[0m [36m205 installs[0m
+[38;5;102m└ https://skills.sh/curiositech/some_claude_skills/test-automation-expert[0m
+
+[38;5;145mliblaf/skills@write-python-tests[0m [36m182 installs[0m
+[38;5;102m└ https://skills.sh/liblaf/skills/write-python-tests[0m
+
+[38;5;145mcomposiohq/composio@python-testing[0m [36m141 installs[0m
+[38;5;102m└ https://skills.sh/composiohq/composio/python-testing[0m
+
+[38;5;145mwdm0006/python-skills@optimizing-python-performance[0m [36m140 installs[0m
+[38;5;102m└ https://skills.sh/wdm0006/python-skills/optimizing-python-performance[0m
+
+[38;5;145mwdm0006/python-skills@testing-python-libraries[0m [36m131 installs[0m
+[38;5;102m└ https://skills.sh/wdm0006/python-skills/testing-python-libraries[0m
+
+[38;5;145mmicrosoft/hve-core@dataops[0m [36m24 installs[0m
+[38;5;102m└ https://skills.sh/microsoft/hve-core/dataops[0m
+
+[38;5;145mwdm0006/python-skills@setting-up-python-libraries[0m [36m118 installs[0m
+[38;5;102m└ https://skills.sh/wdm0006/python-skills/setting-up-python-libraries[0m
+
+[38;5;145mc0x12c/ai-toolkit@python-testing-strategies[0m [36m114 installs[0m
+[38;5;102m└ https://skills.sh/c0x12c/ai-toolkit/python-testing-strategies[0m
+
+[38;5;145mhelp-me-test/skills@helpmetest[0m [36m114 installs[0m
+[38;5;102m└ https://skills.sh/help-me-test/skills/helpmetest[0m
+
+[38;5;145mfull-stack-skills/docker-skills@docker-testcontainers[0m [36m112 installs[0m
+[38;5;102m└ https://skills.sh/full-stack-skills/docker-skills/docker-testcontainers[0m
+
+[38;5;145myonatangross/orchestkit@testing-perf[0m [36m109 installs[0m
+[38;5;102m└ https://skills.sh/yonatangross/orchestkit/testing-perf[0m
+
+[38;5;145mlaurigates/claude-plugins@api-testing[0m [36m106 installs[0m
+[38;5;102m└ https://skills.sh/laurigates/claude-plugins/api-testing[0m
+
+[38;5;145mathola/claude-night-market@python-testing[0m [36m105 installs[0m
+[38;5;102m└ https://skills.sh/athola/claude-night-market/python-testing[0m
+
+[38;5;145myonatangross/orchestkit@testing-unit[0m [36m104 installs[0m
+[38;5;102m└ https://skills.sh/yonatangross/orchestkit/testing-unit[0m
+
+[38;5;145mtestomatio/skills@qa-e2e-tests-reporting[0m [36m104 installs[0m
+[38;5;102m└ https://skills.sh/testomatio/skills/qa-e2e-tests-reporting[0m
+
+[38;5;145mwallabyjs/skills@wallaby-cli[0m [36m103 installs[0m
+[38;5;102m└ https://skills.sh/wallabyjs/skills/wallaby-cli[0m
+
+[38;5;145mrand/cc-polymath@discover-testing[0m [36m99 installs[0m
+[38;5;102m└ https://skills.sh/rand/cc-polymath/discover-testing[0m
+
+[38;5;145mitechmeat/llm-code@open-meteo[0m [36m99 installs[0m
+[38;5;102m└ https://skills.sh/itechmeat/llm-code/open-meteo[0m
+
+[38;5;145mjuspay/merchant-skills@jp-validate[0m [36m95 installs[0m
+[38;5;102m└ https://skills.sh/juspay/merchant-skills/jp-validate[0m
+
+[38;5;145ms-hiraoku/synapse-a2a@code-quality[0m [36m92 installs[0m
+[38;5;102m└ https://skills.sh/s-hiraoku/synapse-a2a/code-quality[0m
+
+[38;5;145mprefecthq/fastmcp@testing-python[0m [36m92 installs[0m
+[38;5;102m└ https://skills.sh/prefecthq/fastmcp/testing-python[0m
+
+[38;5;145mmathews-tom/armory@test-harness[0m [36m87 installs[0m
+[38;5;102m└ https://skills.sh/mathews-tom/armory/test-harness[0m
+
+[38;5;145malexander-danilenko/cortex-claude-code-plugins@python[0m [36m87 installs[0m
+[38;5;102m└ https://skills.sh/alexander-danilenko/cortex-claude-code-plugins/python[0m
+
+[38;5;145mdavila7/claude-code-templates@fastapi-endpoint[0m [36m86 installs[0m
+[38;5;102m└ https://skills.sh/davila7/claude-code-templates/fastapi-endpoint[0m
+
+[38;5;145mscientiacapital/skills@testing[0m [36m75 installs[0m
+[38;5;102m└ https://skills.sh/scientiacapital/skills/testing[0m
+
+[38;5;145mtenequm/skills@python-dev[0m [36m71 installs[0m
+[38;5;102m└ https://skills.sh/tenequm/skills/python-dev[0m
+
+[38;5;145mautumnsgrove/lattice@python-testing[0m [36m70 installs[0m
+[38;5;102m└ https://skills.sh/autumnsgrove/lattice/python-testing[0m
+
+[38;5;145mag2ai/ag2-skills@ag2-testing[0m [36m67 installs[0m
+[38;5;102m└ https://skills.sh/ag2ai/ag2-skills/ag2-testing[0m
+
+[38;5;145mlvtd-llc/skills@django-test-performance[0m [36m65 installs[0m
+[38;5;102m└ https://skills.sh/lvtd-llc/skills/django-test-performance[0m
+
+[38;5;145mlvtd-llc/skills@django-ci-test-optimization[0m [36m60 installs[0m
+[38;5;102m└ https://skills.sh/lvtd-llc/skills/django-ci-test-optimization[0m
+
+[38;5;145mlvtd-llc/skills@django-test-parallelization[0m [36m60 installs[0m
+[38;5;102m└ https://skills.sh/lvtd-llc/skills/django-test-parallelization[0m
+
+[38;5;145mlvtd-llc/skills@django-targeted-mocking[0m [36m60 installs[0m
+[38;5;102m└ https://skills.sh/lvtd-llc/skills/django-targeted-mocking[0m
+
+[38;5;145mlvtd-llc/skills@django-test-profiling[0m [36m60 installs[0m
+[38;5;102m└ https://skills.sh/lvtd-llc/skills/django-test-profiling[0m
+
+[38;5;145mnickcrew/claude-cortex@python-testing-patterns[0m [36m58 installs[0m
+[38;5;102m└ https://skills.sh/nickcrew/claude-cortex/python-testing-patterns[0m
+
+[38;5;145movachiever/droid-tings@test-generator[0m [36m58 installs[0m
+[38;5;102m└ https://skills.sh/ovachiever/droid-tings/test-generator[0m
+
+[38;5;145mrobert-hoffmann/uncle-bob@ub-python[0m [36m57 installs[0m
+[38;5;102m└ https://skills.sh/robert-hoffmann/uncle-bob/ub-python[0m
+
+[38;5;145mlaurigates/claude-plugins@test-focus[0m [36m56 installs[0m
+[38;5;102m└ https://skills.sh/laurigates/claude-plugins/test-focus[0m
+
+[38;5;145mlaurigates/claude-plugins@configure-coverage[0m [36m55 installs[0m
+[38;5;102m└ https://skills.sh/laurigates/claude-plugins/configure-coverage[0m
+
+[38;5;145mlaurigates/claude-plugins@configure-tests[0m [36m54 installs[0m
+[38;5;102m└ https://skills.sh/laurigates/claude-plugins/configure-tests[0m
+
+[38;5;145mlaurigates/claude-plugins@configure-integration-tests[0m [36m53 installs[0m
+[38;5;102m└ https://skills.sh/laurigates/claude-plugins/configure-integration-tests[0m
+
+[38;5;145mjulianobarbosa/claude-code-skills@python-project[0m [36m53 installs[0m
+[38;5;102m└ https://skills.sh/julianobarbosa/claude-code-skills/python-project[0m
+
+[38;5;145mmajesticlabs-dev/majestic-marketplace@testing-patterns[0m [36m47 installs[0m
+[38;5;102m└ https://skills.sh/majesticlabs-dev/majestic-marketplace/testing-patterns[0m
+
+[38;5;145mpartme-ai/full-stack-skills@test-writer[0m [36m47 installs[0m
+[38;5;102m└ https://skills.sh/partme-ai/full-stack-skills/test-writer[0m
+
+[38;5;145mcodeatcode/oss-ai-skills@pyqt-testing[0m [36m46 installs[0m
+[38;5;102m└ https://skills.sh/codeatcode/oss-ai-skills/pyqt-testing[0m
+
+### npx skills find "playwright"
+
+[38;5;102mInstall with[0m npx skills add <owner/repo@skill>
+
+[38;5;145mmicrosoft/playwright-cli@playwright-cli[0m [36m212.5K installs[0m
+[38;5;102m└ https://skills.sh/microsoft/playwright-cli/playwright-cli[0m
+
+[38;5;145mcurrents-dev/playwright-best-practices-skill@playwright-best-practices[0m [36m104.6K installs[0m
+[38;5;102m└ https://skills.sh/currents-dev/playwright-best-practices-skill/playwright-best-practices[0m
+
+[38;5;145mliarjsdev/liarjs-skills@playwright-stealth-verify[0m [36m119.4K installs[0m
+[38;5;102m└ https://skills.sh/liarjsdev/liarjs-skills/playwright-stealth-verify[0m
+
+[38;5;145mopenai/skills@playwright[0m [36m9.3K installs[0m
+[38;5;102m└ https://skills.sh/openai/skills/playwright[0m
+
+[38;5;145mgithub/awesome-copilot@playwright-generate-test[0m [36m18.2K installs[0m
+[38;5;102m└ https://skills.sh/github/awesome-copilot/playwright-generate-test[0m
+
+[38;5;145mgithub/awesome-copilot@playwright-explore-website[0m [36m14.8K installs[0m
+[38;5;102m└ https://skills.sh/github/awesome-copilot/playwright-explore-website[0m
+
+[38;5;145mgithub/awesome-copilot@playwright-automation-fill-in-form[0m [36m13.7K installs[0m
+[38;5;102m└ https://skills.sh/github/awesome-copilot/playwright-automation-fill-in-form[0m
+
+[38;5;145mopenai/skills@playwright-interactive[0m [36m5.7K installs[0m
+[38;5;102m└ https://skills.sh/openai/skills/playwright-interactive[0m
+
+[38;5;145mmicrosoft/playwright@playwright-dev[0m [36m3.8K installs[0m
+[38;5;102m└ https://skills.sh/microsoft/playwright/playwright-dev[0m
+
+[38;5;145mlackeyjb/playwright-skill@playwright-skill[0m [36m7.5K installs[0m
+[38;5;102m└ https://skills.sh/lackeyjb/playwright-skill/playwright-skill[0m
+
+[38;5;145mtestdino-hq/playwright-skill@playwright-skill[0m [36m6.2K installs[0m
+[38;5;102m└ https://skills.sh/testdino-hq/playwright-skill/playwright-skill[0m
+
+[38;5;145mmicrosoft/playwright@playwright-devops[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/microsoft/playwright/playwright-devops[0m
+
+[38;5;145mjeffallan/claude-skills@playwright-expert[0m [36m5.6K installs[0m
+[38;5;102m└ https://skills.sh/jeffallan/claude-skills/playwright-expert[0m
+
+[38;5;145msickn33/agentic-awesome-skills@playwright-skill[0m [36m3.9K installs[0m
+[38;5;102m└ https://skills.sh/sickn33/agentic-awesome-skills/playwright-skill[0m
+
+[38;5;145malinaqi/maggy@playwright-testing[0m [36m3.3K installs[0m
+[38;5;102m└ https://skills.sh/alinaqi/maggy/playwright-testing[0m
+
+[38;5;145mbobmatnyc/claude-mpm-skills@playwright-e2e-testing[0m [36m2.7K installs[0m
+[38;5;102m└ https://skills.sh/bobmatnyc/claude-mpm-skills/playwright-e2e-testing[0m
+
+[38;5;145mpproenca/dot-skills@playwright[0m [36m1.2K installs[0m
+[38;5;102m└ https://skills.sh/pproenca/dot-skills/playwright[0m
+
+[38;5;145mmindrally/skills@playwright[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/mindrally/skills/playwright[0m
+
+[38;5;145mpetrkindlmann/qa-skills@playwright-automation[0m [36m2.2K installs[0m
+[38;5;102m└ https://skills.sh/petrkindlmann/qa-skills/playwright-automation[0m
+
+[38;5;145msecondsky/claude-skills@playwright[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/secondsky/claude-skills/playwright[0m
+
+[38;5;145mbobmatnyc/claude-mpm-skills@playwright[0m [36m907 installs[0m
+[38;5;102m└ https://skills.sh/bobmatnyc/claude-mpm-skills/playwright[0m
+
+[38;5;145mscreenci/screenci@playwright-cli[0m [36m1.8K installs[0m
+[38;5;102m└ https://skills.sh/screenci/screenci/playwright-cli[0m
+
+[38;5;145mbilalmk/todo_correct@browsing-with-playwright[0m [36m1.7K installs[0m
+[38;5;102m└ https://skills.sh/bilalmk/todo_correct/browsing-with-playwright[0m
+
+[38;5;145mdigitalsamba/claude-code-video-toolkit@playwright-recording[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/digitalsamba/claude-code-video-toolkit/playwright-recording[0m
+
+[38;5;145malphaonedev/openclaw-graph@playwright-scraper[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/alphaonedev/openclaw-graph/playwright-scraper[0m
+
+[38;5;145mtestdino-hq/playwright-skill@playwright-core[0m [36m969 installs[0m
+[38;5;102m└ https://skills.sh/testdino-hq/playwright-skill/playwright-core[0m
+
+[38;5;145mmanutej/luxor-claude-marketplace@playwright-visual-testing[0m [36m1.4K installs[0m
+[38;5;102m└ https://skills.sh/manutej/luxor-claude-marketplace/playwright-visual-testing[0m
+
+[38;5;145mhyva-themes/hyva-ai-tools@hyva-playwright-test[0m [36m1.3K installs[0m
+[38;5;102m└ https://skills.sh/hyva-themes/hyva-ai-tools/hyva-playwright-test[0m
+
+[38;5;145mtestdino-hq/playwright-skill@playwright-cli[0m [36m816 installs[0m
+[38;5;102m└ https://skills.sh/testdino-hq/playwright-skill/playwright-cli[0m
+
+[38;5;145mgreekr4/playwright-bot-bypass@playwright-bot-bypass[0m [36m788 installs[0m
+[38;5;102m└ https://skills.sh/greekr4/playwright-bot-bypass/playwright-bot-bypass[0m
+
+[38;5;145mpymodel/react-frontend-skills@playwright[0m [36m562 installs[0m
+[38;5;102m└ https://skills.sh/pymodel/react-frontend-skills/playwright[0m
+
+[38;5;145mtestdino-hq/playwright-skill@playwright-pom[0m [36m585 installs[0m
+[38;5;102m└ https://skills.sh/testdino-hq/playwright-skill/playwright-pom[0m
+
+[38;5;145masyrafhussin/agent-skills@e2e-playwright-testing[0m [36m857 installs[0m
+[38;5;102m└ https://skills.sh/asyrafhussin/agent-skills/e2e-playwright-testing[0m
+
+[38;5;145mmindrally/skills@playwright-cursor-rules[0m [36m720 installs[0m
+[38;5;102m└ https://skills.sh/mindrally/skills/playwright-cursor-rules[0m
+
+[38;5;145malirezarezvani/claude-skills@playwright-pro[0m [36m687 installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/playwright-pro[0m
+
+[38;5;145mvasilyu1983/ai-agents-public@qa-testing-playwright[0m [36m665 installs[0m
+[38;5;102m└ https://skills.sh/vasilyu1983/ai-agents-public/qa-testing-playwright[0m
+
+[38;5;145mfugazi/test-automation-skills-agents@playwright-e2e-testing[0m [36m634 installs[0m
+[38;5;102m└ https://skills.sh/fugazi/test-automation-skills-agents/playwright-e2e-testing[0m
+
+[38;5;145maaronontheweb/dotnet-skills@playwright-blazor-testing[0m [36m560 installs[0m
+[38;5;102m└ https://skills.sh/aaronontheweb/dotnet-skills/playwright-blazor-testing[0m
+
+[38;5;145manthropics/skills@webapp-testing[0m [36m201.6K installs[0m
+[38;5;102m└ https://skills.sh/anthropics/skills/webapp-testing[0m
+
+[38;5;145mbrowser-use/browser-use@browser-use[0m [36m99.4K installs[0m
+[38;5;102m└ https://skills.sh/browser-use/browser-use/browser-use[0m
+
+[38;5;145mvercel/vercel-plugin@access-protected-vercel-deployment[0m [36m2.6K installs[0m
+[38;5;102m└ https://skills.sh/vercel/vercel-plugin/access-protected-vercel-deployment[0m
+
+[38;5;145mclerk/skills@clerk-testing[0m [36m48.2K installs[0m
+[38;5;102m└ https://skills.sh/clerk/skills/clerk-testing[0m
+
+[38;5;145m101-skills/superpowers@agent-browser[0m [36m189.5K installs[0m
+[38;5;102m└ https://skills.sh/101-skills/superpowers/agent-browser[0m
+
+[38;5;145mmagentosh/superpowers@agent-browser[0m [36m167.8K installs[0m
+[38;5;102m└ https://skills.sh/magentosh/superpowers/agent-browser[0m
+
+[38;5;145mantibrow/anti-detect-browser-skills@anti-detect-browser[0m [36m154.6K installs[0m
+[38;5;102m└ https://skills.sh/antibrow/anti-detect-browser-skills/anti-detect-browser[0m
+
+[38;5;145mskills-shell/superpowers@agent-browser[0m [36m148.5K installs[0m
+[38;5;102m└ https://skills.sh/skills-shell/superpowers/agent-browser[0m
+
+[38;5;145mqu-skills/superpowers@agent-browser[0m [36m129.9K installs[0m
+[38;5;102m└ https://skills.sh/qu-skills/superpowers/agent-browser[0m
+
+[38;5;145mantibrow/anti-detect-browser-skills@browser-mcp-agent[0m [36m124K installs[0m
+[38;5;102m└ https://skills.sh/antibrow/anti-detect-browser-skills/browser-mcp-agent[0m
+
+[38;5;145mits-a-skill-issue/superpowers@agent-browser[0m [36m100.7K installs[0m
+[38;5;102m└ https://skills.sh/its-a-skill-issue/superpowers/agent-browser[0m
+
+[38;5;145mbankai-skills/superpowers@agent-browser[0m [36m98.9K installs[0m
+[38;5;102m└ https://skills.sh/bankai-skills/superpowers/agent-browser[0m
+
+[38;5;145mgithub/awesome-copilot@webapp-testing[0m [36m12.5K installs[0m
+[38;5;102m└ https://skills.sh/github/awesome-copilot/webapp-testing[0m
+
+[38;5;145mmicrosoft/playwright-cli@dev[0m [36m6.2K installs[0m
+[38;5;102m└ https://skills.sh/microsoft/playwright-cli/dev[0m
+
+[38;5;145mwshobson/agents@e2e-testing-patterns[0m [36m25.1K installs[0m
+[38;5;102m└ https://skills.sh/wshobson/agents/e2e-testing-patterns[0m
+
+[38;5;145mvuejs-ai/skills@vue-testing-best-practices[0m [36m14.8K installs[0m
+[38;5;102m└ https://skills.sh/vuejs-ai/skills/vue-testing-best-practices[0m
+
+[38;5;145maffaan-m/ecc@e2e-testing[0m [36m12.9K installs[0m
+[38;5;102m└ https://skills.sh/affaan-m/ecc/e2e-testing[0m
+
+[38;5;145mtriggerdotdev/skills@trigger-config[0m [36m2.3K installs[0m
+[38;5;102m└ https://skills.sh/triggerdotdev/skills/trigger-config[0m
+
+[38;5;145maffaan-m/ecc@browser-qa[0m [36m11K installs[0m
+[38;5;102m└ https://skills.sh/affaan-m/ecc/browser-qa[0m
+
+[38;5;145maffaan-m/ecc@ui-demo[0m [36m10.3K installs[0m
+[38;5;102m└ https://skills.sh/affaan-m/ecc/ui-demo[0m
+
+[38;5;145maffaan-m/ecc@react-testing[0m [36m7.5K installs[0m
+[38;5;102m└ https://skills.sh/affaan-m/ecc/react-testing[0m
+
+[38;5;145manalogjs/angular-skills@angular-testing[0m [36m6.6K installs[0m
+[38;5;102m└ https://skills.sh/analogjs/angular-skills/angular-testing[0m
+
+[38;5;145mremorses/playwriter@playwriter[0m [36m5.9K installs[0m
+[38;5;102m└ https://skills.sh/remorses/playwriter/playwriter[0m
+
+[38;5;145mclaude-office-skills/skills@Browser Automation[0m [36m5.4K installs[0m
+[38;5;102m└ https://skills.sh/claude-office-skills/skills/browser-automation[0m
+
+[38;5;145mopenai/skills@develop-web-game[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/openai/skills/develop-web-game[0m
+
+[38;5;145msentimony/skills@web-debug[0m [36m4.1K installs[0m
+[38;5;102m└ https://skills.sh/sentimony/skills/web-debug[0m
+
+[38;5;145mlanggenius/dify@frontend-testing[0m [36m3.8K installs[0m
+[38;5;102m└ https://skills.sh/langgenius/dify/frontend-testing[0m
+
+[38;5;145msophieguanongit/openclaw-browser-automation@browser-automation[0m [36m2.9K installs[0m
+[38;5;102m└ https://skills.sh/sophieguanongit/openclaw-browser-automation/browser-automation[0m
+
+[38;5;145mplaywriter.dev@playwriter[0m [36m2.5K installs[0m
+[38;5;102m└ https://skills.sh/playwriter.dev/playwriter[0m
+
+[38;5;145mactionbook/actionbook@extract[0m [36m2.4K installs[0m
+[38;5;102m└ https://skills.sh/actionbook/actionbook/extract[0m
+
+[38;5;145mcursor/plugins@run-smoke-tests[0m [36m2.2K installs[0m
+[38;5;102m└ https://skills.sh/cursor/plugins/run-smoke-tests[0m
+
+[38;5;145mweb-infra-dev/midscene-skills@vitest-midscene-e2e[0m [36m2.1K installs[0m
+[38;5;102m└ https://skills.sh/web-infra-dev/midscene-skills/vitest-midscene-e2e[0m
+
+[38;5;145mnashsu/autocli-skill@autocli[0m [36m2K installs[0m
+[38;5;102m└ https://skills.sh/nashsu/autocli-skill/autocli[0m
+
+[38;5;145malirezarezvani/claude-skills@review[0m [36m1.7K installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/review[0m
+
+[38;5;145malirezarezvani/claude-skills@report[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/report[0m
+
+[38;5;145malirezarezvani/claude-skills@fix[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/fix[0m
+
+[38;5;145malirezarezvani/claude-skills@init[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/init[0m
+
+[38;5;145malirezarezvani/claude-skills@generate[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/generate[0m
+
+[38;5;145malirezarezvani/claude-skills@browserstack[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/browserstack[0m
+
+[38;5;145madobe/skills@testing-blocks[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/adobe/skills/testing-blocks[0m
+
+[38;5;145mmengto/skills@browser-video-recording[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/mengto/skills/browser-video-recording[0m
+
+[38;5;145malirezarezvani/claude-skills@migrate[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/migrate[0m
+
+[38;5;145mlightpanda-io/agent-skill@lightpanda[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/lightpanda-io/agent-skill/lightpanda[0m
+
+[38;5;145malirezarezvani/claude-skills@testrail[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/testrail[0m
+
+[38;5;145mopenmontageinc/openmontage@character-animation-qa[0m [36m1.5K installs[0m
+[38;5;102m└ https://skills.sh/openmontageinc/openmontage/character-animation-qa[0m
+
+[38;5;145mtester-army/e2e@e2e[0m [36m1.4K installs[0m
+[38;5;102m└ https://skills.sh/tester-army/e2e/e2e[0m
+
+[38;5;145mcap-go/capgo-skills@capacitor-testing[0m [36m1.4K installs[0m
+[38;5;102m└ https://skills.sh/cap-go/capgo-skills/capacitor-testing[0m
+
+[38;5;145malirezarezvani/claude-skills@senior-qa[0m [36m1.2K installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/senior-qa[0m
+
+[38;5;145mam-will/codex-skills@gemini-computer-use[0m [36m1.2K installs[0m
+[38;5;102m└ https://skills.sh/am-will/codex-skills/gemini-computer-use[0m
+
+[38;5;145mplayableintelligence/game-creator@game-qa[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/playableintelligence/game-creator/game-qa[0m
+
+[38;5;145manomalyco/browser-control@browser-control[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/anomalyco/browser-control/browser-control[0m
+
+[38;5;145mcatalystbyzoho/agent-skills@catalyst-smartbrowz[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/catalystbyzoho/agent-skills/catalyst-smartbrowz[0m
+
+[38;5;145mplayableintelligence/game-creator@qa-game[0m [36m990 installs[0m
+[38;5;102m└ https://skills.sh/playableintelligence/game-creator/qa-game[0m
+
+[38;5;145mbrowseros-ai/browseros@browseros-neo[0m [36m940 installs[0m
+[38;5;102m└ https://skills.sh/browseros-ai/browseros/browseros-neo[0m
+
+[38;5;145mabubakrchan/product-launch-motion@product-launch-motion[0m [36m938 installs[0m
+[38;5;102m└ https://skills.sh/abubakrchan/product-launch-motion/product-launch-motion[0m
+
+[38;5;145mgiuseppe-trisciuoglio/developer-kit@specs-e2e-verification[0m [36m874 installs[0m
+[38;5;102m└ https://skills.sh/giuseppe-trisciuoglio/developer-kit/specs-e2e-verification[0m
+
+[38;5;145mjwynia/agent-skills@electron-best-practices[0m [36m863 installs[0m
+[38;5;102m└ https://skills.sh/jwynia/agent-skills/electron-best-practices[0m
+
+[38;5;145msmithery.ai@webapp-testing[0m [36m757 installs[0m
+[38;5;102m└ https://skills.sh/smithery.ai/webapp-testing[0m
+
+[38;5;145mdavila7/claude-code-templates@browser-automation[0m [36m754 installs[0m
+[38;5;102m└ https://skills.sh/davila7/claude-code-templates/browser-automation[0m
+
+[38;5;145malirezarezvani/claude-skills@demo-video[0m [36m736 installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/demo-video[0m
+
+[38;5;145malirezarezvani/claude-skills@browser-automation[0m [36m649 installs[0m
+[38;5;102m└ https://skills.sh/alirezarezvani/claude-skills/browser-automation[0m
+
+[38;5;145minference-sh/skills@agent-browser[0m [36m12 installs[0m
+[38;5;102m└ https://skills.sh/inference-sh/skills/agent-browser[0m
+
+### npx skills find "data visualization"
+
+[38;5;102mInstall with[0m npx skills add <owner/repo@skill>
+
+[38;5;145manthropics/knowledge-work-plugins@data-visualization[0m [36m14.5K installs[0m
+[38;5;102m└ https://skills.sh/anthropics/knowledge-work-plugins/data-visualization[0m
+
+[38;5;145mmapbox/mapbox-agent-skills@mapbox-data-visualization-patterns[0m [36m2.2K installs[0m
+[38;5;102m└ https://skills.sh/mapbox/mapbox-agent-skills/mapbox-data-visualization-patterns[0m
+
+[38;5;145mowl-listener/designer-skills@data-visualization[0m [36m2.6K installs[0m
+[38;5;102m└ https://skills.sh/owl-listener/designer-skills/data-visualization[0m
+
+[38;5;145mlangchain-ai/deepagents@data-visualization[0m [36m272 installs[0m
+[38;5;102m└ https://skills.sh/langchain-ai/deepagents/data-visualization[0m
+
+[38;5;145mdylantarre/animation-principles@data-visualization[0m [36m629 installs[0m
+[38;5;102m└ https://skills.sh/dylantarre/animation-principles/data-visualization[0m
+
+[38;5;145maj-geddes/useful-ai-prompts@Data Visualization[0m [36m574 installs[0m
+[38;5;102m└ https://skills.sh/aj-geddes/useful-ai-prompts/data-visualization[0m
+
+[38;5;145msmithery.ai@data-visualization[0m [36m332 installs[0m
+[38;5;102m└ https://skills.sh/smithery.ai/data-visualization[0m
+
+[38;5;145m101-skills/superpowers@data-visualization[0m [36m217 installs[0m
+[38;5;102m└ https://skills.sh/101-skills/superpowers/data-visualization[0m
+
+[38;5;145mvivy-yi/xiaohongshu-skills@data-visualization[0m [36m188 installs[0m
+[38;5;102m└ https://skills.sh/vivy-yi/xiaohongshu-skills/data-visualization[0m
+
+[38;5;145mseb1n/awesome-ai-agent-skills@data-visualization[0m [36m171 installs[0m
+[38;5;102m└ https://skills.sh/seb1n/awesome-ai-agent-skills/data-visualization[0m
+
+[38;5;145mcommunity-access/accessibility-agents@data-visualization-accessibility[0m [36m168 installs[0m
+[38;5;102m└ https://skills.sh/community-access/accessibility-agents/data-visualization-accessibility[0m
+
+[38;5;145minference-sh/skills@data-visualization[0m [36m6 installs[0m
+[38;5;102m└ https://skills.sh/inference-sh/skills/data-visualization[0m
+
+[38;5;145mwshobson/agents@data-storytelling[0m [36m17.6K installs[0m
+[38;5;102m└ https://skills.sh/wshobson/agents/data-storytelling[0m
+
+[38;5;145mwarpdotdev/common-skills@pr-walkthrough[0m [36m28.3K installs[0m
+[38;5;102m└ https://skills.sh/warpdotdev/common-skills/pr-walkthrough[0m
+
+[38;5;145mclaude-office-skills/skills@data-analysis[0m [36m8.2K installs[0m
+[38;5;102m└ https://skills.sh/claude-office-skills/skills/data-analysis[0m
+
+[38;5;145mjimliu/baoyu-skills@baoyu-diagram[0m [36m15.9K installs[0m
+[38;5;102m└ https://skills.sh/jimliu/baoyu-skills/baoyu-diagram[0m
+
+[38;5;145mwondelai/skills@refactoring-ui[0m [36m10.1K installs[0m
+[38;5;102m└ https://skills.sh/wondelai/skills/refactoring-ui[0m
+
+[38;5;145mconardli/garden-skills@web-design-engineer[0m [36m9.6K installs[0m
+[38;5;102m└ https://skills.sh/conardli/garden-skills/web-design-engineer[0m
+
+[38;5;145mclaude-office-skills/skills@chart-designer[0m [36m6K installs[0m
+[38;5;102m└ https://skills.sh/claude-office-skills/skills/chart-designer[0m
+
+[38;5;145mclaude-office-skills/skills@report-generator[0m [36m5.4K installs[0m
+[38;5;102m└ https://skills.sh/claude-office-skills/skills/report-generator[0m
+
+[38;5;145mforcedotcom/sf-skills@omnistudio-dependencies-analyze[0m [36m4.9K installs[0m
+[38;5;102m└ https://skills.sh/forcedotcom/sf-skills/omnistudio-dependencies-analyze[0m
+
+[38;5;145mdpearson2699/swift-ios-skills@swift-charts[0m [36m4.2K installs[0m
+[38;5;102m└ https://skills.sh/dpearson2699/swift-ios-skills/swift-charts[0m
+
+[38;5;145magents365-ai/365-skills@plantuml-skill[0m [36m4.1K installs[0m
+[38;5;102m└ https://skills.sh/agents365-ai/365-skills/plantuml-skill[0m
+
+[38;5;145mfreshtechbro/claudedesignskills@react-three-fiber[0m [36m4.1K installs[0m
+[38;5;102m└ https://skills.sh/freshtechbro/claudedesignskills/react-three-fiber[0m
+
+[38;5;145mphuryn/pm-skills@metrics-dashboard[0m [36m3.1K installs[0m
+[38;5;102m└ https://skills.sh/phuryn/pm-skills/metrics-dashboard[0m
+
+[38;5;145mmindrally/skills@data-analysis-jupyter[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/mindrally/skills/data-analysis-jupyter[0m
+
+[38;5;145mmarkdown-viewer/skills@vega[0m [36m3.1K installs[0m
+[38;5;102m└ https://skills.sh/markdown-viewer/skills/vega[0m
+
+[38;5;145mowl-listener/designer-skills@color-system[0m [36m2.7K installs[0m
+[38;5;102m└ https://skills.sh/owl-listener/designer-skills/color-system[0m
+
+[38;5;145magricidaniel/claude-blog@blog-chart[0m [36m2.7K installs[0m
+[38;5;102m└ https://skills.sh/agricidaniel/claude-blog/blog-chart[0m
+
+[38;5;145mbytedance/deer-flow@chart-visualization[0m [36m2.7K installs[0m
+[38;5;102m└ https://skills.sh/bytedance/deer-flow/chart-visualization[0m
+
+[38;5;145mk-dense-ai/scientific-agent-skills@scientific-visualization[0m [36m2.6K installs[0m
+[38;5;102m└ https://skills.sh/k-dense-ai/scientific-agent-skills/scientific-visualization[0m
+
+[38;5;145mtfriedel/claude-office-skills@xlsx[0m [36m2.5K installs[0m
+[38;5;102m└ https://skills.sh/tfriedel/claude-office-skills/xlsx[0m
+
+[38;5;145mailabs-393/ai-labs-claude-skills@finance-manager[0m [36m2.5K installs[0m
+[38;5;102m└ https://skills.sh/ailabs-393/ai-labs-claude-skills/finance-manager[0m
+
+[38;5;145mforcedotcom/sf-skills@analyzing-omnistudio-dependencies[0m [36m2.4K installs[0m
+[38;5;102m└ https://skills.sh/forcedotcom/sf-skills/analyzing-omnistudio-dependencies[0m
+
+[38;5;145mdatabricks/databricks-agent-skills@databricks-apps[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/databricks/databricks-agent-skills/databricks-apps[0m
+
+[38;5;145mk-dense-ai/scientific-agent-skills@seaborn[0m [36m2.2K installs[0m
+[38;5;102m└ https://skills.sh/k-dense-ai/scientific-agent-skills/seaborn[0m
+
+[38;5;145mk-dense-ai/scientific-agent-skills@scanpy[0m [36m2K installs[0m
+[38;5;102m└ https://skills.sh/k-dense-ai/scientific-agent-skills/scanpy[0m
+
+[38;5;145mk-dense-ai/scientific-agent-skills@deeptools[0m [36m2K installs[0m
+[38;5;102m└ https://skills.sh/k-dense-ai/scientific-agent-skills/deeptools[0m
+
+[38;5;145mk-dense-ai/scientific-agent-skills@vaex[0m [36m2K installs[0m
+[38;5;102m└ https://skills.sh/k-dense-ai/scientific-agent-skills/vaex[0m
+
+[38;5;145mk-dense-ai/scientific-agent-skills@imaging-data-commons[0m [36m2K installs[0m
+[38;5;102m└ https://skills.sh/k-dense-ai/scientific-agent-skills/imaging-data-commons[0m
+
+[38;5;145miart-ai/data-animation-skills@chart-animation[0m [36m1.9K installs[0m
+[38;5;102m└ https://skills.sh/iart-ai/data-animation-skills/chart-animation[0m
+
+[38;5;145mmengto/skills@globe-gl[0m [36m1.7K installs[0m
+[38;5;102m└ https://skills.sh/mengto/skills/globe-gl[0m
+
+[38;5;145mmengto/skills@globe-particles[0m [36m1.7K installs[0m
+[38;5;102m└ https://skills.sh/mengto/skills/globe-particles[0m
+
+[38;5;145mantvis/chart-visualization-skills@narrative-text-visualization[0m [36m1.6K installs[0m
+[38;5;102m└ https://skills.sh/antvis/chart-visualization-skills/narrative-text-visualization[0m
+
+[38;5;145mjimliu/baoyu-design@dataviz[0m [36m737 installs[0m
+[38;5;102m└ https://skills.sh/jimliu/baoyu-design/dataviz[0m
+
+[38;5;145mailabs-393/ai-labs-claude-skills@csv-data-visualizer[0m [36m1.3K installs[0m
+[38;5;102m└ https://skills.sh/ailabs-393/ai-labs-claude-skills/csv-data-visualizer[0m
+
+[38;5;145mmrgoonie/claudekit-skills@threejs[0m [36m1.3K installs[0m
+[38;5;102m└ https://skills.sh/mrgoonie/claudekit-skills/threejs[0m
+
+[38;5;145maladicf/better-web-ui@data-viz[0m [36m630 installs[0m
+[38;5;102m└ https://skills.sh/aladicf/better-web-ui/data-viz[0m
+
+[38;5;145mantvis/chart-visualization-skills@antv-g6-graph[0m [36m1.2K installs[0m
+[38;5;102m└ https://skills.sh/antvis/chart-visualization-skills/antv-g6-graph[0m
+
+[38;5;145mmindrally/skills@analytics-data-analysis[0m [36m1.2K installs[0m
+[38;5;102m└ https://skills.sh/mindrally/skills/analytics-data-analysis[0m
+
+[38;5;145mduneanalytics/skills@dune[0m [36m1.2K installs[0m
+[38;5;102m└ https://skills.sh/duneanalytics/skills/dune[0m
+
+[38;5;145mandy-spike/skills@recharts[0m [36m1.2K installs[0m
+[38;5;102m└ https://skills.sh/andy-spike/skills/recharts[0m
+
+[38;5;145mdaffy0208/ai-dev-standards@data-visualizer[0m [36m576 installs[0m
+[38;5;102m└ https://skills.sh/daffy0208/ai-dev-standards/data-visualizer[0m
+
+[38;5;145mpluginagentmarketplace/custom-plugin-python@Pandas Data Analysis[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/pluginagentmarketplace/custom-plugin-python/pandas-data-analysis[0m
+
+[38;5;145mmindrally/skills@matplotlib-best-practices[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/mindrally/skills/matplotlib-best-practices[0m
+
+[38;5;145manthropics/life-sciences@single-cell-rna-qc[0m [36m212 installs[0m
+[38;5;102m└ https://skills.sh/anthropics/life-sciences/single-cell-rna-qc[0m
+
+[38;5;145mdavila7/claude-code-templates@plotly[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/davila7/claude-code-templates/plotly[0m
+
+[38;5;145mjimliu/baoyu-design@claude-dashboard[0m [36m1K installs[0m
+[38;5;102m└ https://skills.sh/jimliu/baoyu-design/claude-dashboard[0m
+
+[38;5;145mcline/skills@windsor-ai-business-data[0m [36m1K installs[0m
+[38;5;102m└ https://skills.sh/cline/skills/windsor-ai-business-data[0m
+
+[38;5;145mbrowser-use/video-use@manim-video[0m [36m202 installs[0m
+[38;5;102m└ https://skills.sh/browser-use/video-use/manim-video[0m
+
+[38;5;145manthropics/claude-agent-sdk-demos@xlsx[0m [36m185 installs[0m
+[38;5;102m└ https://skills.sh/anthropics/claude-agent-sdk-demos/xlsx[0m
+
+[38;5;145mailabs-393/ai-labs-claude-skills@xlsx[0m [36m892 installs[0m
+[38;5;102m└ https://skills.sh/ailabs-393/ai-labs-claude-skills/xlsx[0m
+
+[38;5;145mproduct-on-purpose/pm-skills@measure-dashboard-requirements[0m [36m801 installs[0m
+[38;5;102m└ https://skills.sh/product-on-purpose/pm-skills/measure-dashboard-requirements[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-charts[0m [36m775 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-charts[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-kanban[0m [36m741 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-kanban[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-accumulation-chart[0m [36m736 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-accumulation-chart[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-maps[0m [36m733 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-maps[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-heatmap[0m [36m683 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-heatmap[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-timeline[0m [36m680 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-timeline[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-bullet-chart[0m [36m680 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-bullet-chart[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-progress-bar[0m [36m679 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-progress-bar[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-smithchart[0m [36m677 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-smithchart[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-3d-circular-chart[0m [36m676 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-3d-circular-chart[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-stock-chart[0m [36m674 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-stock-chart[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-range-navigator[0m [36m673 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-range-navigator[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-treemaps[0m [36m671 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-treemaps[0m
+
+[38;5;145mcasper-studios/casper-marketplace@data-analysis[0m [36m333 installs[0m
+[38;5;102m└ https://skills.sh/casper-studios/casper-marketplace/data-analysis[0m
+
+[38;5;145msecondsky/sap-skills@sap-sac-custom-widget[0m [36m663 installs[0m
+[38;5;102m└ https://skills.sh/secondsky/sap-skills/sap-sac-custom-widget[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-listview[0m [36m649 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-listview[0m
+
+[38;5;145msyncfusion/react-ui-components-skills@syncfusion-react-sparkline[0m [36m633 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/react-ui-components-skills/syncfusion-react-sparkline[0m
+
+[38;5;145mcuriositech/some_claude_skills@data-viz-2025[0m [36m311 installs[0m
+[38;5;102m└ https://skills.sh/curiositech/some_claude_skills/data-viz-2025[0m
+
+[38;5;145msap/open-ux-tools@sap-fiori-analytical-chart[0m [36m621 installs[0m
+[38;5;102m└ https://skills.sh/sap/open-ux-tools/sap-fiori-analytical-chart[0m
+
+[38;5;145monewave-ai/claude-skills@presentation-design-enhancer[0m [36m597 installs[0m
+[38;5;102m└ https://skills.sh/onewave-ai/claude-skills/presentation-design-enhancer[0m
+
+[38;5;145mwentorai/research-plugins@dataviz-skills[0m [36m288 installs[0m
+[38;5;102m└ https://skills.sh/wentorai/research-plugins/dataviz-skills[0m
+
+[38;5;145mmetabase/agent-skills@metabase-representation-format[0m [36m568 installs[0m
+[38;5;102m└ https://skills.sh/metabase/agent-skills/metabase-representation-format[0m
+
+[38;5;145mgalaxy-dawn/claude-scholar@results-analysis[0m [36m554 installs[0m
+[38;5;102m└ https://skills.sh/galaxy-dawn/claude-scholar/results-analysis[0m
+
+[38;5;145mmukul975/anthropic-cybersecurity-skills@analyzing-apt-group-with-mitre-navigator[0m [36m538 installs[0m
+[38;5;102m└ https://skills.sh/mukul975/anthropic-cybersecurity-skills/analyzing-apt-group-with-mitre-navigator[0m
+
+[38;5;145mkv0906/cc-skills@svg-art[0m [36m535 installs[0m
+[38;5;102m└ https://skills.sh/kv0906/cc-skills/svg-art[0m
+
+[38;5;145msecondsky/claude-skills@kpi-dashboard-design[0m [36m526 installs[0m
+[38;5;102m└ https://skills.sh/secondsky/claude-skills/kpi-dashboard-design[0m
+
+[38;5;145maj-geddes/useful-ai-prompts@Exploratory Data Analysis[0m [36m520 installs[0m
+[38;5;102m└ https://skills.sh/aj-geddes/useful-ai-prompts/exploratory-data-analysis[0m
+
+[38;5;145mnimrodfisher/data-analytics-skills@visualization-builder[0m [36m254 installs[0m
+[38;5;102m└ https://skills.sh/nimrodfisher/data-analytics-skills/visualization-builder[0m
+
+[38;5;145m2ykwang/agent-skills@html-visual[0m [36m500 installs[0m
+[38;5;102m└ https://skills.sh/2ykwang/agent-skills/html-visual[0m
+
+[38;5;145mguia-matthieu/clawfu-skills@data-visualizer[0m [36m228 installs[0m
+[38;5;102m└ https://skills.sh/guia-matthieu/clawfu-skills/data-visualizer[0m
+
+[38;5;145mscientiacapital/skills@data-analysis[0m [36m221 installs[0m
+[38;5;102m└ https://skills.sh/scientiacapital/skills/data-analysis[0m
+
+[38;5;145mthvroyal/kimi-skills@kimi-xlsx[0m [36m433 installs[0m
+[38;5;102m└ https://skills.sh/thvroyal/kimi-skills/kimi-xlsx[0m
+
+[38;5;145monewave-ai/claude-skills@executive-dashboard-generator[0m [36m425 installs[0m
+[38;5;102m└ https://skills.sh/onewave-ai/claude-skills/executive-dashboard-generator[0m
+
+[38;5;145mfull-stack-skills/threejs-skills@threejs-audio[0m [36m414 installs[0m
+[38;5;102m└ https://skills.sh/full-stack-skills/threejs-skills/threejs-audio[0m
+
+[38;5;145msyncfusion/blazor-ui-components-skills@syncfusion-blazor-charts[0m [36m411 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/blazor-ui-components-skills/syncfusion-blazor-charts[0m
+
+[38;5;145msyncfusion/blazor-ui-components-skills@syncfusion-blazor-accumulation-chart[0m [36m393 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/blazor-ui-components-skills/syncfusion-blazor-accumulation-chart[0m
+
+[38;5;145mcuellarfr/design-skills@design-elevation[0m [36m393 installs[0m
+[38;5;102m└ https://skills.sh/cuellarfr/design-skills/design-elevation[0m
+
+### npx skills find "chart.js"
+
+[38;5;102mInstall with[0m npx skills add <owner/repo@skill>
+
+[38;5;145mvishalsachdev/claude-skills@chartjs-generator[0m [36m105 installs[0m
+[38;5;102m└ https://skills.sh/vishalsachdev/claude-skills/chartjs-generator[0m
+
+[38;5;145mvamseeachanta/workspace-hub@chartjs[0m [36m40 installs[0m
+[38;5;102m└ https://skills.sh/vamseeachanta/workspace-hub/chartjs[0m
+
+[38;5;145mjeremylongshore/tons-of-skills-marketplace@chart-js-config-creator[0m [36m31 installs[0m
+[38;5;102m└ https://skills.sh/jeremylongshore/tons-of-skills-marketplace/chart-js-config-creator[0m
+
+[38;5;145mopenlark/skills@chartjs[0m [36m9 installs[0m
+[38;5;102m└ https://skills.sh/openlark/skills/chartjs[0m
+
+[38;5;145msjnims/chartjs-expert@chartjs-tooltips[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/sjnims/chartjs-expert/chartjs-tooltips[0m
+
+[38;5;145msjnims/chartjs-expert@chartjs-quickref[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/sjnims/chartjs-expert/chartjs-quickref[0m
+
+[38;5;145msjnims/chartjs-expert@chartjs-plugins[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/sjnims/chartjs-expert/chartjs-plugins[0m
+
+[38;5;145msjnims/chartjs-expert@chartjs-overview[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/sjnims/chartjs-expert/chartjs-overview[0m
+
+[38;5;145msjnims/chartjs-expert@chartjs-integrations[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/sjnims/chartjs-expert/chartjs-integrations[0m
+
+[38;5;145msjnims/chartjs-expert@chartjs-developers[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/sjnims/chartjs-expert/chartjs-developers[0m
+
+[38;5;145msjnims/chartjs-expert@chartjs-configuration[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/sjnims/chartjs-expert/chartjs-configuration[0m
+
+[38;5;145msjnims/chartjs-expert@chartjs-chart-types[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/sjnims/chartjs-expert/chartjs-chart-types[0m
+
+[38;5;145msjnims/chartjs-expert@chartjs-axes[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/sjnims/chartjs-expert/chartjs-axes[0m
+
+[38;5;145msjnims/chartjs-expert@chartjs-animations[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/sjnims/chartjs-expert/chartjs-animations[0m
+
+[38;5;145msjnims/chartjs-expert@chartjs-advanced[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/sjnims/chartjs-expert/chartjs-advanced[0m
+
+[38;5;145msjnims/chartjs-expert@chartjs-accessibility[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/sjnims/chartjs-expert/chartjs-accessibility[0m
+
+[38;5;145mskills.volces.com@chartjs[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/chartjs[0m
+
+[38;5;145msmithery.ai@chartjs-advanced[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/smithery.ai/chartjs-advanced[0m
+
+[38;5;145mbintzgavin/helios@example-chartjs[0m [36m5 installs[0m
+[38;5;102m└ https://skills.sh/bintzgavin/helios/example-chartjs[0m
+
+[38;5;145mtestland/qa@chartjs-snapshot-tests[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/testland/qa/chartjs-snapshot-tests[0m
+
+[38;5;145mskills.volces.com@chartjs-reporter[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/chartjs-reporter[0m
+
+[38;5;145msmithery.ai@chartjs-chart-types[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/smithery.ai/chartjs-chart-types[0m
+
+[38;5;145msmithery.ai@chart-js-config-creator[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/smithery.ai/chart-js-config-creator[0m
+
+[38;5;145msmithery.ai@chartjs-quickref[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/smithery.ai/chartjs-quickref[0m
+
+[38;5;145msmithery.ai@chartjs-overview[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/smithery.ai/chartjs-overview[0m
+
+[38;5;145msmithery.ai@chartjs-graphs[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/smithery.ai/chartjs-graphs[0m
+
+[38;5;145msmithery.ai@chartjs-accessibility[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/smithery.ai/chartjs-accessibility[0m
+
+[38;5;145mbintzgavin/helios-skills@example-chartjs[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/bintzgavin/helios-skills/example-chartjs[0m
+
+[38;5;145mnextlevelbuilder/ui-ux-pro-max-skill@design[0m [36m48.9K installs[0m
+[38;5;102m└ https://skills.sh/nextlevelbuilder/ui-ux-pro-max-skill/design[0m
+
+[38;5;145mnextlevelbuilder/ui-ux-pro-max-skill@slides[0m [36m46.2K installs[0m
+[38;5;102m└ https://skills.sh/nextlevelbuilder/ui-ux-pro-max-skill/slides[0m
+
+[38;5;145mnextlevelbuilder/ui-ux-pro-max-skill@design[0m [36m32.5K installs[0m
+[38;5;102m└ https://skills.sh/nextlevelbuilder/ui-ux-pro-max-skill/ckmdesign[0m
+
+[38;5;145mnextlevelbuilder/ui-ux-pro-max-skill@slides[0m [36m31.9K installs[0m
+[38;5;102m└ https://skills.sh/nextlevelbuilder/ui-ux-pro-max-skill/ckmslides[0m
+
+[38;5;145mclaude-office-skills/skills@chart-designer[0m [36m6K installs[0m
+[38;5;102m└ https://skills.sh/claude-office-skills/skills/chart-designer[0m
+
+[38;5;145manthropics/knowledge-work-plugins@interactive-dashboard-builder[0m [36m586 installs[0m
+[38;5;102m└ https://skills.sh/anthropics/knowledge-work-plugins/interactive-dashboard-builder[0m
+
+[38;5;145mnextlevelbuilder/ui-ux-pro-max-skill@ckm-design[0m [36m363 installs[0m
+[38;5;102m└ https://skills.sh/nextlevelbuilder/ui-ux-pro-max-skill/ckm-design[0m
+
+[38;5;145mnextlevelbuilder/ui-ux-pro-max-skill@ckm-slides[0m [36m358 installs[0m
+[38;5;102m└ https://skills.sh/nextlevelbuilder/ui-ux-pro-max-skill/ckm-slides[0m
+
+[38;5;145mrheinmir/setup@md-to-html[0m [36m266 installs[0m
+[38;5;102m└ https://skills.sh/rheinmir/setup/md-to-html[0m
+
+[38;5;145mglebis/claude-skills@tufte-report[0m [36m198 installs[0m
+[38;5;102m└ https://skills.sh/glebis/claude-skills/tufte-report[0m
+
+[38;5;145mcommunity-access/accessibility-agents@data-visualization-accessibility[0m [36m168 installs[0m
+[38;5;102m└ https://skills.sh/community-access/accessibility-agents/data-visualization-accessibility[0m
+
+[38;5;145moakoss/agent-skills@data-visualizer[0m [36m126 installs[0m
+[38;5;102m└ https://skills.sh/oakoss/agent-skills/data-visualizer[0m
+
+[38;5;145mlyndonkl/claude@d3-visualization[0m [36m125 installs[0m
+[38;5;102m└ https://skills.sh/lyndonkl/claude/d3-visualization[0m
+
+[38;5;145mcountbot-ai/countbot@web-design[0m [36m65 installs[0m
+[38;5;102m└ https://skills.sh/countbot-ai/countbot/web-design[0m
+
+[38;5;145mmathews-tom/armory@chart-clarity[0m [36m32 installs[0m
+[38;5;102m└ https://skills.sh/mathews-tom/armory/chart-clarity[0m
+
+[38;5;145mnicohodt/claude-code-ui-ux-skill@design[0m [36m54 installs[0m
+[38;5;102m└ https://skills.sh/nicohodt/claude-code-ui-ux-skill/design[0m
+
+[38;5;145mnicohodt/claude-code-ui-ux-skill@slides[0m [36m53 installs[0m
+[38;5;102m└ https://skills.sh/nicohodt/claude-code-ui-ux-skill/slides[0m
+
+[38;5;145mdobroslavradosavljevic/skills@tanstack-charts[0m [36m44 installs[0m
+[38;5;102m└ https://skills.sh/dobroslavradosavljevic/skills/tanstack-charts[0m
+
+[38;5;145mdmccreary/ibook-skills@microsim-generator[0m [36m42 installs[0m
+[38;5;102m└ https://skills.sh/dmccreary/ibook-skills/microsim-generator[0m
+
+[38;5;145mpayoss/uiux-high-taste-skill@ckm:slides[0m [36m27 installs[0m
+[38;5;102m└ https://skills.sh/payoss/uiux-high-taste-skill/ckmslides[0m
+
+[38;5;145mpayoss/uiux-high-taste-skill@ckm:design[0m [36m27 installs[0m
+[38;5;102m└ https://skills.sh/payoss/uiux-high-taste-skill/ckmdesign[0m
+
+[38;5;145mblunotech-dev/agents@design-pro[0m [36m24 installs[0m
+[38;5;102m└ https://skills.sh/blunotech-dev/agents/design-pro[0m
+
+[38;5;145mtilek/graph-health-skill@graph-health-skill[0m [36m24 installs[0m
+[38;5;102m└ https://skills.sh/tilek/graph-health-skill/graph-health-skill[0m
+
+[38;5;145mdragonwar000/setup@md-to-html[0m [36m20 installs[0m
+[38;5;102m└ https://skills.sh/dragonwar000/setup/md-to-html[0m
+
+[38;5;145mclaude-office-skills/skills-hub@chart-designer[0m [36m10 installs[0m
+[38;5;102m└ https://skills.sh/claude-office-skills/skills-hub/chart-designer[0m
+
+[38;5;145msmithery.ai@anthropics-interactive-dashboard-builder[0m [36m18 installs[0m
+[38;5;102m└ https://skills.sh/smithery.ai/anthropics-interactive-dashboard-builder[0m
+
+[38;5;145mvishalsachdev/claude-skills@bubble-chart-generator[0m [36m17 installs[0m
+[38;5;102m└ https://skills.sh/vishalsachdev/claude-skills/bubble-chart-generator[0m
+
+[38;5;145mvishalsachdev/claude-skills@microsim-matcher[0m [36m17 installs[0m
+[38;5;102m└ https://skills.sh/vishalsachdev/claude-skills/microsim-matcher[0m
+
+[38;5;145mhack23/riksdagsmonitor@advanced-data-visualization[0m [36m16 installs[0m
+[38;5;102m└ https://skills.sh/hack23/riksdagsmonitor/advanced-data-visualization[0m
+
+[38;5;145mkevinaimonster/skill-hub@data-viz[0m [36m15 installs[0m
+[38;5;102m└ https://skills.sh/kevinaimonster/skill-hub/data-viz[0m
+
+[38;5;145mwpgaurav/wordpress-skills@ckm:slides[0m [36m12 installs[0m
+[38;5;102m└ https://skills.sh/wpgaurav/wordpress-skills/ckmslides[0m
+
+[38;5;145mwpgaurav/wordpress-skills@ckm:design[0m [36m12 installs[0m
+[38;5;102m└ https://skills.sh/wpgaurav/wordpress-skills/ckmdesign[0m
+
+[38;5;145mskills.netease.im@vibe-slide[0m [36m12 installs[0m
+[38;5;102m└ https://skills.sh/skills.netease.im/vibe-slide[0m
+
+[38;5;145mrheinmir/skills@md-to-html[0m [36m11 installs[0m
+[38;5;102m└ https://skills.sh/rheinmir/skills/md-to-html[0m
+
+[38;5;145mdidixuxu/didi-skills@competitive-landscape[0m [36m11 installs[0m
+[38;5;102m└ https://skills.sh/didixuxu/didi-skills/competitive-landscape[0m
+
+[38;5;145mskills.volces.com@text-to-ppt[0m [36m11 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/text-to-ppt[0m
+
+[38;5;145mynulihao/agentskillos@microsim-generator[0m [36m10 installs[0m
+[38;5;102m└ https://skills.sh/ynulihao/agentskillos/microsim-generator[0m
+
+[38;5;145mshipiit/shipit-ui-design@dashboard-design[0m [36m10 installs[0m
+[38;5;102m└ https://skills.sh/shipiit/shipit-ui-design/dashboard-design[0m
+
+[38;5;145mpsyop-z/uiuxpromax@ckm:slides[0m [36m9 installs[0m
+[38;5;102m└ https://skills.sh/psyop-z/uiuxpromax/ckmslides[0m
+
+[38;5;145mpsyop-z/uiuxpromax@ckm:design[0m [36m9 installs[0m
+[38;5;102m└ https://skills.sh/psyop-z/uiuxpromax/ckmdesign[0m
+
+[38;5;145mimraywang/rayskills@ray-report[0m [36m9 installs[0m
+[38;5;102m└ https://skills.sh/imraywang/rayskills/ray-report[0m
+
+[38;5;145mkoubos/ui-ux-pro-max@ckm:slides[0m [36m8 installs[0m
+[38;5;102m└ https://skills.sh/koubos/ui-ux-pro-max/ckmslides[0m
+
+[38;5;145mdragonwar000/stackoverflow@md-to-html[0m [36m8 installs[0m
+[38;5;102m└ https://skills.sh/dragonwar000/stackoverflow/md-to-html[0m
+
+[38;5;145mskeletorflet/opencode-kit@data-visualization[0m [36m8 installs[0m
+[38;5;102m└ https://skills.sh/skeletorflet/opencode-kit/data-visualization[0m
+
+[38;5;145mkoubos/ui-ux-pro-max@ckm:design[0m [36m8 installs[0m
+[38;5;102m└ https://skills.sh/koubos/ui-ux-pro-max/ckmdesign[0m
+
+[38;5;145mandchamorro/paperskills@research-gap[0m [36m8 installs[0m
+[38;5;102m└ https://skills.sh/andchamorro/paperskills/research-gap[0m
+
+[38;5;145mlainshao/modern-ppt@modern-ppt[0m [36m8 installs[0m
+[38;5;102m└ https://skills.sh/lainshao/modern-ppt/modern-ppt[0m
+
+[38;5;145mtestland/qa@chart-render-tests[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/testland/qa/chart-render-tests[0m
+
+[38;5;145mtraderspost/traderspost-command-dash@chart-setup[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/traderspost/traderspost-command-dash/chart-setup[0m
+
+[38;5;145myepapi/skills@charts[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/yepapi/skills/charts[0m
+
+[38;5;145mblunotech-dev/agents@slides[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/blunotech-dev/agents/slides[0m
+
+[38;5;145msnowbeatrain/skills@react-flow[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/snowbeatrain/skills/react-flow[0m
+
+[38;5;145marcsin1/oh-my-ppt@oh-my-ppt-chart[0m [36m6 installs[0m
+[38;5;102m└ https://skills.sh/arcsin1/oh-my-ppt/oh-my-ppt-chart[0m
+
+[38;5;145malfonsograziano/skills@create-html-report[0m [36m6 installs[0m
+[38;5;102m└ https://skills.sh/alfonsograziano/skills/create-html-report[0m
+
+[38;5;145mrevealbi/reveal.sdk@reveal-embed[0m [36m6 installs[0m
+[38;5;102m└ https://skills.sh/revealbi/reveal.sdk/reveal-embed[0m
+
+[38;5;145mhot-buro/hot-designer@slides[0m [36m5 installs[0m
+[38;5;102m└ https://skills.sh/hot-buro/hot-designer/slides[0m
+
+[38;5;145mdekitproject/ux-ui-promax-skill@ckm:slides[0m [36m5 installs[0m
+[38;5;102m└ https://skills.sh/dekitproject/ux-ui-promax-skill/ckmslides[0m
+
+[38;5;145mericgandrade/design-superskills@slides[0m [36m5 installs[0m
+[38;5;102m└ https://skills.sh/ericgandrade/design-superskills/slides[0m
+
+[38;5;145mkezsmeister/claude-finance-skills@cashflow-chart[0m [36m5 installs[0m
+[38;5;102m└ https://skills.sh/kezsmeister/claude-finance-skills/cashflow-chart[0m
+
+[38;5;145maxot/agent-skills@fin-analyzer[0m [36m5 installs[0m
+[38;5;102m└ https://skills.sh/axot/agent-skills/fin-analyzer[0m
+
+[38;5;145mhot-buro/hot-designer@design[0m [36m5 installs[0m
+[38;5;102m└ https://skills.sh/hot-buro/hot-designer/design[0m
+
+[38;5;145mdekitproject/ux-ui-promax-skill@ckm:design[0m [36m5 installs[0m
+[38;5;102m└ https://skills.sh/dekitproject/ux-ui-promax-skill/ckmdesign[0m
+
+[38;5;145mnawawwow/skills@mermaid-diagram[0m [36m5 installs[0m
+[38;5;102m└ https://skills.sh/nawawwow/skills/mermaid-diagram[0m
+
+[38;5;145mpacb9148/uiux-promax-skill@ckm:slides[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/pacb9148/uiux-promax-skill/ckmslides[0m
+
+[38;5;145mkinnekate-hub/ui-ux-pro-max-skill@ckm:slides[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/kinnekate-hub/ui-ux-pro-max-skill/ckmslides[0m
+
+[38;5;145mhuifer/wellally-health-skills@report[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/huifer/wellally-health-skills/report[0m
+
+[38;5;145mhousegarofalo/claude-code-base@data-visualization[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/housegarofalo/claude-code-base/data-visualization[0m
+
+[38;5;145mgsarig/skills@obsidian-charts[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/gsarig/skills/obsidian-charts[0m
+
+[38;5;145mletheviet/tutorial-writer-skill@tutorial-writer[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/letheviet/tutorial-writer-skill/tutorial-writer[0m
+
+[38;5;145msvaranova/skills@data-visualization[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/svaranova/skills/data-visualization[0m
+
+[38;5;145mpacb9148/uiux-promax-skill@ckm:design[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/pacb9148/uiux-promax-skill/ckmdesign[0m
+
+[38;5;145mkinnekate-hub/ui-ux-pro-max-skill@ckm:design[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/kinnekate-hub/ui-ux-pro-max-skill/ckmdesign[0m
+
+### npx skills find "operations research optimization"
+
+[38;5;102mInstall with[0m npx skills add <owner/repo@skill>
+
+[38;5;145mzhengliangliahu-cloud/skills@operations-research-optimization[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/zhengliangliahu-cloud/skills/operations-research-optimization[0m
+
+[38;5;145mkishorkukreja/awesome-supply-chain@optimization-modeling[0m [36m80 installs[0m
+[38;5;102m└ https://skills.sh/kishorkukreja/awesome-supply-chain/optimization-modeling[0m
+
+[38;5;145mmanojbajaj95/claude-gtm-plugin@content-strategy-and-planning[0m [36m156 installs[0m
+[38;5;102m└ https://skills.sh/manojbajaj95/claude-gtm-plugin/content-strategy-and-planning[0m
+
+[38;5;145mdatadrivenconstruction/ddc_skills_for_ai_agents_in_construction@site-logistics-optimization[0m [36m109 installs[0m
+[38;5;102m└ https://skills.sh/datadrivenconstruction/ddc_skills_for_ai_agents_in_construction/site-logistics-optimization[0m
+
+[38;5;145mxjtulyc/awesome-rosetta-skills@optimization-or[0m [36m10 installs[0m
+[38;5;102m└ https://skills.sh/xjtulyc/awesome-rosetta-skills/optimization-or[0m
+
+[38;5;145mwentorai/research-plugins@operations-research-guide[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/wentorai/research-plugins/operations-research-guide[0m
+
+[38;5;145mfreakwill/willskills@optimization-algorithm[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/freakwill/willskills/optimization-algorithm[0m
+
+[38;5;145mshalintripathi/saas-marketing-agents@seo-growth[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/shalintripathi/saas-marketing-agents/seo-growth[0m
+
+[38;5;145mevolution-foundation/evo-nexus@mkt-seo-ops[0m [36m6 installs[0m
+[38;5;102m└ https://skills.sh/evolution-foundation/evo-nexus/mkt-seo-ops[0m
+
+[38;5;145mmyousefi/write-mathematics@write-mathematics[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/myousefi/write-mathematics/write-mathematics[0m
+
+[38;5;145mndpvt-web/arxiv-claude-skills@mirror-multi-agent-framework-iterative[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/ndpvt-web/arxiv-claude-skills/mirror-multi-agent-framework-iterative[0m
+
+[38;5;145mmatn2468/ai-amazon-skills-torresn@amazon-ppc-launch-flow[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/matn2468/ai-amazon-skills-torresn/amazon-ppc-launch-flow[0m
+
+[38;5;145mneuralblitz/mito@industrial-engineering[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/neuralblitz/mito/industrial-engineering[0m
+
+[38;5;145msmithery.ai@site-logistics-optimization[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/smithery.ai/site-logistics-optimization[0m
+
+[38;5;145mpengkangzhen/scientific-research-plugin@academic-review[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/pengkangzhen/scientific-research-plugin/academic-review[0m
+
+[38;5;145mmuyunping123/ai4management@ai4management[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/muyunping123/ai4management/ai4management[0m
+
+[38;5;145mbayramannakov/ai-native-product-skills@autoresearch[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/bayramannakov/ai-native-product-skills/autoresearch[0m
+
+[38;5;145mslowjade/claude-gtm-plugin@content-strategy-and-planning[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/slowjade/claude-gtm-plugin/content-strategy-and-planning[0m
+
+[38;5;145mjikig-ai/soleur@ops-research[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/jikig-ai/soleur/ops-research[0m
+
+[38;5;145myuuqq/research-grade-skills@matlab[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/yuuqq/research-grade-skills/matlab[0m
+
+### npx skills find "financial dashboard"
+
+[38;5;102mInstall with[0m npx skills add <owner/repo@skill>
+
+[38;5;145mfinsilabs/awesome-ecommerce-skills@financial-analytics-dashboard[0m [36m168 installs[0m
+[38;5;102m└ https://skills.sh/finsilabs/awesome-ecommerce-skills/financial-analytics-dashboard[0m
+
+[38;5;145mfinsilabs/awesome-ecommerce-skills@financial-reporting-dashboard[0m [36m148 installs[0m
+[38;5;102m└ https://skills.sh/finsilabs/awesome-ecommerce-skills/financial-reporting-dashboard[0m
+
+[38;5;145mselfstorageai/reit-dashboard@reit-financial-dashboard[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/selfstorageai/reit-dashboard/reit-financial-dashboard[0m
+
+[38;5;145mstefanocaruso456/ai_agent_skills@financial-dashboard-builder[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/stefanocaruso456/ai_agent_skills/financial-dashboard-builder[0m
+
+[38;5;145manthropics/financial-services@macro-rates-monitor[0m [36m2.4K installs[0m
+[38;5;102m└ https://skills.sh/anthropics/financial-services/macro-rates-monitor[0m
+
+[38;5;145manthropics/financial-services@portfolio-monitoring[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/anthropics/financial-services/portfolio-monitoring[0m
+
+[38;5;145mdavila7/claude-code-templates@plotly[0m [36m1.1K installs[0m
+[38;5;102m└ https://skills.sh/davila7/claude-code-templates/plotly[0m
+
+[38;5;145mdylantarre/animation-principles@fintech-banking[0m [36m581 installs[0m
+[38;5;102m└ https://skills.sh/dylantarre/animation-principles/fintech-banking[0m
+
+[38;5;145mskyworkai/skywork-skills@Skywork Excel[0m [36m367 installs[0m
+[38;5;102m└ https://skills.sh/skyworkai/skywork-skills/skywork-excel[0m
+
+[38;5;145mrkiding/awesome-finance-skills@alphaear-deepear-lite[0m [36m337 installs[0m
+[38;5;102m└ https://skills.sh/rkiding/awesome-finance-skills/alphaear-deepear-lite[0m
+
+[38;5;145mcasper-studios/casper-marketplace@data-analysis[0m [36m333 installs[0m
+[38;5;102m└ https://skills.sh/casper-studios/casper-marketplace/data-analysis[0m
+
+[38;5;145monewave-ai/claude-skills@weekly-business-report[0m [36m272 installs[0m
+[38;5;102m└ https://skills.sh/onewave-ai/claude-skills/weekly-business-report[0m
+
+[38;5;145monewave-ai/claude-skills@investor-update-writer[0m [36m248 installs[0m
+[38;5;102m└ https://skills.sh/onewave-ai/claude-skills/investor-update-writer[0m
+
+[38;5;145melementalsouls/claude-bughunter@hunt-spa-api[0m [36m230 installs[0m
+[38;5;102m└ https://skills.sh/elementalsouls/claude-bughunter/hunt-spa-api[0m
+
+[38;5;145mtondevrel/scientific-agent-skills@plotly[0m [36m213 installs[0m
+[38;5;102m└ https://skills.sh/tondevrel/scientific-agent-skills/plotly[0m
+
+[38;5;145miofficeai/officecli@officecli-xlsx[0m [36m182 installs[0m
+[38;5;102m└ https://skills.sh/iofficeai/officecli/officecli-xlsx[0m
+
+[38;5;145mseb1n/awesome-ai-agent-skills@report-generation[0m [36m142 installs[0m
+[38;5;102m└ https://skills.sh/seb1n/awesome-ai-agent-skills/report-generation[0m
+
+[38;5;145mjk-0001/skills@financial-planning[0m [36m65 installs[0m
+[38;5;102m└ https://skills.sh/jk-0001/skills/financial-planning[0m
+
+[38;5;145miofficeai/officecli@officecli-data-dashboard[0m [36m112 installs[0m
+[38;5;102m└ https://skills.sh/iofficeai/officecli/officecli-data-dashboard[0m
+
+[38;5;145mthecraighewitt/skills@dashboard-builder[0m [36m39 installs[0m
+[38;5;102m└ https://skills.sh/thecraighewitt/skills/dashboard-builder[0m
+
+[38;5;145mancoleman/ai-design-components@using-timeseries-databases[0m [36m76 installs[0m
+[38;5;102m└ https://skills.sh/ancoleman/ai-design-components/using-timeseries-databases[0m
+
+[38;5;145manygenio/anygen-skills@anygen-data-analysis[0m [36m73 installs[0m
+[38;5;102m└ https://skills.sh/anygenio/anygen-skills/anygen-data-analysis[0m
+
+[38;5;145msyncfusion/aspnetcore-ui-components-skills@syncfusion-aspnetcore-stock-chart[0m [36m56 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/aspnetcore-ui-components-skills/syncfusion-aspnetcore-stock-chart[0m
+
+[38;5;145mskills.volces.com@financial-data-visualization[0m [36m18 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/financial-data-visualization[0m
+
+[38;5;145mskills.volces.com@financial-planning[0m [36m17 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/financial-planning[0m
+
+[38;5;145mexploration-labs/nates-substack-skills@complex-excel-builder[0m [36m28 installs[0m
+[38;5;102m└ https://skills.sh/exploration-labs/nates-substack-skills/complex-excel-builder[0m
+
+[38;5;145mdrshailesh88/integrated_content_os@plotly[0m [36m28 installs[0m
+[38;5;102m└ https://skills.sh/drshailesh88/integrated_content_os/plotly[0m
+
+[38;5;145mskills.volces.com@financial-design-systems[0m [36m13 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/financial-design-systems[0m
+
+[38;5;145mhaskaomni/serenity-skill@buy-side-equity-research-memo[0m [36m25 installs[0m
+[38;5;102m└ https://skills.sh/haskaomni/serenity-skill/buy-side-equity-research-memo[0m
+
+[38;5;145mthegovind/claude-scientific-skills@plotly[0m [36m24 installs[0m
+[38;5;102m└ https://skills.sh/thegovind/claude-scientific-skills/plotly[0m
+
+[38;5;145mrgourley/financial-ui-suite@financial-ui-styles[0m [36m12 installs[0m
+[38;5;102m└ https://skills.sh/rgourley/financial-ui-suite/financial-ui-styles[0m
+
+[38;5;145mskills.volces.com@financial-analysis-agent[0m [36m11 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/financial-analysis-agent[0m
+
+[38;5;145mskills.volces.com@daily-finance[0m [36m21 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/dailyfinance[0m
+
+[38;5;145mopenai/plugins@public-equity-investing[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/openai/plugins/public-equity-investing[0m
+
+[38;5;145mskills.volces.com@anygen-data-analysis[0m [36m19 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/anygen-data-analysis[0m
+
+[38;5;145mmicrock/ordinary-claude-skills@plotly[0m [36m18 installs[0m
+[38;5;102m└ https://skills.sh/microck/ordinary-claude-skills/plotly[0m
+
+[38;5;145msyncfusion/javascript-ui-controls-skills@syncfusion-javascript-stock-chart[0m [36m18 installs[0m
+[38;5;102m└ https://skills.sh/syncfusion/javascript-ui-controls-skills/syncfusion-javascript-stock-chart[0m
+
+[38;5;145mdevexpress/agent-skills@devexpress-blazor-charts[0m [36m17 installs[0m
+[38;5;102m└ https://skills.sh/devexpress/agent-skills/devexpress-blazor-charts[0m
+
+[38;5;145mmurrtada/bug-bounty-agent-skills@hunt-spa-api[0m [36m14 installs[0m
+[38;5;102m└ https://skills.sh/murrtada/bug-bounty-agent-skills/hunt-spa-api[0m
+
+[38;5;145mskills.volces.com@animated-financial-display[0m [36m12 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/animated-financial-display[0m
+
+[38;5;145mlawve-ai/awesome-legal-skills@financial-comparison-glossary-ignacio-adrian-lerer[0m [36m6 installs[0m
+[38;5;102m└ https://skills.sh/lawve-ai/awesome-legal-skills/financial-comparison-glossary-ignacio-adrian-lerer[0m
+
+[38;5;145mninehills/skills@alphaear-deepear-lite[0m [36m11 installs[0m
+[38;5;102m└ https://skills.sh/ninehills/skills/alphaear-deepear-lite[0m
+
+[38;5;145mskills.volces.com@Skywork Excel[0m [36m11 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/skywork-excel[0m
+
+[38;5;145msmithery.ai@plotly[0m [36m10 installs[0m
+[38;5;102m└ https://skills.sh/smithery.ai/plotly[0m
+
+[38;5;145mandresladino-design/simetrik-design-studio@ux-data-viz[0m [36m10 installs[0m
+[38;5;102m└ https://skills.sh/andresladino-design/simetrik-design-studio/ux-data-viz[0m
+
+[38;5;145mskills.volces.com@financial-report-render-claw[0m [36m5 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/financial-report-render-claw[0m
+
+[38;5;145msentry01/copilot-cli-skills@excel-toolkit[0m [36m9 installs[0m
+[38;5;102m└ https://skills.sh/sentry01/copilot-cli-skills/excel-toolkit[0m
+
+[38;5;145mskills.volces.com@dashboard-greek-accounting[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/dashboard-greek-accounting[0m
+
+[38;5;145mskills.volces.com@financial-overview[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/financial-overview[0m
+
+[38;5;145mjeremya888/ecomcpa-cfo-skills@financial-reporting[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/jeremya888/ecomcpa-cfo-skills/financial-reporting[0m
+
+[38;5;145mmiovrag/claude-skills@dashboard-dataviz[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/miovrag/claude-skills/dashboard-dataviz[0m
+
+[38;5;145mskills.volces.com@financial-overview[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/norman-financial-overview[0m
+
+[38;5;145mstefanocaruso456/ai_agent_skills@dashboard-recommender[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/stefanocaruso456/ai_agent_skills/dashboard-recommender[0m
+
+[38;5;145msmithery.ai@financial-overview[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/smithery.ai/financial-overview[0m
+
+[38;5;145mwpank/ai@financial-data-visualization[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/wpank/ai/financial-data-visualization[0m
+
+[38;5;145mjasonbhorne/claude-code-skills@financial-advisor[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/jasonbhorne/claude-code-skills/financial-advisor[0m
+
+[38;5;145mjonathanmalkin/jules@financial-advisor[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/jonathanmalkin/jules/financial-advisor[0m
+
+[38;5;145mpottertech/claude-skills@dashboard-builder[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/pottertech/claude-skills/dashboard-builder[0m
+
+[38;5;145msebclawops/financial-statement-analyzer@financial-statement-analyzer[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/sebclawops/financial-statement-analyzer/financial-statement-analyzer[0m
+
+[38;5;145mhithink-tech/financial-api@financial-api[0m [36m1 install[0m
+[38;5;102m└ https://skills.sh/hithink-tech/financial-api/financial-api[0m
+
+[38;5;145mh4vzz/awesome-ai-agent-skills@report-generation[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/h4vzz/awesome-ai-agent-skills/report-generation[0m
+
+[38;5;145maryanbhargavprojects/kapit-skills@kapit-api-client[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/aryanbhargavprojects/kapit-skills/kapit-api-client[0m
+
+[38;5;145mshalintripathi/saas-marketing-agents@client-operations[0m [36m7 installs[0m
+[38;5;102m└ https://skills.sh/shalintripathi/saas-marketing-agents/client-operations[0m
+
+[38;5;145mskills.volces.com@visualization[0m [36m6 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/visualization[0m
+
+[38;5;145mskills.volces.com@fin-cog[0m [36m6 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/fin-cog[0m
+
+[38;5;145mmodelscope.cn@macro-rates-monitor[0m [36m6 installs[0m
+[38;5;102m└ https://skills.sh/modelscope.cn/macro-rates-monitor[0m
+
+[38;5;145maviskaar/open-org@revenue-operations[0m [36m6 installs[0m
+[38;5;102m└ https://skills.sh/aviskaar/open-org/revenue-operations[0m
+
+[38;5;145mfiingroup/fiinquant@ui-ux-finquant-dashboard[0m [36m5 installs[0m
+[38;5;102m└ https://skills.sh/fiingroup/fiinquant/ui-ux-finquant-dashboard[0m
+
+[38;5;145mdnviti/artcraft-skills@gridcraft-spreadsheets[0m [36m5 installs[0m
+[38;5;102m└ https://skills.sh/dnviti/artcraft-skills/gridcraft-spreadsheets[0m
+
+[38;5;145mxiangdong-415/codex-wps-office-mcp-skills@office-spreadsheet-workflow[0m [36m5 installs[0m
+[38;5;102m└ https://skills.sh/xiangdong-415/codex-wps-office-mcp-skills/office-spreadsheet-workflow[0m
+
+[38;5;145minselfcontroll/ai-agent-skills@enterprise-visual-design[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/inselfcontroll/ai-agent-skills/enterprise-visual-design[0m
+
+[38;5;145mskills.volces.com@erpclaw-analytics[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/erpclaw-analytics[0m
+
+[38;5;145mskills.volces.com@data-reporter[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/clawd-data-reporter[0m
+
+[38;5;145mvikast908/data-visualization-skill@data-visualization[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/vikast908/data-visualization-skill/data-visualization[0m
+
+[38;5;145maviskaar/open-org@account-intelligence[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/aviskaar/open-org/account-intelligence[0m
+
+[38;5;145mnmoralescyber/claude-skill-optimization@xlsx[0m [36m4 installs[0m
+[38;5;102m└ https://skills.sh/nmoralescyber/claude-skill-optimization/xlsx[0m
+
+[38;5;145miofficeai/aioncore@officecli-xlsx[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/iofficeai/aioncore/officecli-xlsx[0m
+
+[38;5;145msellersheetai/sellersheet-skills@sellersheet-sheets[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/sellersheetai/sellersheet-skills/sellersheet-sheets[0m
+
+[38;5;145mgokulsvision/crewm8-cfo-skills@board-reporting[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/gokulsvision/crewm8-cfo-skills/board-reporting[0m
+
+[38;5;145mhelalifaker/project_2052@finance-frontend-designer[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/helalifaker/project_2052/finance-frontend-designer[0m
+
+[38;5;145mpeterhdd/agent-skills@data-analytics-reporter[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/peterhdd/agent-skills/data-analytics-reporter[0m
+
+[38;5;145mjeremya888/ecomcpa-cfo-skills@kpi-dashboard[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/jeremya888/ecomcpa-cfo-skills/kpi-dashboard[0m
+
+[38;5;145miofficeai/aioncore@officecli-data-dashboard[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/iofficeai/aioncore/officecli-data-dashboard[0m
+
+[38;5;145mskills.volces.com@stock-analysis-cellcog[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/skills.volces.com/stock-analysis-cellcog[0m
+
+[38;5;145mcellcog/skills@stock-analysis-cellcog[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/cellcog/skills/stock-analysis-cellcog[0m
+
+[38;5;145mthe-utopia-studio/skills@macro-rates-monitor[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/the-utopia-studio/skills/macro-rates-monitor[0m
+
+[38;5;145mawesamarth/agentis@agentis[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/awesamarth/agentis/agentis[0m
+
+[38;5;145maloc999/exploitninja@hunt-spa-api[0m [36m3 installs[0m
+[38;5;102m└ https://skills.sh/aloc999/exploitninja/hunt-spa-api[0m
+
+[38;5;145mchandravardhan8998/react-native-motion-skills@rn-chart-motion[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/chandravardhan8998/react-native-motion-skills/rn-chart-motion[0m
+
+[38;5;145mchenyiru3/ai-skills-collections@officecli-xlsx[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/chenyiru3/ai-skills-collections/officecli-xlsx[0m
+
+[38;5;145mwaterdjiang/wattter_openskills@wtt-fin-chart[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/waterdjiang/wattter_openskills/wtt-fin-chart[0m
+
+[38;5;145mmodelscope.cn@plotly[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/modelscope.cn/plotly-majiayu000-claude-skill-registr[0m
+
+[38;5;145mjacksoncorey/skills@verify-before-ship[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/jacksoncorey/skills/verify-before-ship[0m
+
+[38;5;145mxcrrr/claude-skills@xlsx[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/xcrrr/claude-skills/xlsx[0m
+
+[38;5;145mdaloopa/daloopa-plugin-claude@supply-chain[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/daloopa/daloopa-plugin-claude/supply-chain[0m
+
+[38;5;145mdaloopa/investing@supply-chain[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/daloopa/investing/supply-chain[0m
+
+[38;5;145mteam-commonly/commonly@officecli-data-dashboard[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/team-commonly/commonly/officecli-data-dashboard[0m
+
+[38;5;145mamo-tech-ai/event-studio@Building Frontend Dashboards[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/amo-tech-ai/event-studio/building-frontend-dashboards[0m
+
+[38;5;145mzhizunbao84/financial-services-plugins@macro-rates-monitor[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/zhizunbao84/financial-services-plugins/macro-rates-monitor[0m
+
+[38;5;145mnbreeze-eric/financial-services-plugins-cn@macro-rates-monitor[0m [36m2 installs[0m
+[38;5;102m└ https://skills.sh/nbreeze-eric/financial-services-plugins-cn/macro-rates-monitor[0m
+

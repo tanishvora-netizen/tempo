@@ -1,0 +1,29 @@
+{
+  "name": "tempo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanishvora-netizen/tempo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tanishvora-netizen/tempo/issues"
+  },
+  "homepage": "https://github.com/tanishvora-netizen/tempo#readme",
+  "devDependencies": {
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@tailwindcss/cli": "^4.3.5",
+    "chart.js": "^4.6.1",
+    "lucide-static": "^1.71.0",
+    "tailwindcss": "^4.3.5"
+  }
+}
