@@ -115,10 +115,8 @@ def solve(
     _monotone_rows(rows, layout)
     for idx, cap in capacity:
         rows.add({int(j): layout.opts[j].cash_out_cents / CENTS for j in idx}, -np.inf, cap / CENTS)
-    n_z, scenario_rows = (_reduced_rows if reduced else _full_rows)(rows, layout, r_d, k, bill_options)
+    n_z, scenario_rows = (_reduced_rows if reduced else _full_rows)(rows, layout, r_d, k)
     n_cols = layout.z_start + n_z
-    if n_z:
-        rows.add({layout.z_start + j: 1.0 for j in range(n_z)}, n_z - k, np.inf)
     objective = np.zeros(n_cols)
     objective[: layout.n_x] = [-o.value_cents / CENTS for o in layout.opts]
     objective[layout.g_col(layout.n_d - 1)] = credit_cost
@@ -219,7 +217,7 @@ def _monotone_rows(rows: _Rows, layout: _Layout) -> None:
         rows.add({layout.g_col(d): 1.0, layout.g_col(d - 1): -1.0}, 0.0, np.inf)
 
 
-def _reduced_rows(rows: _Rows, layout: _Layout, r_d: np.ndarray, k: int, _bill_options) -> tuple[int, int]:
+def _reduced_rows(rows: _Rows, layout: _Layout, r_d: np.ndarray, k: int) -> tuple[int, int]:
     """Quantile cut per check day plus at most K tight-big-M scenario rows per day."""
     q = np.partition(r_d, k, axis=0)[k]
     below = r_d < q[None, :]
@@ -236,13 +234,19 @@ def _reduced_rows(rows: _Rows, layout: _Layout, r_d: np.ndarray, k: int, _bill_o
             float(r_d[s, d]) + m,
         )
         count += 1
+    _cardinality_row(rows, layout, len(scen), k)
     return len(scen), count
 
 
-def _full_rows(rows: _Rows, layout: _Layout, r_d: np.ndarray, k: int, bill_options) -> tuple[int, int]:
+def _cardinality_row(rows: _Rows, layout: _Layout, n_z: int, k: int) -> None:
+    """At most k of the scenarios that have rows may be unprotected: sum z >= n_z - k."""
+    if n_z:
+        rows.add({layout.z_start + j: 1.0 for j in range(n_z)}, n_z - k, np.inf)
+
+
+def _full_rows(rows: _Rows, layout: _Layout, r_d: np.ndarray, k: int) -> tuple[int, int]:
     """Naive SAA rows for every scenario and check day, big-M = max(0, Cmax[d] - R[s, d])."""
-    del k
-    c_max = _max_cumulative_outflow(bill_options, layout)
+    c_max = _max_cumulative_outflow(layout)
     n_scen = r_d.shape[0]
     count = 0
     for s in range(n_scen):
@@ -254,20 +258,19 @@ def _full_rows(rows: _Rows, layout: _Layout, r_d: np.ndarray, k: int, bill_optio
                 float(r_d[s, d]) + m,
             )
             count += 1
+    _cardinality_row(rows, layout, n_scen, k)
     return n_scen, count
 
 
-def _max_cumulative_outflow(bill_options, layout: _Layout) -> np.ndarray:
+def _max_cumulative_outflow(layout: _Layout) -> np.ndarray:
     """Upper bound on C[d]: for each bill, the largest cash-out among its options on or before day d."""
     c_max = np.zeros(layout.n_d)
-    start = 0
-    for opts in bill_options:
-        days = layout.opt_day[start : start + len(opts)]
-        cash = np.array([o.cash_out_cents / CENTS for o in opts])
+    cash = np.array([o.cash_out_cents / CENTS for o in layout.opts])
+    for i in np.unique(layout.bill_of):
+        idx = np.flatnonzero(layout.bill_of == i)
         for d in range(layout.n_d):
-            due = cash[days <= d]
+            due = cash[idx][layout.opt_day[idx] <= d]
             c_max[d] += due.max() if due.size else 0.0
-        start += len(opts)
     return c_max
 
 
