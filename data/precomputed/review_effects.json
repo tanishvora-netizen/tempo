@@ -3,7 +3,7 @@
   {
    "bill_id": "c221527a-4e5d-4d7f-9a4c-b011e0cd4949",
    "diff": [],
-   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "plan_hash": "2b6be8624c4aba1a7807e9c533fc763f94f56adbfaa98c1cebf66ea32bf23a66",
    "suggested": {
     "anchor": "invoice_date",
     "discount_bps": null,
@@ -15,21 +15,107 @@
   },
   {
    "bill_id": "fb0207bf-fd23-4e2b-806a-021c63ccf55c",
-   "diff": [],
-   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "diff": [
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 6196187,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 99283
+     },
+     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
+     "invoice_number": "JPR-67819",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-04",
+      "value_cents": 48717
+     },
+     "amount_cents": 2955309,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-24",
+      "value_cents": 0
+     },
+     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
+     "invoice_number": "QLA-45870",
+     "reason": "Paid early Dec 4 by ACH: saves $551 (2% of the subtotal) for paying 20 days early, a 34.7%/yr return on the cash, vs your 17.1%/yr cost of cash.",
+     "vendor": "Quarry Lane Aggregates"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-14",
+      "value_cents": 0
+     },
+     "amount_cents": 1819444,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-11-24",
+      "value_cents": 30016
+     },
+     "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
+     "invoice_number": "HVC-70914",
+     "reason": "Paid on the due date Dec 14 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Hollisford Valve Co."
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid early Dec 10 by RTP: saves $851 (2% of the subtotal) for paying 20 days early, a 34.3%/yr return on the cash, vs your 17.1%/yr cost of cash.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "amount_cents": 568046,
+     "before": {
+      "option": "CARD",
+      "send_date": "2026-12-03",
+      "value_cents": -5636
+     },
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid on the due date Dec 3 by ACH: the card surcharge outweighs the cashback, and no discount is offered.",
+     "vendor": "Harborline Logistics"
+    }
+   ],
+   "plan_hash": "a0e617add95262af5daaccc662e956b8e0d3ac2f5a1ec378165ddc42f2f68c88",
    "suggested": {
     "anchor": "invoice_date",
     "discount_bps": 100,
-    "discount_days": 10,
+    "discount_days": 15,
     "net_days": 45,
     "prox_day": null
    },
-   "value_delta_cents": 0
+   "value_delta_cents": 228
   },
   {
    "bill_id": "3b326372-8a3a-4ba0-a198-d8a745513470",
    "diff": [],
-   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "plan_hash": "2b6be8624c4aba1a7807e9c533fc763f94f56adbfaa98c1cebf66ea32bf23a66",
    "suggested": {
     "anchor": "invoice_date",
     "discount_bps": null,
@@ -45,42 +131,25 @@
     {
      "after": {
       "option": "BANK_DUE",
-      "send_date": "2026-12-10",
+      "send_date": "2026-12-30",
       "value_cents": 0
      },
-     "amount_cents": 418025,
+     "amount_cents": 6196187,
      "before": {
-      "option": "CARD",
+      "option": "BANK_EARLY",
       "send_date": "2026-12-10",
-      "value_cents": -2568
+      "value_cents": 99283
      },
-     "bill_id": "e612a631-7af1-4e9a-ad8f-944195dc727e",
-     "invoice_number": "OC-15735",
-     "reason": "Paid on the due date Dec 10 by RTP: the card surcharge outweighs the cashback, and no discount is offered.",
-     "vendor": "Ospreyline Courier"
-    },
-    {
-     "after": {
-      "option": "FINANCE_EARLY",
-      "send_date": "2026-11-23",
-      "value_cents": 8332
-     },
-     "amount_cents": 839920,
-     "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-11-23",
-      "value_cents": 13856
-     },
-     "bill_id": "184b58a3-7562-420a-b877-ef022000015d",
-     "invoice_number": "DPC-1493",
-     "reason": "Financed at the discount deadline Nov 23: 2% for paying 20 days early, about 37%/yr; a Flex-style fee of $82 and you repay Dec 23, so cash stays in the account.",
-     "vendor": "Driftwood Pallet & Crate"
+     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
+     "invoice_number": "JPR-67819",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
     },
     {
      "after": {
       "option": "BANK_EARLY",
-      "send_date": "2026-11-26",
-      "value_cents": 31232
+      "send_date": "2026-11-25",
+      "value_cents": 31025
      },
      "amount_cents": 1929188,
      "before": {
@@ -90,28 +159,45 @@
      },
      "bill_id": "b699d9f8-7fee-464c-ad11-f42acce09495",
      "invoice_number": "WTD-52383",
-     "reason": "Paid early Nov 26 by RTP: 2% for paying 20 days early, about 37%/yr, beats your 9%/yr cost of cash.",
+     "reason": "Paid early Nov 25 by RTP: saves $354 (2% of the subtotal) for paying 21 days early, a 32.5%/yr return on the cash, vs your 17%/yr cost of cash.",
      "vendor": "Westbrook Tool & Die"
     },
     {
      "after": {
       "option": "BANK_DUE",
-      "send_date": "2027-01-10",
+      "send_date": "2026-12-22",
       "value_cents": 0
      },
-     "amount_cents": 1529087,
+     "amount_cents": 1227620,
      "before": {
       "option": "BANK_EARLY",
-      "send_date": "2026-12-11",
-      "value_cents": 9050
+      "send_date": "2026-12-02",
+      "value_cents": 21390
      },
-     "bill_id": "aa6432ec-935f-4308-907d-7698b6ebb6b3",
-     "invoice_number": "NA-62732",
-     "reason": "Paid on the due date Jan 10 by RTP: the 1/15 net 45 discount (12.3%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Northgate Abrasives"
+     "bill_id": "dcae1dab-e225-4f3b-aa21-92c35d53a1be",
+     "invoice_number": "RH-89171",
+     "reason": "Paid on the due date Dec 22 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Redfield Hydraulics"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-04",
+      "value_cents": 91898
+     },
+     "amount_cents": 5600502,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-24",
+      "value_cents": 0
+     },
+     "bill_id": "bfc53758-cfa5-413e-b50c-bd5d77690d73",
+     "invoice_number": "QLA-45871",
+     "reason": "Paid early Dec 4 by ACH: saves $1,039 (2% of the subtotal) for paying 20 days early, a 34.5%/yr return on the cash, vs your 17%/yr cost of cash.",
+     "vendor": "Quarry Lane Aggregates"
     }
    ],
-   "plan_hash": "59130c7e1b80b624c5beace4a5d25e04fe2ab1fb7455058c65c504e09efa2f0e",
+   "plan_hash": "fcf4e8bfc0278913b5ca9194b2b3181b9a9591327f52f83d54c8d734ee2df023",
    "suggested": {
     "anchor": "invoice_date",
     "discount_bps": 200,
@@ -119,12 +205,12 @@
     "net_days": 30,
     "prox_day": null
    },
-   "value_delta_cents": 19226
+   "value_delta_cents": 2250
   },
   {
    "bill_id": "4ec67a29-e847-4152-9c69-248d5988cec5",
    "diff": [],
-   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "plan_hash": "2b6be8624c4aba1a7807e9c533fc763f94f56adbfaa98c1cebf66ea32bf23a66",
    "suggested": {
     "anchor": "invoice_date",
     "discount_bps": null,
@@ -137,7 +223,7 @@
   {
    "bill_id": "b2f50fa5-8590-41e2-a925-85f10c7825da",
    "diff": [],
-   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "plan_hash": "2b6be8624c4aba1a7807e9c533fc763f94f56adbfaa98c1cebf66ea32bf23a66",
    "suggested": {
     "anchor": "invoice_date",
     "discount_bps": null,
@@ -149,34 +235,138 @@
   },
   {
    "bill_id": "6592d666-09b8-4d73-ad7b-a205967ed91f",
-   "diff": [],
-   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "diff": [
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 6196187,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 99283
+     },
+     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
+     "invoice_number": "JPR-67819",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-04",
+      "value_cents": 48717
+     },
+     "amount_cents": 2955309,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-24",
+      "value_cents": 0
+     },
+     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
+     "invoice_number": "QLA-45870",
+     "reason": "Paid early Dec 4 by ACH: saves $551 (2% of the subtotal) for paying 20 days early, a 34.7%/yr return on the cash, vs your 17.1%/yr cost of cash.",
+     "vendor": "Quarry Lane Aggregates"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-14",
+      "value_cents": 0
+     },
+     "amount_cents": 1819444,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-11-24",
+      "value_cents": 30016
+     },
+     "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
+     "invoice_number": "HVC-70914",
+     "reason": "Paid on the due date Dec 14 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Hollisford Valve Co."
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid early Dec 10 by RTP: saves $851 (2% of the subtotal) for paying 20 days early, a 34.3%/yr return on the cash, vs your 17.1%/yr cost of cash.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "amount_cents": 568046,
+     "before": {
+      "option": "CARD",
+      "send_date": "2026-12-03",
+      "value_cents": -5636
+     },
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid on the due date Dec 3 by ACH: the card surcharge outweighs the cashback, and no discount is offered.",
+     "vendor": "Harborline Logistics"
+    }
+   ],
+   "plan_hash": "a0e617add95262af5daaccc662e956b8e0d3ac2f5a1ec378165ddc42f2f68c88",
    "suggested": {
     "anchor": "invoice_date",
-    "discount_bps": null,
-    "discount_days": null,
+    "discount_bps": 100,
+    "discount_days": 10,
     "net_days": 30,
     "prox_day": null
    },
-   "value_delta_cents": 0
+   "value_delta_cents": 228
   },
   {
    "bill_id": "4c011f93-ce45-4c05-a537-9e711372e296",
-   "diff": [],
-   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "diff": [
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-15",
+      "value_cents": 32663
+     },
+     "amount_cents": 1890316,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-04",
+      "value_cents": 0
+     },
+     "bill_id": "4c011f93-ce45-4c05-a537-9e711372e296",
+     "invoice_number": "RH-89172",
+     "reason": "Paid early Dec 15 by RTP: saves $367 (2% of the subtotal) for paying 20 days early, a 36.2%/yr return on the cash, vs your 17.3%/yr cost of cash.",
+     "vendor": "Redfield Hydraulics"
+    }
+   ],
+   "plan_hash": "31349697c276eed1d505dceaf2778cbe202303304c32769ec75df0f527f4b252",
    "suggested": {
     "anchor": "invoice_date",
-    "discount_bps": null,
-    "discount_days": null,
+    "discount_bps": 200,
+    "discount_days": 10,
     "net_days": 30,
     "prox_day": null
    },
-   "value_delta_cents": 0
+   "value_delta_cents": 32663
   },
   {
    "bill_id": "e604cd20-05cf-40b7-9414-3e2990a292b2",
    "diff": [],
-   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "plan_hash": "2b6be8624c4aba1a7807e9c533fc763f94f56adbfaa98c1cebf66ea32bf23a66",
    "suggested": {
     "anchor": "invoice_date",
     "discount_bps": null,
@@ -189,7 +379,7 @@
   {
    "bill_id": "143dc1ba-f5e2-4185-bd17-b54b37c0898e",
    "diff": [],
-   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "plan_hash": "2b6be8624c4aba1a7807e9c533fc763f94f56adbfaa98c1cebf66ea32bf23a66",
    "suggested": {
     "anchor": "invoice_date",
     "discount_bps": null,
@@ -205,90 +395,107 @@
     {
      "after": {
       "option": "BANK_DUE",
-      "send_date": "2027-01-09",
+      "send_date": "2026-12-30",
       "value_cents": 0
      },
-     "amount_cents": 641969,
+     "amount_cents": 6196187,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 99283
+     },
+     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
+     "invoice_number": "JPR-67819",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-04",
+      "value_cents": 48717
+     },
+     "amount_cents": 2955309,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-24",
+      "value_cents": 0
+     },
+     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
+     "invoice_number": "QLA-45870",
+     "reason": "Paid early Dec 4 by ACH: saves $551 (2% of the subtotal) for paying 20 days early, a 34.7%/yr return on the cash, vs your 17.3%/yr cost of cash.",
+     "vendor": "Quarry Lane Aggregates"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-14",
+      "value_cents": 0
+     },
+     "amount_cents": 1819444,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-11-24",
+      "value_cents": 30016
+     },
+     "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
+     "invoice_number": "HVC-70914",
+     "reason": "Paid on the due date Dec 14 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Hollisford Valve Co."
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid early Dec 10 by RTP: saves $851 (2% of the subtotal) for paying 20 days early, a 34.3%/yr return on the cash, vs your 17.3%/yr cost of cash.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "amount_cents": 568046,
      "before": {
       "option": "CARD",
-      "send_date": "2027-01-09",
-      "value_cents": -3871
+      "send_date": "2026-12-03",
+      "value_cents": -5636
      },
-     "bill_id": "07b85191-7f3c-4f43-8ddd-f05b0e9a32f1",
-     "invoice_number": "OC-15739",
-     "reason": "Paid on the due date Jan 9 by RTP: the card surcharge outweighs the cashback, and no discount is offered.",
-     "vendor": "Ospreyline Courier"
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid on the due date Dec 3 by ACH: the card surcharge outweighs the cashback, and no discount is offered.",
+     "vendor": "Harborline Logistics"
     },
     {
      "after": {
       "option": "BANK_EARLY",
       "send_date": "2026-12-21",
-      "value_cents": 117356
+      "value_cents": 118768
      },
      "amount_cents": 6573804,
      "before": {
       "option": "BANK_DUE",
-      "send_date": "2027-01-10",
+      "send_date": "2027-01-08",
       "value_cents": 0
      },
      "bill_id": "f417a814-d122-43fc-bd51-ada0d300b822",
      "invoice_number": "SBP-40097",
-     "reason": "Paid early Dec 21 by RTP: 2% for paying 20 days early, about 37%/yr, beats your 9%/yr cost of cash.",
+     "reason": "Paid early Dec 21 by RTP: saves $1,315 (2% of the subtotal) for paying 20 days early, a 37.2%/yr return on the cash, vs your 17.3%/yr cost of cash.",
      "vendor": "Sorrel Bay Plastics"
-    },
-    {
-     "after": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-18",
-      "value_cents": 6876
-     },
-     "amount_cents": 943522,
-     "before": {
-      "option": "FINANCE_EARLY",
-      "send_date": "2026-12-26",
-      "value_cents": 1438
-     },
-     "bill_id": "15f340f1-5937-455d-8d7b-71658cd97fba",
-     "invoice_number": "DCS-33222",
-     "reason": "Paid early Dec 18 by ACH: 1% for paying 20 days early, about 18%/yr, beats your 9%/yr cost of cash.",
-     "vendor": "Dunmore Conveyor Systems"
-    },
-    {
-     "after": {
-      "option": "BANK_EARLY",
-      "send_date": "2027-01-06",
-      "value_cents": 16992
-     },
-     "amount_cents": 2895200,
-     "before": {
-      "option": "BANK_DUE",
-      "send_date": "2027-02-05",
-      "value_cents": 0
-     },
-     "bill_id": "dc591c71-7e44-4957-b997-daab36a398cb",
-     "invoice_number": "NA-62734",
-     "reason": "Paid early Jan 6 by RTP: 1% for paying 30 days early, about 12%/yr, beats your 9%/yr cost of cash.",
-     "vendor": "Northgate Abrasives"
-    },
-    {
-     "after": {
-      "option": "FINANCE_EARLY",
-      "send_date": "2027-01-10",
-      "value_cents": 50466
-     },
-     "amount_cents": 4390662,
-     "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2027-01-04",
-      "value_cents": 76459
-     },
-     "bill_id": "aa844baf-6539-42b1-a5d7-fdc12c073005",
-     "invoice_number": "CCI-89961",
-     "reason": "Financed at the discount deadline Jan 10: 2% for paying 20 days early, about 37%/yr; a Flex-style fee of $430 and you repay Feb 9, so cash stays in the account.",
-     "vendor": "Cobalt Creek Industrial Gases"
     }
    ],
-   "plan_hash": "9ab82b8f2c98d91fe8076b7e865d69a931c67f6e864373c6b519778bf328af82",
+   "plan_hash": "dea284c7ed4841953e668af438e25f86853651dad2c7c917f755e1a5fdfa7d1f",
    "suggested": {
     "anchor": "invoice_date",
     "discount_bps": 200,
@@ -296,16 +503,135 @@
     "net_days": 30,
     "prox_day": null
    },
-   "value_delta_cents": 117664
+   "value_delta_cents": 118996
   },
   {
    "bill_id": "2ad37740-e6e8-4838-9e7a-bbf5c7d7b31e",
    "diff": [
     {
      "after": {
-      "option": "FINANCE_EARLY",
-      "send_date": "2027-01-07",
-      "value_cents": 7476
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 6196187,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 99283
+     },
+     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
+     "invoice_number": "JPR-67819",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-04",
+      "value_cents": 48717
+     },
+     "amount_cents": 2955309,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-24",
+      "value_cents": 0
+     },
+     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
+     "invoice_number": "QLA-45870",
+     "reason": "Paid early Dec 4 by ACH: saves $551 (2% of the subtotal) for paying 20 days early, a 34.7%/yr return on the cash, vs your 17.1%/yr cost of cash.",
+     "vendor": "Quarry Lane Aggregates"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-14",
+      "value_cents": 0
+     },
+     "amount_cents": 1819444,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-11-24",
+      "value_cents": 30016
+     },
+     "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
+     "invoice_number": "HVC-70914",
+     "reason": "Paid on the due date Dec 14 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Hollisford Valve Co."
+    },
+    {
+     "after": {
+      "option": "CARD",
+      "send_date": "2027-01-04",
+      "value_cents": -3236
+     },
+     "amount_cents": 333624,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-29",
+      "value_cents": 0
+     },
+     "bill_id": "fb06ece7-ac93-4b33-b5c5-e7a939b05e67",
+     "invoice_number": "VOS-85895",
+     "reason": "Paid by card Jan 4: 1.5% cashback, minus a $100 surcharge; cash leaves Feb 10 with the statement (+37 days).",
+     "vendor": "Vireo Office Supply"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid early Dec 10 by RTP: saves $851 (2% of the subtotal) for paying 20 days early, a 34.3%/yr return on the cash, vs your 17.1%/yr cost of cash.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "amount_cents": 568046,
+     "before": {
+      "option": "CARD",
+      "send_date": "2026-12-03",
+      "value_cents": -5636
+     },
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid on the due date Dec 3 by ACH: the card surcharge outweighs the cashback, and no discount is offered.",
+     "vendor": "Harborline Logistics"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-26",
+      "value_cents": 0
+     },
+     "amount_cents": 3199404,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2027-01-04",
+      "value_cents": 51518
+     },
+     "bill_id": "36f836f2-19fc-407d-a72f-737dda414b44",
+     "invoice_number": "QLA-45872",
+     "reason": "Paid on the due date Jan 30 by ACH: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Jan 8.",
+     "vendor": "Quarry Lane Aggregates"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-31",
+      "value_cents": 114617
      },
      "amount_cents": 7039480,
      "before": {
@@ -315,51 +641,221 @@
      },
      "bill_id": "2ad37740-e6e8-4838-9e7a-bbf5c7d7b31e",
      "invoice_number": "SC-65351",
-     "reason": "Financed at the discount deadline Jan 7: 1% for paying 20 days early, about 18%/yr; a Flex-style fee of $697 and you repay Feb 6, so cash stays in the account.",
+     "reason": "Paid early Dec 31 by ACH: saves $1,313 (2% of the subtotal) for paying 20 days early, a 34.7%/yr return on the cash, vs your 17.1%/yr cost of cash.",
      "vendor": "Saltmarsh Coatings"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-29",
+      "value_cents": 0
+     },
+     "amount_cents": 3518790,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2027-01-08",
+      "value_cents": 56953
+     },
+     "bill_id": "157e4243-80ab-4258-b3fb-d3c1bd9a1576",
+     "invoice_number": "JPR-67823",
+     "reason": "Paid on the due date Jan 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Jan 8.",
+     "vendor": "Juniper Polymer Resins"
     }
    ],
-   "plan_hash": "252d9a3af4932142b610efb963d42c1fcfb84d46fd5084d290b7f359a18e4af8",
+   "plan_hash": "9f2da7bff19e2161af812a5ca6aa93c9800da574ffaa3f8ec40f5d890145a137",
    "suggested": {
     "anchor": "invoice_date",
-    "discount_bps": 100,
+    "discount_bps": 200,
     "discount_days": 10,
     "net_days": 30,
     "prox_day": null
    },
-   "value_delta_cents": 7476
+   "value_delta_cents": 3138
   },
   {
    "bill_id": "7b079154-e1c8-4519-997d-65498fba8870",
    "diff": [
     {
      "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 6196187,
+     "before": {
       "option": "BANK_EARLY",
-      "send_date": "2027-01-17",
-      "value_cents": 31506
+      "send_date": "2026-12-10",
+      "value_cents": 99283
+     },
+     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
+     "invoice_number": "JPR-67819",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "CARD",
+      "send_date": "2027-01-04",
+      "value_cents": -3236
+     },
+     "amount_cents": 333624,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-29",
+      "value_cents": 0
+     },
+     "bill_id": "fb06ece7-ac93-4b33-b5c5-e7a939b05e67",
+     "invoice_number": "VOS-85895",
+     "reason": "Paid by card Jan 4: 1.5% cashback, minus a $100 surcharge; cash leaves Feb 10 with the statement (+37 days).",
+     "vendor": "Vireo Office Supply"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-22",
+      "value_cents": 0
+     },
+     "amount_cents": 1227620,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-02",
+      "value_cents": 21390
+     },
+     "bill_id": "dcae1dab-e225-4f3b-aa21-92c35d53a1be",
+     "invoice_number": "RH-89171",
+     "reason": "Paid on the due date Dec 22 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Redfield Hydraulics"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-08",
+      "value_cents": 45142
+     },
+     "amount_cents": 2815541,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-28",
+      "value_cents": 0
+     },
+     "bill_id": "2af2a7d7-d9a6-42f8-8d6a-b7fee6d2a720",
+     "invoice_number": "WTD-52384",
+     "reason": "Paid early Dec 8 by RTP: saves $512 (2% of the subtotal) for paying 20 days early, a 33.8%/yr return on the cash, vs your 17.5%/yr cost of cash.",
+     "vendor": "Westbrook Tool & Die"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid early Dec 10 by RTP: saves $851 (2% of the subtotal) for paying 20 days early, a 34.3%/yr return on the cash, vs your 17.5%/yr cost of cash.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-26",
+      "value_cents": 0
+     },
+     "amount_cents": 3199404,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2027-01-04",
+      "value_cents": 51518
+     },
+     "bill_id": "36f836f2-19fc-407d-a72f-737dda414b44",
+     "invoice_number": "QLA-45872",
+     "reason": "Paid on the due date Jan 30 by ACH: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Jan 8.",
+     "vendor": "Quarry Lane Aggregates"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-24",
+      "value_cents": 8646
+     },
+     "amount_cents": 3725976,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-14",
+      "value_cents": 0
+     },
+     "bill_id": "54e896ff-73dd-464c-bd19-a354a1b52915",
+     "invoice_number": "CF-5388",
+     "reason": "Paid early Dec 24 by RTP: saves $172 (0.5% of the subtotal) for paying 21 days early, a 8.1%/yr return on the cash, vs your 17.5%/yr cost of cash.",
+     "vendor": "Cinderhill Foundry"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-31",
+      "value_cents": 10891
+     },
+     "amount_cents": 668896,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-22",
+      "value_cents": 0
+     },
+     "bill_id": "2ac3774a-02e0-4f11-a2ae-6693eb4bc522",
+     "invoice_number": "DPC-1496",
+     "reason": "Paid early Dec 31 by RTP: saves $125 (2% of the subtotal) for paying 23 days early, a 30.2%/yr return on the cash, vs your 17.5%/yr cost of cash.",
+     "vendor": "Driftwood Pallet & Crate"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2027-02-05",
+      "value_cents": 0
+     },
+     "amount_cents": 1227311,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2027-01-15",
+      "value_cents": 20115
+     },
+     "bill_id": "925537e7-ef2b-457f-89ea-864be8b1dec5",
+     "invoice_number": "DPC-1497",
+     "reason": "Paid on the due date Feb 5 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is debt service day, Jan 15.",
+     "vendor": "Driftwood Pallet & Crate"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2027-01-15",
+      "value_cents": 71534
      },
      "amount_cents": 4088105,
      "before": {
       "option": "BANK_DUE",
-      "send_date": "2027-02-06",
+      "send_date": "2027-02-05",
       "value_cents": 0
      },
      "bill_id": "7b079154-e1c8-4519-997d-65498fba8870",
      "invoice_number": "BC-47343",
-     "reason": "Paid early Jan 17 by RTP: 1% for paying 20 days early, about 18%/yr, beats your 9%/yr cost of cash.",
+     "reason": "Paid early Jan 15 by RTP: saves $808 (2% of the subtotal) for paying 22 days early, a 33.4%/yr return on the cash, vs your 17.5%/yr cost of cash.",
      "vendor": "Bramblewood Chemicals"
     }
    ],
-   "plan_hash": "7244281bab373693d9db708ba4b140d9fc9be4293a9277f7f951cabf9de41c76",
+   "plan_hash": "fd604c549b19ef9a71b527fcf5a63cf6e1f99e28a2f1f2447d3806728af3198a",
    "suggested": {
     "anchor": "invoice_date",
-    "discount_bps": 100,
+    "discount_bps": 200,
     "discount_days": 10,
     "net_days": 30,
     "prox_day": null
    },
-   "value_delta_cents": 31506
+   "value_delta_cents": 15845
   }
  ],
- "input_hash": "fe74ce6599e7c4cb"
+ "input_hash": "1fbe86723eaf802b"
 }

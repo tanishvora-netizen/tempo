@@ -300,10 +300,6 @@ def update_readme(bundle: dict, proof: dict) -> None:
     print(f"updated {README}")
 
 
-if __name__ == "__main__":
-    main()
-
-
 TEMPLATE = REPO / "docs" / "demo_script.template.md"
 DEMO_SCRIPT = REPO / "docs" / "DEMO_SCRIPT.md"
 SUBMISSION = REPO / "SUBMISSION.md"
@@ -377,3 +373,7 @@ def update_submission(tokens: dict[str, str]) -> None:
     i, j = text.index(start), text.index(end) + len(end)
     SUBMISSION.write_text(text[:i] + start + "\n" + description + "\n" + end + text[j:])
     print(f"updated {SUBMISSION} ({len(description.split())} words)")
+
+
+if __name__ == "__main__":
+    main()

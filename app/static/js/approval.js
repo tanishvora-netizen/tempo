@@ -3,7 +3,7 @@
 import { $, $$, html, icon, setHTML } from "./dom.js";
 import { count, money, moneyExact } from "./format.js";
 import { approvePlan } from "./api.js";
-import { invalidate, ui } from "./store.js";
+import { invalidate, STATE_CHANGED, ui } from "./store.js";
 import { openAuditDrawer } from "./drawers.js";
 
 const VERIFIED_CHIPS = new Set(["Verified", "Model verified", "Accepted by reviewer"]);
@@ -139,6 +139,7 @@ async function confirmApproval(dialog, isAutonomyValid, onApproved) {
   try {
     const result = await approvePlan(name, ui.autonomy);
     invalidate("state");
+    window.dispatchEvent(new CustomEvent(STATE_CHANGED));
     dialog.close();
     onApproved();
     openAuditDrawer({ entry: result.entry });

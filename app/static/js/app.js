@@ -2,7 +2,7 @@
 import { $, $$, html, hydrateIcons, icon, setHTML } from "./dom.js";
 import { weekdayDate } from "./format.js";
 import { loadingScreen, errorBlock } from "./states.js";
-import { loadState } from "./store.js";
+import { invalidate, loadState, STATE_CHANGED } from "./store.js";
 import { openAuditDrawer, openNegotiateDrawer } from "./drawers.js";
 import * as overview from "./overview.js";
 import * as run from "./run.js";
@@ -117,8 +117,18 @@ async function boot() {
   }
 }
 
+/** Refetch /api/state and redraw the nav so the Needs review badge reflects accepted items. */
+function refreshNav() {
+  invalidate("state");
+  const { screen } = parseRoute();
+  loadState()
+    .then((state) => renderNav(screen.id, state.review_count))
+    .catch((err) => console.error(err));
+}
+
 hydrateIcons(document.body);
 wireLaunchers();
 window.addEventListener("hashchange", route);
+window.addEventListener(STATE_CHANGED, refreshNav);
 boot();
 route();

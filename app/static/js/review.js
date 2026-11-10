@@ -6,7 +6,8 @@ import { money, moneyExact, sentence, termsText } from "./format.js";
 import { STATUS_LABEL, valueCell } from "./labels.js";
 import { documentView, evidenceLegend, highlight, sourceLabel } from "./evidence.js";
 import { emptyBlock, errorBlock } from "./states.js";
-import { invalidate, loadReview, loadState } from "./store.js";
+import { invalidate, loadReview, loadState, STATE_CHANGED } from "./store.js";
+import { uploadControl, wireUpload } from "./upload.js";
 import { diffTable } from "./widgets.js";
 import { reviewForm, readTerms, wireAnchorField } from "./reviewform.js";
 import * as api from "./api.js";
@@ -136,7 +137,8 @@ async function submit(button, item, action, ctx) {
   try {
     const result = await action();
     ctx.accepted.add(item.bill_id);
-    invalidate("review");
+    invalidate("review", "state");
+    window.dispatchEvent(new CustomEvent(STATE_CHANGED)); // app.js refreshes the nav badge from /api/state
     ctx.results.set(item.bill_id, result);
     ctx.select(item.bill_id);
     $("[data-effect]", ctx.detail)?.focus();
@@ -164,20 +166,28 @@ function wireDetail(item, ctx) {
   });
 }
 
+function header(count) {
+  return html`<div class="flex flex-wrap items-end justify-between gap-3">
+    <div>
+      <h1 class="text-xl">Needs review</h1>
+      <p class="text-sm text-ink-2">${count ? `${count} bills whose terms Tempo would not accept on its own. Check the quotes, then accept or edit the terms.` : "Bills whose terms Tempo would not accept on its own."}</p>
+    </div>
+    ${uploadControl()}
+  </div>`;
+}
+
 export async function render(main) {
   const [review, state] = await Promise.all([loadReview(), loadState()]);
   const items = review.items;
   if (!items.length) {
-    setHTML(main, html`<h1 class="text-xl">Needs review</h1><section class="panel mt-4">${emptyBlock("Nothing needs review", "Every bill's terms were read the same way by the parser and the model, or a reviewer already accepted them.")}</section>`);
+    setHTML(main, html`<div class="flex flex-col gap-4">${header(0)}<section class="panel">${emptyBlock("Nothing needs review", "Every bill's terms were read the same way by the parser and the model, or a reviewer already accepted them.")}</section></div>`);
+    wireUpload(main);
     return null;
   }
   setHTML(
     main,
     html`<div class="flex flex-col gap-4">
-      <div>
-        <h1 class="text-xl">Needs review</h1>
-        <p class="text-sm text-ink-2">${items.length} bills whose terms Tempo would not accept on its own. Check the quotes, then accept or edit the terms.</p>
-      </div>
+      ${header(items.length)}
       <div class="grid grid-cols-[300px_minmax(0,1fr)] items-start gap-4 max-[1100px]:grid-cols-[240px_minmax(0,1fr)]">
         <nav class="panel sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto" aria-label="Bills needing review"><ul data-list></ul></nav>
         <section class="panel p-5" data-detail aria-live="polite"></section>
@@ -199,6 +209,7 @@ export async function render(main) {
     if (result) setHTML($("[data-effect-slot]", ctx.detail), effectPanel(result, state.kpis.value_vs_pay_on_due_cents));
     wireDetail(item, ctx);
   };
+  wireUpload(main);
   try {
     ctx.select(items[0].bill_id);
   } catch (err) {

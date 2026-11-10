@@ -1,0 +1,10 @@
+{
+ "entries": 212,
+ "failures": 2,
+ "models": {
+  "qwen3:8b": 212
+ },
+ "tasks": {
+  "extract": 212
+ }
+}

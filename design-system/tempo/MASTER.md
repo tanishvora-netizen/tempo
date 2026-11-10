@@ -85,6 +85,7 @@ Flat. Panels use a 1px border and no shadow. Only overlays lift: drawers (`-12px
 - **Tables (`.tbl`):** sticky header, 13px body, right-aligned numbers, clickable rows are focusable (`tabindex=0`, Enter opens), sortable headers expose `aria-sort`.
 - **Drawers:** right side, 640px (760px for bill detail and audit), backdrop, Esc closes, focus moves to Close and returns to the opener.
 - **Dialog:** native `<dialog>` with `showModal()`, centered, 480px.
+- **File upload:** a `<label class="btn">` wrapping a visually hidden `<input type="file">` (focus ring shown through `:has(input:focus-visible)`), with its scope stated beside it ("Reads the terms only; uploads never change the plan."). Client-side type and size checks first; the result opens in a drawer.
 - **Loading / empty / error:** skeleton bars; an inbox icon with one sentence of direction; a red callout with the server's message and a Retry button.
 
 ---

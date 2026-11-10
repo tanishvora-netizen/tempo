@@ -3,7 +3,7 @@
 import { html, icon, setHTML } from "./dom.js";
 import { longDate, money, moneyExact, perYear, sentence, shortDate, termsText } from "./format.js";
 import { chip, OPTION_LABEL, RAIL_LABEL, STATUS_LABEL, valueCell } from "./labels.js";
-import { documentView, evidenceLegend } from "./evidence.js";
+import { documentView, evidenceLegend, methodsText } from "./evidence.js";
 import { openDrawer } from "./drawer.js";
 import { errorBlock, loadingBlock } from "./states.js";
 import { loadBill } from "./store.js";
@@ -87,7 +87,7 @@ function evidenceSection(b) {
       <dt>Terms used</dt><dd><span class="font-medium">${r.accepted ? termsText(r.accepted) : b.terms}</span> ${chip(b.chip)}</dd>
       <dt>Reconciliation</dt><dd>${STATUS_LABEL[r.status] ?? sentence(r.status)}${r.reason && r.reason.toLowerCase() !== (STATUS_LABEL[r.status] ?? "").toLowerCase() ? html`<span class="text-ink-2">. ${sentence(r.reason)}.</span>` : ""}</dd>
       ${r.card_surcharge_bps ? html`<dt>Card surcharge</dt><dd class="num">${(r.card_surcharge_bps / 100).toFixed(2)}%</dd>` : ""}
-      <dt>Accepts</dt><dd>${(r.accepted_methods || []).join(", ") || "not stated"}</dd>
+      <dt>Accepts</dt><dd>${methodsText(r.accepted_methods)}</dd>
     </dl>
     ${documentView(b.document, b.evidence, r.authoritative_source)}
   </section>`;

@@ -85,7 +85,7 @@ function offerFacts(o) {
     ${fact("Cost of cash", perYear(o.cost_of_cash, 2))}
   </div>
   <p class="callout ${o.tempo_takes_it ? "" : "callout-review"}">${icon(o.tempo_takes_it ? "circle-check" : "circle-alert", "icon mt-0.5 flex-none")}
-    <span>${o.verdict}${o.tempo_takes_it ? html` <span class="num gain font-medium">${money(o.value_delta_cents, { signed: true })}</span> to the plan.` : ""}</span></p>`;
+    <span title="Plan value change if accepted: ${moneyExact(o.value_delta_cents)}">${o.verdict}</span></p>`;
 }
 
 function emailView(email) {

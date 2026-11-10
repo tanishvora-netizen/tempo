@@ -23,6 +23,9 @@ export const loadCashValue = () => once("cash-value", api.getCashValue);
 export const loadReview = () => once("review", api.getReview);
 export const loadBill = (billId) => once(`bill:${billId}`, () => api.getBill(billId));
 
+/** Window event fired after a change that alters /api/state (e.g. accepting a review item). */
+export const STATE_CHANGED = "tempo:state-changed";
+
 export function invalidate(...keys) {
   keys.forEach((key) => cache.delete(key));
 }

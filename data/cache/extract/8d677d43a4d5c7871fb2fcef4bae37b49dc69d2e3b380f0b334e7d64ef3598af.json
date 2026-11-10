@@ -1,0 +1,11 @@
+{
+ "created_at": "2026-11-10T11:54:46+00:00",
+ "error": null,
+ "key": "8d677d43a4d5c7871fb2fcef4bae37b49dc69d2e3b380f0b334e7d64ef3598af",
+ "model": "qwen3:8b",
+ "prompt_version": "v1",
+ "provider": "ollama",
+ "raw": "{\n  \"terms_quote\": \"30 days net\",\n  \"terms_source\": \"footer\",\n  \"discount_pct\": null,\n  \"discount_days\": null,\n  \"net_days\": 30,\n  \"anchor\": \"invoice_date\",\n  \"prox_day\": null,\n  \"late_fee_quote\": null,\n  \"late_fee_source\": null,\n  \"late_fee_kind\": null,\n  \"late_fee_value\": null,\n  \"methods_quote\": null,\n  \"methods_source\": \"payment_box\",\n  \"accepted_methods\": [\"ACH\", \"WIRE\", \"CARD\"],\n  \"surcharge_quote\": \"A 2.5% surcharge applies to credit card payments.\",\n  \"surcharge_source\": \"payment_box\",\n  \"card_surcharge_pct\": 2.5,\n  \"card_discount_quote\": null,\n  \"card_discount_source\": null,\n  \"card_discount_allowed\": false,\n  \"terms_overridden_in_email\": false\n}",
+ "schema_version": "terms-v2",
+ "task": "extract"
+}

@@ -28,6 +28,19 @@ VIEWPORTS = {1440: 900, 1024: 768}
 WAIT_MS = 15_000
 SETTLE_MS = 300
 APPROVER = "Jordan Lee, CFO"
+SAMPLE_INVOICE_LINES = [
+    "NORTHWIND FASTENER SUPPLY",
+    "INVOICE #NFS-20417",
+    "Invoice date: 11/02/2026",
+    "Bill to: Kestrel Ridge Manufacturing, Inc.",
+    "Hex bolts M8, box of 200   12 x $84.50   $1,014.00",
+    "Subtotal: $1,014.00",
+    "Freight: $45.00",
+    "Total due: $1,059.00 USD",
+    "Payment terms: 2/10 Net 30",
+    "Late payments accrue 1.5% per month.",
+    "We accept ACH and credit card, 3% surcharge on card payments.",
+]
 LOCAL_SCHEMES = {"data", "blob"}
 
 
@@ -99,9 +112,29 @@ def capture_run(page: Page, base: str, width: int) -> None:
     close_drawer(page)
 
 
+def sample_pdf() -> bytes:
+    """A small fictional invoice PDF built with the test suite's hand-rolled PDF writer."""
+    sys.path.insert(0, str(ROOT))
+    from tests.unit.test_upload import make_pdf
+
+    return make_pdf(SAMPLE_INVOICE_LINES)
+
+
+def capture_upload(page: Page, width: int) -> None:
+    page.set_input_files(
+        "[data-upload]",
+        files=[{"name": "northwind-invoice.pdf", "mimeType": "application/pdf", "buffer": sample_pdf()}],
+    )
+    page.wait_for_selector(".drawer[data-drawer='upload'] .doc", timeout=60_000)
+    settle(page)
+    shoot(page, "upload-pdf", width, full_page=False)
+    close_drawer(page)
+
+
 def capture_review(page: Page, base: str, width: int, accept: bool) -> None:
     goto(page, base, "review", "[data-detail] [data-accept]")
     shoot(page, "needs-review", width)
+    capture_upload(page, width)
     injection = page.locator("[data-item]", has_text="Westbrook")
     if injection.count():
         injection.first.click()

@@ -41,12 +41,20 @@ export function highlight(text, spans) {
   return raw(out);
 }
 
-export function evidenceLegend() {
+const LEGEND = { regex: "Parser (rules)", model: "Local model quote", both: "Both" };
+
+/** Legend for the highlight styles; pass kinds to show only the ones on screen. */
+export function evidenceLegend(kinds = ["regex", "model", "both"]) {
   return html`<div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-2">
-    <span class="inline-flex items-center gap-1.5"><mark class="ev ev-regex">2/10</mark>Parser (rules)</span>
-    <span class="inline-flex items-center gap-1.5"><mark class="ev ev-model">2/10</mark>Local model quote</span>
-    <span class="inline-flex items-center gap-1.5"><mark class="ev ev-both">2/10</mark>Both</span>
+    ${kinds.map((k) => html`<span class="inline-flex items-center gap-1.5"><mark class="ev ev-${k}">2/10</mark>${LEGEND[k]}</span>`)}
   </div>`;
+}
+
+const METHOD_LABEL = { ACH: "ACH", CARD: "Card", CHECK: "Check", WIRE: "Wire", RTP: "RTP" };
+
+/** ["ACH", "CARD"] -> "ACH, Card" */
+export function methodsText(methods) {
+  return (methods ?? []).map((m) => METHOD_LABEL[m] ?? m).join(", ") || "Not stated";
 }
 
 function blockView(block, spans) {

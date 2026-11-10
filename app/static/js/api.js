@@ -20,7 +20,9 @@ function detailMessage(body, status) {
 
 async function request(method, path, payload) {
   const init = { method, headers: { Accept: "application/json" } };
-  if (payload !== undefined) {
+  if (payload instanceof FormData) {
+    init.body = payload; // the browser sets the multipart boundary
+  } else if (payload !== undefined) {
     init.headers["Content-Type"] = "application/json";
     init.body = JSON.stringify(payload);
   }
@@ -47,6 +49,13 @@ export const getForecast = () => request("GET", "/api/forecast");
 export const getPresets = () => request("GET", "/api/whatif/presets");
 export const runWhatIf = (whatIf) => request("POST", "/api/optimize", { what_if: whatIf });
 export const getEvaluate = () => request("GET", "/api/evaluate");
+
+/** Read terms from a PDF invoice (multipart field "file"); never changes the plan. */
+export function uploadInvoice(file) {
+  const form = new FormData();
+  form.append("file", file, file.name);
+  return request("POST", "/api/extract/upload", form);
+}
 export const getCashValue = () => request("GET", "/api/cash-value");
 
 // Negotiation agent (directive 5.7, 7.6). Nothing is ever sent to a vendor.
