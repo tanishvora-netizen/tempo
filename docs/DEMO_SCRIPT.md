@@ -13,20 +13,20 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Live final: `ma
 > "Ramp already has every input: Bill Pay, the card, Treasury's 13-week forecast, Faster Payments. Target Balance moves cash to fit the bills. Tempo moves the bills to fit the cash."
 
 **Click:** nothing yet; the Overview is already on screen. Point at the KPI strip:
-- value versus paying on due dates: $41,036
-- chance below the buffer: 2.24%, bound 2.50%, target 5%
+- value versus paying on due dates: $41,038
+- chance below the buffer: 2.22%, bound 2.48%, target 5%
 
 ## 0:50 to 2:20: Tanish (the engine, a live what-if, the proof)
 
-> "That fan is 1,000 forecast scenarios of when customers actually pay. The band is pointwise; the number beside it is the chance of breaching the buffer on any day in 13 weeks. Next to it, same scenarios: today's weekly AP run captures $34,189 but breaches in 10.11% of them. Taking every discount the median allows captures $52,596 but breaches in 7.69%. Tempo gets $41,036 at 2.24%."
+> "That fan is 1,000 forecast scenarios of when customers actually pay. The band is pointwise; the number beside it is the chance of breaching the buffer on any day in 13 weeks. Next to it, same scenarios: today's weekly AP run captures $34,189 but breaches in 10.11% of them. Taking every discount the median allows captures $52,596 but breaches in 7.69%. Tempo gets $41,038 at 2.22%."
 
-**Click:** Payment run (left nav) → click the first discounted row. Read the reason sentence aloud, e.g. "Paid early ... saves $X (2% of the subtotal) for paying 20 days early, a 36%/yr return on the cash, vs your 17.2%/yr cost of cash." If a row says "skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day", read that one: it is the chance constraint binding.
+**Click:** Payment run (left nav) → click the first discounted row. Read the reason sentence aloud, e.g. "Paid early ... saves $X (2% of the subtotal) for paying 20 days early, a 36%/yr return on the cash, vs your 17.0%/yr cost of cash." If a row says "skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day", read that one: it is the chance constraint binding.
 
 > "One MILP decides all 212 bills jointly. Three exact reductions take it from 18,413 rows to 630, and it solves in under a second."
 
 **Click:** What-if → preset "Bluefin Marine Outfitters pays 14 days late". The chart redraws.
 
-> "Our biggest customer pays two weeks late. Tempo re-forecast and re-solved, and 31 decisions flipped. Each one has a reason. The risk is still certified under 5%."
+> "Our biggest customer pays two weeks late. Tempo re-forecast and re-solved, and 33 decisions flipped. Each one has a reason. The risk is still certified under 5%."
 
 **Click:** Proof.
 
@@ -56,8 +56,8 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Live final: `ma
 
 ## Judge Q&A
 
-1. **Why not greedy?** Greedy picks bills one at a time in due-date order, so it can't see that two early payments together sink payroll day. Greedy on the median breaches 7.69%. The smart spreadsheet that checks each day's 5th percentile lands at 4.83% (bound 5.20%; 5.44% under the true model): close to the line, uncertifiable, and it has no way to know its own risk. Our headline ladder is deliberately conservative (it certifies at 2.24%). Starting the certification ladder at K = 10 instead certifies a plan worth $49,282 at 4.20%, as much as the spreadsheet, but with a guarantee. It's in RESULTS.md as a disclosed sensitivity.
-2. **How do you know the 95% holds?** Three seeds: A optimizes, B certifies with a one-sided Wilson bound (Bonferroni z = 2.394 for up to six tries), and C reports. On C: 2.24%, bound 2.50%. That covers sampling error. Model error is the main weakness, so we also report under the generator's true model: 2.74%.
+1. **Why not greedy?** Greedy picks bills one at a time in due-date order, so it can't see that two early payments together sink payroll day. Greedy on the median breaches 7.69%. The smart spreadsheet that checks each day's 5th percentile lands at 4.83% (bound 5.20%; 5.44% under the true model): close to the line, uncertifiable, and it has no way to know its own risk. Our headline ladder is deliberately conservative (it certifies at 2.22%). Starting the certification ladder at K = 10 instead certifies a plan worth $49,282 at 4.20%, as much as the spreadsheet, but with a guarantee. It's in RESULTS.md as a disclosed sensitivity.
+2. **How do you know the 95% holds?** Three seeds: A optimizes, B certifies with a one-sided Wilson bound (Bonferroni z = 2.394 for up to six tries), and C reports. On C: 2.22%, bound 2.48%. That covers sampling error. Model error is the main weakness, so we also report under the generator's true model: 2.74%.
 3. **What if the model is wrong?** It can't move money on its own. Every value must match a verbatim quote re-parsed by code and agree with the parser. Disagreements, unverifiable values, insane values, and changes from terms on file go to Needs review, and bills in review never take a discount. On the held-out split we auto-accept 87% at 100.0% precision.
 4. **Why a local model?** We may not be allowed external APIs, and invoices and cash positions are sensitive. A local 8B model is enough for locate-and-quote when code does the verification. A hosted adapter exists but refuses to run unless explicitly enabled.
 5. **How is this different from Centime or C2FO?**
@@ -78,7 +78,7 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Live final: `ma
    - Send the payload preview through one adapter (PATCH payment_date and payment_method; hold and release).
    - Backtest the payment-timing model on real history.
 8. **What breaks first?** The forecast model. If customers' timing is more correlated than our common factor assumes, the real breach rate rises. Fix: backtest and fit the common factor, and add a survival model with covariates.
-9. **Why not use LP duals for the value of cash?** A MILP has no meaningful duals; fixing the binaries gives zero on every buffer row. We re-solve with $25,000 more cash: forward difference, 17.2%/yr cost of cash.
+9. **Why not use LP duals for the value of cash?** A MILP has no meaningful duals; fixing the binaries gives zero on every buffer row. We re-solve with $25,000 more cash: forward difference, 17.0%/yr cost of cash.
 10. **Isn't the data rigged?** It's synthetic and says so everywhere. The only tuned parameter is starting cash, from six values pre-registered in DECISIONS.md and swept on a seed we never report. We missed the directive's own 15% greedy-breach target and said so. Two realism fixes to the generator are disclosed.
 11. **What about RTP: it isn't in Ramp's request enum?** Right. Plans assume Ramp Checking pays RTP-eligible vendors by RTP, and the payload preview gives every such payment an ACH-safe fallback date.
-12. **How fast is it?** The certified plan solves in 0.67 s. Presets are precomputed. A custom what-if re-solves in about a second locally; on Render's free 0.1 CPU it is slower, so live solves are cached and throttled.
+12. **How fast is it?** The certified plan solves in 0.74 s. Presets are precomputed. A custom what-if re-solves in about a second locally; on Render's free 0.1 CPU it is slower, so live solves are cached and throttled.

@@ -52,30 +52,13 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 1.765727458987385,
+      "solve_seconds": 0.5487041659944225,
       "value_cents": 3379091
      }
     ],
     "z_certify": 2.394
    },
    "diff": [
-    {
-     "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-30",
-      "value_cents": 0
-     },
-     "amount_cents": 6196187,
-     "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-10",
-      "value_cents": 99283
-     },
-     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
-     "invoice_number": "JPR-67819",
-     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Juniper Polymer Resins"
-    },
     {
      "after": {
       "option": "BANK_EARLY",
@@ -95,15 +78,32 @@
     },
     {
      "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-24",
+      "value_cents": 0
+     },
+     "amount_cents": 2955309,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-04",
+      "value_cents": 48717
+     },
+     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
+     "invoice_number": "QLA-45870",
+     "reason": "Paid on the due date Dec 30 by ACH: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Quarry Lane Aggregates"
+    },
+    {
+     "after": {
       "option": "CARD",
       "send_date": "2026-12-14",
       "value_cents": -11994
      },
      "amount_cents": 1819444,
      "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-11-24",
-      "value_cents": 30016
+      "option": "BANK_DUE",
+      "send_date": "2026-12-14",
+      "value_cents": 0
      },
      "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
      "invoice_number": "HVC-70914",
@@ -283,6 +283,23 @@
     {
      "after": {
       "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
       "send_date": "2026-12-24",
       "value_cents": 0
      },
@@ -313,6 +330,23 @@
      "invoice_number": "NWC-30796",
      "reason": "Paid on the due date Jan 15 by RTP: the 1/15 net 45 discount (12.3%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Dec 18.",
      "vendor": "Nettlefield Wire & Cable"
+    },
+    {
+     "after": {
+      "option": "CARD",
+      "send_date": "2026-12-03",
+      "value_cents": -5636
+     },
+     "amount_cents": 568046,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid by card Dec 3: 1.5% cashback, minus a $170 surcharge; cash leaves Jan 10 with the statement (+38 days).",
+     "vendor": "Harborline Logistics"
     },
     {
      "after": {
@@ -1166,15 +1200,15 @@
    "label": "Bluefin Marine Outfitters pays 7 days late",
    "plan_hash": "b807314dc3d00dfb95c12ee253243e11da2d1ce0e7de8b8feda6c6d0a2507c21",
    "solver": {
-    "case_seconds": 4.391896042012377,
+    "case_seconds": 1.6640388749947306,
     "check_days": 61,
     "cols": 729,
-    "mip_gap": 9.752110895319804e-05,
+    "mip_gap": 0.0,
     "nonzeros": 2343,
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 1.765727458987385,
+    "solve_seconds": 0.5487041659944225,
     "status": "optimal"
    },
    "what_if": {
@@ -1220,7 +1254,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.7189235000114422,
+      "solve_seconds": 0.32196220799232833,
       "value_cents": 2618966
      }
     ],
@@ -1280,23 +1314,6 @@
     },
     {
      "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-30",
-      "value_cents": 0
-     },
-     "amount_cents": 6196187,
-     "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-10",
-      "value_cents": 99283
-     },
-     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
-     "invoice_number": "JPR-67819",
-     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Juniper Polymer Resins"
-    },
-    {
-     "after": {
       "option": "LATE",
       "send_date": "2026-12-21",
       "value_cents": -12921
@@ -1331,15 +1348,32 @@
     },
     {
      "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-24",
+      "value_cents": 0
+     },
+     "amount_cents": 2955309,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-04",
+      "value_cents": 48717
+     },
+     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
+     "invoice_number": "QLA-45870",
+     "reason": "Paid on the due date Dec 30 by ACH: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Quarry Lane Aggregates"
+    },
+    {
+     "after": {
       "option": "CARD",
       "send_date": "2026-12-14",
       "value_cents": -11994
      },
      "amount_cents": 1819444,
      "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-11-24",
-      "value_cents": 30016
+      "option": "BANK_DUE",
+      "send_date": "2026-12-14",
+      "value_cents": 0
      },
      "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
      "invoice_number": "HVC-70914",
@@ -1451,6 +1485,23 @@
     {
      "after": {
       "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
       "send_date": "2026-12-24",
       "value_cents": 0
      },
@@ -1481,6 +1532,23 @@
      "invoice_number": "NWC-30796",
      "reason": "Paid on the due date Jan 15 by RTP: the 1/15 net 45 discount (12.3%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Dec 18.",
      "vendor": "Nettlefield Wire & Cable"
+    },
+    {
+     "after": {
+      "option": "CARD",
+      "send_date": "2026-12-03",
+      "value_cents": -5636
+     },
+     "amount_cents": 568046,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid by card Dec 3: 1.5% cashback, minus a $170 surcharge; cash leaves Jan 10 with the statement (+38 days).",
+     "vendor": "Harborline Logistics"
     },
     {
      "after": {
@@ -2436,15 +2504,15 @@
    "label": "Bluefin Marine Outfitters pays 14 days late",
    "plan_hash": "a57339ef3597125070a72a120a76dcc131efd963de9b40398df9ca45483c1be2",
    "solver": {
-    "case_seconds": 3.195375540992245,
+    "case_seconds": 1.5505929170176387,
     "check_days": 61,
     "cols": 731,
-    "mip_gap": 9.27959242726194e-05,
+    "mip_gap": 0.0,
     "nonzeros": 2348,
     "rows": 631,
     "rows_naive": 18413,
     "scenario_rows": 232,
-    "solve_seconds": 0.7189235000114422,
+    "solve_seconds": 0.32196220799232833,
     "status": "optimal"
    },
    "what_if": {
@@ -2455,13 +2523,13 @@
   },
   {
    "cash_value": {
-    "annual_rate": 0.8069724835164834,
-    "base_objective_cents": 456100,
+    "annual_rate": 4.6998715604395604,
+    "base_objective_cents": -1970296,
     "bumped_objective_cents": 959076,
-    "cost_of_cash": 0.8469724835164835,
-    "credit_bound": true,
+    "cost_of_cash": 4.7398715604395605,
+    "credit_bound": false,
     "k": 4,
-    "lam": 0.2011904,
+    "lam": 1.1717488,
     "n_scenarios": 200,
     "step_cents": 2500000
    },
@@ -2472,26 +2540,26 @@
     "n": 200,
     "passed": true,
     "reported": {
-     "breaches": 299,
+     "breaches": 237,
      "n": 10000,
      "passes": true,
-     "rate": 0.0299,
+     "rate": 0.0237,
      "seed": 22261139,
-     "upper": 0.032831305577204345,
+     "upper": 0.026334086383929145,
      "z": 1.645
     },
     "steps": [
      {
-      "cert_breaches": 255,
+      "cert_breaches": 206,
       "cert_n": 10000,
-      "cert_rate": 0.0255,
-      "cert_upper": 0.029554342236221692,
+      "cert_rate": 0.0206,
+      "cert_upper": 0.024285157592668857,
       "in_sample_breaches": 4,
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 10.003980458015576,
-      "value_cents": 721428
+      "solve_seconds": 8.846411584003363,
+      "value_cents": -1970296
      }
     ],
     "z_certify": 2.394
@@ -2517,6 +2585,40 @@
     {
      "after": {
       "option": "LATE",
+      "send_date": "2026-12-15",
+      "value_cents": -49709
+     },
+     "amount_cents": 1491364,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "bill_id": "129da260-246a-47e3-bf66-a97c55831bad",
+     "invoice_number": "MRC-23664",
+     "reason": "Paid late on Dec 15: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $224 late fee. Review this one.",
+     "vendor": "Meridian Row Calibration Labs"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2026-12-23",
+      "value_cents": -33875
+     },
+     "amount_cents": 1012907,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-09",
+      "value_cents": 0
+     },
+     "bill_id": "6e59a1da-7ab3-4840-bfbd-def744782f59",
+     "invoice_number": "10/15/2026",
+     "reason": "Paid late on Dec 29: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $152 late fee. Review this one.",
+     "vendor": "Inkberry Packaging Co."
+    },
+    {
+     "after": {
+      "option": "LATE",
       "send_date": "2026-12-14",
       "value_cents": -118641
      },
@@ -2530,6 +2632,23 @@
      "invoice_number": "RS-52884",
      "reason": "Paid late on Dec 14: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $538 late fee. Review this one.",
      "vendor": "Rookwood Signage"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2026-12-23",
+      "value_cents": -83563
+     },
+     "amount_cents": 2507030,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-08",
+      "value_cents": 0
+     },
+     "bill_id": "f0046806-75bb-417e-b9bd-064470c13ce5",
+     "invoice_number": "NWC-30793",
+     "reason": "Paid late on Dec 23: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $376 late fee. Review this one.",
+     "vendor": "Nettlefield Wire & Cable"
     },
     {
      "after": {
@@ -2551,6 +2670,23 @@
     {
      "after": {
       "option": "LATE",
+      "send_date": "2027-01-06",
+      "value_cents": -13652
+     },
+     "amount_cents": 410931,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-21",
+      "value_cents": 0
+     },
+     "bill_id": "0e81ef38-934d-4a9f-9a4e-58091768cf45",
+     "invoice_number": "10/28/2026",
+     "reason": "Paid late on Jan 11: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $62 late fee. Review this one.",
+     "vendor": "Inkberry Packaging Co."
+    },
+    {
+     "after": {
+      "option": "LATE",
       "send_date": "2026-12-28",
       "value_cents": -44836
      },
@@ -2567,26 +2703,145 @@
     },
     {
      "after": {
+      "option": "LATE",
+      "send_date": "2026-12-22",
+      "value_cents": -94768
+     },
+     "amount_cents": 2833729,
+     "before": {
       "option": "BANK_DUE",
-      "send_date": "2026-12-30",
+      "send_date": "2026-12-08",
       "value_cents": 0
      },
-     "amount_cents": 6196187,
-     "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-10",
-      "value_cents": 99283
-     },
-     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
-     "invoice_number": "JPR-67819",
-     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Juniper Polymer Resins"
+     "bill_id": "868b55bb-13f6-4ad4-a28f-4f9e47e673de",
+     "invoice_number": "EWH-77763",
+     "reason": "Paid late on Dec 28: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $425 late fee. Review this one.",
+     "vendor": "Elmstead Waste Hauling"
     },
     {
      "after": {
       "option": "LATE",
-      "send_date": "2027-01-11",
-      "value_cents": -85619
+      "send_date": "2026-12-14",
+      "value_cents": -124207
+     },
+     "amount_cents": 3751437,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-27",
+      "value_cents": 0
+     },
+     "bill_id": "606f4f17-caa6-487e-b72b-8ad87d1e82a3",
+     "invoice_number": "HVC-70913",
+     "reason": "Paid late on Dec 14: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $563 late fee. Review this one.",
+     "vendor": "Hollisford Valve Co."
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2026-12-14",
+      "value_cents": -590562
+     },
+     "amount_cents": 17836880,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-27",
+      "value_cents": 0
+     },
+     "bill_id": "56366017-fd5b-401c-ab5f-41edfe490ffb",
+     "invoice_number": "JMT-89991",
+     "reason": "Paid late on Dec 14: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $2,676 late fee. Review this one.",
+     "vendor": "Jasper Mill Textiles"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2026-12-18",
+      "value_cents": -89377
+     },
+     "amount_cents": 2681444,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-03",
+      "value_cents": 0
+     },
+     "bill_id": "612f2e43-7c51-4c50-a3fc-5c4d23b48ea0",
+     "invoice_number": "TUR-79786",
+     "reason": "Paid late on Dec 18: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $402 late fee. Review this one.",
+     "vendor": "Thistledown Uniform Rental"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2027-01-04",
+      "value_cents": -55580
+     },
+     "amount_cents": 1678682,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-18",
+      "value_cents": 0
+     },
+     "bill_id": "977161ad-6381-4ae3-9343-ee997499b953",
+     "invoice_number": "NWC-30794",
+     "reason": "Paid late on Jan 4: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $252 late fee. Review this one.",
+     "vendor": "Nettlefield Wire & Cable"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2026-12-24",
+      "value_cents": -75190
+     },
+     "amount_cents": 2248300,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-10",
+      "value_cents": 0
+     },
+     "bill_id": "8c55027f-422f-4a3d-a41c-51daa2fc6b85",
+     "invoice_number": "KS-83822",
+     "reason": "Paid late on Dec 24: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $337 late fee. Review this one.",
+     "vendor": "Keelhaven Staffing"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2026-12-21",
+      "value_cents": -49792
+     },
+     "amount_cents": 1488881,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-07",
+      "value_cents": 0
+     },
+     "bill_id": "21b31b10-c01c-41ff-91ae-fd5ed6614af6",
+     "invoice_number": "LIS-52723",
+     "reason": "Paid late on Dec 24: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $223 late fee. Review this one.",
+     "vendor": "Larchmere IT Services"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2027-01-20",
+      "value_cents": -24455
+     },
+     "amount_cents": 733680,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-05",
+      "value_cents": 0
+     },
+     "bill_id": "8c753910-fd64-4414-b5be-90b35f583558",
+     "invoice_number": "11/11/2026",
+     "reason": "Paid late on Jan 25: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $110 late fee. Review this one.",
+     "vendor": "Inkberry Packaging Co."
+    },
+    {
+     "after": {
+      "option": "CARD",
+      "send_date": "2026-12-24",
+      "value_cents": -32773
      },
      "amount_cents": 2594681,
      "before": {
@@ -2596,8 +2851,42 @@
      },
      "bill_id": "f6770909-1151-44d2-960e-f2cb5fcc8749",
      "invoice_number": "RS-52885",
-     "reason": "Paid late on Jan 11: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $389 late fee. Review this one.",
+     "reason": "Paid by card Dec 24: 1.5% cashback, minus a $778 surcharge; cash leaves Jan 10 with the statement (+17 days).",
      "vendor": "Rookwood Signage"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2026-12-28",
+      "value_cents": -27809
+     },
+     "amount_cents": 839920,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-11-23",
+      "value_cents": 14037
+     },
+     "bill_id": "184b58a3-7562-420a-b877-ef022000015d",
+     "invoice_number": "DPC-1493",
+     "reason": "Paid late on Dec 28: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $126 late fee. Review this one.",
+     "vendor": "Driftwood Pallet & Crate"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2027-01-11",
+      "value_cents": -97519
+     },
+     "amount_cents": 2955309,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-04",
+      "value_cents": 48717
+     },
+     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
+     "invoice_number": "QLA-45870",
+     "reason": "Paid late on Jan 14: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $443 late fee. Review this one.",
+     "vendor": "Quarry Lane Aggregates"
     },
     {
      "after": {
@@ -2607,14 +2896,48 @@
      },
      "amount_cents": 1819444,
      "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-11-24",
-      "value_cents": 30016
+      "option": "BANK_DUE",
+      "send_date": "2026-12-14",
+      "value_cents": 0
      },
      "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
      "invoice_number": "HVC-70914",
      "reason": "Paid by card Dec 14: 1.5% cashback, minus a $455 surcharge; cash leaves Jan 10 with the statement (+27 days).",
      "vendor": "Hollisford Valve Co."
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2026-12-29",
+      "value_cents": -168339
+     },
+     "amount_cents": 5050435,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-14",
+      "value_cents": 0
+     },
+     "bill_id": "ec3a34b9-18fc-43d8-9190-f21b5f34f1a1",
+     "invoice_number": "JMT-89992",
+     "reason": "Paid late on Dec 29: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $758 late fee. Review this one.",
+     "vendor": "Jasper Mill Textiles"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2027-01-29",
+      "value_cents": -15441
+     },
+     "amount_cents": 461720,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-15",
+      "value_cents": 0
+     },
+     "bill_id": "2115a734-10b7-4de4-bf22-22e8530e2992",
+     "invoice_number": "11/17/2026",
+     "reason": "Paid late on Jan 29: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $69 late fee. Review this one.",
+     "vendor": "Gullwing Freight Lines"
     },
     {
      "after": {
@@ -2771,9 +3094,9 @@
     },
     {
      "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-21",
-      "value_cents": 0
+      "option": "LATE",
+      "send_date": "2027-01-06",
+      "value_cents": -161241
      },
      "amount_cents": 4853695,
      "before": {
@@ -2783,7 +3106,7 @@
      },
      "bill_id": "357e1be9-408f-47f6-9f22-39230ecddfab",
      "invoice_number": "SC-65349",
-     "reason": "Paid on the due date Dec 27 by ACH: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "reason": "Paid late on Jan 11: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $728 late fee. Review this one.",
      "vendor": "Saltmarsh Coatings"
     },
     {
@@ -2805,26 +3128,43 @@
     },
     {
      "after": {
-      "option": "LATE",
-      "send_date": "2027-01-11",
-      "value_cents": -184805
-     },
-     "amount_cents": 5600502,
-     "before": {
       "option": "BANK_DUE",
-      "send_date": "2026-12-24",
+      "send_date": "2026-12-29",
       "value_cents": 0
      },
-     "bill_id": "bfc53758-cfa5-413e-b50c-bd5d77690d73",
-     "invoice_number": "QLA-45871",
-     "reason": "Paid late on Jan 14: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $840 late fee. Review this one.",
-     "vendor": "Quarry Lane Aggregates"
+     "amount_cents": 1438922,
+     "before": {
+      "option": "CARD",
+      "send_date": "2026-12-29",
+      "value_cents": 23476
+     },
+     "bill_id": "b2f50fa5-8590-41e2-a925-85f10c7825da",
+     "invoice_number": "IM-82975",
+     "reason": "Paid on the due date Dec 29 by RTP: card would earn more but would push the risk of a buffer breach past the limit.",
+     "vendor": "Ironwood Machining"
     },
     {
      "after": {
-      "option": "LATE",
-      "send_date": "2027-01-11",
-      "value_cents": -105844
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-24",
+      "value_cents": 0
      },
      "amount_cents": 3207624,
      "before": {
@@ -2834,8 +3174,42 @@
      },
      "bill_id": "622ae801-e471-4db0-8a89-bec00a29da14",
      "invoice_number": "CCI-89959",
-     "reason": "Paid late on Jan 14: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $481 late fee. Review this one.",
+     "reason": "Paid on the due date Dec 30 by ACH: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
      "vendor": "Cobalt Creek Industrial Gases"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2027-01-11",
+      "value_cents": -61371
+     },
+     "amount_cents": 1859853,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-24",
+      "value_cents": 0
+     },
+     "bill_id": "6592d666-09b8-4d73-ad7b-a205967ed91f",
+     "invoice_number": "TBS-37750",
+     "reason": "Paid late on Jan 14: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $279 late fee. Review this one.",
+     "vendor": "Tidewater Bearing Supply"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 1478898,
+     "before": {
+      "option": "CARD_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 15403
+     },
+     "bill_id": "77884509-109f-4073-ac16-df92d4838323",
+     "invoice_number": "HVC-70915",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Hollisford Valve Co."
     },
     {
      "after": {
@@ -2851,8 +3225,25 @@
      },
      "bill_id": "6123b157-f47d-4e0d-8a43-c4b2be10a187",
      "invoice_number": "NWC-30796",
-     "reason": "Paid on the due date Jan 15 by RTP: the 1/15 net 45 discount (12.3%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 24.",
+     "reason": "Paid on the due date Jan 15 by RTP: the 1/15 net 45 discount (12.3%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Dec 18.",
      "vendor": "Nettlefield Wire & Cable"
+    },
+    {
+     "after": {
+      "option": "CARD",
+      "send_date": "2026-12-03",
+      "value_cents": -5636
+     },
+     "amount_cents": 568046,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid by card Dec 3: 1.5% cashback, minus a $170 surcharge; cash leaves Jan 10 with the statement (+38 days).",
+     "vendor": "Harborline Logistics"
     },
     {
      "after": {
@@ -2891,19 +3282,19 @@
     {
      "after": {
       "option": "LATE",
-      "send_date": "2027-02-19",
-      "value_cents": -27776
+      "send_date": "2027-01-20",
+      "value_cents": -37123
      },
-     "amount_cents": 833303,
+     "amount_cents": 1113765,
      "before": {
       "option": "BANK_DUE",
-      "send_date": "2027-02-04",
+      "send_date": "2027-01-05",
       "value_cents": 0
      },
-     "bill_id": "517267ea-ca75-4dc3-b4b2-a413fffd3c76",
-     "invoice_number": "12/6/2026",
-     "reason": "Paid late on Feb 19: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $125 late fee. Review this one.",
-     "vendor": "Gullwing Freight Lines"
+     "bill_id": "51db6aa1-7d8a-44a3-9525-0cfb294ec94f",
+     "invoice_number": "LIS-52724",
+     "reason": "Paid late on Jan 25: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $167 late fee. Review this one.",
+     "vendor": "Larchmere IT Services"
     },
     {
      "after": {
@@ -2941,9 +3332,26 @@
     },
     {
      "after": {
+      "option": "LATE",
+      "send_date": "2026-12-21",
+      "value_cents": -73115
+     },
+     "amount_cents": 2208312,
+     "before": {
       "option": "BANK_DUE",
-      "send_date": "2027-01-08",
+      "send_date": "2026-12-04",
       "value_cents": 0
+     },
+     "bill_id": "b5daf4f7-a1b2-4bb8-b5eb-0bca84ffd1e7",
+     "invoice_number": "MEC-38629",
+     "reason": "Paid late on Dec 24: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $331 late fee. Review this one.",
+     "vendor": "Millrace Engineering Consultants"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2027-01-22",
+      "value_cents": -41201
      },
      "amount_cents": 1231978,
      "before": {
@@ -2953,14 +3361,31 @@
      },
      "bill_id": "7580ec37-27a6-4175-87b9-cfa15bd90d44",
      "invoice_number": "DPC-1495",
-     "reason": "Paid on the due date Jan 9 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 24.",
+     "reason": "Paid late on Jan 22: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $185 late fee. Review this one.",
      "vendor": "Driftwood Pallet & Crate"
     },
     {
      "after": {
       "option": "LATE",
+      "send_date": "2027-02-08",
+      "value_cents": -37062
+     },
+     "amount_cents": 1119386,
+     "before": {
+      "option": "BANK_DUE",
       "send_date": "2027-01-22",
-      "value_cents": -55145
+      "value_cents": 0
+     },
+     "bill_id": "441d1382-7e2d-4298-bc05-b73f21d3bb72",
+     "invoice_number": "NA-62733",
+     "reason": "Paid late on Feb 8: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $168 late fee. Review this one.",
+     "vendor": "Northgate Abrasives"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-08",
+      "value_cents": 0
      },
      "amount_cents": 1648966,
      "before": {
@@ -2970,8 +3395,25 @@
      },
      "bill_id": "2a9e6480-550a-4064-9764-2eab068ae65b",
      "invoice_number": "WTD-52385",
-     "reason": "Paid late on Jan 22: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $247 late fee. Review this one.",
+     "reason": "Paid on the due date Jan 9 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Dec 18.",
      "vendor": "Westbrook Tool & Die"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2027-01-22",
+      "value_cents": -142366
+     },
+     "amount_cents": 4257000,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-18",
+      "value_cents": 74376
+     },
+     "bill_id": "24c9cfd7-6d20-4f94-a19d-c12faac306b3",
+     "invoice_number": "BC-47341",
+     "reason": "Paid late on Jan 22: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $639 late fee. Review this one.",
+     "vendor": "Bramblewood Chemicals"
     },
     {
      "after": {
@@ -3060,9 +3502,9 @@
     },
     {
      "after": {
-      "option": "BANK_DUE",
-      "send_date": "2027-01-07",
-      "value_cents": 0
+      "option": "LATE",
+      "send_date": "2027-01-22",
+      "value_cents": -99454
      },
      "amount_cents": 2983772,
      "before": {
@@ -3072,14 +3514,14 @@
      },
      "bill_id": "047e0af2-511d-4870-aae4-45590d4eb8e1",
      "invoice_number": "SC-65350",
-     "reason": "Paid on the due date Jan 12 by ACH: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 24.",
+     "reason": "Paid late on Jan 27: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $448 late fee. Review this one.",
      "vendor": "Saltmarsh Coatings"
     },
     {
      "after": {
-      "option": "BANK_DUE",
-      "send_date": "2027-01-12",
-      "value_cents": 0
+      "option": "LATE",
+      "send_date": "2027-01-27",
+      "value_cents": -289229
      },
      "amount_cents": 8677333,
      "before": {
@@ -3089,7 +3531,7 @@
      },
      "bill_id": "90bc7bde-c5d9-448f-ae60-a4954c64a74a",
      "invoice_number": "JMT-89994",
-     "reason": "Paid on the due date Jan 12 by RTP: the 1/10 net 30 discount (18.4%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 24.",
+     "reason": "Paid late on Jan 27: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $1,302 late fee. Review this one.",
      "vendor": "Jasper Mill Textiles"
     },
     {
@@ -3162,9 +3604,26 @@
     },
     {
      "after": {
+      "option": "LATE",
+      "send_date": "2027-01-29",
+      "value_cents": -124193
+     },
+     "amount_cents": 3725976,
+     "before": {
       "option": "BANK_DUE",
-      "send_date": "2027-01-12",
+      "send_date": "2027-01-14",
       "value_cents": 0
+     },
+     "bill_id": "54e896ff-73dd-464c-bd19-a354a1b52915",
+     "invoice_number": "CF-5388",
+     "reason": "Paid late on Jan 29: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $559 late fee. Review this one.",
+     "vendor": "Cinderhill Foundry"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2027-01-26",
+      "value_cents": -276827
      },
      "amount_cents": 8277628,
      "before": {
@@ -3174,7 +3633,7 @@
      },
      "bill_id": "55f8a5b0-b798-4222-a0af-ecccf7340e78",
      "invoice_number": "CCI-89960",
-     "reason": "Paid on the due date Jan 15 by ACH: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Dec 18.",
+     "reason": "Paid late on Jan 29: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $1,242 late fee. Review this one.",
      "vendor": "Cobalt Creek Industrial Gases"
     },
     {
@@ -3191,7 +3650,7 @@
      },
      "bill_id": "15f340f1-5937-455d-8d7b-71658cd97fba",
      "invoice_number": "DCS-33222",
-     "reason": "Paid on the due date Jan 15 by ACH: the 1/10 net 30 discount (18.4%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 24.",
+     "reason": "Paid on the due date Jan 15 by ACH: the 1/10 net 30 discount (18.4%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Dec 18.",
      "vendor": "Dunmore Conveyor Systems"
     },
     {
@@ -3210,6 +3669,23 @@
      "invoice_number": "RH-89173",
      "reason": "Paid on the due date Jan 19 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Jan 10.",
      "vendor": "Redfield Hydraulics"
+    },
+    {
+     "after": {
+      "option": "CARD",
+      "send_date": "2026-12-21",
+      "value_cents": -4291
+     },
+     "amount_cents": 365820,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-16",
+      "value_cents": 0
+     },
+     "bill_id": "27cfb07f-06e5-49ba-87b4-dacd88ef341e",
+     "invoice_number": "HL-45781",
+     "reason": "Paid by card Dec 21: 1.5% cashback, minus a $110 surcharge; cash leaves Jan 10 with the statement (+20 days).",
+     "vendor": "Harborline Logistics"
     },
     {
      "after": {
@@ -3242,7 +3718,7 @@
      },
      "bill_id": "746d9aac-7f38-46d0-9760-b70d2c707a83",
      "invoice_number": "WTD-52386",
-     "reason": "Paid on the due date Jan 22 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Jan 10.",
+     "reason": "Paid on the due date Jan 22 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Dec 31.",
      "vendor": "Westbrook Tool & Die"
     },
     {
@@ -3264,6 +3740,23 @@
     },
     {
      "after": {
+      "option": "LATE",
+      "send_date": "2027-02-08",
+      "value_cents": -233071
+     },
+     "amount_cents": 7039480,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-22",
+      "value_cents": 0
+     },
+     "bill_id": "2ad37740-e6e8-4838-9e7a-bbf5c7d7b31e",
+     "invoice_number": "SC-65351",
+     "reason": "Paid late on Feb 11: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $1,056 late fee. Review this one.",
+     "vendor": "Saltmarsh Coatings"
+    },
+    {
+     "after": {
       "option": "CARD",
       "send_date": "2027-01-27",
       "value_cents": -4413
@@ -3278,23 +3771,6 @@
      "invoice_number": "OC-15742",
      "reason": "Paid by card Jan 27: 1.5% cashback, minus a $137 surcharge; cash leaves Feb 10 with the statement (+14 days).",
      "vendor": "Ospreyline Courier"
-    },
-    {
-     "after": {
-      "option": "LATE",
-      "send_date": "2027-02-09",
-      "value_cents": -44216
-     },
-     "amount_cents": 1326549,
-     "before": {
-      "option": "BANK_DUE",
-      "send_date": "2027-01-25",
-      "value_cents": 0
-     },
-     "bill_id": "4d9fd82d-51d6-498d-975e-7b4ff3865d3f",
-     "invoice_number": "DCS-33223",
-     "reason": "Paid late on Feb 12: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $199 late fee. Review this one.",
-     "vendor": "Dunmore Conveyor Systems"
     },
     {
      "after": {
@@ -3383,26 +3859,9 @@
     },
     {
      "after": {
-      "option": "LATE",
-      "send_date": "2027-02-19",
-      "value_cents": -98273
-     },
-     "amount_cents": 2948348,
-     "before": {
       "option": "BANK_DUE",
-      "send_date": "2027-02-04",
+      "send_date": "2027-02-05",
       "value_cents": 0
-     },
-     "bill_id": "5b1580b9-5efa-4f94-92c3-6e8f1bdb6f7b",
-     "invoice_number": "TUR-79788",
-     "reason": "Paid late on Feb 19: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $442 late fee. Review this one.",
-     "vendor": "Thistledown Uniform Rental"
-    },
-    {
-     "after": {
-      "option": "LATE",
-      "send_date": "2027-02-19",
-      "value_cents": -41045
      },
      "amount_cents": 1227311,
      "before": {
@@ -3412,7 +3871,7 @@
      },
      "bill_id": "925537e7-ef2b-457f-89ea-864be8b1dec5",
      "invoice_number": "DPC-1497",
-     "reason": "Paid late on Feb 19: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $184 late fee. Review this one.",
+     "reason": "Paid on the due date Feb 5 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is debt service day, Jan 15.",
      "vendor": "Driftwood Pallet & Crate"
     },
     {
@@ -3472,281 +3931,281 @@
      "p10": [
       329232867,
       329232867,
-      325447941,
-      245801288,
-      250578088,
-      257961288,
-      248892853,
-      226077422,
-      223489533,
-      230318933,
-      225614700,
-      231958350,
-      241634200,
-      231778724,
-      225640613,
-      224933461,
-      233165261,
-      152331863,
-      156131623,
-      162471043,
-      162802542,
-      155697142,
-      160917932,
-      165384888,
-      167198299,
-      175663959,
-      183387949,
-      183850158,
-      185353839,
-      194950632,
-      185582992,
-      115728612,
-      129035382,
-      139842932,
-      142979201,
-      135680900,
-      144694752,
-      155458174,
-      163625172,
-      179377962,
-      190385242,
-      199671781,
-      208481304,
-      220487774,
-      159955001,
-      169029791,
-      185895901,
-      197307261,
-      197009243,
-      200060101,
-      184333569,
-      195242158,
-      203845048,
-      214367778,
-      223420568,
-      225850958,
-      231924303,
-      245189843,
-      252729281,
-      201022193,
-      212939813,
-      176744305,
-      180915776,
-      175340181,
-      187210181,
-      197696155,
-      169910873,
-      186235213,
-      202060813,
-      212865913,
-      216696049,
-      225207149,
-      234214902,
-      161968311,
-      173014051,
-      192239811,
-      182253921,
-      180970911,
-      183691798,
-      195884308,
-      189064779,
-      201402769,
-      211163509,
-      213164043,
-      225590463,
-      223967491,
-      229900891,
-      157887258,
-      168497978,
-      183267998,
-      143597820
+      324917284,
+      245270631,
+      250047431,
+      257430631,
+      248362196,
+      225546765,
+      222958876,
+      229788276,
+      225084043,
+      231427693,
+      241103543,
+      232072324,
+      225934213,
+      225227061,
+      233458861,
+      174213780,
+      178013540,
+      184352960,
+      186175823,
+      179070423,
+      184291213,
+      191439613,
+      195461336,
+      203926996,
+      211650986,
+      213602076,
+      220446516,
+      231056216,
+      223936876,
+      154082496,
+      167389266,
+      178196816,
+      164471378,
+      155659343,
+      165039015,
+      175802437,
+      187099471,
+      202852261,
+      213859541,
+      224658055,
+      230591343,
+      239025077,
+      172217315,
+      181292105,
+      198158215,
+      209569575,
+      208419038,
+      204904782,
+      187699352,
+      198607941,
+      207210831,
+      217733561,
+      226786351,
+      227512879,
+      235433669,
+      243355614,
+      253878824,
+      201754748,
+      213672368,
+      177354068,
+      188211998,
+      199591364,
+      211461364,
+      225673314,
+      198349752,
+      214674092,
+      230499692,
+      241304792,
+      245134928,
+      251770872,
+      260778625,
+      189764758,
+      200810498,
+      220036258,
+      208723819,
+      199039017,
+      192952411,
+      205144921,
+      194074880,
+      206412870,
+      216173610,
+      218174144,
+      230600564,
+      228977592,
+      231129341,
+      157888397,
+      168499117,
+      183269137,
+      141748254
      ],
      "p50": [
       332431767,
       351573067,
-      355784041,
-      285425288,
-      295944688,
-      306421838,
-      298360753,
-      276237422,
-      278699633,
-      287029683,
-      281149260,
-      288754960,
-      294129860,
-      283534534,
-      277056443,
-      280120061,
-      287006961,
-      203963093,
-      212593443,
-      220829443,
-      226826122,
-      218334322,
-      225336122,
-      231996728,
-      237432649,
-      246406199,
-      257737349,
-      264534018,
-      271401969,
-      282915062,
-      279285312,
-      218687012,
-      236401012,
-      252099762,
-      262662541,
-      256451530,
-      265865472,
-      275116224,
-      279627772,
-      293968272,
-      307353122,
-      313740521,
-      323873114,
-      335848964,
-      273016601,
-      284270551,
-      297204051,
-      306423451,
-      311999013,
-      314172341,
-      297492409,
-      301872208,
-      315825858,
-      328402358,
-      339798408,
-      342995158,
-      352502013,
-      365832513,
-      380857241,
-      336768843,
-      353757793,
-      320082445,
-      327728446,
-      322234381,
-      336066931,
-      347653205,
-      309330603,
-      324105953,
-      335153653,
-      346254103,
-      344386009,
-      351113869,
-      364956012,
-      294989581,
-      306593781,
-      318023931,
-      307047891,
-      303943451,
-      305907698,
-      319287198,
-      316014079,
-      325098629,
-      333661429,
-      337308553,
-      349785603,
-      351228601,
-      368165201,
-      299862628,
-      318493578,
-      335544378,
-      291476700
+      355253384,
+      284894631,
+      295414031,
+      305891181,
+      297830096,
+      275706765,
+      278168976,
+      286499026,
+      280618603,
+      288224303,
+      293599203,
+      283828134,
+      277350043,
+      280413661,
+      287300561,
+      225845010,
+      234475360,
+      242711360,
+      250199403,
+      241707603,
+      248709403,
+      258051453,
+      265695686,
+      274669236,
+      286000386,
+      294285936,
+      306494646,
+      319020646,
+      317639196,
+      257040896,
+      274754896,
+      290453646,
+      284154718,
+      276429973,
+      286209735,
+      295460487,
+      303102071,
+      317442571,
+      330827421,
+      338726795,
+      345983153,
+      354386267,
+      285278915,
+      296532865,
+      309466365,
+      318685765,
+      323408808,
+      319017022,
+      300858192,
+      305237991,
+      319191641,
+      331768141,
+      343164191,
+      344657079,
+      356011379,
+      363998284,
+      382006784,
+      337501398,
+      354490348,
+      320692208,
+      335024668,
+      346485564,
+      360318114,
+      375630364,
+      337769482,
+      352544832,
+      363592532,
+      374692982,
+      372824888,
+      377677592,
+      391519735,
+      322786028,
+      334390228,
+      345820378,
+      333517789,
+      322011557,
+      315168311,
+      328547811,
+      321024180,
+      330108730,
+      338671530,
+      342318654,
+      354795704,
+      356238702,
+      369393651,
+      299863767,
+      318494717,
+      335545517,
+      289627134
      ],
      "p90": [
       366383567,
       388726857,
-      404364651,
-      336603268,
-      346019098,
-      356396288,
-      348526053,
-      327277072,
-      326755423,
-      336643433,
-      331499340,
-      340212360,
-      349855290,
-      339665514,
-      335139913,
-      338474561,
-      346787871,
-      263237253,
-      269427023,
-      280480823,
-      285166592,
-      280748942,
-      292480152,
-      307413578,
-      318698159,
-      332090889,
-      351109039,
-      360741588,
-      374926109,
-      383965472,
-      387161582,
-      324662502,
-      341300742,
-      359204502,
-      369083691,
-      365594540,
-      376805892,
-      378769784,
-      384161982,
-      398929752,
-      417478132,
-      423905091,
-      432779294,
-      448022364,
-      384555401,
-      394190641,
-      405743991,
-      417041171,
-      417708833,
-      420638211,
-      407339989,
-      417398398,
-      434008118,
-      450856408,
-      465406498,
-      474588318,
-      489561173,
-      502806653,
-      516412621,
-      470695933,
-      482384103,
-      440890935,
-      442217086,
-      434944501,
-      447478201,
-      456091835,
-      420846953,
-      432549123,
-      446236733,
-      460084113,
-      460437139,
-      464139359,
-      479244772,
-      406575411,
-      415492391,
-      426692981,
-      411545501,
-      408621481,
-      407633638,
-      419699938,
-      416894159,
-      434967989,
-      448474809,
-      458953783,
-      477125893,
-      482824271,
-      502922541,
-      434502318,
-      449981358,
-      466720718,
-      419758510
+      403833994,
+      336072611,
+      345488441,
+      355865631,
+      347995396,
+      326746415,
+      326224766,
+      336112776,
+      330968683,
+      339681703,
+      349324633,
+      339959114,
+      335433513,
+      338768161,
+      347081471,
+      285119170,
+      291308940,
+      302362740,
+      308539873,
+      304122223,
+      315853433,
+      333468303,
+      346961196,
+      360353926,
+      379372076,
+      390493506,
+      410018786,
+      420071056,
+      425515466,
+      363016386,
+      379654626,
+      397558386,
+      390575868,
+      385572983,
+      397150155,
+      399114047,
+      407636281,
+      422404051,
+      440952431,
+      448891365,
+      454889333,
+      466559667,
+      396817715,
+      406452955,
+      418006305,
+      429303485,
+      429118628,
+      425482892,
+      410705772,
+      420764181,
+      437373901,
+      454222191,
+      468772281,
+      476250239,
+      493070539,
+      500972424,
+      517562164,
+      471428488,
+      483116658,
+      441500698,
+      449513308,
+      459195684,
+      471729384,
+      484068994,
+      449285832,
+      460988002,
+      474675612,
+      488522992,
+      488876018,
+      490703082,
+      505808495,
+      434371858,
+      443288838,
+      454489428,
+      438015399,
+      426689587,
+      416894251,
+      428960551,
+      421904260,
+      439978090,
+      453484910,
+      463963884,
+      482135994,
+      487834372,
+      504150991,
+      434503457,
+      449982497,
+      466721857,
+      417908944
      ]
     },
     "before": {
@@ -4128,36 +4587,36 @@
    },
    "id": "delay-cus_001-30",
    "kpis": {
-    "breach_rate": 0.0299,
-    "breach_upper": 0.032831305577204345,
+    "breach_rate": 0.0237,
+    "breach_upper": 0.026334086383929145,
     "buffer_cents": 50000000,
     "card_count": 59,
-    "card_rewards_cents": 1790786,
-    "cost_of_cash": 0.8469724835164835,
-    "cost_of_cash_credit_bound": true,
-    "credit_drawn_cents": 530657,
-    "credit_first_date": "2026-11-12",
-    "discounts_captured_cents": 1195030,
-    "discounts_captured_count": 17,
+    "card_rewards_cents": 1792628,
+    "cost_of_cash": 4.7398715604395605,
+    "cost_of_cash_credit_bound": false,
+    "credit_drawn_cents": 0,
+    "credit_first_date": null,
+    "discounts_captured_cents": 1067808,
+    "discounts_captured_count": 14,
     "epsilon": 0.05,
-    "late_count": 21,
-    "value_vs_pay_on_due_cents": 721428,
-    "worst_p10_balance_cents": 119596742,
-    "worst_p10_date": "2026-12-11"
+    "late_count": 41,
+    "value_vs_pay_on_due_cents": -1970296,
+    "worst_p10_balance_cents": 143105204,
+    "worst_p10_date": "2027-02-08"
    },
    "label": "Bluefin Marine Outfitters pays 30 days late",
-   "plan_hash": "d723c4b9bb5925eba737de7b09001eba471b2a225073cf13a0d9c1a05a2ffc8b",
+   "plan_hash": "14f468d67f3a07c0b31ff4939ee22953f261a1c1eea0211ed25d39482c5f025e",
    "solver": {
-    "case_seconds": 23.183265500003472,
+    "case_seconds": 19.322684167011175,
     "check_days": 61,
     "cols": 729,
-    "mip_gap": 0.014368600809415846,
+    "mip_gap": 9.998497687459903e-05,
     "nonzeros": 2346,
     "rows": 631,
     "rows_naive": 18413,
     "scenario_rows": 232,
-    "solve_seconds": 10.003980458015576,
-    "status": "time_limit"
+    "solve_seconds": 8.846411584003363,
+    "status": "optimal"
    },
    "what_if": {
     "customer_id": "cus_001",
@@ -4167,13 +4626,13 @@
   },
   {
    "cash_value": {
-    "annual_rate": 0.1701204835164835,
-    "base_objective_cents": 3381779,
+    "annual_rate": 0.17280142857142858,
+    "base_objective_cents": 3380108,
     "bumped_objective_cents": 3487813,
-    "cost_of_cash": 0.21012048351648352,
-    "credit_bound": true,
+    "cost_of_cash": 0.21280142857142859,
+    "credit_bound": false,
     "k": 4,
-    "lam": 0.0424136,
+    "lam": 0.043082,
     "n_scenarios": 200,
     "step_cents": 2500000
    },
@@ -4194,16 +4653,16 @@
     },
     "steps": [
      {
-      "cert_breaches": 202,
+      "cert_breaches": 201,
       "cert_n": 10000,
-      "cert_rate": 0.0202,
-      "cert_upper": 0.023853032633804644,
+      "cert_rate": 0.0201,
+      "cert_upper": 0.023744948614485797,
       "in_sample_breaches": 4,
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.8632317500014324,
-      "value_cents": 3383065
+      "solve_seconds": 0.4906127089925576,
+      "value_cents": 3380108
      }
     ],
     "z_certify": 2.394
@@ -4212,36 +4671,19 @@
     {
      "after": {
       "option": "LATE",
-      "send_date": "2026-12-21",
-      "value_cents": -14242
+      "send_date": "2026-12-28",
+      "value_cents": -17199
      },
-     "amount_cents": 424440,
+     "amount_cents": 519444,
      "before": {
       "option": "BANK_DUE",
-      "send_date": "2026-12-08",
+      "send_date": "2026-12-11",
       "value_cents": 0
      },
-     "bill_id": "370e167f-e499-44fd-b453-d1d0d44d6ca7",
-     "invoice_number": "PL-42411",
-     "reason": "Paid late on Dec 24: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $64 late fee. Review this one.",
-     "vendor": "Pinegrove Lubricants"
-    },
-    {
-     "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-30",
-      "value_cents": 0
-     },
-     "amount_cents": 6196187,
-     "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-10",
-      "value_cents": 99283
-     },
-     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
-     "invoice_number": "JPR-67819",
-     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Juniper Polymer Resins"
+     "bill_id": "69b36dc6-ba40-4640-b768-7703a0c64a5f",
+     "invoice_number": "10/14/2026",
+     "reason": "Paid late on Dec 28: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $78 late fee. Review this one.",
+     "vendor": "Gullwing Freight Lines"
     },
     {
      "after": {
@@ -4262,15 +4704,32 @@
     },
     {
      "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-24",
+      "value_cents": 0
+     },
+     "amount_cents": 2955309,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-04",
+      "value_cents": 48717
+     },
+     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
+     "invoice_number": "QLA-45870",
+     "reason": "Paid on the due date Dec 30 by ACH: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Quarry Lane Aggregates"
+    },
+    {
+     "after": {
       "option": "CARD",
       "send_date": "2026-12-14",
       "value_cents": -11994
      },
      "amount_cents": 1819444,
      "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-11-24",
-      "value_cents": 30016
+      "option": "BANK_DUE",
+      "send_date": "2026-12-14",
+      "value_cents": 0
      },
      "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
      "invoice_number": "HVC-70914",
@@ -4382,6 +4841,23 @@
     {
      "after": {
       "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
       "send_date": "2026-12-24",
       "value_cents": 0
      },
@@ -4395,6 +4871,23 @@
      "invoice_number": "CCI-89959",
      "reason": "Paid on the due date Dec 30 by ACH: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
      "vendor": "Cobalt Creek Industrial Gases"
+    },
+    {
+     "after": {
+      "option": "CARD",
+      "send_date": "2026-12-03",
+      "value_cents": -5636
+     },
+     "amount_cents": 568046,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid by card Dec 3: 1.5% cashback, minus a $170 surcharge; cash leaves Jan 10 with the statement (+38 days).",
+     "vendor": "Harborline Logistics"
     },
     {
      "after": {
@@ -4461,7 +4954,7 @@
      },
      "bill_id": "2ac3774a-02e0-4f11-a2ae-6693eb4bc522",
      "invoice_number": "DPC-1496",
-     "reason": "Paid early Dec 31 by RTP: saves $125 (2% of the subtotal) for paying 23 days early, a 30.2%/yr return on the cash, vs your 21%/yr cost of cash.",
+     "reason": "Paid early Dec 31 by RTP: saves $125 (2% of the subtotal) for paying 23 days early, a 30.2%/yr return on the cash, vs your 21.3%/yr cost of cash.",
      "vendor": "Driftwood Pallet & Crate"
     },
     {
@@ -4478,7 +4971,7 @@
      },
      "bill_id": "ec5f353e-65ff-4fb9-982c-2d91a837784b",
      "invoice_number": "TBS-37752",
-     "reason": "Paid early Dec 28 by ACH: saves $135 (1% of the subtotal) for paying 20 days early, a 18.1%/yr return on the cash, vs your 21%/yr cost of cash.",
+     "reason": "Paid early Dec 28 by ACH: saves $135 (1% of the subtotal) for paying 20 days early, a 18.1%/yr return on the cash, vs your 21.3%/yr cost of cash.",
      "vendor": "Tidewater Bearing Supply"
     },
     {
@@ -4504,281 +4997,281 @@
      "p10": [
       329232867,
       329232867,
-      324919857,
-      244271165,
-      253302465,
-      261580765,
-      251427340,
-      228769959,
-      226632750,
-      233971580,
-      228470067,
-      235681137,
-      245084067,
-      235889261,
-      234874370,
-      237642798,
-      247623558,
-      160033078,
-      169957748,
-      178423328,
-      183378147,
-      177927117,
-      187455627,
-      197216233,
-      203488281,
-      213661471,
-      221106851,
-      226608990,
-      231527431,
-      240228794,
-      234717104,
-      164071270,
-      176682800,
-      188761150,
-      194475111,
-      189308900,
-      196601102,
-      203458683,
-      199339826,
-      217933466,
-      231943796,
-      237497857,
-      246970083,
-      251479131,
-      170664647,
-      177656787,
-      193744977,
-      211193027,
-      207648070,
-      207227428,
-      192184709,
-      193113496,
-      205957526,
-      216086676,
-      225356086,
-      224535391,
-      214876315,
-      225938795,
-      237707223,
-      164848095,
-      177727945,
-      146766465,
-      159693255,
-      175073297,
-      186702397,
-      195854421,
-      153853663,
-      169095993,
-      185647323,
-      203742323,
-      217146321,
-      226462831,
-      243038319,
-      184870383,
-      195134893,
-      209209183,
-      215849550,
-      220292332,
-      216163092,
-      226085062,
-      231625459,
-      244140109,
-      254398899,
-      253167909,
-      263235106,
-      258045104,
-      266460025,
-      195672506,
-      208456396,
-      223662626,
-      192387875
+      324917284,
+      244268592,
+      253299892,
+      261578192,
+      251424767,
+      228767386,
+      226630177,
+      233969007,
+      228467494,
+      235678564,
+      245081494,
+      235886688,
+      234871797,
+      237640225,
+      247620985,
+      160030505,
+      169955175,
+      178420755,
+      183375574,
+      177924544,
+      187453054,
+      197213660,
+      203485708,
+      213658898,
+      221104278,
+      226606417,
+      231100418,
+      239801781,
+      234290091,
+      164163701,
+      176775231,
+      188853581,
+      194567542,
+      189401331,
+      196693533,
+      203551114,
+      199432257,
+      218025897,
+      232036227,
+      238021095,
+      247493321,
+      252002369,
+      171187885,
+      178180025,
+      194268215,
+      211716265,
+      207644072,
+      207223430,
+      192180711,
+      193109498,
+      205953528,
+      216082678,
+      225352088,
+      224531393,
+      214872317,
+      225934797,
+      237703225,
+      164844097,
+      177723947,
+      146762467,
+      159689257,
+      175069299,
+      186698399,
+      195850423,
+      153849665,
+      169091995,
+      185643325,
+      203738325,
+      217142323,
+      226458833,
+      243034321,
+      184866385,
+      195130895,
+      209205185,
+      215845552,
+      220288334,
+      216159094,
+      226081064,
+      231621461,
+      244136111,
+      254394901,
+      253163911,
+      263231108,
+      258041106,
+      266456027,
+      195668508,
+      208452398,
+      223658628,
+      192383877
      ],
      "p50": [
       334404367,
       351933067,
-      360093357,
-      287079215,
-      299043265,
-      308696565,
-      302483580,
-      285857199,
-      287831910,
-      301713710,
-      298712537,
-      310691837,
-      322322087,
-      312563211,
-      309875870,
-      316150438,
-      327419438,
-      247458968,
-      258450618,
-      266449568,
-      276698047,
-      271568747,
-      282615097,
-      293344003,
-      302493991,
-      316290441,
-      328497591,
-      336430610,
-      343672651,
-      358107944,
-      354049194,
-      293557550,
-      308512250,
-      323235550,
-      331641181,
-      327846170,
-      335264582,
-      339895303,
-      333515506,
-      346480356,
-      361196106,
-      365353877,
-      373112923,
-      374346361,
-      294767967,
-      306468817,
-      315676617,
-      328958867,
-      331277380,
-      332434808,
-      315151479,
-      313359566,
-      324636516,
-      336706866,
-      349831716,
-      344975881,
-      340284545,
-      354189495,
-      365939873,
-      301114985,
-      317144035,
-      284807195,
-      303653245,
-      318649917,
-      328902467,
-      339052441,
-      304387323,
-      318371023,
-      329889823,
-      340781873,
-      351230021,
-      361229441,
-      373093849,
-      312289413,
-      326379763,
-      336709213,
-      341135570,
-      343980992,
-      341184192,
-      352149592,
-      354045829,
-      362729829,
-      373595729,
-      377919629,
-      389723256,
-      389955404,
-      400530015,
-      333936266,
-      350129416,
-      363711966,
-      339103545
+      360090784,
+      287076642,
+      299040692,
+      308693992,
+      302481007,
+      285854626,
+      287829337,
+      301711137,
+      298709964,
+      310689264,
+      322319514,
+      312560638,
+      309873297,
+      316147865,
+      327416865,
+      247456395,
+      258448045,
+      266446995,
+      276695474,
+      271566174,
+      282612524,
+      293341430,
+      302491418,
+      316287868,
+      328495018,
+      336428037,
+      343245638,
+      357680931,
+      353622181,
+      293649981,
+      308604681,
+      323327981,
+      331733612,
+      327938601,
+      335357013,
+      339987734,
+      333607937,
+      346572787,
+      361288537,
+      365877115,
+      373636161,
+      374869599,
+      295291205,
+      306992055,
+      316199855,
+      329482105,
+      331273382,
+      332430810,
+      315147481,
+      313355568,
+      324632518,
+      336702868,
+      349827718,
+      344971883,
+      340280547,
+      354185497,
+      365935875,
+      301110987,
+      317140037,
+      284803197,
+      303649247,
+      318645919,
+      328898469,
+      339048443,
+      304383325,
+      318367025,
+      329885825,
+      340777875,
+      351226023,
+      361225443,
+      373089851,
+      312285415,
+      326375765,
+      336705215,
+      341131572,
+      343976994,
+      341180194,
+      352145594,
+      354041831,
+      362725831,
+      373591731,
+      377915631,
+      389719258,
+      389951406,
+      400526017,
+      333932268,
+      350125418,
+      363707968,
+      339099547
      ],
      "p90": [
       369347247,
       396351657,
-      410157647,
-      342167135,
-      356320755,
-      369932205,
-      367696680,
-      357194719,
-      359740040,
-      375603320,
-      378609577,
-      389812757,
-      403677327,
-      395880801,
-      397364680,
-      405465588,
-      417694428,
-      333864128,
-      348355408,
-      360285088,
-      369189297,
-      369199937,
-      382826267,
-      391757713,
-      407502811,
-      424617641,
-      446715061,
-      457471140,
-      469752961,
-      486893074,
-      484661544,
-      419387300,
-      433887410,
-      449634510,
-      457781531,
-      447961440,
-      454348712,
-      454236213,
-      448912946,
-      462215946,
-      473013526,
-      475736957,
-      484140623,
-      483533181,
-      404479757,
-      411988307,
-      426049297,
-      435092627,
-      437914140,
-      438146658,
-      421832689,
-      423483396,
-      437649506,
-      455248766,
-      466493176,
-      463697741,
-      461501455,
-      476906285,
-      492362463,
-      426738535,
-      445442045,
-      410582685,
-      424256175,
-      432971147,
-      444226397,
-      451898721,
-      413091093,
-      419202733,
-      433284573,
-      441842303,
-      459186441,
-      469892321,
-      478924999,
-      420155163,
-      431383383,
-      441246803,
-      447827300,
-      446457302,
-      441709692,
-      449518812,
-      455528609,
-      468395099,
-      488310449,
-      495030329,
-      514386776,
-      513377714,
-      530531795,
-      473614036,
-      489527056,
-      504921096,
-      471290045
+      410155074,
+      342164562,
+      356318182,
+      369929632,
+      367694107,
+      357192146,
+      359737467,
+      375600747,
+      378607004,
+      389810184,
+      403674754,
+      395878228,
+      397362107,
+      405463015,
+      417691855,
+      333861555,
+      348352835,
+      360282515,
+      369186724,
+      369197364,
+      382823694,
+      391755140,
+      407500238,
+      424615068,
+      446712488,
+      457468567,
+      469325948,
+      486466061,
+      484234531,
+      419479731,
+      433979841,
+      449726941,
+      457873962,
+      448053871,
+      454441143,
+      454328644,
+      449005377,
+      462308377,
+      473105957,
+      476260195,
+      484663861,
+      484056419,
+      405002995,
+      412511545,
+      426572535,
+      435615865,
+      437910142,
+      438142660,
+      421828691,
+      423479398,
+      437645508,
+      455244768,
+      466489178,
+      463693743,
+      461497457,
+      476902287,
+      492358465,
+      426734537,
+      445438047,
+      410578687,
+      424252177,
+      432967149,
+      444222399,
+      451894723,
+      413087095,
+      419198735,
+      433280575,
+      441838305,
+      459182443,
+      469888323,
+      478921001,
+      420151165,
+      431379385,
+      441242805,
+      447823302,
+      446453304,
+      441705694,
+      449514814,
+      455524611,
+      468391101,
+      488306451,
+      495026331,
+      514382778,
+      513373716,
+      530527797,
+      473610038,
+      489523058,
+      504917098,
+      471286047
      ]
     },
     "before": {
@@ -5165,30 +5658,30 @@
     "buffer_cents": 50000000,
     "card_count": 49,
     "card_rewards_cents": 1581512,
-    "cost_of_cash": 0.21012048351648352,
-    "cost_of_cash_credit_bound": true,
-    "credit_drawn_cents": 2573,
-    "credit_first_date": "2026-11-12",
+    "cost_of_cash": 0.21280142857142859,
+    "cost_of_cash_credit_bound": false,
+    "credit_drawn_cents": 0,
+    "credit_first_date": null,
     "discounts_captured_cents": 2384683,
     "discounts_captured_count": 38,
     "epsilon": 0.05,
     "late_count": 2,
-    "value_vs_pay_on_due_cents": 3383065,
-    "worst_p10_balance_cents": 151835805,
+    "value_vs_pay_on_due_cents": 3380108,
+    "worst_p10_balance_cents": 151831807,
     "worst_p10_date": "2027-01-10"
    },
    "label": "Copperline Rail Systems pays 7 days late",
-   "plan_hash": "dc58631df5245d7da12ff5f0b0ea222887ca600728c1cb7e05a25d5d629ceeb4",
+   "plan_hash": "02c66242bbf95d4b5559afd2bce0319787a6034086ac8fbe403e9d3bdd57d78a",
    "solver": {
-    "case_seconds": 2.617596083000535,
+    "case_seconds": 1.833528208982898,
     "check_days": 61,
     "cols": 728,
-    "mip_gap": 9.32634099408683e-05,
+    "mip_gap": 0.0,
     "nonzeros": 2330,
     "rows": 626,
     "rows_naive": 18413,
     "scenario_rows": 227,
-    "solve_seconds": 0.8632317500014324,
+    "solve_seconds": 0.4906127089925576,
     "status": "optimal"
    },
    "what_if": {
@@ -5199,13 +5692,13 @@
   },
   {
    "cash_value": {
-    "annual_rate": 0.2395025714285714,
-    "base_objective_cents": 2617273,
-    "bumped_objective_cents": 2766552,
-    "cost_of_cash": 0.2795025714285714,
-    "credit_bound": true,
+    "annual_rate": 0.2402325714285714,
+    "base_objective_cents": 2616809,
+    "bumped_objective_cents": 2766543,
+    "cost_of_cash": 0.2802325714285714,
+    "credit_bound": false,
     "k": 4,
-    "lam": 0.0597116,
+    "lam": 0.0598936,
     "n_scenarios": 200,
     "step_cents": 2500000
    },
@@ -5234,8 +5727,8 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 3.616820958995959,
-      "value_cents": 2617307
+      "solve_seconds": 2.958387999999104,
+      "value_cents": 2616809
      }
     ],
     "z_certify": 2.394
@@ -5278,8 +5771,42 @@
     {
      "after": {
       "option": "LATE",
-      "send_date": "2026-12-23",
-      "value_cents": -5309
+      "send_date": "2026-12-21",
+      "value_cents": -14242
+     },
+     "amount_cents": 424440,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-08",
+      "value_cents": 0
+     },
+     "bill_id": "370e167f-e499-44fd-b453-d1d0d44d6ca7",
+     "invoice_number": "PL-42411",
+     "reason": "Paid late on Dec 24: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $64 late fee. Review this one.",
+     "vendor": "Pinegrove Lubricants"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2026-12-28",
+      "value_cents": -44836
+     },
+     "amount_cents": 1354189,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-11-13",
+      "value_cents": 8233
+     },
+     "bill_id": "0c55c607-dfc3-4393-85d2-e3439b5152ae",
+     "invoice_number": "NA-62730",
+     "reason": "Paid late on Dec 28: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $203 late fee. Review this one.",
+     "vendor": "Northgate Abrasives"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-09",
+      "value_cents": 0
      },
      "amount_cents": 158735,
      "before": {
@@ -5289,25 +5816,8 @@
      },
      "bill_id": "39f41962-9c3c-4a5b-81aa-f37c9631136f",
      "invoice_number": "VOS-85894",
-     "reason": "Paid late on Dec 29: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $24 late fee. Review this one.",
+     "reason": "Paid on the due date Dec 14 by ACH: the card surcharge outweighs the cashback, and no discount is offered.",
      "vendor": "Vireo Office Supply"
-    },
-    {
-     "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-30",
-      "value_cents": 0
-     },
-     "amount_cents": 6196187,
-     "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-10",
-      "value_cents": 99283
-     },
-     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
-     "invoice_number": "JPR-67819",
-     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Juniper Polymer Resins"
     },
     {
      "after": {
@@ -5328,15 +5838,32 @@
     },
     {
      "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-24",
+      "value_cents": 0
+     },
+     "amount_cents": 2955309,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-04",
+      "value_cents": 48717
+     },
+     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
+     "invoice_number": "QLA-45870",
+     "reason": "Paid on the due date Dec 30 by ACH: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Quarry Lane Aggregates"
+    },
+    {
+     "after": {
       "option": "CARD",
       "send_date": "2026-12-14",
       "value_cents": -11994
      },
      "amount_cents": 1819444,
      "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-11-24",
-      "value_cents": 30016
+      "option": "BANK_DUE",
+      "send_date": "2026-12-14",
+      "value_cents": 0
      },
      "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
      "invoice_number": "HVC-70914",
@@ -5379,9 +5906,9 @@
     },
     {
      "after": {
-      "option": "LATE",
-      "send_date": "2026-12-30",
-      "value_cents": -50099
+      "option": "BANK_EARLY",
+      "send_date": "2026-11-24",
+      "value_cents": 11405
      },
      "amount_cents": 1498050,
      "before": {
@@ -5391,7 +5918,7 @@
      },
      "bill_id": "21b518ce-8dfe-4d85-9598-7fbe4d49be1a",
      "invoice_number": "DCS-33220",
-     "reason": "Paid late on Jan 5: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $225 late fee. Review this one.",
+     "reason": "Paid early Nov 24 by ACH: saves $150 (1% of the subtotal) for paying 20 days early, a 18.4%/yr return on the cash, vs your 28%/yr cost of cash.",
      "vendor": "Dunmore Conveyor Systems"
     },
     {
@@ -5482,6 +6009,23 @@
     {
      "after": {
       "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
       "send_date": "2026-12-24",
       "value_cents": 0
      },
@@ -5512,6 +6056,23 @@
      "invoice_number": "NWC-30796",
      "reason": "Paid on the due date Jan 15 by RTP: the 1/15 net 45 discount (12.3%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Dec 17.",
      "vendor": "Nettlefield Wire & Cable"
+    },
+    {
+     "after": {
+      "option": "CARD",
+      "send_date": "2026-12-03",
+      "value_cents": -5636
+     },
+     "amount_cents": 568046,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid by card Dec 3: 1.5% cashback, minus a $170 surcharge; cash leaves Jan 10 with the statement (+38 days).",
+     "vendor": "Harborline Logistics"
     },
     {
      "after": {
@@ -5842,281 +6403,281 @@
      "p10": [
       329232867,
       329232867,
-      324917351,
-      244268659,
-      253299959,
-      261578259,
-      251424834,
-      228767453,
-      225376344,
-      232064794,
-      227359571,
-      233828171,
-      240796461,
-      230872465,
-      227115624,
-      228375542,
-      236345792,
-      152732862,
-      159249312,
-      167579412,
-      170510341,
-      166119911,
-      173917481,
-      182903607,
-      191961855,
-      199369325,
-      209022855,
-      211088794,
-      216855645,
-      225139298,
-      222454008,
-      153306258,
-      163228148,
-      177695208,
-      183390689,
-      176852008,
-      189766970,
-      194938312,
-      209757200,
-      226857160,
-      241677300,
-      249104788,
-      262641511,
-      261253163,
-      180149083,
-      192402703,
-      208371453,
-      219423303,
-      224151287,
-      230791475,
-      206280875,
-      214615704,
-      224886564,
-      238172584,
-      246359134,
-      245397506,
-      237678440,
-      249775922,
-      256099058,
-      179077554,
-      194288774,
-      159148258,
-      176572778,
-      175710250,
-      193677750,
-      199258004,
-      166687532,
-      179041732,
-      194658792,
-      209134872,
-      223193802,
-      232367092,
-      241620573,
-      175703327,
-      186430557,
-      199814507,
-      209583004,
-      210440624,
-      210978154,
-      223181384,
-      224096001,
-      234981371,
-      244074351,
-      244617951,
-      248786678,
-      247340076,
-      254172267,
-      180667063,
-      194272343,
-      202411483,
-      177729489
+      324917284,
+      245610431,
+      254641731,
+      262920031,
+      252766606,
+      230109225,
+      226718116,
+      233406566,
+      228701343,
+      235169943,
+      242138233,
+      232214237,
+      226974327,
+      228234245,
+      236204495,
+      152591565,
+      159108015,
+      167438115,
+      170369044,
+      165978614,
+      173776184,
+      182762310,
+      191820558,
+      199228028,
+      208881558,
+      210947497,
+      217138788,
+      225263706,
+      222578416,
+      153430666,
+      163352556,
+      177819616,
+      183515097,
+      176976416,
+      189891378,
+      195062720,
+      209881608,
+      226981568,
+      241801708,
+      248798389,
+      262335112,
+      261107880,
+      180003800,
+      192257420,
+      208226170,
+      219278020,
+      222631502,
+      229271690,
+      206281611,
+      214616440,
+      224887300,
+      238173320,
+      246359870,
+      245398242,
+      237679176,
+      249776658,
+      256099794,
+      179078290,
+      194289510,
+      159148994,
+      176573514,
+      175710986,
+      193678486,
+      199258740,
+      166688268,
+      179042468,
+      194659528,
+      209135608,
+      223194538,
+      232367828,
+      241621309,
+      175704063,
+      186431293,
+      199815243,
+      209583740,
+      210441360,
+      210978890,
+      223182120,
+      224096737,
+      234982107,
+      244075087,
+      244618687,
+      248787414,
+      247340812,
+      254173003,
+      180667799,
+      194273079,
+      202412219,
+      177730225
      ],
      "p50": [
       334404367,
       351933067,
-      360090851,
-      287076709,
-      299040759,
-      308694059,
-      302481074,
-      283512443,
-      284380454,
-      294711554,
-      289154781,
-      296480681,
-      305074381,
-      296730305,
-      294496864,
-      299147332,
-      311659032,
-      229938862,
-      240080862,
-      254913962,
-      260132941,
-      255648541,
-      268120491,
-      278256597,
-      289853485,
-      298765435,
-      310101085,
-      320210604,
-      325269205,
-      340223298,
-      339674898,
-      280428548,
-      295217648,
-      309306848,
-      317342979,
-      313600518,
-      325757230,
-      330209582,
-      340737700,
-      353638750,
-      365569750,
-      369117728,
-      378801121,
-      384521493,
-      308373073,
-      321231173,
-      334001073,
-      345305123,
-      348198537,
-      348981415,
-      328153715,
-      334232414,
-      346244864,
-      358297664,
-      371096414,
-      371869406,
-      367032520,
-      380403952,
-      390032458,
-      321261064,
-      337749614,
-      298827068,
-      318030918,
-      320804390,
-      332980490,
-      340811764,
-      305962712,
-      318431212,
-      329016062,
-      343619412,
-      353609782,
-      365969952,
-      376223473,
-      309529117,
-      319858017,
-      331275567,
-      339582674,
-      335472434,
-      333165784,
-      343005634,
-      343220481,
-      351126681,
-      362596931,
-      365155581,
-      377822758,
-      375240256,
-      384755017,
-      319048833,
-      333689083,
-      349405583,
-      324107489
+      360090784,
+      288418481,
+      300382531,
+      310035831,
+      303822846,
+      284854215,
+      285722226,
+      296053326,
+      290496553,
+      297822453,
+      306416153,
+      298072077,
+      294355567,
+      299006035,
+      311517735,
+      229797565,
+      239939565,
+      254772665,
+      259991644,
+      255507244,
+      267979194,
+      278115300,
+      289712188,
+      298624138,
+      309959788,
+      320069307,
+      325552348,
+      340347706,
+      339799306,
+      280552956,
+      295342056,
+      309431256,
+      317467387,
+      313724926,
+      325881638,
+      330333990,
+      340862108,
+      353763158,
+      365694158,
+      368811329,
+      378494722,
+      384376210,
+      308227790,
+      321085890,
+      333855790,
+      345159840,
+      346678752,
+      347461630,
+      328154451,
+      334233150,
+      346245600,
+      358298400,
+      371097150,
+      371870142,
+      367033256,
+      380404688,
+      390033194,
+      321261800,
+      337750350,
+      298827804,
+      318031654,
+      320805126,
+      332981226,
+      340812500,
+      305963448,
+      318431948,
+      329016798,
+      343620148,
+      353610518,
+      365970688,
+      376224209,
+      309529853,
+      319858753,
+      331276303,
+      339583410,
+      335473170,
+      333166520,
+      343006370,
+      343221217,
+      351127417,
+      362597667,
+      365156317,
+      377823494,
+      375240992,
+      384755753,
+      319049569,
+      333689819,
+      349406319,
+      324108225
      ],
      "p90": [
       369347247,
       396351657,
-      410155141,
-      342164629,
-      356318249,
-      369929699,
-      367694174,
-      349324623,
-      352971654,
-      362312594,
-      358524761,
-      371331251,
-      380970391,
-      372006225,
-      373079884,
-      385308952,
-      395217602,
-      319757722,
-      330351282,
-      342410572,
-      353244051,
-      352138101,
-      367932311,
-      381126167,
-      391045035,
-      412428015,
-      433328735,
-      444280394,
-      456741525,
-      472272648,
-      471026308,
-      401704198,
-      413014418,
-      431664448,
-      434392799,
-      427165078,
-      441133110,
-      443704352,
-      454001690,
-      466415820,
-      482286930,
-      483628838,
-      495358501,
-      501639573,
-      419133453,
-      434735473,
-      441156703,
-      450441533,
-      449887227,
-      451802615,
-      436453225,
-      440477834,
-      455460074,
-      475013364,
-      486903994,
-      492793746,
-      490128120,
-      506085662,
-      518656528,
-      446870824,
-      459467414,
-      421562708,
-      431761768,
-      432699940,
-      444194490,
-      452048864,
-      416144142,
-      426855732,
-      435897932,
-      451980102,
-      464113352,
-      473860212,
-      485004123,
-      416644077,
-      425495747,
-      435200037,
-      437865504,
-      433097384,
-      432119234,
-      442057054,
-      441823781,
-      458474061,
-      479010501,
-      486699361,
-      503651688,
-      504017296,
-      521197767,
-      454893983,
-      470285883,
-      484842843,
-      452348449
+      410155074,
+      343506401,
+      357660021,
+      371271471,
+      369035946,
+      350666395,
+      354313426,
+      363654366,
+      359866533,
+      372673023,
+      382312163,
+      373347997,
+      372938587,
+      385167655,
+      395076305,
+      319616425,
+      330209985,
+      342269275,
+      353102754,
+      351996804,
+      367791014,
+      380984870,
+      390903738,
+      412286718,
+      433187438,
+      444139097,
+      457024668,
+      472397056,
+      471150716,
+      401828606,
+      413138826,
+      431788856,
+      434517207,
+      427289486,
+      441257518,
+      443828760,
+      454126098,
+      466540228,
+      482411338,
+      483322439,
+      495052102,
+      501494290,
+      418988170,
+      434590190,
+      441011420,
+      450296250,
+      448367442,
+      450282830,
+      436453961,
+      440478570,
+      455460810,
+      475014100,
+      486904730,
+      492794482,
+      490128856,
+      506086398,
+      518657264,
+      446871560,
+      459468150,
+      421563444,
+      431762504,
+      432700676,
+      444195226,
+      452049600,
+      416144878,
+      426856468,
+      435898668,
+      451980838,
+      464114088,
+      473860948,
+      485004859,
+      416644813,
+      425496483,
+      435200773,
+      437866240,
+      433098120,
+      432119970,
+      442057790,
+      441824517,
+      458474797,
+      479011237,
+      486700097,
+      503652424,
+      504018032,
+      521198503,
+      454894719,
+      470286619,
+      484843579,
+      452349185
      ]
     },
     "before": {
@@ -6503,30 +7064,30 @@
     "buffer_cents": 50000000,
     "card_count": 53,
     "card_rewards_cents": 1635154,
-    "cost_of_cash": 0.2795025714285714,
-    "cost_of_cash_credit_bound": true,
-    "credit_drawn_cents": 67,
-    "credit_first_date": "2026-11-12",
-    "discounts_captured_cents": 1595613,
+    "cost_of_cash": 0.2802325714285714,
+    "cost_of_cash_credit_bound": false,
+    "credit_drawn_cents": 0,
+    "credit_first_date": null,
+    "discounts_captured_cents": 1598244,
     "discounts_captured_count": 22,
     "epsilon": 0.05,
     "late_count": 4,
-    "value_vs_pay_on_due_cents": 2617307,
-    "worst_p10_balance_cents": 151306362,
+    "value_vs_pay_on_due_cents": 2616809,
+    "worst_p10_balance_cents": 151165065,
     "worst_p10_date": "2026-11-27"
    },
    "label": "Copperline Rail Systems pays 14 days late",
-   "plan_hash": "24e0d39f89bd1b711a11a909dbe4eec596824596ac6d26e37e36228793cd2c35",
+   "plan_hash": "d0be726f7b79e414eca9f04b04e07e3ab15bd0ae329d5788f61dc632f06fdfec",
    "solver": {
-    "case_seconds": 10.111937375011621,
+    "case_seconds": 8.369893499999307,
     "check_days": 61,
     "cols": 729,
-    "mip_gap": 8.152559553771114e-05,
+    "mip_gap": 0.0,
     "nonzeros": 2331,
     "rows": 626,
     "rows_naive": 18413,
     "scenario_rows": 227,
-    "solve_seconds": 3.616820958995959,
+    "solve_seconds": 2.958387999999104,
     "status": "optimal"
    },
    "what_if": {
@@ -6537,13 +7098,13 @@
   },
   {
    "cash_value": {
-    "annual_rate": 2.0056389010989015,
-    "base_objective_cents": -4607279,
-    "bumped_objective_cents": -3357189,
-    "cost_of_cash": 2.0456389010989016,
+    "annual_rate": 2.0058474725274724,
+    "base_objective_cents": -4607378,
+    "bumped_objective_cents": -3357158,
+    "cost_of_cash": 2.0458474725274725,
     "credit_bound": true,
     "k": 4,
-    "lam": 0.500036,
+    "lam": 0.500088,
     "n_scenarios": 200,
     "step_cents": 2500000
    },
@@ -6572,8 +7133,8 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 3.0478704999841284,
-      "value_cents": -1962709
+      "solve_seconds": 1.0285372080106754,
+      "value_cents": -1962808
      }
     ],
     "z_certify": 2.394
@@ -6700,23 +7261,6 @@
     },
     {
      "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-30",
-      "value_cents": 0
-     },
-     "amount_cents": 6196187,
-     "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-10",
-      "value_cents": 99283
-     },
-     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
-     "invoice_number": "JPR-67819",
-     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 24.",
-     "vendor": "Juniper Polymer Resins"
-    },
-    {
-     "after": {
       "option": "LATE",
       "send_date": "2027-01-04",
       "value_cents": -55580
@@ -6731,6 +7275,23 @@
      "invoice_number": "NWC-30794",
      "reason": "Paid late on Jan 4: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $252 late fee. Review this one.",
      "vendor": "Nettlefield Wire & Cable"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2027-01-20",
+      "value_cents": -24455
+     },
+     "amount_cents": 733680,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-05",
+      "value_cents": 0
+     },
+     "bill_id": "8c753910-fd64-4414-b5be-90b35f583558",
+     "invoice_number": "11/11/2026",
+     "reason": "Paid late on Jan 25: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $110 late fee. Review this one.",
+     "vendor": "Inkberry Packaging Co."
     },
     {
      "after": {
@@ -6786,23 +7347,6 @@
     {
      "after": {
       "option": "LATE",
-      "send_date": "2027-01-14",
-      "value_cents": -149568
-     },
-     "amount_cents": 4487296,
-     "before": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-30",
-      "value_cents": 0
-     },
-     "bill_id": "e3d95d8f-e96f-4470-8724-c2b92a36eb0a",
-     "invoice_number": "MRC-23665",
-     "reason": "Paid late on Jan 14: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $673 late fee. Review this one.",
-     "vendor": "Meridian Row Calibration Labs"
-    },
-    {
-     "after": {
-      "option": "LATE",
       "send_date": "2026-12-29",
       "value_cents": -44916
      },
@@ -6825,9 +7369,9 @@
      },
      "amount_cents": 2955309,
      "before": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-24",
-      "value_cents": 0
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-04",
+      "value_cents": 48717
      },
      "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
      "invoice_number": "QLA-45870",
@@ -6842,9 +7386,9 @@
      },
      "amount_cents": 1819444,
      "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-11-24",
-      "value_cents": 30016
+      "option": "BANK_DUE",
+      "send_date": "2026-12-14",
+      "value_cents": 0
      },
      "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
      "invoice_number": "HVC-70914",
@@ -6938,6 +7482,23 @@
     },
     {
      "after": {
+      "option": "LATE",
+      "send_date": "2027-01-15",
+      "value_cents": -45628
+     },
+     "amount_cents": 1368911,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-31",
+      "value_cents": 0
+     },
+     "bill_id": "48ce6641-2143-44aa-912b-04b1d70994c6",
+     "invoice_number": "NWC-30795",
+     "reason": "Paid late on Jan 15: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $205 late fee. Review this one.",
+     "vendor": "Nettlefield Wire & Cable"
+    },
+    {
+     "after": {
       "option": "CARD",
       "send_date": "2026-12-18",
       "value_cents": -3442
@@ -6969,6 +7530,23 @@
      "invoice_number": "VOS-85895",
      "reason": "Paid by card Jan 4: 1.5% cashback, minus a $100 surcharge; cash leaves Feb 10 with the statement (+37 days).",
      "vendor": "Vireo Office Supply"
+    },
+    {
+     "after": {
+      "option": "LATE",
+      "send_date": "2027-01-13",
+      "value_cents": -14824
+     },
+     "amount_cents": 444730,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-29",
+      "value_cents": 0
+     },
+     "bill_id": "84de324f-cbd2-4e9b-8234-8d08b9b677f6",
+     "invoice_number": "PL-42412",
+     "reason": "Paid late on Jan 19: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $67 late fee. Review this one.",
+     "vendor": "Pinegrove Lubricants"
     },
     {
      "after": {
@@ -7092,23 +7670,6 @@
     {
      "after": {
       "option": "LATE",
-      "send_date": "2027-01-20",
-      "value_cents": -123850
-     },
-     "amount_cents": 3715724,
-     "before": {
-      "option": "BANK_DUE",
-      "send_date": "2027-01-05",
-      "value_cents": 0
-     },
-     "bill_id": "32c8a642-48c3-449d-a195-5fe850de26ad",
-     "invoice_number": "EWH-77764",
-     "reason": "Paid late on Jan 25: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $557 late fee. Review this one.",
-     "vendor": "Elmstead Waste Hauling"
-    },
-    {
-     "after": {
-      "option": "LATE",
       "send_date": "2027-01-06",
       "value_cents": -161241
      },
@@ -7142,20 +7703,20 @@
     },
     {
      "after": {
-      "option": "LATE",
-      "send_date": "2027-01-12",
-      "value_cents": -93846
-     },
-     "amount_cents": 2815541,
-     "before": {
       "option": "BANK_DUE",
-      "send_date": "2026-12-28",
+      "send_date": "2026-12-30",
       "value_cents": 0
      },
-     "bill_id": "2af2a7d7-d9a6-42f8-8d6a-b7fee6d2a720",
-     "invoice_number": "WTD-52384",
-     "reason": "Paid late on Jan 12: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $422 late fee. Review this one.",
-     "vendor": "Westbrook Tool & Die"
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 24.",
+     "vendor": "Juniper Polymer Resins"
     },
     {
      "after": {
@@ -7211,19 +7772,19 @@
     {
      "after": {
       "option": "LATE",
-      "send_date": "2027-01-12",
-      "value_cents": -7170
+      "send_date": "2027-01-14",
+      "value_cents": -151389
      },
-     "amount_cents": 215120,
+     "amount_cents": 4541905,
      "before": {
       "option": "BANK_DUE",
-      "send_date": "2026-12-28",
+      "send_date": "2026-12-30",
       "value_cents": 0
      },
-     "bill_id": "6c18d276-54eb-4d45-be26-2524b089fc86",
-     "invoice_number": "USG-32662",
-     "reason": "Paid late on Jan 15: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $32 late fee. Review this one.",
-     "vendor": "Upland Safety Gear"
+     "bill_id": "63bd956a-8778-4dbc-a974-66309b5c5a3c",
+     "invoice_number": "JMT-89993",
+     "reason": "Paid late on Jan 14: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $681 late fee. Review this one.",
+     "vendor": "Jasper Mill Textiles"
     },
     {
      "after": {
@@ -7244,37 +7805,20 @@
     },
     {
      "after": {
-      "option": "LATE",
-      "send_date": "2027-01-15",
-      "value_cents": -23801
+      "option": "CARD",
+      "send_date": "2026-12-03",
+      "value_cents": -5636
      },
-     "amount_cents": 714040,
+     "amount_cents": 568046,
      "before": {
       "option": "BANK_DUE",
-      "send_date": "2026-12-31",
+      "send_date": "2026-11-30",
       "value_cents": 0
      },
-     "bill_id": "ef065c5b-6ad2-458e-90eb-141c22621a5a",
-     "invoice_number": "OC-15738",
-     "reason": "Paid late on Jan 15: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $107 late fee. Review this one.",
-     "vendor": "Ospreyline Courier"
-    },
-    {
-     "after": {
-      "option": "LATE",
-      "send_date": "2027-01-12",
-      "value_cents": -18202
-     },
-     "amount_cents": 546099,
-     "before": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-28",
-      "value_cents": 0
-     },
-     "bill_id": "17d7632a-a8a2-4fd5-923c-8da6a0521417",
-     "invoice_number": "DCS-33221",
-     "reason": "Paid late on Jan 15: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $82 late fee. Review this one.",
-     "vendor": "Dunmore Conveyor Systems"
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid by card Dec 3: 1.5% cashback, minus a $170 surcharge; cash leaves Jan 10 with the statement (+38 days).",
+     "vendor": "Harborline Logistics"
     },
     {
      "after": {
@@ -7431,9 +7975,9 @@
     },
     {
      "after": {
-      "option": "BANK_DUE",
-      "send_date": "2027-01-07",
-      "value_cents": 0
+      "option": "LATE",
+      "send_date": "2027-01-22",
+      "value_cents": -99454
      },
      "amount_cents": 2983772,
      "before": {
@@ -7443,7 +7987,7 @@
      },
      "bill_id": "047e0af2-511d-4870-aae4-45590d4eb8e1",
      "invoice_number": "SC-65350",
-     "reason": "Paid on the due date Jan 12 by ACH: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 24.",
+     "reason": "Paid late on Jan 27: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $448 late fee. Review this one.",
      "vendor": "Saltmarsh Coatings"
     },
     {
@@ -7562,7 +8106,7 @@
      },
      "bill_id": "b158cd8c-0fdf-4899-9f60-201f9b1a44fb",
      "invoice_number": "RH-89173",
-     "reason": "Paid on the due date Jan 19 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Dec 30.",
+     "reason": "Paid on the due date Jan 19 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Dec 31.",
      "vendor": "Redfield Hydraulics"
     },
     {
@@ -7737,6 +8281,23 @@
     },
     {
      "after": {
+      "option": "LATE",
+      "send_date": "2027-01-15",
+      "value_cents": -80786
+     },
+     "amount_cents": 2423706,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-31",
+      "value_cents": 0
+     },
+     "bill_id": "83afacdc-e2c5-4e9d-a281-c0aec9eb04fb",
+     "invoice_number": "MEC-38630",
+     "reason": "Paid late on Jan 21: paying on time would push the chance of dropping below the $500,000 buffer past 5%; costs a $364 late fee. Review this one.",
+     "vendor": "Millrace Engineering Consultants"
+    },
+    {
+     "after": {
       "option": "BANK_DUE",
       "send_date": "2027-02-03",
       "value_cents": 0
@@ -7758,7 +8319,7 @@
      "p10": [
       329232867,
       329232867,
-      330206424,
+      324917284,
       250899571,
       259930871,
       268209171,
@@ -7804,54 +8365,54 @@
       238713640,
       251672940,
       266540330,
-      270796933,
-      277130193,
-      260722539,
-      263088476,
-      274574876,
-      283344136,
-      291909406,
-      290284766,
-      292795111,
-      297504394,
-      306329479,
-      232540938,
-      243558768,
-      207076937,
-      206003068,
-      214236725,
-      213101920,
-      216551682,
-      185059839,
-      199269789,
-      218229869,
-      228682899,
-      241182083,
-      249963195,
-      259485163,
-      192484986,
-      206722656,
-      219931136,
-      213549347,
-      207816315,
-      195774139,
-      206103169,
-      189711813,
-      207739793,
-      217032363,
-      214104517,
-      221973764,
-      223482382,
-      227138843,
-      153444419,
-      172092469,
-      175957889,
-      148078942
+      267220173,
+      273998163,
+      257645118,
+      263089632,
+      274576032,
+      283345292,
+      291910562,
+      290285922,
+      289814223,
+      294523506,
+      306332363,
+      232543822,
+      243561652,
+      207079821,
+      206005952,
+      217870020,
+      216283814,
+      219678147,
+      185061548,
+      199271498,
+      218231578,
+      228684608,
+      241183792,
+      252991679,
+      262513647,
+      192484941,
+      206722611,
+      219931091,
+      213549302,
+      207816270,
+      195774094,
+      206103124,
+      189711768,
+      207739748,
+      217032318,
+      214104472,
+      221973719,
+      223482337,
+      227138798,
+      153444374,
+      172092424,
+      175957844,
+      148078897
      ],
      "p50": [
       334404367,
       351933067,
-      365379924,
+      360090784,
       293707621,
       305671671,
       315324971,
@@ -7897,54 +8458,54 @@
       360245450,
       372145250,
       383415400,
-      386103583,
-      392404573,
-      379404329,
-      377490826,
-      390344976,
-      400779326,
-      412482426,
-      407587006,
-      418941531,
-      425665484,
-      437402129,
-      371440798,
-      384738748,
-      352279897,
-      354585658,
-      364752475,
-      366708350,
-      369663042,
-      333224789,
-      345794289,
-      355777089,
-      369464089,
-      377135813,
-      382855005,
-      395310263,
-      329069326,
-      340131376,
-      351708376,
-      341302537,
-      329890705,
-      316554599,
-      328422249,
-      314918543,
-      322944843,
-      336419043,
-      336548517,
-      348046894,
-      346353692,
-      356083503,
-      289863569,
-      307332069,
-      323659519,
-      294138382
+      382526823,
+      389272543,
+      376326908,
+      377491982,
+      390346132,
+      400780482,
+      412483582,
+      407588162,
+      415960643,
+      422684596,
+      437405013,
+      371443682,
+      384741632,
+      352282781,
+      354588542,
+      368385770,
+      369890244,
+      372789507,
+      333226498,
+      345795998,
+      355778798,
+      369465798,
+      377137522,
+      385883489,
+      398338747,
+      329069281,
+      340131331,
+      351708331,
+      341302492,
+      329890660,
+      316554554,
+      328422204,
+      314918498,
+      322944798,
+      336418998,
+      336548472,
+      348046849,
+      346353647,
+      356083458,
+      289863524,
+      307332024,
+      323659474,
+      294138337
      ],
      "p90": [
       369347247,
       396351657,
-      415444214,
+      410155074,
       348795541,
       362949161,
       376560611,
@@ -7990,49 +8551,49 @@
       469971760,
       477771760,
       490208320,
-      491284213,
-      493135253,
-      483125519,
-      480989096,
-      498481916,
-      515891326,
-      530236246,
-      534010306,
-      544127301,
-      552130834,
-      566146799,
-      497272988,
-      510339808,
-      471349227,
-      464636108,
-      471414065,
-      473689410,
-      474554932,
-      436979789,
-      450645139,
-      462546859,
-      476704689,
-      484585543,
-      494086775,
-      501802443,
-      433611506,
-      441548396,
-      453127996,
-      439695417,
-      425879915,
-      415112569,
-      422326739,
-      411793993,
-      429219343,
-      450204143,
-      457041507,
-      472380154,
-      476990842,
-      490871613,
-      423442969,
-      443066209,
-      455822789,
-      428651662
+      487707453,
+      490003223,
+      480048098,
+      480990252,
+      498483072,
+      515892482,
+      530237402,
+      534011462,
+      541146413,
+      549149946,
+      566149683,
+      497275872,
+      510342692,
+      471352111,
+      464638992,
+      475047360,
+      476871304,
+      477681397,
+      436981498,
+      450646848,
+      462548568,
+      476706398,
+      484587252,
+      497115259,
+      504830927,
+      433611461,
+      441548351,
+      453127951,
+      439695372,
+      425879870,
+      415112524,
+      422326694,
+      411793948,
+      429219298,
+      450204098,
+      457041462,
+      472380109,
+      476990797,
+      490871568,
+      423442924,
+      443066164,
+      455822744,
+      428651617
      ]
     },
     "before": {
@@ -8419,30 +8980,30 @@
     "buffer_cents": 50000000,
     "card_count": 53,
     "card_rewards_cents": 1671986,
-    "cost_of_cash": 2.0456389010989016,
+    "cost_of_cash": 2.0458474725274725,
     "cost_of_cash_credit_bound": true,
     "credit_drawn_cents": 5289140,
-    "credit_first_date": "2026-11-12",
+    "credit_first_date": "2026-11-13",
     "discounts_captured_cents": 1095387,
     "discounts_captured_count": 15,
     "epsilon": 0.05,
     "late_count": 42,
-    "value_vs_pay_on_due_cents": -1962709,
+    "value_vs_pay_on_due_cents": -1962808,
     "worst_p10_balance_cents": 137055730,
     "worst_p10_date": "2026-12-11"
    },
    "label": "Copperline Rail Systems pays 30 days late",
-   "plan_hash": "fae4f0f2227a4eb03da163bcf665fea56437504b0a2572ac218f140c86ad44c8",
+   "plan_hash": "a09f03f06616530d899cdbcfeb536c50ed273e4e5a1159c9598aac4a6503b83c",
    "solver": {
-    "case_seconds": 7.561982292012544,
+    "case_seconds": 4.083683792006923,
     "check_days": 61,
     "cols": 729,
-    "mip_gap": 9.9892780790406e-05,
+    "mip_gap": 9.971629231759672e-05,
     "nonzeros": 2331,
     "rows": 626,
     "rows_naive": 18413,
     "scenario_rows": 227,
-    "solve_seconds": 3.0478704999841284,
+    "solve_seconds": 1.0285372080106754,
     "status": "optimal"
    },
    "what_if": {
@@ -8453,13 +9014,13 @@
   },
   {
    "cash_value": {
-    "annual_rate": 0.1313695164835165,
+    "annual_rate": 0.1301196923076923,
     "base_objective_cents": 4103780,
-    "bumped_objective_cents": 4185661,
-    "cost_of_cash": 0.1713695164835165,
-    "credit_bound": true,
+    "bumped_objective_cents": 4184882,
+    "cost_of_cash": 0.1701196923076923,
+    "credit_bound": false,
     "k": 4,
-    "lam": 0.0327524,
+    "lam": 0.0324408,
     "n_scenarios": 200,
     "step_cents": 2500000
    },
@@ -8488,99 +9049,13 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.941433958010748,
+      "solve_seconds": 0.7718373750103638,
       "value_cents": 4103780
      }
     ],
     "z_certify": 2.394
    },
-   "diff": [
-    {
-     "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-30",
-      "value_cents": 0
-     },
-     "amount_cents": 6196187,
-     "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-10",
-      "value_cents": 99283
-     },
-     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
-     "invoice_number": "JPR-67819",
-     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Juniper Polymer Resins"
-    },
-    {
-     "after": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-04",
-      "value_cents": 48717
-     },
-     "amount_cents": 2955309,
-     "before": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-24",
-      "value_cents": 0
-     },
-     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
-     "invoice_number": "QLA-45870",
-     "reason": "Paid early Dec 4 by ACH: saves $551 (2% of the subtotal) for paying 20 days early, a 34.7%/yr return on the cash, vs your 17.1%/yr cost of cash.",
-     "vendor": "Quarry Lane Aggregates"
-    },
-    {
-     "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-14",
-      "value_cents": 0
-     },
-     "amount_cents": 1819444,
-     "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-11-24",
-      "value_cents": 30016
-     },
-     "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
-     "invoice_number": "HVC-70914",
-     "reason": "Paid on the due date Dec 14 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Hollisford Valve Co."
-    },
-    {
-     "after": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-10",
-      "value_cents": 75174
-     },
-     "amount_cents": 4611999,
-     "before": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-30",
-      "value_cents": 0
-     },
-     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
-     "invoice_number": "JPR-67821",
-     "reason": "Paid early Dec 10 by RTP: saves $851 (2% of the subtotal) for paying 20 days early, a 34.3%/yr return on the cash, vs your 17.1%/yr cost of cash.",
-     "vendor": "Juniper Polymer Resins"
-    },
-    {
-     "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-11-30",
-      "value_cents": 0
-     },
-     "amount_cents": 568046,
-     "before": {
-      "option": "CARD",
-      "send_date": "2026-12-03",
-      "value_cents": -5636
-     },
-     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
-     "invoice_number": "HL-45779",
-     "reason": "Paid on the due date Dec 3 by ACH: the card surcharge outweighs the cashback, and no discount is offered.",
-     "vendor": "Harborline Logistics"
-    }
-   ],
+   "diff": [],
    "fan": {
     "after": {
      "p10": [
@@ -9247,8 +9722,8 @@
     "buffer_cents": 50000000,
     "card_count": 44,
     "card_rewards_cents": 1476172,
-    "cost_of_cash": 0.1713695164835165,
-    "cost_of_cash_credit_bound": true,
+    "cost_of_cash": 0.1701196923076923,
+    "cost_of_cash_credit_bound": false,
     "credit_drawn_cents": 0,
     "credit_first_date": null,
     "discounts_captured_cents": 3114745,
@@ -9262,15 +9737,15 @@
    "label": "Greywater Agricultural Equipment pays 7 days late",
    "plan_hash": "a0e617add95262af5daaccc662e956b8e0d3ac2f5a1ec378165ddc42f2f68c88",
    "solver": {
-    "case_seconds": 2.6749267079867423,
+    "case_seconds": 2.742038791999221,
     "check_days": 61,
     "cols": 727,
-    "mip_gap": 9.059944044686628e-05,
+    "mip_gap": 9.9420534239562e-05,
     "nonzeros": 2341,
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.941433958010748,
+    "solve_seconds": 0.7718373750103638,
     "status": "optimal"
    },
    "what_if": {
@@ -9316,7 +9791,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.994864417007193,
+      "solve_seconds": 0.7092781249957625,
       "value_cents": 3921902
      }
     ],
@@ -9342,37 +9817,20 @@
     },
     {
      "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-30",
-      "value_cents": 0
-     },
-     "amount_cents": 6196187,
-     "before": {
       "option": "BANK_EARLY",
-      "send_date": "2026-12-10",
-      "value_cents": 99283
+      "send_date": "2026-11-24",
+      "value_cents": 30016
      },
-     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
-     "invoice_number": "JPR-67819",
-     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Juniper Polymer Resins"
-    },
-    {
-     "after": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-04",
-      "value_cents": 48717
-     },
-     "amount_cents": 2955309,
+     "amount_cents": 1819444,
      "before": {
       "option": "BANK_DUE",
-      "send_date": "2026-12-24",
+      "send_date": "2026-12-14",
       "value_cents": 0
      },
-     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
-     "invoice_number": "QLA-45870",
-     "reason": "Paid early Dec 4 by ACH: saves $551 (2% of the subtotal) for paying 20 days early, a 34.7%/yr return on the cash, vs your 17.3%/yr cost of cash.",
-     "vendor": "Quarry Lane Aggregates"
+     "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
+     "invoice_number": "HVC-70914",
+     "reason": "Paid early Nov 24 by RTP: saves $339 (2% of the subtotal) for paying 20 days early, a 34.7%/yr return on the cash, vs your 17.3%/yr cost of cash.",
+     "vendor": "Hollisford Valve Co."
     },
     {
      "after": {
@@ -9441,6 +9899,40 @@
      "invoice_number": "QLA-45871",
      "reason": "Paid early Dec 4 by ACH: saves $1,039 (2% of the subtotal) for paying 20 days early, a 34.5%/yr return on the cash, vs your 17.3%/yr cost of cash.",
      "vendor": "Quarry Lane Aggregates"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "CARD",
+      "send_date": "2026-12-03",
+      "value_cents": -5636
+     },
+     "amount_cents": 568046,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid by card Dec 3: 1.5% cashback, minus a $170 surcharge; cash leaves Jan 10 with the statement (+38 days).",
+     "vendor": "Harborline Logistics"
     },
     {
      "after": {
@@ -10192,15 +10684,15 @@
    "label": "Greywater Agricultural Equipment pays 14 days late",
    "plan_hash": "29f8b6b0ed6cf527ccfaccda9b511d1f98be6fbfe25002fcbd9e032a1867dff9",
    "solver": {
-    "case_seconds": 2.9870457079960033,
+    "case_seconds": 2.3232520000019576,
     "check_days": 61,
     "cols": 727,
-    "mip_gap": 9.972793383850863e-05,
+    "mip_gap": 2.4222940818673743e-05,
     "nonzeros": 2341,
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.994864417007193,
+    "solve_seconds": 0.7092781249957625,
     "status": "optimal"
    },
    "what_if": {
@@ -10246,7 +10738,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.6439685840159655,
+      "solve_seconds": 0.7072234580118675,
       "value_cents": 3891886
      }
     ],
@@ -10269,57 +10761,6 @@
      "invoice_number": "VOS-85894",
      "reason": "Paid on the due date Dec 14 by ACH: the card surcharge outweighs the cashback, and no discount is offered.",
      "vendor": "Vireo Office Supply"
-    },
-    {
-     "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-30",
-      "value_cents": 0
-     },
-     "amount_cents": 6196187,
-     "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-10",
-      "value_cents": 99283
-     },
-     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
-     "invoice_number": "JPR-67819",
-     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Juniper Polymer Resins"
-    },
-    {
-     "after": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-04",
-      "value_cents": 48717
-     },
-     "amount_cents": 2955309,
-     "before": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-24",
-      "value_cents": 0
-     },
-     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
-     "invoice_number": "QLA-45870",
-     "reason": "Paid early Dec 4 by ACH: saves $551 (2% of the subtotal) for paying 20 days early, a 34.7%/yr return on the cash, vs your 17.4%/yr cost of cash.",
-     "vendor": "Quarry Lane Aggregates"
-    },
-    {
-     "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-14",
-      "value_cents": 0
-     },
-     "amount_cents": 1819444,
-     "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-11-24",
-      "value_cents": 30016
-     },
-     "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
-     "invoice_number": "HVC-70914",
-     "reason": "Paid on the due date Dec 14 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Hollisford Valve Co."
     },
     {
      "after": {
@@ -10388,6 +10829,40 @@
      "invoice_number": "QLA-45871",
      "reason": "Paid early Dec 4 by ACH: saves $1,039 (2% of the subtotal) for paying 20 days early, a 34.5%/yr return on the cash, vs your 17.4%/yr cost of cash.",
      "vendor": "Quarry Lane Aggregates"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "CARD",
+      "send_date": "2026-12-03",
+      "value_cents": -5636
+     },
+     "amount_cents": 568046,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid by card Dec 3: 1.5% cashback, minus a $170 surcharge; cash leaves Jan 10 with the statement (+38 days).",
+     "vendor": "Harborline Logistics"
     },
     {
      "after": {
@@ -11139,15 +11614,15 @@
    "label": "Greywater Agricultural Equipment pays 30 days late",
    "plan_hash": "15049ca9134df70ac46ddff30e1b480b6451d4c7dbc24b600f9bc5d3c4cbf2da",
    "solver": {
-    "case_seconds": 2.6205542919924483,
+    "case_seconds": 2.0100664169876836,
     "check_days": 61,
     "cols": 728,
-    "mip_gap": 9.483124701010241e-05,
+    "mip_gap": 9.481264353306291e-05,
     "nonzeros": 2342,
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.6439685840159655,
+    "solve_seconds": 0.7072234580118675,
     "status": "optimal"
    },
    "what_if": {
@@ -11193,7 +11668,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.8370815420057625,
+      "solve_seconds": 1.060604833997786,
       "value_cents": 3606668
      }
     ],
@@ -11202,37 +11677,20 @@
    "diff": [
     {
      "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-30",
-      "value_cents": 0
-     },
-     "amount_cents": 6196187,
-     "before": {
       "option": "BANK_EARLY",
-      "send_date": "2026-12-10",
-      "value_cents": 99283
+      "send_date": "2026-11-24",
+      "value_cents": 30016
      },
-     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
-     "invoice_number": "JPR-67819",
-     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Juniper Polymer Resins"
-    },
-    {
-     "after": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-12-04",
-      "value_cents": 48717
-     },
-     "amount_cents": 2955309,
+     "amount_cents": 1819444,
      "before": {
       "option": "BANK_DUE",
-      "send_date": "2026-12-24",
+      "send_date": "2026-12-14",
       "value_cents": 0
      },
-     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
-     "invoice_number": "QLA-45870",
-     "reason": "Paid early Dec 4 by ACH: saves $551 (2% of the subtotal) for paying 20 days early, a 34.7%/yr return on the cash, vs your 16.3%/yr cost of cash.",
-     "vendor": "Quarry Lane Aggregates"
+     "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
+     "invoice_number": "HVC-70914",
+     "reason": "Paid early Nov 24 by RTP: saves $339 (2% of the subtotal) for paying 20 days early, a 34.7%/yr return on the cash, vs your 16.3%/yr cost of cash.",
+     "vendor": "Hollisford Valve Co."
     },
     {
      "after": {
@@ -11301,6 +11759,40 @@
      "invoice_number": "QLA-45871",
      "reason": "Paid early Dec 4 by ACH: saves $1,039 (2% of the subtotal) for paying 20 days early, a 34.5%/yr return on the cash, vs your 16.3%/yr cost of cash.",
      "vendor": "Quarry Lane Aggregates"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "CARD",
+      "send_date": "2026-12-03",
+      "value_cents": -5636
+     },
+     "amount_cents": 568046,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid by card Dec 3: 1.5% cashback, minus a $170 surcharge; cash leaves Jan 10 with the statement (+38 days).",
+     "vendor": "Harborline Logistics"
     },
     {
      "after": {
@@ -12154,15 +12646,15 @@
    "label": "Unexpected $100,000 payment today",
    "plan_hash": "38741360d8d8fea418462f85e7c23485175aa3066d2794e45939a227ea3347a2",
    "solver": {
-    "case_seconds": 3.356835916027194,
+    "case_seconds": 3.454353958979482,
     "check_days": 61,
     "cols": 727,
-    "mip_gap": 0.0,
+    "mip_gap": 6.266171435741272e-05,
     "nonzeros": 2341,
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.8370815420057625,
+    "solve_seconds": 1.060604833997786,
     "status": "optimal"
    },
    "what_if": {
@@ -12208,7 +12700,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.6889614579849876,
+      "solve_seconds": 0.5008417920034844,
       "value_cents": 3040581
      }
     ],
@@ -12218,36 +12710,19 @@
     {
      "after": {
       "option": "BANK_DUE",
-      "send_date": "2026-12-30",
+      "send_date": "2026-12-24",
       "value_cents": 0
      },
-     "amount_cents": 6196187,
+     "amount_cents": 2955309,
      "before": {
       "option": "BANK_EARLY",
-      "send_date": "2026-12-10",
-      "value_cents": 99283
+      "send_date": "2026-12-04",
+      "value_cents": 48717
      },
-     "bill_id": "7ee31822-4232-484d-890b-c4ca4052808a",
-     "invoice_number": "JPR-67819",
-     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Juniper Polymer Resins"
-    },
-    {
-     "after": {
-      "option": "BANK_DUE",
-      "send_date": "2026-12-14",
-      "value_cents": 0
-     },
-     "amount_cents": 1819444,
-     "before": {
-      "option": "BANK_EARLY",
-      "send_date": "2026-11-24",
-      "value_cents": 30016
-     },
-     "bill_id": "e8fe6726-f66a-4d64-aa9e-61998fb35bd6",
-     "invoice_number": "HVC-70914",
-     "reason": "Paid on the due date Dec 14 by RTP: the 2/10 net 30 discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
-     "vendor": "Hollisford Valve Co."
+     "bill_id": "09363dc5-f5cf-4744-94be-09c5e997135c",
+     "invoice_number": "QLA-45870",
+     "reason": "Paid on the due date Dec 30 by ACH: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Quarry Lane Aggregates"
     },
     {
      "after": {
@@ -12337,6 +12812,23 @@
     {
      "after": {
       "option": "BANK_DUE",
+      "send_date": "2026-12-30",
+      "value_cents": 0
+     },
+     "amount_cents": 4611999,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-10",
+      "value_cents": 75174
+     },
+     "bill_id": "b73ebde8-d5c4-484d-9a7e-057f0282d028",
+     "invoice_number": "JPR-67821",
+     "reason": "Paid on the due date Dec 30 by RTP: the 2/10 net 30 EOM discount (37.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Juniper Polymer Resins"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
       "send_date": "2026-12-24",
       "value_cents": 0
      },
@@ -12367,6 +12859,23 @@
      "invoice_number": "NWC-30796",
      "reason": "Paid on the due date Jan 15 by RTP: the 1/15 net 45 discount (12.3%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Dec 20.",
      "vendor": "Nettlefield Wire & Cable"
+    },
+    {
+     "after": {
+      "option": "CARD",
+      "send_date": "2026-12-03",
+      "value_cents": -5636
+     },
+     "amount_cents": 568046,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-11-30",
+      "value_cents": 0
+     },
+     "bill_id": "16dd20c5-520d-44a5-a6c5-0f019783b06e",
+     "invoice_number": "HL-45779",
+     "reason": "Paid by card Dec 3: 1.5% cashback, minus a $170 surcharge; cash leaves Jan 10 with the statement (+38 days).",
+     "vendor": "Harborline Logistics"
     },
     {
      "after": {
@@ -13254,15 +13763,15 @@
    "label": "Unexpected $250,000 payment today",
    "plan_hash": "671422c214c77fd7b7b2377cbc22745d896e0a389599986f4866b5c0294ee3fd",
    "solver": {
-    "case_seconds": 3.3521784160111565,
+    "case_seconds": 2.2777195000089705,
     "check_days": 61,
     "cols": 727,
-    "mip_gap": 5.141747043199636e-05,
+    "mip_gap": 1.183984245022508e-05,
     "nonzeros": 2341,
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.6889614579849876,
+    "solve_seconds": 0.5008417920034844,
     "status": "optimal"
    },
    "what_if": {
