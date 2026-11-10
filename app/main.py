@@ -1,5 +1,6 @@
 """Tempo HTTP API. Routes only; all logic lives in the `tempo` package."""
 
+import hashlib
 import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -285,15 +286,24 @@ def post_approve(body: ApproveRequest) -> Payload:
     """Record the CFO's approval in the append-only, hash-chained audit log. Nothing is sent to Ramp."""
     s = state()
     autonomy = body.autonomy.model_dump()
+    rows = {r["bill_id"]: r for r in s.bundle["bills"]}
+    ids = sorted(set(body.bill_ids)) if body.bill_ids is not None else sorted(rows)
+    unknown = [i for i in ids if i not in rows]
+    if unknown:
+        raise HTTPException(status_code=422, detail=f"{len(unknown)} unknown bill ids")
+    scope = {
+        "bill_count": len(ids),
+        "cash_out_cents": sum(rows[i]["cash_out_cents"] for i in ids),
+        "value_cents": sum(rows[i]["value_cents"] for i in ids),
+        "rtp_dependent_count": sum(rows[i]["rtp_dependent"] for i in ids),
+        "bill_ids_sha256": hashlib.sha256(",".join(ids).encode()).hexdigest(),
+        "approver_authenticated": False,
+    }
     metrics = {
-        k: s.bundle["kpis"][k]
-        for k in (
-            "value_vs_pay_on_due_cents",
-            "breach_rate",
-            "breach_upper",
-            "discounts_captured_count",
-            "card_count",
-        )
+        "scope": scope,
+        "plan": {
+            k: s.bundle["kpis"][k] for k in ("value_vs_pay_on_due_cents", "breach_rate", "breach_upper")
+        },
     }
     with s.lock:
         s.autonomy = autonomy
@@ -303,6 +313,7 @@ def post_approve(body: ApproveRequest) -> Payload:
             )
         except ValueError as exc:
             raise HTTPException(status_code=409, detail=str(exc)) from exc
+        s.approved_ids = set(ids)
     return Payload(data={"entry": entry, "chain": audit.verify_chain(s.audit_path).__dict__})
 
 
@@ -315,7 +326,13 @@ def get_audit() -> Payload:
 @app.get("/api/ramp/payload-preview", response_model=Payload)
 def get_payload_preview() -> Payload:
     s = state()
-    return Payload(data=payment_run(s.bundle["bills"], set(s.overrides), s.autonomy, s.bundle["plan_hash"]))
+    rows = s.bundle["bills"]
+    if s.approved_ids:
+        rows = [r for r in rows if r["bill_id"] in s.approved_ids]
+    preview = payment_run(rows, set(s.overrides), s.autonomy, s.bundle["plan_hash"])
+    return Payload(
+        data={**preview, "scope": "last approval" if s.approved_ids else "whole plan (not yet approved)"}
+    )
 
 
 def _terms_from(t: TermsInput | None) -> TermsRecord | None:

@@ -81,6 +81,27 @@ def document_view(invoice: Invoice) -> dict:
     }
 
 
+MODEL_CHECK_LABELS = {
+    "ok": "Quote found in the document and re-parsed to the same terms",
+    "quote_not_found": "The model's quote is not in the document",
+    "value_mismatch": "The model's value does not match its own quote",
+    "no_value": "The model gave no reading",
+}
+
+
+def model_check_label(r: Reconciled) -> str:
+    """Plain words for the model's status; never a raw transport error."""
+    check = r.model_checks.get("terms")
+    if check is not None:
+        return MODEL_CHECK_LABELS.get(check.reason, check.reason)
+    error = (r.provider_error or "").lower()
+    if "timed out" in error or "transport" in error or "unreachable" in error:
+        return "No model reading: the local model did not answer in time for this invoice"
+    if "no cached" in error or "cache" in error:
+        return "No model reading for this invoice on this deployment"
+    return "No model reading"
+
+
 def reconciliation_view(r: Reconciled) -> dict:
     check = r.model_checks.get("terms")
     return {
@@ -91,11 +112,12 @@ def reconciliation_view(r: Reconciled) -> dict:
         "model_quote": check.quote if check else None,
         "model_source": check.source if check else None,
         "model_check": check.reason if check else ("no model output" if r.provider_error else None),
+        "model_check_label": model_check_label(r),
         "proposed": terms_dict(r.terms.proposed),
         "accepted": terms_dict(r.terms.value),
         "authoritative_source": r.authoritative_source,
         "overridden_in_email": r.overridden_in_email,
-        "provider_error": r.provider_error,
+        "provider_error": None if r.provider_error is None else "no model output",
         "late_fee": asdict(r.late_fee) if r.late_fee else None,
         "accepted_methods": list(r.accepted_methods),
         "card_surcharge_bps": r.card_surcharge_bps,

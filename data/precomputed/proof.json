@@ -74,11 +74,11 @@
     },
     "conflict": {
      "correct": 0,
-     "n": 4
+     "n": 5
     },
     "history_mismatch": {
      "correct": 0,
-     "n": 3
+     "n": 2
     },
     "regex_only": {
      "correct": 23,
@@ -94,21 +94,21 @@
     "routed": 11
    },
    "hallucination_catch": {
-    "kept_out_of_plan": 6,
+    "kept_out_of_plan": 7,
     "rate": 1.0,
     "rejected_by_verification": 1,
-    "wrong_model_readings": 6
+    "wrong_model_readings": 7
    },
    "invoice_all_correct_rate": 0.9150943396226415,
    "model": {
     "accuracy": 0.8773584905660378,
-    "answered": 192,
+    "answered": 193,
     "correct": 186,
-    "coverage": 0.9056603773584906,
+    "coverage": 0.910377358490566,
     "discount_precision": 1.0,
-    "discount_recall": 0.9017857142857143,
+    "discount_recall": 0.9107142857142857,
     "n": 212,
-    "precision": 0.96875
+    "precision": 0.9637305699481865
    },
    "reconciled": {
     "accuracy": 0.9386792452830188,
@@ -287,11 +287,7 @@
     "buckets": {
      "conflict": {
       "correct": 0,
-      "n": 4
-     },
-     "history_mismatch": {
-      "correct": 0,
-      "n": 1
+      "n": 5
      }
     },
     "expected_reviews_routed": {
@@ -299,19 +295,19 @@
      "routed": 5
     },
     "hallucination_catch": {
-     "kept_out_of_plan": 4,
+     "kept_out_of_plan": 5,
      "rate": 1.0,
      "rejected_by_verification": 0,
-     "wrong_model_readings": 4
+     "wrong_model_readings": 5
     },
     "invoice_all_correct_rate": 0.0,
     "model": {
      "accuracy": 0.0,
-     "answered": 4,
+     "answered": 5,
      "correct": 0,
-     "coverage": 0.8,
+     "coverage": 1.0,
      "discount_precision": 1.0,
-     "discount_recall": 0.6,
+     "discount_recall": 0.8,
      "n": 5,
      "precision": 0.0
     },

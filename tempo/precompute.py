@@ -238,7 +238,7 @@ def build_bundle(dataset: Dataset, ingest_result: IngestResult, base: Solved) ->
         **plan_summary(base, pay_on_due),
         "markers": markers(base.plan),
         "credit_cum_cents": [int(x) for x in base.plan.credit_cum_cents],
-        "bills": bill_rows(base.plan, decisions, ingest_result.reconciled),
+        "bills": bill_rows(base.plan, decisions, ingest_result.reconciled, c.as_of),
         "fixed_outflows": [
             {
                 "date": f.on.isoformat(),

@@ -5,9 +5,18 @@ assumptions.py, or the solver; nothing is invented.
 from dataclasses import asdict
 from datetime import date, timedelta
 
-from tempo.assumptions import EPSILON, SEED_C, WILSON_Z_REPORT
+from tempo.assumptions import (
+    ACH_LEAD_BUSINESS_DAYS,
+    ACH_LEAD_DISCOUNT_BUSINESS_DAYS,
+    ACH_LEAD_NEW_VENDOR_BUSINESS_DAYS,
+    EPSILON,
+    SEED_C,
+    WILSON_Z_REPORT,
+)
+from tempo.business_days import subtract_business_days
 from tempo.extract.reconcile import Reconciled
 from tempo.models import Decision, PaymentOption
+from tempo.optimize.baselines import annualized_discount_return
 from tempo.optimize.cash_value import CashValue
 from tempo.optimize.certify import Certification
 from tempo.optimize.engine import Plan
@@ -22,6 +31,17 @@ STATUS_CHIPS = {
     "model_verified": "Model verified",
     "human_accepted": "Accepted by reviewer",
 }
+
+
+def rtp_dependent(bill: PlannableBill, o: PaymentOption) -> bool:
+    """True if the plan needs RTP: as standard ACH from the planned send date it would arrive too late."""
+    if o.rail != "RTP":
+        return False
+    target = bill.discount_deadline if o.takes_discount and bill.discount_deadline else bill.due_date
+    lead = ACH_LEAD_DISCOUNT_BUSINESS_DAYS if o.takes_discount else ACH_LEAD_BUSINESS_DAYS
+    if bill.is_new_vendor:
+        lead = ACH_LEAD_NEW_VENDOR_BUSINESS_DAYS
+    return subtract_business_days(target, lead) < o.send_date
 
 
 def chip(status: str) -> str:
@@ -45,15 +65,17 @@ def option_view(o: PaymentOption) -> dict:
     }
 
 
-def bill_rows(plan: Plan, decisions: tuple[Decision, ...], reconciled: dict[str, Reconciled]) -> list[dict]:
+def bill_rows(
+    plan: Plan, decisions: tuple[Decision, ...], reconciled: dict[str, Reconciled], as_of: date | None = None
+) -> list[dict]:
     """One row per bill for the Payment run table (plus everything the side panel needs)."""
     rows = []
     for bill, opts, c, d in zip(plan.bills, plan.options, plan.choice, decisions, strict=True):
-        rows.append(_row(bill, opts, c, d, reconciled.get(bill.id)))
+        rows.append(_row(bill, opts, c, d, reconciled.get(bill.id), as_of))
     return rows
 
 
-def _row(bill: PlannableBill, opts, c: int, d: Decision, r: Reconciled | None) -> dict:
+def _row(bill: PlannableBill, opts, c: int, d: Decision, r: Reconciled | None, as_of: date | None) -> dict:
     o = opts[c]
     return {
         "bill_id": bill.id,
@@ -80,6 +102,11 @@ def _row(bill: PlannableBill, opts, c: int, d: Decision, r: Reconciled | None) -
         "takes_discount": o.takes_discount,
         "is_card": o.rail == "CARD",
         "is_late": o.kind == "LATE",
+        "arrives_after_due": o.arrival_date > bill.due_date,
+        "expected": as_of is not None and bill.issued_at > as_of,
+        "rtp_dependent": rtp_dependent(bill, o),
+        "arrival_date": o.arrival_date.isoformat(),
+        "terms_rate": annualized_discount_return(bill) if o.takes_discount else None,
         "reason": d.reason,
         "binding_day": d.binding_day.isoformat() if d.binding_day else None,
         "options": [option_view(x) for x in opts],
@@ -140,6 +167,12 @@ def kpis(plan: Plan, oos: PolicyResult, cv: CashValue, buffer_cents: int, as_of:
         "cost_of_cash": cv.cost_of_cash,
         "cost_of_cash_credit_bound": cv.credit_bound,
         "late_count": oos.late_count,
+        "arrive_after_due_count": sum(
+            o.arrival_date > b.due_date for b, o in zip(plan.bills, chosen, strict=True)
+        ),
+        "yield_cents": sum(o.yield_cents for o in chosen),
+        "surcharge_cents": sum(o.surcharge_cents for o in chosen),
+        "fees_cents": sum(o.fee_cents for o in chosen),
         "credit_drawn_cents": plan.credit_drawn_cents(),
         "credit_first_date": _first_credit_date(plan, as_of),
     }

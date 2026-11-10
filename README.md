@@ -64,7 +64,7 @@ Breach = any end-of-day balance below the $500,000 buffer in 13 weeks, measured 
 | **Tempo** (chance-constrained, certified) | $41,038 | 2.22% (2.48%) | 2.74% |
 
 - Certified with N = 200, K = 4 on a separate 10,000-scenario set (Bonferroni-corrected Wilson bound).
-- Solver: 630 rows instead of 18,413, 0.74 s, gap 0.010%.
+- Solver: 630 rows instead of 18,413, 0.73 s, gap 0.010%.
 - Extraction (synthetic, held-out split): Tempo auto-accepts 87% of invoices' terms at 100.0% precision and routes the rest to Needs review.
 
 Full tables, certification steps, ablations, what-ifs, and the extraction eval: [docs/RESULTS.md](docs/RESULTS.md).

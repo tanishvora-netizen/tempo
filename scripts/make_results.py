@@ -343,6 +343,7 @@ def demo_tokens(bundle: dict, proof: dict, whatifs: dict) -> dict[str, str]:
         "SOLVE_S": f"{bundle['solver']['solve_seconds']:.2f}",
         "PRESET_LABEL": preset["label"],
         "FLIPS": str(len(preset["diff"])),
+        "PRESET_LATE": str(preset["kpis"]["late_count"]),
         "REVIEW_COUNT": str(sum(r["needs_review"] for r in bundle["bills"])),
         "COVERAGE": pct(rec["coverage"], 0),
         "PRECISION": pct(rec["precision"], 1),

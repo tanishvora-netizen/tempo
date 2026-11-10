@@ -68,7 +68,7 @@ def live_solve(
         "fan_after": balance_fan(plan, fan_head, c.as_of, c.buffer_cents),
         "fan_before": balance_fan(pay_on_due, fan_head, c.as_of, c.buffer_cents),
         "diff": diff_plans(base_plan, plan, decisions),
-        "bills": bill_rows(plan, decisions, ingest_result.reconciled),
+        "bills": bill_rows(plan, decisions, ingest_result.reconciled, c.as_of),
         "solve_seconds": plan.stats.solve_seconds if plan.stats else None,
         "total_seconds": seconds,
         "plan_hash": plan.plan_hash(),

@@ -52,7 +52,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.5487041659944225,
+      "solve_seconds": 0.5506439589953516,
       "value_cents": 3379091
      }
     ],
@@ -1180,6 +1180,7 @@
    },
    "id": "delay-cus_001-7",
    "kpis": {
+    "arrive_after_due_count": 5,
     "breach_rate": 0.0249,
     "breach_upper": 0.02759464774045053,
     "buffer_cents": 50000000,
@@ -1192,15 +1193,18 @@
     "discounts_captured_cents": 2349159,
     "discounts_captured_count": 37,
     "epsilon": 0.05,
+    "fees_cents": 0,
     "late_count": 0,
+    "surcharge_cents": 401971,
     "value_vs_pay_on_due_cents": 3379091,
     "worst_p10_balance_cents": 137270925,
-    "worst_p10_date": "2026-11-27"
+    "worst_p10_date": "2026-11-27",
+    "yield_cents": -93689
    },
    "label": "Bluefin Marine Outfitters pays 7 days late",
    "plan_hash": "b807314dc3d00dfb95c12ee253243e11da2d1ce0e7de8b8feda6c6d0a2507c21",
    "solver": {
-    "case_seconds": 1.6640388749947306,
+    "case_seconds": 1.712359249999281,
     "check_days": 61,
     "cols": 729,
     "mip_gap": 0.0,
@@ -1208,7 +1212,7 @@
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.5487041659944225,
+    "solve_seconds": 0.5506439589953516,
     "status": "optimal"
    },
    "what_if": {
@@ -1254,7 +1258,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.32196220799232833,
+      "solve_seconds": 0.32148566699470393,
       "value_cents": 2618966
      }
     ],
@@ -2484,6 +2488,7 @@
    },
    "id": "delay-cus_001-14",
    "kpis": {
+    "arrive_after_due_count": 10,
     "breach_rate": 0.0247,
     "breach_upper": 0.027384665480073202,
     "buffer_cents": 50000000,
@@ -2496,15 +2501,18 @@
     "discounts_captured_cents": 1688566,
     "discounts_captured_count": 25,
     "epsilon": 0.05,
+    "fees_cents": 91343,
     "late_count": 5,
+    "surcharge_cents": 412946,
     "value_vs_pay_on_due_cents": 2618966,
     "worst_p10_balance_cents": 148209765,
-    "worst_p10_date": "2026-11-27"
+    "worst_p10_date": "2026-11-27",
+    "yield_cents": 24727
    },
    "label": "Bluefin Marine Outfitters pays 14 days late",
    "plan_hash": "a57339ef3597125070a72a120a76dcc131efd963de9b40398df9ca45483c1be2",
    "solver": {
-    "case_seconds": 1.5505929170176387,
+    "case_seconds": 1.5514713329903316,
     "check_days": 61,
     "cols": 731,
     "mip_gap": 0.0,
@@ -2512,7 +2520,7 @@
     "rows": 631,
     "rows_naive": 18413,
     "scenario_rows": 232,
-    "solve_seconds": 0.32196220799232833,
+    "solve_seconds": 0.32148566699470393,
     "status": "optimal"
    },
    "what_if": {
@@ -2558,7 +2566,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 8.846411584003363,
+      "solve_seconds": 8.926549458992667,
       "value_cents": -1970296
      }
     ],
@@ -4587,6 +4595,7 @@
    },
    "id": "delay-cus_001-30",
    "kpis": {
+    "arrive_after_due_count": 46,
     "breach_rate": 0.0237,
     "breach_upper": 0.026334086383929145,
     "buffer_cents": 50000000,
@@ -4599,15 +4608,18 @@
     "discounts_captured_cents": 1067808,
     "discounts_captured_count": 14,
     "epsilon": 0.05,
+    "fees_cents": 1836919,
     "late_count": 41,
+    "surcharge_cents": 905387,
     "value_vs_pay_on_due_cents": -1970296,
     "worst_p10_balance_cents": 143105204,
-    "worst_p10_date": "2027-02-08"
+    "worst_p10_date": "2027-02-08",
+    "yield_cents": 360800
    },
    "label": "Bluefin Marine Outfitters pays 30 days late",
    "plan_hash": "14f468d67f3a07c0b31ff4939ee22953f261a1c1eea0211ed25d39482c5f025e",
    "solver": {
-    "case_seconds": 19.322684167011175,
+    "case_seconds": 19.46345283300616,
     "check_days": 61,
     "cols": 729,
     "mip_gap": 9.998497687459903e-05,
@@ -4615,7 +4627,7 @@
     "rows": 631,
     "rows_naive": 18413,
     "scenario_rows": 232,
-    "solve_seconds": 8.846411584003363,
+    "solve_seconds": 8.926549458992667,
     "status": "optimal"
    },
    "what_if": {
@@ -4661,7 +4673,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.4906127089925576,
+      "solve_seconds": 0.4988401669834275,
       "value_cents": 3380108
      }
     ],
@@ -5653,6 +5665,7 @@
    },
    "id": "delay-cus_002-7",
    "kpis": {
+    "arrive_after_due_count": 7,
     "breach_rate": 0.0232,
     "breach_upper": 0.025808364888795086,
     "buffer_cents": 50000000,
@@ -5665,15 +5678,18 @@
     "discounts_captured_cents": 2384683,
     "discounts_captured_count": 38,
     "epsilon": 0.05,
+    "fees_cents": 13646,
     "late_count": 2,
+    "surcharge_cents": 492072,
     "value_vs_pay_on_due_cents": 3380108,
     "worst_p10_balance_cents": 151831807,
-    "worst_p10_date": "2027-01-10"
+    "worst_p10_date": "2027-01-10",
+    "yield_cents": -62175
    },
    "label": "Copperline Rail Systems pays 7 days late",
    "plan_hash": "02c66242bbf95d4b5559afd2bce0319787a6034086ac8fbe403e9d3bdd57d78a",
    "solver": {
-    "case_seconds": 1.833528208982898,
+    "case_seconds": 1.8383172919857316,
     "check_days": 61,
     "cols": 728,
     "mip_gap": 0.0,
@@ -5681,7 +5697,7 @@
     "rows": 626,
     "rows_naive": 18413,
     "scenario_rows": 227,
-    "solve_seconds": 0.4906127089925576,
+    "solve_seconds": 0.4988401669834275,
     "status": "optimal"
    },
    "what_if": {
@@ -5727,7 +5743,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 2.958387999999104,
+      "solve_seconds": 2.944084082992049,
       "value_cents": 2616809
      }
     ],
@@ -5918,7 +5934,7 @@
      },
      "bill_id": "21b518ce-8dfe-4d85-9598-7fbe4d49be1a",
      "invoice_number": "DCS-33220",
-     "reason": "Paid early Nov 24 by ACH: saves $150 (1% of the subtotal) for paying 20 days early, a 18.4%/yr return on the cash, vs your 28%/yr cost of cash.",
+     "reason": "Paid early Nov 24 by ACH: saves $150 (1% of the subtotal) for paying 20 days early, a 18.4%/yr return on the cash, vs your 28.0%/yr cost of cash.",
      "vendor": "Dunmore Conveyor Systems"
     },
     {
@@ -7059,6 +7075,7 @@
    },
    "id": "delay-cus_002-14",
    "kpis": {
+    "arrive_after_due_count": 9,
     "breach_rate": 0.0226,
     "breach_upper": 0.025177102155878765,
     "buffer_cents": 50000000,
@@ -7071,15 +7088,18 @@
     "discounts_captured_cents": 1598244,
     "discounts_captured_count": 22,
     "epsilon": 0.05,
+    "fees_cents": 40326,
     "late_count": 4,
+    "surcharge_cents": 580875,
     "value_vs_pay_on_due_cents": 2616809,
     "worst_p10_balance_cents": 151165065,
-    "worst_p10_date": "2026-11-27"
+    "worst_p10_date": "2026-11-27",
+    "yield_cents": 58379
    },
    "label": "Copperline Rail Systems pays 14 days late",
    "plan_hash": "d0be726f7b79e414eca9f04b04e07e3ab15bd0ae329d5788f61dc632f06fdfec",
    "solver": {
-    "case_seconds": 8.369893499999307,
+    "case_seconds": 8.314148083009059,
     "check_days": 61,
     "cols": 729,
     "mip_gap": 0.0,
@@ -7087,7 +7107,7 @@
     "rows": 626,
     "rows_naive": 18413,
     "scenario_rows": 227,
-    "solve_seconds": 2.958387999999104,
+    "solve_seconds": 2.944084082992049,
     "status": "optimal"
    },
    "what_if": {
@@ -7133,7 +7153,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 1.0285372080106754,
+      "solve_seconds": 1.0220305420225486,
       "value_cents": -1962808
      }
     ],
@@ -8975,6 +8995,7 @@
    },
    "id": "delay-cus_002-30",
    "kpis": {
+    "arrive_after_due_count": 47,
     "breach_rate": 0.0235,
     "breach_upper": 0.026123833194923243,
     "buffer_cents": 50000000,
@@ -8987,15 +9008,18 @@
     "discounts_captured_cents": 1095387,
     "discounts_captured_count": 15,
     "epsilon": 0.05,
+    "fees_cents": 1898866,
     "late_count": 42,
+    "surcharge_cents": 643556,
     "value_vs_pay_on_due_cents": -1962808,
     "worst_p10_balance_cents": 137055730,
-    "worst_p10_date": "2026-12-11"
+    "worst_p10_date": "2026-12-11",
+    "yield_cents": 344065
    },
    "label": "Copperline Rail Systems pays 30 days late",
    "plan_hash": "a09f03f06616530d899cdbcfeb536c50ed273e4e5a1159c9598aac4a6503b83c",
    "solver": {
-    "case_seconds": 4.083683792006923,
+    "case_seconds": 4.073108417011099,
     "check_days": 61,
     "cols": 729,
     "mip_gap": 9.971629231759672e-05,
@@ -9003,7 +9027,7 @@
     "rows": 626,
     "rows_naive": 18413,
     "scenario_rows": 227,
-    "solve_seconds": 1.0285372080106754,
+    "solve_seconds": 1.0220305420225486,
     "status": "optimal"
    },
    "what_if": {
@@ -9049,7 +9073,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.7718373750103638,
+      "solve_seconds": 0.7774940830131527,
       "value_cents": 4103780
      }
     ],
@@ -9717,6 +9741,7 @@
    },
    "id": "delay-cus_003-7",
    "kpis": {
+    "arrive_after_due_count": 5,
     "breach_rate": 0.0253,
     "breach_upper": 0.02801448286282877,
     "buffer_cents": 50000000,
@@ -9729,15 +9754,18 @@
     "discounts_captured_cents": 3114745,
     "discounts_captured_count": 46,
     "epsilon": 0.05,
+    "fees_cents": 0,
     "late_count": 0,
+    "surcharge_cents": 317214,
     "value_vs_pay_on_due_cents": 4103780,
     "worst_p10_balance_cents": 155629036,
-    "worst_p10_date": "2027-01-10"
+    "worst_p10_date": "2027-01-10",
+    "yield_cents": -169923
    },
    "label": "Greywater Agricultural Equipment pays 7 days late",
    "plan_hash": "a0e617add95262af5daaccc662e956b8e0d3ac2f5a1ec378165ddc42f2f68c88",
    "solver": {
-    "case_seconds": 2.742038791999221,
+    "case_seconds": 2.7451401250145864,
     "check_days": 61,
     "cols": 727,
     "mip_gap": 9.9420534239562e-05,
@@ -9745,7 +9773,7 @@
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.7718373750103638,
+    "solve_seconds": 0.7774940830131527,
     "status": "optimal"
    },
    "what_if": {
@@ -9791,7 +9819,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.7092781249957625,
+      "solve_seconds": 0.7110926250170451,
       "value_cents": 3921902
      }
     ],
@@ -10664,6 +10692,7 @@
    },
    "id": "delay-cus_003-14",
    "kpis": {
+    "arrive_after_due_count": 5,
     "breach_rate": 0.024,
     "breach_upper": 0.026649379092769848,
     "buffer_cents": 50000000,
@@ -10676,15 +10705,18 @@
     "discounts_captured_cents": 2913383,
     "discounts_captured_count": 43,
     "epsilon": 0.05,
+    "fees_cents": 0,
     "late_count": 0,
+    "surcharge_cents": 339502,
     "value_vs_pay_on_due_cents": 3921902,
     "worst_p10_balance_cents": 157288417,
-    "worst_p10_date": "2026-12-11"
+    "worst_p10_date": "2026-12-11",
+    "yield_cents": -139825
    },
    "label": "Greywater Agricultural Equipment pays 14 days late",
    "plan_hash": "29f8b6b0ed6cf527ccfaccda9b511d1f98be6fbfe25002fcbd9e032a1867dff9",
    "solver": {
-    "case_seconds": 2.3232520000019576,
+    "case_seconds": 2.316544208006235,
     "check_days": 61,
     "cols": 727,
     "mip_gap": 2.4222940818673743e-05,
@@ -10692,7 +10724,7 @@
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.7092781249957625,
+    "solve_seconds": 0.7110926250170451,
     "status": "optimal"
    },
    "what_if": {
@@ -10738,7 +10770,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.7072234580118675,
+      "solve_seconds": 0.7073104580049403,
       "value_cents": 3891886
      }
     ],
@@ -11594,6 +11626,7 @@
    },
    "id": "delay-cus_003-30",
    "kpis": {
+    "arrive_after_due_count": 5,
     "breach_rate": 0.0268,
     "breach_upper": 0.02958738803934751,
     "buffer_cents": 50000000,
@@ -11606,15 +11639,18 @@
     "discounts_captured_cents": 2879454,
     "discounts_captured_count": 42,
     "epsilon": 0.05,
+    "fees_cents": 0,
     "late_count": 0,
+    "surcharge_cents": 339502,
     "value_vs_pay_on_due_cents": 3891886,
     "worst_p10_balance_cents": 147704475,
-    "worst_p10_date": "2027-01-10"
+    "worst_p10_date": "2027-01-10",
+    "yield_cents": -135912
    },
    "label": "Greywater Agricultural Equipment pays 30 days late",
    "plan_hash": "15049ca9134df70ac46ddff30e1b480b6451d4c7dbc24b600f9bc5d3c4cbf2da",
    "solver": {
-    "case_seconds": 2.0100664169876836,
+    "case_seconds": 2.0032210419885814,
     "check_days": 61,
     "cols": 728,
     "mip_gap": 9.481264353306291e-05,
@@ -11622,7 +11658,7 @@
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.7072234580118675,
+    "solve_seconds": 0.7073104580049403,
     "status": "optimal"
    },
    "what_if": {
@@ -11668,7 +11704,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 1.060604833997786,
+      "solve_seconds": 1.067667541996343,
       "value_cents": 3606668
      }
     ],
@@ -12626,6 +12662,7 @@
    },
    "id": "shock-100000",
    "kpis": {
+    "arrive_after_due_count": 5,
     "breach_rate": 0.0208,
     "breach_upper": 0.023280546704566717,
     "buffer_cents": 50000000,
@@ -12638,15 +12675,18 @@
     "discounts_captured_cents": 2594939,
     "discounts_captured_count": 44,
     "epsilon": 0.05,
+    "fees_cents": 0,
     "late_count": 0,
+    "surcharge_cents": 450093,
     "value_vs_pay_on_due_cents": 3606668,
     "worst_p10_balance_cents": 153929337,
-    "worst_p10_date": "2026-12-11"
+    "worst_p10_date": "2026-12-11",
+    "yield_cents": -93522
    },
    "label": "Unexpected $100,000 payment today",
    "plan_hash": "38741360d8d8fea418462f85e7c23485175aa3066d2794e45939a227ea3347a2",
    "solver": {
-    "case_seconds": 3.454353958979482,
+    "case_seconds": 3.4774523329979274,
     "check_days": 61,
     "cols": 727,
     "mip_gap": 6.266171435741272e-05,
@@ -12654,7 +12694,7 @@
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 1.060604833997786,
+    "solve_seconds": 1.067667541996343,
     "status": "optimal"
    },
    "what_if": {
@@ -12700,7 +12740,7 @@
       "k": 4,
       "n": 200,
       "passed": true,
-      "solve_seconds": 0.5008417920034844,
+      "solve_seconds": 0.49949779102462344,
       "value_cents": 3040581
      }
     ],
@@ -13743,6 +13783,7 @@
    },
    "id": "shock-250000",
    "kpis": {
+    "arrive_after_due_count": 5,
     "breach_rate": 0.0227,
     "breach_upper": 0.025282343322275296,
     "buffer_cents": 50000000,
@@ -13755,15 +13796,18 @@
     "discounts_captured_cents": 1969162,
     "discounts_captured_count": 33,
     "epsilon": 0.05,
+    "fees_cents": 0,
     "late_count": 0,
+    "surcharge_cents": 522895,
     "value_vs_pay_on_due_cents": 3040581,
     "worst_p10_balance_cents": 150459865,
-    "worst_p10_date": "2026-11-27"
+    "worst_p10_date": "2026-11-27",
+    "yield_cents": -6154
    },
    "label": "Unexpected $250,000 payment today",
    "plan_hash": "671422c214c77fd7b7b2377cbc22745d896e0a389599986f4866b5c0294ee3fd",
    "solver": {
-    "case_seconds": 2.2777195000089705,
+    "case_seconds": 2.3475435840082355,
     "check_days": 61,
     "cols": 727,
     "mip_gap": 1.183984245022508e-05,
@@ -13771,7 +13815,7 @@
     "rows": 630,
     "rows_naive": 18413,
     "scenario_rows": 231,
-    "solve_seconds": 0.5008417920034844,
+    "solve_seconds": 0.49949779102462344,
     "status": "optimal"
    },
    "what_if": {

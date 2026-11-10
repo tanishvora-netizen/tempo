@@ -360,7 +360,7 @@
      "after": {
       "option": "BANK_EARLY",
       "send_date": "2026-12-21",
-      "value_cents": 118768
+      "value_cents": 52900
      },
      "amount_cents": 6573804,
      "before": {
@@ -370,19 +370,19 @@
      },
      "bill_id": "f417a814-d122-43fc-bd51-ada0d300b822",
      "invoice_number": "SBP-40097",
-     "reason": "Paid early Dec 21 by RTP: saves $1,315 (2% of the subtotal) for paying 20 days early, a 37.2%/yr return on the cash, vs your 17.3%/yr cost of cash.",
+     "reason": "Paid early Dec 21 by RTP: saves $657 (1% of the subtotal) for paying 20 days early, a 18.4%/yr return on the cash, vs your 17.3%/yr cost of cash.",
      "vendor": "Sorrel Bay Plastics"
     }
    ],
-   "plan_hash": "dea284c7ed4841953e668af438e25f86853651dad2c7c917f755e1a5fdfa7d1f",
+   "plan_hash": "be514dc1f755250715f1cdbad07f4242373c0fcb555710dd073e26ba40a35cde",
    "suggested": {
     "anchor": "invoice_date",
-    "discount_bps": 200,
+    "discount_bps": 100,
     "discount_days": 10,
     "net_days": 30,
     "prox_day": null
    },
-   "value_delta_cents": 118768
+   "value_delta_cents": 52900
   },
   {
    "bill_id": "2ad37740-e6e8-4838-9e7a-bbf5c7d7b31e",

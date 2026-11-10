@@ -20,13 +20,13 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Live final: `ma
 
 > "That fan is 1,000 forecast scenarios of when customers actually pay. The band is pointwise; the number beside it is the chance of breaching the buffer on any day in 13 weeks. Next to it, same scenarios: today's weekly AP run captures $34,189 but breaches in 10.11% of them. Taking every discount the median allows captures $52,596 but breaches in 7.69%. Tempo gets $41,038 at 2.22%."
 
-**Click:** Payment run (left nav) → click the first discounted row. Read the reason sentence aloud, e.g. "Paid early ... saves $X (2% of the subtotal) for paying 20 days early, a 36%/yr return on the cash, vs your 17.0%/yr cost of cash." If a row says "skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day", read that one: it is the chance constraint binding.
+**Click:** Payment run (left nav) → click the first discounted row. Read the reason sentence aloud, e.g. "Paid early ... saves $X (2% of the subtotal) for paying 20 days early, a ...%/yr return on the cash actually paid, vs your 17.0%/yr cost of cash." The return column uses the same number. If a row says "skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day", read that one: it is the chance constraint binding.
 
 > "One MILP decides all 212 bills jointly. Three exact reductions take it from 18,413 rows to 630, and it solves in under a second."
 
 **Click:** What-if → preset "Bluefin Marine Outfitters pays 14 days late". The chart redraws.
 
-> "Our biggest customer pays two weeks late. Tempo re-forecast and re-solved, and 33 decisions flipped. Each one has a reason. The risk is still certified under 5%."
+> "Our biggest customer pays two weeks late. Tempo re-forecast and re-solved, and 33 decisions flipped. Each one has a reason. The risk is still certified under 5%. Where cash gets too tight, it says so: 5 bills would be paid late, flagged in red, never hidden."
 
 **Click:** Proof.
 
@@ -52,7 +52,7 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Live final: `ma
 
 ## 3:50 to 4:00: close (Namith)
 
-> "One question for you: Ramp's bill payment_method response enum includes EARLY_PAYMENT_DISCOUNT. Tempo is the decision layer that would fill it in."
+> "A spreadsheet rule can get close on value, but it can't tell you its own risk. Tempo can, and proves it on scenarios it never saw. One question for you: Ramp's bill payment_method response enum includes EARLY_PAYMENT_DISCOUNT. Tempo is the decision layer that would fill it in."
 
 ## Judge Q&A
 
@@ -81,4 +81,4 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Live final: `ma
 9. **Why not use LP duals for the value of cash?** A MILP has no meaningful duals; fixing the binaries gives zero on every buffer row. We re-solve with $25,000 more cash: forward difference, 17.0%/yr cost of cash.
 10. **Isn't the data rigged?** It's synthetic and says so everywhere. The only tuned parameter is starting cash, from six values pre-registered in DECISIONS.md and swept on a seed we never report. We missed the directive's own 15% greedy-breach target and said so. Two realism fixes to the generator are disclosed.
 11. **What about RTP: it isn't in Ramp's request enum?** Right. Plans assume Ramp Checking pays RTP-eligible vendors by RTP, and the payload preview gives every such payment an ACH-safe fallback date.
-12. **How fast is it?** The certified plan solves in 0.74 s. Presets are precomputed. A custom what-if re-solves in about a second locally; on Render's free 0.1 CPU it is slower, so live solves are cached and throttled.
+12. **How fast is it?** The certified plan solves in 0.73 s. Presets are precomputed. A custom what-if re-solves in about a second locally; on Render's free 0.1 CPU it is slower, so live solves are cached and throttled.

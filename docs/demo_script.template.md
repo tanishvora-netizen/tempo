@@ -20,13 +20,13 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Live final: `ma
 
 > "That fan is 1,000 forecast scenarios of when customers actually pay. The band is pointwise; the number beside it is the chance of breaching the buffer on any day in 13 weeks. Next to it, same scenarios: today's weekly AP run captures ⟨WEEKLY_VALUE⟩ but breaches in ⟨WEEKLY_BREACH⟩ of them. Taking every discount the median allows captures ⟨GREEDY_VALUE⟩ but breaches in ⟨GREEDY_BREACH⟩. Tempo gets ⟨TEMPO_VALUE⟩ at ⟨TEMPO_BREACH⟩."
 
-**Click:** Payment run (left nav) → click the first discounted row. Read the reason sentence aloud, e.g. "Paid early ... saves $X (2% of the subtotal) for paying 20 days early, a 36%/yr return on the cash, vs your ⟨COST_OF_CASH⟩ cost of cash." If a row says "skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day", read that one: it is the chance constraint binding.
+**Click:** Payment run (left nav) → click the first discounted row. Read the reason sentence aloud, e.g. "Paid early ... saves $X (2% of the subtotal) for paying 20 days early, a ...%/yr return on the cash actually paid, vs your ⟨COST_OF_CASH⟩ cost of cash." The return column uses the same number. If a row says "skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day", read that one: it is the chance constraint binding.
 
 > "One MILP decides all 212 bills jointly. Three exact reductions take it from ⟨ROWS_NAIVE⟩ rows to ⟨ROWS⟩, and it solves in under a second."
 
 **Click:** What-if → preset "⟨PRESET_LABEL⟩". The chart redraws.
 
-> "Our biggest customer pays two weeks late. Tempo re-forecast and re-solved, and ⟨FLIPS⟩ decisions flipped. Each one has a reason. The risk is still certified under 5%."
+> "Our biggest customer pays two weeks late. Tempo re-forecast and re-solved, and ⟨FLIPS⟩ decisions flipped. Each one has a reason. The risk is still certified under 5%. Where cash gets too tight, it says so: ⟨PRESET_LATE⟩ bills would be paid late, flagged in red, never hidden."
 
 **Click:** Proof.
 
@@ -52,7 +52,7 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Live final: `ma
 
 ## 3:50 to 4:00: close (Namith)
 
-> "One question for you: Ramp's bill payment_method response enum includes EARLY_PAYMENT_DISCOUNT. Tempo is the decision layer that would fill it in."
+> "A spreadsheet rule can get close on value, but it can't tell you its own risk. Tempo can, and proves it on scenarios it never saw. One question for you: Ramp's bill payment_method response enum includes EARLY_PAYMENT_DISCOUNT. Tempo is the decision layer that would fill it in."
 
 ## Judge Q&A
 

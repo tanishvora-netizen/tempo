@@ -69,6 +69,9 @@ class AutonomyInput(Strict):
 class ApproveRequest(Strict):
     approver: str = Field(min_length=1, max_length=80, pattern=r"^[\w .,'@-]+$")
     autonomy: AutonomyInput = AutonomyInput()
+    bill_ids: list[str] | None = Field(
+        default=None, max_length=300, description="the bills this approval covers"
+    )
 
 
 class ReplyRequest(Strict):

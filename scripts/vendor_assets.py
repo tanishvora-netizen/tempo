@@ -57,6 +57,8 @@ ICONS = (
     "square-pen",
     "circle-x",
     "history",
+    "clock",
+    "calendar",
 )
 
 SVG_INNER = re.compile(r"<svg[^>]*>(.*)</svg>", re.DOTALL)

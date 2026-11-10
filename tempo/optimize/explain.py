@@ -39,7 +39,7 @@ def fmt_date(d: date) -> str:
 
 
 def pct(x: float, digits: int = 1) -> str:
-    return f"{x * 100:.{digits}f}%".replace(".0%", "%")
+    return f"{x * 100:.{digits}f}%"
 
 
 def ordinal(n: int) -> str:
@@ -87,7 +87,7 @@ def explain_all(ctx: ExplainContext) -> tuple[Decision, ...]:
 
 def _decision(bill: PlannableBill, o: PaymentOption, reason: str, binding: date | None) -> Decision:
     method = "LATE" if o.kind == "LATE" else METHOD_FOR_RAIL[o.rail]
-    annual = annualized_discount_return(bill) if o.takes_discount else None
+    annual = cash_return(o, (bill.due_date - o.arrival_date).days) if o.takes_discount else None
     return Decision(
         bill.id,
         o.send_date,
@@ -169,6 +169,8 @@ def _due_reason(ctx: ExplainContext, bill, opts, o, base_cum, base_breaches) -> 
             f"soon for a payment to arrive in time from {fmt_date(o.send_date)}."
         )
         return closed, None
+    if early is None and o.arrival_date > bill.due_date:
+        return f"{head}. This is the earliest a bank payment can arrive; no discount is offered.", None
     if early is None:
         return _no_discount_reason(head, bill, opts, o), None
     r = annualized_discount_return(bill)

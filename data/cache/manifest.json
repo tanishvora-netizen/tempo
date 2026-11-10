@@ -1,6 +1,6 @@
 {
  "entries": 312,
- "failures": 2,
+ "failures": 1,
  "models": {
   "qwen3:8b": 312
  },

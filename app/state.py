@@ -50,6 +50,7 @@ class AppState:
     offers: dict = field(default_factory=dict)
     overrides: dict[str, TermsRecord] = field(default_factory=dict)
     negotiated: dict[str, dict] = field(default_factory=dict)
+    approved_ids: set[str] = field(default_factory=set)
     autonomy: dict = field(default_factory=lambda: dict(DEFAULT_AUTONOMY))
     lock: threading.Lock = field(default_factory=threading.Lock)
     touched_at: float = field(default_factory=time.monotonic)
@@ -59,11 +60,14 @@ class AppState:
         with self.lock:
             self.overrides = {}
             self.negotiated = {}
+            self.approved_ids = set()
             self.autonomy = dict(DEFAULT_AUTONOMY)
             self.touched_at = time.monotonic()
 
     def reset_if_idle(self) -> None:
-        if (self.overrides or self.negotiated) and time.monotonic() - self.touched_at > IDLE_RESET_S:
+        if (
+            self.overrides or self.negotiated or self.approved_ids
+        ) and time.monotonic() - self.touched_at > IDLE_RESET_S:
             self.reset()
 
     def _key(self, what_if: WhatIf | None, overrides: dict[str, TermsRecord]) -> tuple:

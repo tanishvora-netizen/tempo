@@ -99,14 +99,13 @@ def walk(page: Page, base: str) -> None:
     page.goto(f"{base}/#/overview")
     pause(page, 1)
     click_first(page, '[data-open="negotiate"]', BEAT_MS * 2)
-    click_first(page, "[data-vendor]", BEAT_MS * 3)
-    click_first(page, "button:has-text('Draft offer')", BEAT_MS * 4)
+    click_first(page, "[data-vendor]", BEAT_MS * 5)  # draft offer: model template, code-filled numbers
     click_first(page, "[data-reply]", BEAT_MS * 3)
     click_first(page, "[data-accept-terms]", BEAT_MS * 2)
     page.keyboard.press("Escape")
     pause(page, 1)
     if click_first(page, "[data-approve]", BEAT_MS * 2):
-        name = page.locator("[data-name]").first
+        name = page.locator('[name="approver"]').first
         if name.count():
             name.fill("Dana Ortiz, CFO")
         click_first(page, "[data-confirm]", BEAT_MS * 5)  # audit entry and Ramp payload preview

@@ -27,6 +27,7 @@ OUT_DIR = ROOT / "docs" / "screenshots"
 VIEWPORTS = {1440: 900, 1024: 768}
 WAIT_MS = 15_000
 SETTLE_MS = 300
+MODEL_WAIT_MS = 120_000  # live local-model calls (offer drafting, reply parsing) can take a while
 APPROVER = "Jordan Lee, CFO"
 SAMPLE_INVOICE_LINES = [
     "NORTHWIND FASTENER SUPPLY",
@@ -125,7 +126,7 @@ def capture_upload(page: Page, width: int) -> None:
         "[data-upload]",
         files=[{"name": "northwind-invoice.pdf", "mimeType": "application/pdf", "buffer": sample_pdf()}],
     )
-    page.wait_for_selector(".drawer[data-drawer='upload'] .doc", timeout=60_000)
+    page.wait_for_selector(".drawer[data-drawer='upload'] .doc", timeout=MODEL_WAIT_MS)
     settle(page)
     shoot(page, "upload-pdf", width, full_page=False)
     close_drawer(page)
@@ -181,9 +182,9 @@ def capture_negotiate(page: Page, base: str, width: int) -> None:
     draft = page.locator(".drawer [data-vendor]")
     if draft.count():
         draft.first.click()
-        page.wait_for_selector(".drawer [data-reply]", timeout=WAIT_MS)
+        page.wait_for_selector(".drawer [data-reply]", timeout=MODEL_WAIT_MS)  # the local model drafts
         page.click(".drawer [data-reply='counter']")
-        page.wait_for_selector(".drawer [data-reply-out] dl", timeout=WAIT_MS)
+        page.wait_for_selector(".drawer [data-reply-out] dl", timeout=MODEL_WAIT_MS)
         settle(page)
         shoot(page, "negotiate-offer", width, full_page=False)
     close_drawer(page)

@@ -1,5 +1,5 @@
 {
- "created_at": "2026-11-10T11:44:27+00:00",
+ "created_at": "2026-11-10T12:32:17+00:00",
  "error": "ollama transport error: timed out",
  "key": "21289a302ac9ba08f55431ee9b84b3d150629c4b5caa343d3b9acf5d78469756",
  "model": "qwen3:8b",
