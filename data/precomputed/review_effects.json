@@ -1,0 +1,365 @@
+{
+ "effects": [
+  {
+   "bill_id": "c221527a-4e5d-4d7f-9a4c-b011e0cd4949",
+   "diff": [],
+   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "suggested": {
+    "anchor": "invoice_date",
+    "discount_bps": null,
+    "discount_days": null,
+    "net_days": 30,
+    "prox_day": null
+   },
+   "value_delta_cents": 0
+  },
+  {
+   "bill_id": "fb0207bf-fd23-4e2b-806a-021c63ccf55c",
+   "diff": [],
+   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "suggested": {
+    "anchor": "invoice_date",
+    "discount_bps": 100,
+    "discount_days": 10,
+    "net_days": 45,
+    "prox_day": null
+   },
+   "value_delta_cents": 0
+  },
+  {
+   "bill_id": "3b326372-8a3a-4ba0-a198-d8a745513470",
+   "diff": [],
+   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "suggested": {
+    "anchor": "invoice_date",
+    "discount_bps": null,
+    "discount_days": null,
+    "net_days": 30,
+    "prox_day": null
+   },
+   "value_delta_cents": 0
+  },
+  {
+   "bill_id": "b699d9f8-7fee-464c-ad11-f42acce09495",
+   "diff": [
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-10",
+      "value_cents": 0
+     },
+     "amount_cents": 418025,
+     "before": {
+      "option": "CARD",
+      "send_date": "2026-12-10",
+      "value_cents": -2568
+     },
+     "bill_id": "e612a631-7af1-4e9a-ad8f-944195dc727e",
+     "invoice_number": "OC-15735",
+     "reason": "Paid on the due date Dec 10 by RTP: the card surcharge outweighs the cashback, and no discount is offered.",
+     "vendor": "Ospreyline Courier"
+    },
+    {
+     "after": {
+      "option": "FINANCE_EARLY",
+      "send_date": "2026-11-23",
+      "value_cents": 8332
+     },
+     "amount_cents": 839920,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-11-23",
+      "value_cents": 13856
+     },
+     "bill_id": "184b58a3-7562-420a-b877-ef022000015d",
+     "invoice_number": "DPC-1493",
+     "reason": "Financed at the discount deadline Nov 23: 2% for paying 20 days early, about 37%/yr; a Flex-style fee of $82 and you repay Dec 23, so cash stays in the account.",
+     "vendor": "Driftwood Pallet & Crate"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-11-26",
+      "value_cents": 31232
+     },
+     "amount_cents": 1929188,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2026-12-16",
+      "value_cents": 0
+     },
+     "bill_id": "b699d9f8-7fee-464c-ad11-f42acce09495",
+     "invoice_number": "WTD-52383",
+     "reason": "Paid early Nov 26 by RTP: 2% for paying 20 days early, about 37%/yr, beats your 9%/yr cost of cash.",
+     "vendor": "Westbrook Tool & Die"
+    },
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-10",
+      "value_cents": 0
+     },
+     "amount_cents": 1529087,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-11",
+      "value_cents": 9050
+     },
+     "bill_id": "aa6432ec-935f-4308-907d-7698b6ebb6b3",
+     "invoice_number": "NA-62732",
+     "reason": "Paid on the due date Jan 10 by RTP: the 1/15 net 45 discount (12.3%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
+     "vendor": "Northgate Abrasives"
+    }
+   ],
+   "plan_hash": "59130c7e1b80b624c5beace4a5d25e04fe2ab1fb7455058c65c504e09efa2f0e",
+   "suggested": {
+    "anchor": "invoice_date",
+    "discount_bps": 200,
+    "discount_days": 10,
+    "net_days": 30,
+    "prox_day": null
+   },
+   "value_delta_cents": 19226
+  },
+  {
+   "bill_id": "4ec67a29-e847-4152-9c69-248d5988cec5",
+   "diff": [],
+   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "suggested": {
+    "anchor": "invoice_date",
+    "discount_bps": null,
+    "discount_days": null,
+    "net_days": 30,
+    "prox_day": null
+   },
+   "value_delta_cents": 0
+  },
+  {
+   "bill_id": "b2f50fa5-8590-41e2-a925-85f10c7825da",
+   "diff": [],
+   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "suggested": {
+    "anchor": "invoice_date",
+    "discount_bps": null,
+    "discount_days": null,
+    "net_days": 30,
+    "prox_day": null
+   },
+   "value_delta_cents": 0
+  },
+  {
+   "bill_id": "6592d666-09b8-4d73-ad7b-a205967ed91f",
+   "diff": [],
+   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "suggested": {
+    "anchor": "invoice_date",
+    "discount_bps": null,
+    "discount_days": null,
+    "net_days": 30,
+    "prox_day": null
+   },
+   "value_delta_cents": 0
+  },
+  {
+   "bill_id": "4c011f93-ce45-4c05-a537-9e711372e296",
+   "diff": [],
+   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "suggested": {
+    "anchor": "invoice_date",
+    "discount_bps": null,
+    "discount_days": null,
+    "net_days": 30,
+    "prox_day": null
+   },
+   "value_delta_cents": 0
+  },
+  {
+   "bill_id": "e604cd20-05cf-40b7-9414-3e2990a292b2",
+   "diff": [],
+   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "suggested": {
+    "anchor": "invoice_date",
+    "discount_bps": null,
+    "discount_days": null,
+    "net_days": 30,
+    "prox_day": null
+   },
+   "value_delta_cents": 0
+  },
+  {
+   "bill_id": "143dc1ba-f5e2-4185-bd17-b54b37c0898e",
+   "diff": [],
+   "plan_hash": "0126cd6906b3246e27f67d25cafb2c766bf52039bb4292d7fe5e24e20bb2bef7",
+   "suggested": {
+    "anchor": "invoice_date",
+    "discount_bps": null,
+    "discount_days": null,
+    "net_days": 30,
+    "prox_day": null
+   },
+   "value_delta_cents": 0
+  },
+  {
+   "bill_id": "f417a814-d122-43fc-bd51-ada0d300b822",
+   "diff": [
+    {
+     "after": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-09",
+      "value_cents": 0
+     },
+     "amount_cents": 641969,
+     "before": {
+      "option": "CARD",
+      "send_date": "2027-01-09",
+      "value_cents": -3871
+     },
+     "bill_id": "07b85191-7f3c-4f43-8ddd-f05b0e9a32f1",
+     "invoice_number": "OC-15739",
+     "reason": "Paid on the due date Jan 9 by RTP: the card surcharge outweighs the cashback, and no discount is offered.",
+     "vendor": "Ospreyline Courier"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-21",
+      "value_cents": 117356
+     },
+     "amount_cents": 6573804,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-10",
+      "value_cents": 0
+     },
+     "bill_id": "f417a814-d122-43fc-bd51-ada0d300b822",
+     "invoice_number": "SBP-40097",
+     "reason": "Paid early Dec 21 by RTP: 2% for paying 20 days early, about 37%/yr, beats your 9%/yr cost of cash.",
+     "vendor": "Sorrel Bay Plastics"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2026-12-18",
+      "value_cents": 6876
+     },
+     "amount_cents": 943522,
+     "before": {
+      "option": "FINANCE_EARLY",
+      "send_date": "2026-12-26",
+      "value_cents": 1438
+     },
+     "bill_id": "15f340f1-5937-455d-8d7b-71658cd97fba",
+     "invoice_number": "DCS-33222",
+     "reason": "Paid early Dec 18 by ACH: 1% for paying 20 days early, about 18%/yr, beats your 9%/yr cost of cash.",
+     "vendor": "Dunmore Conveyor Systems"
+    },
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2027-01-06",
+      "value_cents": 16992
+     },
+     "amount_cents": 2895200,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2027-02-05",
+      "value_cents": 0
+     },
+     "bill_id": "dc591c71-7e44-4957-b997-daab36a398cb",
+     "invoice_number": "NA-62734",
+     "reason": "Paid early Jan 6 by RTP: 1% for paying 30 days early, about 12%/yr, beats your 9%/yr cost of cash.",
+     "vendor": "Northgate Abrasives"
+    },
+    {
+     "after": {
+      "option": "FINANCE_EARLY",
+      "send_date": "2027-01-10",
+      "value_cents": 50466
+     },
+     "amount_cents": 4390662,
+     "before": {
+      "option": "BANK_EARLY",
+      "send_date": "2027-01-04",
+      "value_cents": 76459
+     },
+     "bill_id": "aa844baf-6539-42b1-a5d7-fdc12c073005",
+     "invoice_number": "CCI-89961",
+     "reason": "Financed at the discount deadline Jan 10: 2% for paying 20 days early, about 37%/yr; a Flex-style fee of $430 and you repay Feb 9, so cash stays in the account.",
+     "vendor": "Cobalt Creek Industrial Gases"
+    }
+   ],
+   "plan_hash": "9ab82b8f2c98d91fe8076b7e865d69a931c67f6e864373c6b519778bf328af82",
+   "suggested": {
+    "anchor": "invoice_date",
+    "discount_bps": 200,
+    "discount_days": 10,
+    "net_days": 30,
+    "prox_day": null
+   },
+   "value_delta_cents": 117664
+  },
+  {
+   "bill_id": "2ad37740-e6e8-4838-9e7a-bbf5c7d7b31e",
+   "diff": [
+    {
+     "after": {
+      "option": "FINANCE_EARLY",
+      "send_date": "2027-01-07",
+      "value_cents": 7476
+     },
+     "amount_cents": 7039480,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2027-01-22",
+      "value_cents": 0
+     },
+     "bill_id": "2ad37740-e6e8-4838-9e7a-bbf5c7d7b31e",
+     "invoice_number": "SC-65351",
+     "reason": "Financed at the discount deadline Jan 7: 1% for paying 20 days early, about 18%/yr; a Flex-style fee of $697 and you repay Feb 6, so cash stays in the account.",
+     "vendor": "Saltmarsh Coatings"
+    }
+   ],
+   "plan_hash": "252d9a3af4932142b610efb963d42c1fcfb84d46fd5084d290b7f359a18e4af8",
+   "suggested": {
+    "anchor": "invoice_date",
+    "discount_bps": 100,
+    "discount_days": 10,
+    "net_days": 30,
+    "prox_day": null
+   },
+   "value_delta_cents": 7476
+  },
+  {
+   "bill_id": "7b079154-e1c8-4519-997d-65498fba8870",
+   "diff": [
+    {
+     "after": {
+      "option": "BANK_EARLY",
+      "send_date": "2027-01-17",
+      "value_cents": 31506
+     },
+     "amount_cents": 4088105,
+     "before": {
+      "option": "BANK_DUE",
+      "send_date": "2027-02-06",
+      "value_cents": 0
+     },
+     "bill_id": "7b079154-e1c8-4519-997d-65498fba8870",
+     "invoice_number": "BC-47343",
+     "reason": "Paid early Jan 17 by RTP: 1% for paying 20 days early, about 18%/yr, beats your 9%/yr cost of cash.",
+     "vendor": "Bramblewood Chemicals"
+    }
+   ],
+   "plan_hash": "7244281bab373693d9db708ba4b140d9fc9be4293a9277f7f951cabf9de41c76",
+   "suggested": {
+    "anchor": "invoice_date",
+    "discount_bps": 100,
+    "discount_days": 10,
+    "net_days": 30,
+    "prox_day": null
+   },
+   "value_delta_cents": 31506
+  }
+ ],
+ "input_hash": "fe74ce6599e7c4cb"
+}

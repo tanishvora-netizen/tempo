@@ -1,0 +1,62 @@
+{
+ "starting_cash_cents": 360000000,
+ "rule": "fallback",
+ "seed": 23261127,
+ "provider": "cached",
+ "rows": [
+  {
+   "starting_cash_cents": 300000000,
+   "pay_on_due_breach": 0.052,
+   "greedy_breach": 0.186,
+   "tempo_certified": true,
+   "tempo_value_share_of_greedy": 0.7428261664237314,
+   "meets_directive": false,
+   "meets_fallback": false
+  },
+  {
+   "starting_cash_cents": 320000000,
+   "pay_on_due_breach": 0.0335,
+   "greedy_breach": 0.1397,
+   "tempo_certified": true,
+   "tempo_value_share_of_greedy": 0.7983045341852665,
+   "meets_directive": false,
+   "meets_fallback": false
+  },
+  {
+   "starting_cash_cents": 340000000,
+   "pay_on_due_breach": 0.0209,
+   "greedy_breach": 0.1006,
+   "tempo_certified": true,
+   "tempo_value_share_of_greedy": 0.8474478780632168,
+   "meets_directive": false,
+   "meets_fallback": false
+  },
+  {
+   "starting_cash_cents": 360000000,
+   "pay_on_due_breach": 0.0129,
+   "greedy_breach": 0.0695,
+   "tempo_certified": true,
+   "tempo_value_share_of_greedy": 0.894158201534793,
+   "meets_directive": false,
+   "meets_fallback": true
+  },
+  {
+   "starting_cash_cents": 380000000,
+   "pay_on_due_breach": 0.0071,
+   "greedy_breach": 0.0458,
+   "tempo_certified": true,
+   "tempo_value_share_of_greedy": 0.9382315454072406,
+   "meets_directive": false,
+   "meets_fallback": false
+  },
+  {
+   "starting_cash_cents": 400000000,
+   "pay_on_due_breach": 0.0041,
+   "greedy_breach": 0.0289,
+   "tempo_certified": true,
+   "tempo_value_share_of_greedy": 0.9790063262198897,
+   "meets_directive": false,
+   "meets_fallback": false
+  }
+ ]
+}

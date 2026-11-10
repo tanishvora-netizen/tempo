@@ -1,0 +1,108 @@
+"""One full planning run: inputs, Tempo with certification, the baselines, and their evaluation.
+
+Shared by scripts/calibrate_cash.py, scripts/precompute.py, and scripts/make_results.py so every number in
+docs/RESULTS.md and the UI comes from the same code path.
+"""
+
+from dataclasses import dataclass, field
+
+import numpy as np
+
+from tempo.assumptions import (
+    EPSILON,
+    FALLBACK_N,
+    N_CERT_SCENARIOS,
+    N_OPT_SCENARIOS,
+    SEED_A,
+    SEED_B,
+    YIELD_ON_CASH,
+)
+from tempo.forecast.simulate import WhatIf
+from tempo.models import Dataset, PaymentOption, TermsRecord
+from tempo.optimize import baselines as bl
+from tempo.optimize.certify import Certification, certify
+from tempo.optimize.engine import Forecast, Plan, build_forecast, option_sets
+from tempo.optimize.evaluate import PolicyResult, evaluate
+from tempo.optimize.options import PlannableBill, RailContext
+from tempo.pipeline import IngestResult, plannable_bills
+
+POLICY_ORDER = ("pay_on_due", "weekly_run", "greedy_discount", "greedy_p05", "deterministic_p50", "tempo")
+
+
+@dataclass(frozen=True)
+class RunInputs:
+    dataset: Dataset
+    bills: tuple[PlannableBill, ...]
+    options: tuple[tuple[PaymentOption, ...], ...]
+    forecast: Forecast
+    headroom_a: np.ndarray = field(repr=False)  # seed A, N_OPT_SCENARIOS
+    headroom_a_fallback: np.ndarray = field(repr=False)  # seed A, FALLBACK_N (first rows equal headroom_a)
+    headroom_b: np.ndarray = field(repr=False)  # seed B, N_CERT_SCENARIOS
+
+    @property
+    def as_of(self):
+        return self.dataset.company.as_of
+
+    @property
+    def horizon(self) -> int:
+        return self.dataset.company.horizon_days
+
+
+def prepare(
+    dataset: Dataset,
+    ingest_result: IngestResult,
+    what_if: WhatIf | None = None,
+    overrides: dict[str, TermsRecord] | None = None,
+    cash_delta_cents: int = 0,
+) -> RunInputs:
+    """Resolve bills and options and draw the optimizer (A) and certification (B) scenarios."""
+    bills = plannable_bills(dataset, ingest_result, overrides)
+    options = option_sets(bills, RailContext(dataset.company.as_of, dataset.company.funding_account))
+    forecast = build_forecast(dataset, what_if, cash_delta_cents)
+    fallback = forecast.headroom(forecast.scenarios(FALLBACK_N, SEED_A))
+    head_a = fallback[:N_OPT_SCENARIOS]
+    head_b = forecast.headroom(forecast.scenarios(N_CERT_SCENARIOS, SEED_B))
+    return RunInputs(dataset, bills, options, forecast, head_a, fallback, head_b)
+
+
+def run_tempo(inputs: RunInputs) -> tuple[Plan, Certification]:
+    return certify(
+        inputs.bills,
+        inputs.options,
+        inputs.headroom_a,
+        inputs.headroom_b,
+        inputs.as_of,
+        inputs.headroom_a_fallback,
+    )
+
+
+def baseline_plans(inputs: RunInputs, cost_of_cash: float = YIELD_ON_CASH) -> dict[str, Plan]:
+    """Every comparison policy, planned on seed-A information only."""
+    p50 = bl.quantile_path(inputs.headroom_a, 0.5)
+    p05 = bl.quantile_path(inputs.headroom_a, 0.05)
+    b, o, a, h = inputs.bills, inputs.options, inputs.as_of, inputs.horizon
+    return {
+        "pay_on_due": bl.pay_on_due(b, o, h),
+        "weekly_run": bl.weekly_run(b, o, a, h),
+        "greedy_discount": bl.greedy(b, o, p50, a, "greedy_discount"),
+        "greedy_p05": bl.greedy(b, o, p05, a, "greedy_p05", min_annual_return=cost_of_cash),
+        "deterministic_p50": bl.path_plan(b, o, p50, a, "deterministic_p50"),
+    }
+
+
+def ablation_plans(inputs: RunInputs, fan_headroom: np.ndarray) -> dict[str, Plan]:
+    """Per-day chance constraints instead of Tempo's joint one (evaluated on seed C in RESULTS.md)."""
+    n_days = inputs.horizon
+    b, o, a = inputs.bills, inputs.options, inputs.as_of
+    return {
+        "per_day_5pct": bl.path_plan(b, o, bl.quantile_path(fan_headroom, EPSILON), a, "per_day_5pct"),
+        "bonferroni_per_day": bl.path_plan(
+            b, o, bl.quantile_path(fan_headroom, EPSILON / n_days), a, "bonferroni_per_day"
+        ),
+        "deterministic_p50": bl.path_plan(b, o, bl.quantile_path(fan_headroom, 0.5), a, "deterministic_p50"),
+    }
+
+
+def evaluate_all(plans: dict[str, Plan], headroom: np.ndarray, inputs: RunInputs) -> dict[str, PolicyResult]:
+    buffer = inputs.dataset.company.buffer_cents
+    return {name: evaluate(p, headroom, inputs.as_of, buffer) for name, p in plans.items()}

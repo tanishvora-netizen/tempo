@@ -13,7 +13,7 @@ import numpy as np
 from tempo.data.names import CUSTOMERS
 from tempo.models import Customer, CustomerTruth, PaymentRecord, Receivable, Segment
 
-MONTHLY_REVENUE_CENTS = 340_000_000  # $3.4M per month billed across all customers. ASSUMPTION (synthetic).
+MONTHLY_REVENUE_CENTS = 400_000_000  # $4.0M per month billed across all customers. ASSUMPTION (synthetic).
 BIG_CUSTOMER_SHARES = (0.18, 0.15, 0.12)  # the three largest customers' share of billings. ASSUMPTION.
 SEGMENT_PARAMS: dict[Segment, tuple[tuple[float, float], tuple[float, float]]] = {
     # segment: ((median days low, high), (sigma low, high))

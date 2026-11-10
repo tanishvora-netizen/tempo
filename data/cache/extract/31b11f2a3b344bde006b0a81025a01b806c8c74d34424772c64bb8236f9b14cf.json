@@ -1,0 +1,11 @@
+{
+ "created_at": "2026-11-10T11:15:33+00:00",
+ "error": null,
+ "key": "31b11f2a3b344bde006b0a81025a01b806c8c74d34424772c64bb8236f9b14cf",
+ "model": "qwen3:8b",
+ "prompt_version": "v1",
+ "provider": "ollama",
+ "raw": "{\n  \"terms_quote\": \"2/10 Net 30\",\n  \"terms_source\": \"payment_box\",\n  \"discount_pct\": 2,\n  \"discount_days\": 10,\n  \"net_days\": 30,\n  \"anchor\": \"invoice_date\",\n  \"prox_day\": null,\n  \"late_fee_quote\": \"18% per annum\",\n  \"late_fee_source\": \"footer\",\n  \"late_fee_kind\": \"pct_year\",\n  \"late_fee_value\": 18,\n  \"methods_quote\": \"ACH, check\",\n  \"methods_source\": \"payment_box\",\n  \"accepted_methods\": [\"ACH\", \"CHECK\"],\n  \"surcharge_quote\": null,\n  \"surcharge_source\": null,\n  \"card_surcharge_pct\": null,\n  \"card_discount_quote\": null,\n  \"card_discount_source\": null,\n  \"card_discount_allowed\": false,\n  \"terms_overridden_in_email\": false\n}",
+ "schema_version": "terms-v2",
+ "task": "extract"
+}

@@ -1,0 +1,965 @@
+{
+ "ablations": [
+  {
+   "breach_rate": 0.0244,
+   "breach_upper": 0.02706960977881257,
+   "breaches": 244,
+   "card_count": 40,
+   "credit_drawn_cents": 0,
+   "discount_count": 74,
+   "discounts_cents": 4582528,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "tempo",
+   "rewards_cents": 1421206,
+   "value_cents": 4875014,
+   "worst_p10_balance_cents": 147763743,
+   "worst_p10_date": "2027-01-10"
+  },
+  {
+   "breach_rate": 0.0655,
+   "breach_upper": 0.0696885211856897,
+   "breaches": 655,
+   "card_count": 33,
+   "credit_drawn_cents": 0,
+   "discount_count": 83,
+   "discounts_cents": 4832470,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "per_day_5pct",
+   "rewards_cents": 1283649,
+   "value_cents": 5438020,
+   "worst_p10_balance_cents": 87009358,
+   "worst_p10_date": "2026-12-11"
+  },
+  {
+   "breach_rate": 0.004,
+   "breach_upper": 0.00518098416294485,
+   "breaches": 40,
+   "card_count": 52,
+   "credit_drawn_cents": 0,
+   "discount_count": 64,
+   "discounts_cents": 4358112,
+   "late_count": 12,
+   "n_scenarios": 10000,
+   "policy": "bonferroni_per_day",
+   "rewards_cents": 1556165,
+   "value_cents": 2839427,
+   "worst_p10_balance_cents": 213691362,
+   "worst_p10_date": "2026-12-11"
+  },
+  {
+   "breach_rate": 0.0673,
+   "breach_upper": 0.07153955950494836,
+   "breaches": 673,
+   "card_count": 33,
+   "credit_drawn_cents": 0,
+   "discount_count": 83,
+   "discounts_cents": 4832470,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "deterministic_p50",
+   "rewards_cents": 1283649,
+   "value_cents": 5452071,
+   "worst_p10_balance_cents": 84655538,
+   "worst_p10_date": "2026-12-11"
+  }
+ ],
+ "extraction": {
+  "all": {
+   "buckets": {
+    "ambiguous_document": {
+     "correct": 0,
+     "n": 6
+    },
+    "conflict": {
+     "correct": 0,
+     "n": 1
+    },
+    "history_mismatch": {
+     "correct": 0,
+     "n": 6
+    },
+    "regex_only": {
+     "correct": 183,
+     "n": 183
+    },
+    "verified": {
+     "correct": 16,
+     "n": 16
+    }
+   },
+   "expected_reviews_routed": {
+    "n": 11,
+    "routed": 11
+   },
+   "hallucination_catch": {
+    "kept_out_of_plan": 2,
+    "rate": 1.0,
+    "rejected_by_verification": 1,
+    "wrong_model_readings": 2
+   },
+   "invoice_all_correct_rate": 0.9150943396226415,
+   "model": {
+    "accuracy": 0.08018867924528301,
+    "answered": 19,
+    "correct": 17,
+    "coverage": 0.08962264150943396,
+    "discount_precision": 1.0,
+    "discount_recall": 0.08035714285714286,
+    "n": 212,
+    "precision": 0.8947368421052632
+   },
+   "reconciled": {
+    "accuracy": 0.9386792452830188,
+    "answered": 199,
+    "correct": 199,
+    "coverage": 0.9386792452830188,
+    "discount_precision": 1.0,
+    "discount_recall": 0.9285714285714286,
+    "n": 212,
+    "precision": 1.0
+   },
+   "regex": {
+    "accuracy": 0.9622641509433962,
+    "answered": 206,
+    "correct": 204,
+    "coverage": 0.9716981132075472,
+    "discount_precision": 1.0,
+    "discount_recall": 0.9732142857142857,
+    "n": 212,
+    "precision": 0.9902912621359223
+   }
+  },
+  "by_tag": {
+   "clean": {
+    "buckets": {
+     "regex_only": {
+      "correct": 72,
+      "n": 72
+     },
+     "verified": {
+      "correct": 8,
+      "n": 8
+     }
+    },
+    "expected_reviews_routed": {
+     "n": 0,
+     "routed": 0
+    },
+    "hallucination_catch": {
+     "kept_out_of_plan": 0,
+     "rate": null,
+     "rejected_by_verification": 0,
+     "wrong_model_readings": 0
+    },
+    "invoice_all_correct_rate": 0.95,
+    "model": {
+     "accuracy": 0.1,
+     "answered": 8,
+     "correct": 8,
+     "coverage": 0.1,
+     "discount_precision": 1.0,
+     "discount_recall": 0.11864406779661017,
+     "n": 80,
+     "precision": 1.0
+    },
+    "reconciled": {
+     "accuracy": 1.0,
+     "answered": 80,
+     "correct": 80,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 1.0,
+     "n": 80,
+     "precision": 1.0
+    },
+    "regex": {
+     "accuracy": 1.0,
+     "answered": 80,
+     "correct": 80,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 1.0,
+     "n": 80,
+     "precision": 1.0
+    }
+   },
+   "date_lookalike": {
+    "buckets": {
+     "regex_only": {
+      "correct": 9,
+      "n": 9
+     },
+     "verified": {
+      "correct": 1,
+      "n": 1
+     }
+    },
+    "expected_reviews_routed": {
+     "n": 0,
+     "routed": 0
+    },
+    "hallucination_catch": {
+     "kept_out_of_plan": 0,
+     "rate": null,
+     "rejected_by_verification": 0,
+     "wrong_model_readings": 0
+    },
+    "invoice_all_correct_rate": 1.0,
+    "model": {
+     "accuracy": 0.1,
+     "answered": 1,
+     "correct": 1,
+     "coverage": 0.1,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 10,
+     "precision": 1.0
+    },
+    "reconciled": {
+     "accuracy": 1.0,
+     "answered": 10,
+     "correct": 10,
+     "coverage": 1.0,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 10,
+     "precision": 1.0
+    },
+    "regex": {
+     "accuracy": 1.0,
+     "answered": 10,
+     "correct": 10,
+     "coverage": 1.0,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 10,
+     "precision": 1.0
+    }
+   },
+   "email_only": {
+    "buckets": {
+     "regex_only": {
+      "correct": 41,
+      "n": 41
+     },
+     "verified": {
+      "correct": 1,
+      "n": 1
+     }
+    },
+    "expected_reviews_routed": {
+     "n": 0,
+     "routed": 0
+    },
+    "hallucination_catch": {
+     "kept_out_of_plan": 1,
+     "rate": 1.0,
+     "rejected_by_verification": 1,
+     "wrong_model_readings": 1
+    },
+    "invoice_all_correct_rate": 0.9761904761904762,
+    "model": {
+     "accuracy": 0.047619047619047616,
+     "answered": 3,
+     "correct": 2,
+     "coverage": 0.07142857142857142,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 42,
+     "precision": 0.6666666666666666
+    },
+    "reconciled": {
+     "accuracy": 1.0,
+     "answered": 42,
+     "correct": 42,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 1.0,
+     "n": 42,
+     "precision": 1.0
+    },
+    "regex": {
+     "accuracy": 1.0,
+     "answered": 42,
+     "correct": 42,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 1.0,
+     "n": 42,
+     "precision": 1.0
+    }
+   },
+   "email_override": {
+    "buckets": {
+     "conflict": {
+      "correct": 0,
+      "n": 1
+     },
+     "history_mismatch": {
+      "correct": 0,
+      "n": 4
+     }
+    },
+    "expected_reviews_routed": {
+     "n": 5,
+     "routed": 5
+    },
+    "hallucination_catch": {
+     "kept_out_of_plan": 1,
+     "rate": 1.0,
+     "rejected_by_verification": 0,
+     "wrong_model_readings": 1
+    },
+    "invoice_all_correct_rate": 0.0,
+    "model": {
+     "accuracy": 0.0,
+     "answered": 1,
+     "correct": 0,
+     "coverage": 0.2,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 5,
+     "precision": 0.0
+    },
+    "reconciled": {
+     "accuracy": 0.0,
+     "answered": 0,
+     "correct": 0,
+     "coverage": 0.0,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 5,
+     "precision": 0.0
+    },
+    "regex": {
+     "accuracy": 1.0,
+     "answered": 5,
+     "correct": 5,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 1.0,
+     "n": 5,
+     "precision": 1.0
+    }
+   },
+   "eom_prox": {
+    "buckets": {
+     "regex_only": {
+      "correct": 18,
+      "n": 18
+     },
+     "verified": {
+      "correct": 3,
+      "n": 3
+     }
+    },
+    "expected_reviews_routed": {
+     "n": 0,
+     "routed": 0
+    },
+    "hallucination_catch": {
+     "kept_out_of_plan": 0,
+     "rate": null,
+     "rejected_by_verification": 0,
+     "wrong_model_readings": 0
+    },
+    "invoice_all_correct_rate": 1.0,
+    "model": {
+     "accuracy": 0.14285714285714285,
+     "answered": 3,
+     "correct": 3,
+     "coverage": 0.14285714285714285,
+     "discount_precision": 1.0,
+     "discount_recall": 0.1,
+     "n": 21,
+     "precision": 1.0
+    },
+    "reconciled": {
+     "accuracy": 1.0,
+     "answered": 21,
+     "correct": 21,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 1.0,
+     "n": 21,
+     "precision": 1.0
+    },
+    "regex": {
+     "accuracy": 1.0,
+     "answered": 21,
+     "correct": 21,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 1.0,
+     "n": 21,
+     "precision": 1.0
+    }
+   },
+   "footer_conflict": {
+    "buckets": {
+     "ambiguous_document": {
+      "correct": 0,
+      "n": 5
+     }
+    },
+    "expected_reviews_routed": {
+     "n": 5,
+     "routed": 5
+    },
+    "hallucination_catch": {
+     "kept_out_of_plan": 0,
+     "rate": null,
+     "rejected_by_verification": 0,
+     "wrong_model_readings": 0
+    },
+    "invoice_all_correct_rate": 0.0,
+    "model": {
+     "accuracy": 0.0,
+     "answered": 0,
+     "correct": 0,
+     "coverage": 0.0,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 5,
+     "precision": 0.0
+    },
+    "reconciled": {
+     "accuracy": 0.0,
+     "answered": 0,
+     "correct": 0,
+     "coverage": 0.0,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 5,
+     "precision": 0.0
+    },
+    "regex": {
+     "accuracy": 0.0,
+     "answered": 0,
+     "correct": 0,
+     "coverage": 0.0,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 5,
+     "precision": 0.0
+    }
+   },
+   "fraction": {
+    "buckets": {
+     "regex_only": {
+      "correct": 5,
+      "n": 5
+     }
+    },
+    "expected_reviews_routed": {
+     "n": 0,
+     "routed": 0
+    },
+    "hallucination_catch": {
+     "kept_out_of_plan": 0,
+     "rate": null,
+     "rejected_by_verification": 0,
+     "wrong_model_readings": 0
+    },
+    "invoice_all_correct_rate": 1.0,
+    "model": {
+     "accuracy": 0.0,
+     "answered": 0,
+     "correct": 0,
+     "coverage": 0.0,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 5,
+     "precision": 0.0
+    },
+    "reconciled": {
+     "accuracy": 1.0,
+     "answered": 5,
+     "correct": 5,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 1.0,
+     "n": 5,
+     "precision": 1.0
+    },
+    "regex": {
+     "accuracy": 1.0,
+     "answered": 5,
+     "correct": 5,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 1.0,
+     "n": 5,
+     "precision": 1.0
+    }
+   },
+   "injection": {
+    "buckets": {
+     "ambiguous_document": {
+      "correct": 0,
+      "n": 1
+     }
+    },
+    "expected_reviews_routed": {
+     "n": 1,
+     "routed": 1
+    },
+    "hallucination_catch": {
+     "kept_out_of_plan": 0,
+     "rate": null,
+     "rejected_by_verification": 0,
+     "wrong_model_readings": 0
+    },
+    "invoice_all_correct_rate": 0.0,
+    "model": {
+     "accuracy": 0.0,
+     "answered": 0,
+     "correct": 0,
+     "coverage": 0.0,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 1,
+     "precision": 0.0
+    },
+    "reconciled": {
+     "accuracy": 0.0,
+     "answered": 0,
+     "correct": 0,
+     "coverage": 0.0,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 1,
+     "precision": 0.0
+    },
+    "regex": {
+     "accuracy": 0.0,
+     "answered": 0,
+     "correct": 0,
+     "coverage": 0.0,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 1,
+     "precision": 0.0
+    }
+   },
+   "ocr_noise": {
+    "buckets": {
+     "history_mismatch": {
+      "correct": 0,
+      "n": 2
+     },
+     "regex_only": {
+      "correct": 6,
+      "n": 6
+     }
+    },
+    "expected_reviews_routed": {
+     "n": 0,
+     "routed": 0
+    },
+    "hallucination_catch": {
+     "kept_out_of_plan": 0,
+     "rate": null,
+     "rejected_by_verification": 0,
+     "wrong_model_readings": 0
+    },
+    "invoice_all_correct_rate": 0.75,
+    "model": {
+     "accuracy": 0.0,
+     "answered": 0,
+     "correct": 0,
+     "coverage": 0.0,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 8,
+     "precision": 0.0
+    },
+    "reconciled": {
+     "accuracy": 0.75,
+     "answered": 6,
+     "correct": 6,
+     "coverage": 0.75,
+     "discount_precision": 1.0,
+     "discount_recall": 0.5,
+     "n": 8,
+     "precision": 1.0
+    },
+    "regex": {
+     "accuracy": 0.75,
+     "answered": 8,
+     "correct": 6,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 0.5,
+     "n": 8,
+     "precision": 0.75
+    }
+   },
+   "prose_terms": {
+    "buckets": {
+     "regex_only": {
+      "correct": 6,
+      "n": 6
+     }
+    },
+    "expected_reviews_routed": {
+     "n": 0,
+     "routed": 0
+    },
+    "hallucination_catch": {
+     "kept_out_of_plan": 0,
+     "rate": null,
+     "rejected_by_verification": 0,
+     "wrong_model_readings": 0
+    },
+    "invoice_all_correct_rate": 1.0,
+    "model": {
+     "accuracy": 0.0,
+     "answered": 0,
+     "correct": 0,
+     "coverage": 0.0,
+     "discount_precision": 0.0,
+     "discount_recall": 0.0,
+     "n": 6,
+     "precision": 0.0
+    },
+    "reconciled": {
+     "accuracy": 1.0,
+     "answered": 6,
+     "correct": 6,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 1.0,
+     "n": 6,
+     "precision": 1.0
+    },
+    "regex": {
+     "accuracy": 1.0,
+     "answered": 6,
+     "correct": 6,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 1.0,
+     "n": 6,
+     "precision": 1.0
+    }
+   },
+   "surcharge_text": {
+    "buckets": {
+     "regex_only": {
+      "correct": 26,
+      "n": 26
+     },
+     "verified": {
+      "correct": 3,
+      "n": 3
+     }
+    },
+    "expected_reviews_routed": {
+     "n": 0,
+     "routed": 0
+    },
+    "hallucination_catch": {
+     "kept_out_of_plan": 0,
+     "rate": null,
+     "rejected_by_verification": 0,
+     "wrong_model_readings": 0
+    },
+    "invoice_all_correct_rate": 1.0,
+    "model": {
+     "accuracy": 0.10344827586206896,
+     "answered": 3,
+     "correct": 3,
+     "coverage": 0.10344827586206896,
+     "discount_precision": 1.0,
+     "discount_recall": 0.2,
+     "n": 29,
+     "precision": 1.0
+    },
+    "reconciled": {
+     "accuracy": 1.0,
+     "answered": 29,
+     "correct": 29,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 1.0,
+     "n": 29,
+     "precision": 1.0
+    },
+    "regex": {
+     "accuracy": 1.0,
+     "answered": 29,
+     "correct": 29,
+     "coverage": 1.0,
+     "discount_precision": 1.0,
+     "discount_recall": 1.0,
+     "n": 29,
+     "precision": 1.0
+    }
+   }
+  },
+  "has_model_outputs": true,
+  "holdout": {
+   "buckets": {
+    "ambiguous_document": {
+     "correct": 0,
+     "n": 4
+    },
+    "history_mismatch": {
+     "correct": 0,
+     "n": 4
+    },
+    "regex_only": {
+     "correct": 52,
+     "n": 52
+    },
+    "verified": {
+     "correct": 3,
+     "n": 3
+    }
+   },
+   "expected_reviews_routed": {
+    "n": 6,
+    "routed": 6
+   },
+   "hallucination_catch": {
+    "kept_out_of_plan": 1,
+    "rate": 1.0,
+    "rejected_by_verification": 1,
+    "wrong_model_readings": 1
+   },
+   "invoice_all_correct_rate": 0.8253968253968254,
+   "model": {
+    "accuracy": 0.06349206349206349,
+    "answered": 5,
+    "correct": 4,
+    "coverage": 0.07936507936507936,
+    "discount_precision": 1.0,
+    "discount_recall": 0.06060606060606061,
+    "n": 63,
+    "precision": 0.8
+   },
+   "reconciled": {
+    "accuracy": 0.873015873015873,
+    "answered": 55,
+    "correct": 55,
+    "coverage": 0.873015873015873,
+    "discount_precision": 1.0,
+    "discount_recall": 0.8484848484848485,
+    "n": 63,
+    "precision": 1.0
+   },
+   "regex": {
+    "accuracy": 0.9047619047619048,
+    "answered": 59,
+    "correct": 57,
+    "coverage": 0.9365079365079365,
+    "discount_precision": 1.0,
+    "discount_recall": 0.9090909090909091,
+    "n": 63,
+    "precision": 0.9661016949152542
+   }
+  },
+  "synthetic": true
+ },
+ "input_hash": "fe74ce6599e7c4cb",
+ "policies": [
+  {
+   "breach_rate": 0.0124,
+   "breach_upper": 0.014356839379074992,
+   "breaches": 124,
+   "card_count": 0,
+   "credit_drawn_cents": 0,
+   "discount_count": 0,
+   "discounts_cents": 0,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "pay_on_due",
+   "rewards_cents": 0,
+   "value_cents": 0,
+   "worst_p10_balance_cents": 174345656,
+   "worst_p10_date": "2026-12-11"
+  },
+  {
+   "breach_rate": 0.1045,
+   "breach_upper": 0.10963963891865054,
+   "breaches": 1045,
+   "card_count": 0,
+   "credit_drawn_cents": 0,
+   "discount_count": 80,
+   "discounts_cents": 4496655,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "weekly_run",
+   "rewards_cents": 0,
+   "value_cents": 3627761,
+   "worst_p10_balance_cents": 69984398,
+   "worst_p10_date": "2026-12-11"
+  },
+  {
+   "breach_rate": 0.0673,
+   "breach_upper": 0.07153955950494836,
+   "breaches": 673,
+   "card_count": 33,
+   "credit_drawn_cents": 0,
+   "discount_count": 83,
+   "discounts_cents": 4832470,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "greedy_discount",
+   "rewards_cents": 1283649,
+   "value_cents": 5452071,
+   "worst_p10_balance_cents": 84655538,
+   "worst_p10_date": "2026-12-11"
+  },
+  {
+   "breach_rate": 0.0509,
+   "breach_upper": 0.054638649946311194,
+   "breaches": 509,
+   "card_count": 33,
+   "credit_drawn_cents": 0,
+   "discount_count": 80,
+   "discounts_cents": 4788372,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "greedy_p05",
+   "rewards_cents": 1283897,
+   "value_cents": 5285991,
+   "worst_p10_balance_cents": 110439038,
+   "worst_p10_date": "2026-12-11"
+  },
+  {
+   "breach_rate": 0.0673,
+   "breach_upper": 0.07153955950494836,
+   "breaches": 673,
+   "card_count": 33,
+   "credit_drawn_cents": 0,
+   "discount_count": 83,
+   "discounts_cents": 4832470,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "deterministic_p50",
+   "rewards_cents": 1283649,
+   "value_cents": 5452071,
+   "worst_p10_balance_cents": 84655538,
+   "worst_p10_date": "2026-12-11"
+  },
+  {
+   "breach_rate": 0.0244,
+   "breach_upper": 0.02706960977881257,
+   "breaches": 244,
+   "card_count": 40,
+   "credit_drawn_cents": 0,
+   "discount_count": 74,
+   "discounts_cents": 4582528,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "tempo",
+   "rewards_cents": 1421206,
+   "value_cents": 4875014,
+   "worst_p10_balance_cents": 147763743,
+   "worst_p10_date": "2027-01-10"
+  }
+ ],
+ "policies_true_model": [
+  {
+   "breach_rate": 0.019,
+   "breach_upper": 0.02137941957371877,
+   "breaches": 190,
+   "card_count": 0,
+   "credit_drawn_cents": 0,
+   "discount_count": 0,
+   "discounts_cents": 0,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "pay_on_due",
+   "rewards_cents": 0,
+   "value_cents": 0,
+   "worst_p10_balance_cents": 165556340,
+   "worst_p10_date": "2027-02-05"
+  },
+  {
+   "breach_rate": 0.1235,
+   "breach_upper": 0.12901429935416833,
+   "breaches": 1235,
+   "card_count": 0,
+   "credit_drawn_cents": 0,
+   "discount_count": 80,
+   "discounts_cents": 4496655,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "weekly_run",
+   "rewards_cents": 0,
+   "value_cents": 3627761,
+   "worst_p10_balance_cents": 62912908,
+   "worst_p10_date": "2026-12-11"
+  },
+  {
+   "breach_rate": 0.0786,
+   "breach_upper": 0.08314178599825321,
+   "breaches": 786,
+   "card_count": 33,
+   "credit_drawn_cents": 0,
+   "discount_count": 83,
+   "discounts_cents": 4832470,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "greedy_discount",
+   "rewards_cents": 1283649,
+   "value_cents": 5452071,
+   "worst_p10_balance_cents": 77584048,
+   "worst_p10_date": "2026-12-11"
+  },
+  {
+   "breach_rate": 0.0605,
+   "breach_upper": 0.06454202827377867,
+   "breaches": 605,
+   "card_count": 33,
+   "credit_drawn_cents": 0,
+   "discount_count": 80,
+   "discounts_cents": 4788372,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "greedy_p05",
+   "rewards_cents": 1283897,
+   "value_cents": 5285991,
+   "worst_p10_balance_cents": 103367548,
+   "worst_p10_date": "2026-12-11"
+  },
+  {
+   "breach_rate": 0.0786,
+   "breach_upper": 0.08314178599825321,
+   "breaches": 786,
+   "card_count": 33,
+   "credit_drawn_cents": 0,
+   "discount_count": 83,
+   "discounts_cents": 4832470,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "deterministic_p50",
+   "rewards_cents": 1283649,
+   "value_cents": 5452071,
+   "worst_p10_balance_cents": 77584048,
+   "worst_p10_date": "2026-12-11"
+  },
+  {
+   "breach_rate": 0.033,
+   "breach_upper": 0.036067225037276274,
+   "breaches": 330,
+   "card_count": 40,
+   "credit_drawn_cents": 0,
+   "discount_count": 74,
+   "discounts_cents": 4582528,
+   "late_count": 0,
+   "n_scenarios": 10000,
+   "policy": "tempo",
+   "rewards_cents": 1421206,
+   "value_cents": 4875014,
+   "worst_p10_balance_cents": 129858893,
+   "worst_p10_date": "2027-01-10"
+  }
+ ],
+ "seed_c": 22261139
+}

@@ -45,6 +45,8 @@ CATEGORY_PROFILE: dict[str, tuple[float, float, int]] = {
     "utilities": (31_000.0, 0.15, 30),
 }
 
+MATERIALS = frozenset({"raw_materials", "components", "packaging"})
+MIX_NOISE = 1.3  # ASSUMPTION: how loosely discount terms follow the materials category
 N_CARD_VENDORS = 14
 N_NEW_VENDORS = 4
 N_CARD_DISCOUNT_VENDORS = 3
@@ -72,7 +74,7 @@ class VendorProfile:
 
 def generate_vendors(rng: np.random.Generator) -> tuple[VendorProfile, ...]:
     """Create the 40 vendor profiles with a fixed terms mix and seeded attributes."""
-    terms = [TERMS_POOL[i] for i in rng.permutation(len(TERMS_POOL))]
+    terms = _assign_terms(rng)
     n = len(VENDORS)
     card = set(rng.choice(n, N_CARD_VENDORS, replace=False).tolist())
     new = set(rng.choice(n, N_NEW_VENDORS, replace=False).tolist())
@@ -83,6 +85,24 @@ def generate_vendors(rng: np.random.Generator) -> tuple[VendorProfile, ...]:
     return tuple(
         _profile(rng, i, terms[i], i in card, i in new, i in card_discount, i in date_numbers) for i in range(n)
     )
+
+
+def _assign_terms(rng: np.random.Generator) -> list[TermsRecord]:
+    """Give the pool's discount terms mostly to materials suppliers, as in manufacturing supply chains.
+
+    Each vendor gets a score of 1 if it sells materials (raw materials, components, packaging) plus uniform
+    noise in [0, MIX_NOISE); the highest scores take the discount terms, the rest take the net terms in
+    random order. The noise lets a few non-materials vendors offer discounts too.
+    """
+    n = len(VENDORS)
+    score = np.array([float(VENDORS[i][1] in MATERIALS) for i in range(n)]) + rng.uniform(0, MIX_NOISE, n)
+    order = np.argsort(-score, kind="stable")
+    discount = [t for t in TERMS_POOL if t.discount_bps]
+    net = [TERMS_POOL[i] for i in rng.permutation(len(TERMS_POOL)) if not TERMS_POOL[i].discount_bps]
+    out: list[TermsRecord | None] = [None] * n
+    for rank, i in enumerate(order):
+        out[int(i)] = discount[rank] if rank < len(discount) else net[rank - len(discount)]
+    return [t for t in out if t is not None]
 
 
 def _profile(

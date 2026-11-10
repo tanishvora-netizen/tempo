@@ -1,0 +1,11 @@
+{
+ "created_at": "2026-11-10T10:38:07+00:00",
+ "error": null,
+ "key": "871f113e484f3a00fb4130bf3067c115d207892e1a7bec270b634290aea757e0",
+ "model": "qwen3:8b",
+ "prompt_version": "v1",
+ "provider": "ollama",
+ "raw": "{\n  \"terms_quote\": \"Net 10th proximo\",\n  \"terms_source\": \"payment_box\",\n  \"discount_pct\": null,\n  \"discount_days\": null,\n  \"net_days\": null,\n  \"anchor\": \"prox\",\n  \"prox_day\": 10,\n  \"late_fee_quote\": null,\n  \"late_fee_source\": null,\n  \"late_fee_kind\": null,\n  \"late_fee_value\": null,\n  \"methods_quote\": \"ACH, credit card (Visa, Mastercard, Amex)\",\n  \"methods_source\": \"payment_box\",\n  \"accepted_methods\": [\"ACH\", \"CARD\", \"CARD\", \"CARD\"],\n  \"surcharge_quote\": null,\n  \"surcharge_source\": null,\n  \"card_surcharge_pct\": null,\n  \"card_discount_quote\": null,\n  \"card_discount_source\": null,\n  \"card_discount_allowed\": false,\n  \"terms_overridden_in_email\": false\n}",
+ "schema_version": "terms-v2",
+ "task": "extract"
+}
