@@ -1,0 +1,36 @@
+{
+ "k": 4,
+ "naive_time_limit_s": 60.0,
+ "runs": [
+  {
+   "reduced": true,
+   "rows": 630,
+   "cols": 727,
+   "nonzeros": 2341,
+   "status": "optimal",
+   "mip_gap": 9.93356077053353e-05,
+   "seconds": 0.64,
+   "objective_dollars": 41035.52,
+   "peak_rss_mb": 244.3,
+   "options": 592,
+   "bills": 212,
+   "scenarios": 200,
+   "check_days": 61
+  },
+  {
+   "reduced": false,
+   "rows": 12538,
+   "cols": 914,
+   "nonzeros": 38313,
+   "status": "optimal",
+   "mip_gap": 9.970946445429844e-05,
+   "seconds": 2.92,
+   "objective_dollars": 41037.8,
+   "peak_rss_mb": 259.7,
+   "options": 592,
+   "bills": 212,
+   "scenarios": 200,
+   "check_days": 61
+  }
+ ]
+}
