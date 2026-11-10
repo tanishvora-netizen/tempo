@@ -40,7 +40,7 @@ Each answer is also logged as a ruling in `docs/DECISIONS.md`.
 
 **Q: "~200 open bills over 13 weeks" when most real invoices arrive later?** The dataset holds bills issued from about 25 days before `AS_OF` to about 55 days after it. Future-dated bills are recurring or PO-backed invoices already entered in Bill Pay (ASSUMPTION, stated in the UI and README). Bills whose due date falls after the horizon are excluded from the run. No bill is overdue at `AS_OF`.
 
-**Q: Which payment option is the baseline?** `BANK_DUE`: arrives on the due date. Every option's value uses one formula, `v = (A_base - c) + rewards + YIELD_ON_CASH * c * (t_base - t) / 365 - fees`, where `A_base` is the full amount and `t_base` the `BANK_DUE` cash-out day. `BANK_DUE` therefore has value `-fee` (zero from Ramp Checking).
+**Q: Which payment option is the baseline?** `BANK_DUE`: arrives on the due date. Every option's value uses one formula, `v = (A_base - c) + rewards + YIELD_ON_CASH * c * (t - t_base) / 365 - fees` (paying later than the baseline earns yield; paying earlier loses it), where `A_base` is the full amount and `t_base` the `BANK_DUE` cash-out day. `BANK_DUE` therefore has value `-fee` (zero from Ramp Checking).
 
 **Q: Does every vendor accept RTP?** No. Each vendor has an `rtp_eligible` flag (ASSUMPTION: about 70% of receiving banks). Non-RTP vendors are paid by standard ACH sent 3 business days before arrival; the cash leaves on the send date. US federal holidays are not business days.
 

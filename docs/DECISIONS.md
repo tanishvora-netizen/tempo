@@ -22,3 +22,6 @@ Format for quick rulings: `Ruling: <what> | <why> | <cost if wrong>`. Longer ADR
 - Ruling: Certification fallback is N = 1,000 with K = 5, not K = 20 | K/N = 2% is looser than K = 0 at N = 200 (C1, quant) | Low.
 - Ruling: Discount-window ACH payments use the 4-business-day upper bound; due-date ACH uses 3 | missing a discount window forfeits the discount, while one day late on a due date rarely costs anything | Low.
 - Ruling: Starting cash is calibrated on a separate seed D, never on the reported seed C | the calibration must not reuse the numbers we report (C1, quant) | Low.
+- Ruling: Drop the "only 10% of AP teams fully automate discount capture" claim | the research pass read the State of ePayables 2025 report and found no such figure (docs/SOURCES.md, claim 2) | None: never stated.
+- Ruling: Say "Ramp's bill and vendor objects have no field for discount terms (vendors and purchase orders carry only `net_payment_terms`)" | the vendor object also has `net_payment_terms`, so the directive's "only on purchase orders" is wrong (docs/ramp_api_snapshot.md) | Low.
+- Ruling: The payload preview uses Ramp's request enum (`ACH`, `CARD`, ...) and notes RTP as "chosen in Ramp when funded from Ramp Checking" | `RTP` and `EARLY_PAYMENT_DISCOUNT` are response-only values | Low.
