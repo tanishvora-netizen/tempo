@@ -367,6 +367,7 @@ def demo_tokens(bundle: dict, proof: dict, whatifs: dict) -> dict[str, str]:
         "FLIPS": str(len(preset["diff"])),
         "P05_GAP": usd(fitted["greedy_p05"]["value_cents"] - fitted["tempo"]["value_cents"]),
         "LADDER_TRUE": pct(proof["ladder_sensitivity"]["true_breach_rate"]),
+        "LADDER_TRUE_BOUND": pct(proof["ladder_sensitivity"]["true_breach_upper"]),
         "STRESS_TEMPO": pct(stress["tempo"]["breach_rate"]),
         "STRESS_GREEDY": pct(stress["greedy_discount"]["breach_rate"]),
         "ACCEPTED_CORRECT": str(rec["correct"]),
