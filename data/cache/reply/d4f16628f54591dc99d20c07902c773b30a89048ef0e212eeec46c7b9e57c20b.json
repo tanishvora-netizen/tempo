@@ -1,0 +1,11 @@
+{
+ "created_at": "2026-11-10T12:00:52+00:00",
+ "error": null,
+ "key": "d4f16628f54591dc99d20c07902c773b30a89048ef0e212eeec46c7b9e57c20b",
+ "model": "qwen3:8b",
+ "prompt_version": "v1",
+ "provider": "ollama",
+ "raw": "{\n  \"terms_quote\": null,\n  \"terms_source\": null,\n  \"discount_pct\": null,\n  \"discount_days\": null,\n  \"net_days\": null,\n  \"anchor\": null,\n  \"prox_day\": null,\n  \"late_fee_quote\": null,\n  \"late_fee_source\": null,\n  \"late_fee_kind\": null,\n  \"late_fee_value\": null,\n  \"methods_quote\": null,\n  \"methods_source\": null,\n  \"accepted_methods\": [],\n  \"surcharge_quote\": null,\n  \"surcharge_source\": null,\n  \"card_surcharge_pct\": null,\n  \"card_discount_quote\": null,\n  \"card_discount_source\": null,\n  \"card_discount_allowed\": null,\n  \"terms_overridden_in_email\": false\n}",
+ "schema_version": "terms-v2",
+ "task": "reply"
+}

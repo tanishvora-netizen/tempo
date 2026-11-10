@@ -8,6 +8,8 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
+from tempo.data.store import load_dataset  # noqa: E402
+
 PRE = REPO / "data" / "precomputed"
 OUT = REPO / "docs" / "RESULTS.md"
 CALIBRATION = REPO / "data" / "demo" / "calibration.json"
@@ -316,7 +318,12 @@ def demo_tokens(bundle: dict, proof: dict, whatifs: dict) -> dict[str, str]:
         if p["what_if"]["customer_id"] == biggest and p["what_if"]["delay_days"] == 14
     )
     rec = proof["extraction"]["holdout"]["reconciled"]
+    dataset = load_dataset("demo")
+    injection = next(i for i in dataset.invoices if i.tag == "injection")
+    vendor = next(v.name for v in dataset.vendors if v.id == injection.vendor_id)
     return {
+        "INJECTION_VENDOR": vendor,
+        "INJECTION_INVOICE": injection.invoice_number,
         "TEMPO_VALUE": usd(fitted["tempo"]["value_cents"]),
         "TEMPO_BREACH": pct(fitted["tempo"]["breach_rate"]),
         "TEMPO_BOUND": pct(fitted["tempo"]["breach_upper"]),
