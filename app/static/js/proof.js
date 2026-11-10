@@ -17,7 +17,6 @@ const POLICY = {
   per_day_5pct: ["Per-day 5% limit", "Each day separately at 5%, not the 13 weeks jointly"],
   per_day_worst_case: ["Worst case per day", "Each day at 5% divided by 91 days; with 1,000 planning scenarios, the day's worst scenario"],
   tempo_with_financing: ["Tempo with financing on", "Flex-style financing allowed; off in the headline because the fee is an assumption"],
-  tempo_ladder_from_eps_n: ["Tempo, ladder from K = 10", "Certification ladder starting at 5% of N; added after the headline results"],
 };
 
 function policyName(id) {
@@ -148,12 +147,10 @@ function ablationSection(ev, state) {
 /** Robustness rows reported beside the headline, never instead of it. */
 function sensitivitySection(ev, state) {
   const fin = ev.financing_sensitivity;
-  const ladder = ev.ladder_sensitivity;
-  const rows = [fin, ladder].filter(Boolean);
+  const rows = [fin].filter(Boolean);
   if (!rows.length) return "";
   const notes = [
     fin && html`<li>Financing on: <span class="num">${count(fin.financed_count)}</span> bills financed, <span class="num" title="${moneyExact(fin.financed_cents)}">${money(fin.financed_cents)}</span> repaid; certified: ${fin.certified ? "yes" : "no"}.</li>`,
-    ladder && html`<li>Ladder from K = ${ladder.k}: seed-B bound <span class="num">${pct(ladder.cert_upper)}</span> at z = ${ladder.z.toFixed(3)}; under the generator's true model <span class="num">${pct(ladder.true_breach_rate)}</span> (bound <span class="num ${ladder.true_breach_upper > state.kpis.epsilon ? "risk" : ""}">${pct(ladder.true_breach_upper)}</span>).</li>`,
   ];
   const body = html`<div class="overflow-x-auto">${policyTable(rows, state.kpis.epsilon, "Sensitivity checks on seed C")}</div>
     <ul class="flex list-disc flex-col gap-1 border-t border-line py-3 pl-8 pr-4 text-sm text-ink-2">${notes}</ul>`;

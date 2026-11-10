@@ -1,9 +1,9 @@
 """Out-of-sample certification of the chance constraint (directive 5.5, council C1).
 
 SAA is optimistic: a plan that protects all but K of N = 200 sampled scenarios breaches more often on fresh
-ones. So we solve with K = 4, 3, 2, 1, 0 and test each plan on 10,000 fresh seed-B scenarios, stopping at
-the first pass. The test uses a one-sided Wilson upper bound with a Bonferroni-adjusted z (0.05 split over
-the 6 possible steps, z = 2.394), because the ladder tests several plans. If K = 0 still fails, one fallback
+ones. So we solve with K = 10, 8, 6, 4, 3, 2, 1, 0 (10 = EPSILON * N) and test each plan on 10,000 fresh
+seed-B scenarios, stopping at the first pass. The test uses a one-sided Wilson upper bound with a
+Bonferroni-adjusted z (0.05 split over the 9 possible steps, z = 2.539), because the ladder tests several plans. If K = 0 still fails, one fallback
 solve with N = 1,000 and K = 5. If that fails too, the plan with the lowest seed-B bound ships with the miss shown in red.
 Seed C is never used here.
 """

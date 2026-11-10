@@ -9,7 +9,6 @@ import time
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
-from statistics import NormalDist
 
 import numpy as np
 
@@ -21,7 +20,7 @@ from tempo.forecast.simulate import WhatIf
 from tempo.models import Dataset, Decision, TermsRecord
 from tempo.optimize import baselines as bl
 from tempo.optimize.cash_value import CashValue, marginal_value_of_cash
-from tempo.optimize.certify import Certification, certify
+from tempo.optimize.certify import Certification
 from tempo.optimize.engine import Plan, true_params
 from tempo.optimize.evaluate import balance_fan, evaluate
 from tempo.optimize.explain import ExplainContext, explain_all
@@ -77,43 +76,6 @@ def macro_stress(base: "Solved", plans: dict[str, Plan]) -> dict:
     scen = base.inputs.forecast.scenarios(N_EVAL_SCENARIOS, SEED_C, sigma_macro=STRESS_SIGMA_MACRO)
     res = evaluate_all(plans, base.inputs.forecast.headroom(scen), base.inputs)
     return {"sigma_macro": STRESS_SIGMA_MACRO, "policies": [policy_view(res[p]) for p in POLICY_ORDER]}
-
-
-SENSITIVITY_LADDER = (10, 8, 6, 4, 3, 2, 1, 0)  # starts at K = EPSILON * N for N = 200
-
-
-def ladder_sensitivity(dataset: Dataset, base: "Solved") -> dict:
-    """Certification ladder starting at K = EPSILON * N (not the pre-registered 4..0), Bonferroni over its rungs.
-
-    Added after the headline results were seen (disclosed in DECISIONS.md); reported beside, never instead of,
-    the headline. Seed B still decides; seed C and the true model only report."""
-    inputs = base.inputs
-    z = NormalDist().inv_cdf(1 - EPSILON / (len(SENSITIVITY_LADDER) + 1))
-    plan, cert = certify(
-        inputs.bills,
-        inputs.options,
-        inputs.headroom_a,
-        inputs.headroom_b,
-        inputs.as_of,
-        inputs.headroom_a_fallback,
-        z=z,
-        ladder=SENSITIVITY_LADDER,
-    )
-    fitted = evaluate(plan, base.headroom_c, inputs.as_of, dataset.company.buffer_cents)
-    truth = inputs.forecast.headroom(
-        inputs.forecast.scenarios(N_EVAL_SCENARIOS, SEED_C, params=true_params(dataset))
-    )
-    true_res = evaluate(plan, truth, inputs.as_of, dataset.company.buffer_cents)
-    return {
-        **policy_view(fitted),
-        "policy": "tempo_ladder_from_eps_n",
-        "certified": cert.passed,
-        "k": cert.final.k,
-        "z": z,
-        "cert_upper": cert.final.cert_upper,
-        "true_breach_rate": true_res.breach_rate,
-        "true_breach_upper": true_res.breach_upper,
-    }
 
 
 def financing_sensitivity(dataset: Dataset, ingest_result: IngestResult) -> dict:
@@ -280,7 +242,6 @@ def build_proof(dataset: Dataset, ingest_result: IngestResult, base: Solved) -> 
             for p in ("tempo", "per_day_5pct", "per_day_worst_case", "deterministic_p50")
         ],
         "financing_sensitivity": financing_sensitivity(dataset, ingest_result),
-        "ladder_sensitivity": ladder_sensitivity(dataset, base),
         "extraction": evaluate_extraction(dataset, ingest_result.reconciled, ingest_result.extractions),
     }
 

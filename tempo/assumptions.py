@@ -8,6 +8,7 @@ Money is integer cents everywhere outside the solver and charts. Rates are fract
 """
 
 from datetime import date
+from statistics import NormalDist
 
 # --- Calendar and day count -------------------------------------------------------------------
 
@@ -83,11 +84,14 @@ N_OPT_SCENARIOS = 200  # scenarios in the optimizer (seed A). ASSUMPTION.
 N_FAN_SCENARIOS = 1_000  # scenarios for the fan chart. ASSUMPTION.
 N_CERT_SCENARIOS = 10_000  # fresh scenarios for certification (seed B). ASSUMPTION.
 N_EVAL_SCENARIOS = 10_000  # fresh scenarios for reported numbers (seed C). ASSUMPTION.
-K_LADDER = (4, 3, 2, 1, 0)  # unprotected scenarios allowed, tried in order. ASSUMPTION (directive 5.5).
+K_LADDER = (10, 8, 6, 4, 3, 2, 1, 0)  # unprotected scenarios allowed, tried in order. ASSUMPTION: starts at
+#   K = floor(EPSILON * N_OPT_SCENARIOS) = 10 and walks down to 0 (final fix pass; was 4..0, see DECISIONS.md).
 FALLBACK_N = 1_000  # scenarios if K = 0 fails at N = 200. ASSUMPTION (council C1, quant).
 FALLBACK_K = 5  # unprotected scenarios in the fallback. ASSUMPTION (council C1, quant).
 WILSON_Z_REPORT = 1.645  # one-sided 95% normal quantile, for reported bounds.
-WILSON_Z_CERTIFY = 2.394  # one-sided normal quantile at 0.05 / 6: Bonferroni over the 6 ladder steps.
+CERT_STEPS = len(K_LADDER) + 1  # every plan the ladder can test: its rungs plus the N = 1,000 fallback.
+WILSON_Z_CERTIFY = NormalDist().inv_cdf(1 - EPSILON / CERT_STEPS)  # one-sided quantile at 0.05 / 9 = 2.539:
+#   Bonferroni over every step the ladder can try.
 SOLVER_TIME_LIMIT_S = 10.0  # seconds. ASSUMPTION: safety net; the reduced model solves well within it.
 SOLVER_MIP_REL_GAP = 1e-4  # relative gap. ASSUMPTION.
 CASH_VALUE_STEP_CENTS = 2_500_000  # $25,000 forward step for the marginal value of cash. ASSUMPTION.

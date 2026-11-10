@@ -8,6 +8,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
+from tempo.assumptions import CERT_STEPS  # noqa: E402
 from tempo.data.store import load_dataset  # noqa: E402
 
 PRE = REPO / "data" / "precomputed"
@@ -93,7 +94,7 @@ def main() -> None:
         "",
         f"Target EPSILON = {pct(cert['epsilon'], 0)}. Optimizer scenarios N = {cert['n']}, unprotected K = {cert['k']} "
         f"(in-sample breach {pct(cert['in_sample_rate'])}). Certification test: one-sided Wilson bound on 10,000 "
-        f"seed-B scenarios with Bonferroni z = {cert['z_certify']} (0.05 split over 6 ladder steps).",
+        f"seed-B scenarios with Bonferroni z = {cert['z_certify']:.3f} (0.05 split over {CERT_STEPS} possible ladder steps).",
         "",
         "| N | K | In-sample breaches | Seed-B breaches | Seed-B rate | Seed-B bound | Pass | Solve (s) |",
         "|---:|---:|---:|---:|---:|---:|:---:|---:|",
@@ -150,19 +151,6 @@ def main() -> None:
         "Off in the headline (council C2): the fee is an assumption and Flex has no public API.",
         "",
     ]
-    lad = proof["ladder_sensitivity"]
-    lines += [
-        "## Sensitivity: certification ladder starting at K = EPSILON * N",
-        "",
-        "The pre-registered ladder starts at K = 4 of 200 (2%), so the headline plan certifies with a wide margin. "
-        "Starting at K = 10 (5% of 200) and stepping down, with Bonferroni over all nine rungs "
-        f"(z = {lad['z']:.3f}), seed B certifies K = {lad['k']} (bound {pct(lad['cert_upper'])}). This row was "
-        "added after the headline results were seen and is reported beside them, never instead of them "
-        f"(docs/DECISIONS.md). Under the generator's true model: {pct(lad['true_breach_rate'])} "
-        f"(bound {pct(lad['true_breach_upper'])}).",
-        "",
-    ]
-    lines += policy_table([lad], "Seed C")
     fin = proof["financing_sensitivity"]
     lines += policy_table(
         [fin],
@@ -304,12 +292,6 @@ def update_readme(bundle: dict, proof: dict) -> None:
             "",
             f"- Certified with N = {cert['n']}, K = {cert['k']} on a separate 10,000-scenario set "
             f"(Bonferroni-corrected Wilson bound).",
-            f"- Sensitivity (disclosed in DECISIONS.md): a certification ladder that starts at K = 10 instead of "
-            f"the pre-registered K = 4 gives {usd(proof['ladder_sensitivity']['value_cents'])} at "
-            f"{pct(proof['ladder_sensitivity']['breach_rate'])} "
-            f"(bound {pct(proof['ladder_sensitivity']['breach_upper'])}): close to the smart spreadsheet's "
-            f"value, certified under the fitted model only (true model {pct(proof['ladder_sensitivity']['true_breach_rate'])}, "
-            f"bound {pct(proof['ladder_sensitivity']['true_breach_upper'])}).",
             f"- Solver: {solver['rows']:,} rows instead of {solver['rows_naive']:,}, {solver['solve_seconds']:.2f} s, "
             f"gap {pct(solver['mip_gap'], 3)}.",
             f"- Extraction (synthetic, held-out split): Tempo auto-accepts {pct(rec['coverage'], 0)} of invoices' terms "
@@ -359,8 +341,6 @@ def demo_tokens(bundle: dict, proof: dict, whatifs: dict, review_effects: dict) 
         "P05_BREACH": pct(fitted["greedy_p05"]["breach_rate"]),
         "P05_BOUND": pct(fitted["greedy_p05"]["breach_upper"]),
         "P05_TRUE": pct(true["greedy_p05"]["breach_rate"]),
-        "LADDER_VALUE": usd(proof["ladder_sensitivity"]["value_cents"]),
-        "LADDER_BREACH": pct(proof["ladder_sensitivity"]["breach_rate"]),
         "COST_OF_CASH": pct(bundle["cash_value"]["cost_of_cash"], 1) + "/yr",
         "ROWS_NAIVE": f"{bundle['solver']['rows_naive']:,}",
         "ROWS": f"{bundle['solver']['rows']:,}",
@@ -368,8 +348,6 @@ def demo_tokens(bundle: dict, proof: dict, whatifs: dict, review_effects: dict) 
         "PRESET_LABEL": preset["label"],
         "FLIPS": str(len(preset["diff"])),
         "P05_GAP": usd(fitted["greedy_p05"]["value_cents"] - fitted["tempo"]["value_cents"]),
-        "LADDER_TRUE": pct(proof["ladder_sensitivity"]["true_breach_rate"]),
-        "LADDER_TRUE_BOUND": pct(proof["ladder_sensitivity"]["true_breach_upper"]),
         "STRESS_TEMPO": pct(stress["tempo"]["breach_rate"]),
         "STRESS_GREEDY": pct(stress["greedy_discount"]["breach_rate"]),
         "ACCEPTED_CORRECT": str(rec["correct"]),

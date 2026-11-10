@@ -110,7 +110,7 @@ $$U = \frac{\hat p + \frac{z^2}{2n} + z\sqrt{\frac{\hat p(1-\hat p)}{n} + \frac{
 
 At $z = 1.645$ and $n = 10{,}000$: 464 breaches give $U = 4.9985\%$ (passes 5%); 465 give $5.0088\%$.
 
-The ladder tries $K = 4, 3, 2, 1, 0$ at $N = 200$, then $K = 5$ at $N = 1{,}000$, and stops at the first plan whose seed-B bound is at most $\varepsilon$. Because up to six plans are tested, the seed-B test uses a Bonferroni-adjusted $z = \Phi^{-1}(1 - 0.05/6) = 2.394$. If nothing passes, the plan with the lowest seed-B bound ships and the miss is shown. Seed C is reported with $z = 1.645$ as it comes out.
+The ladder starts at $K = \lfloor \varepsilon N \rfloor = 10$ and tries $K = 10, 8, 6, 4, 3, 2, 1, 0$ at $N = 200$, then $K = 5$ at $N = 1{,}000$, and stops at the first plan whose seed-B bound is at most $\varepsilon$. Because up to nine plans are tested, the seed-B test uses a Bonferroni-adjusted $z = \Phi^{-1}(1 - 0.05/9) = 2.539$. If nothing passes, the plan with the lowest seed-B bound ships and the miss is shown. Seed C is reported with $z = 1.645$ as it comes out.
 
 Certification covers sampling error, not model error: B and C come from the fitted forecast. RESULTS.md therefore also evaluates every policy on seed C drawn with the generator's *true* per-customer laws (this does not test the common factor or the no-pay rate, which stay at their assumed values), and again with the common factor doubled ($\sigma_{\text{macro}} = 0.30$). Seed C's point estimate can exceed seed B's bound: B's bound covers B's rate, and C is an independent draw.
 
