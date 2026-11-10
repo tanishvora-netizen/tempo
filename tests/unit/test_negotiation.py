@@ -27,6 +27,12 @@ def _setup():
     return inputs, base
 
 
+@cache
+def _offers():
+    inputs, base = _setup()
+    return plan_offers(inputs, base, 0.10)
+
+
 def test_offer_is_break_even_plus_margin_rounded_up_to_a_quarter_point() -> None:
     d_star, offer_bps = price(0.08, 30)
 
@@ -38,7 +44,7 @@ def test_offer_is_break_even_plus_margin_rounded_up_to_a_quarter_point() -> None
 @pytest.mark.slow
 def test_offer_verification_resolve_takes_a_generous_offer_and_refuses_a_token_one() -> None:
     inputs, base = _setup()
-    top = plan_offers(inputs, base, 0.10)[0]
+    top = _offers()[0]
     index = next(i for i, b in enumerate(inputs.bills) if b.id == top.bill_id)
     assert index in candidate_bills(inputs.bills, inputs.as_of).values()
 
@@ -52,9 +58,7 @@ def test_offer_verification_resolve_takes_a_generous_offer_and_refuses_a_token_o
 
 @pytest.mark.slow
 def test_ranked_offers_put_verified_takers_first_and_emails_carry_only_code_numbers() -> None:
-    inputs, base = _setup()
-
-    offers = plan_offers(inputs, base, 0.10)
+    offers = _offers()
 
     takers = [o.tempo_takes_it for o in offers]
     assert takers == sorted(takers, reverse=True)
@@ -65,8 +69,7 @@ def test_ranked_offers_put_verified_takers_first_and_emails_carry_only_code_numb
 
 
 def test_vendor_replies_are_parsed_but_never_auto_applied() -> None:
-    inputs, base = _setup()
-    offer = plan_offers(inputs, base, 0.10)[0]
+    offer = _offers()[0]
 
     accept = parse_reply(None, offer, "accept")
     counter = parse_reply(None, offer, "counter")

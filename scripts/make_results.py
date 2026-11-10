@@ -228,6 +228,60 @@ def main() -> None:
     lines.append("")
     OUT.write_text("\n".join(lines))
     print(f"wrote {OUT}")
+    update_readme(bundle, proof)
+
+
+README = REPO / "README.md"
+START, END = "<!-- results:start -->", "<!-- results:end -->"
+LABELS = {
+    "pay_on_due": "Pay every bill on its due date",
+    "weekly_run": "Weekly AP run, take discounts in the window (today's workflow)",
+    "greedy_discount": "Greedy: take every discount the median forecast allows",
+    "greedy_p05": "Smart spreadsheet: greedy on the P5 path, return beats cost of cash",
+    "deterministic_p50": "Same optimizer on the median forecast only",
+    "tempo": "**Tempo** (chance-constrained, certified)",
+}
+
+
+def update_readme(bundle: dict, proof: dict) -> None:
+    """Replace the README's results block with numbers from the same precomputed files as RESULTS.md."""
+    fitted = {r["policy"]: r for r in proof["policies"]}
+    true = {r["policy"]: r for r in proof["policies_true_model"]}
+    cert, solver, ev = bundle["certification"], bundle["solver"], proof["extraction"]["holdout"]
+    rows = [
+        "| Policy (13 weeks, 212 bills) | Value vs paying on due date | Breach probability (95% bound) | Under the true model |",
+        "|---|---:|---:|---:|",
+    ]
+    for key, label in LABELS.items():
+        f, t = fitted[key], true[key]
+        rows.append(
+            f"| {label} | {usd(f['value_cents'])} | {pct(f['breach_rate'])} ({pct(f['breach_upper'])}) | "
+            f"{pct(t['breach_rate'])} |"
+        )
+    rec = ev["reconciled"]
+    block = "\n".join(
+        [
+            START,
+            f"Breach = any end-of-day balance below the {usd(bundle['company']['buffer_cents'])} buffer in 13 weeks, "
+            f"measured on {cert['reported']['n']:,} fresh scenarios that no decision saw (target {pct(cert['epsilon'], 0)}).",
+            "",
+            *rows,
+            "",
+            f"- Certified with N = {cert['n']}, K = {cert['k']} on a separate 10,000-scenario set "
+            f"(Bonferroni-corrected Wilson bound).",
+            f"- Solver: {solver['rows']:,} rows instead of {solver['rows_naive']:,}, {solver['solve_seconds']:.2f} s, "
+            f"gap {pct(solver['mip_gap'], 3)}.",
+            f"- Extraction (synthetic, held-out split): Tempo auto-accepts {pct(rec['coverage'], 0)} of invoices' terms "
+            f"at {pct(rec['precision'], 1)} precision and routes the rest to Needs review.",
+            "",
+            "Full tables, certification steps, ablations, what-ifs, and the extraction eval: [docs/RESULTS.md](docs/RESULTS.md).",
+            END,
+        ]
+    )
+    text = README.read_text()
+    start, end = text.index(START), text.index(END) + len(END)
+    README.write_text(text[:start] + block + text[end:])
+    print(f"updated {README}")
 
 
 if __name__ == "__main__":
