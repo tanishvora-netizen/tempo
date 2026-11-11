@@ -30,14 +30,14 @@ function rankedTable(offers, negotiated) {
   return html`<div class="overflow-hidden rounded-md border border-line">
     <table class="tbl">
       <caption class="sr-only">Offers Tempo would take, ranked by value to the plan</caption>
-      <thead><tr><th scope="col">Vendor</th><th scope="col" class="r">Bill</th><th scope="col" class="r">Offer</th><th scope="col" class="r">This bill</th><th scope="col" class="r" title="This vendor's bill spend in the 13 weeks of data x 365/91 x the offer discount">Annual value if accepted</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
+      <thead><tr><th scope="col">Vendor</th><th scope="col" class="r">Bill</th><th scope="col" class="r">Offer</th><th scope="col" class="r">This bill</th><th scope="col" class="r" title="Gross discount: this vendor's bill spend in the 13 weeks of data x 365/91 x the offer discount, before the cost of paying early (the This bill column is net)">Annual value if accepted</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
       <tbody>${offers.map(
         (o) => html`<tr>
           <td><div class="font-medium">${o.vendor_name}</div><div class="meta">${invoiceId(o.invoice_number)}, pay ${longDate(o.proposed_date)} (${count(o.days_early)} days early)</div></td>
           <td class="r num" title="${moneyExact(o.amount_cents)}">${money(o.amount_cents)}</td>
           <td class="r num">${offerPct(o)}</td>
           <td class="r num gain" title="${moneyExact(o.value_delta_cents)}">${money(o.value_delta_cents, { signed: true })}</td>
-          <td class="r num" title="${moneyExact(o.vendor_spend_13w_cents)} of bills in 13 weeks x 365/91 x ${offerPct(o)}">${money(o.annual_value_cents)}<div class="meta">estimate from 13 weeks of bills</div></td>
+          <td class="r num" title="${moneyExact(o.vendor_spend_13w_cents)} of bills in 13 weeks x 365/91 x ${offerPct(o)}">${money(o.annual_value_cents)}<div class="meta">gross discount; estimate from 13 weeks of bills</div></td>
           <td class="r">${negotiated[o.vendor_id]
             ? html`<span class="chip chip-solid">${icon("user-check")}Terms saved</span>`
             : html`<button type="button" class="btn btn-sm" data-vendor="${o.vendor_id}" data-name="${o.vendor_name}">Draft offer</button>`}</td>

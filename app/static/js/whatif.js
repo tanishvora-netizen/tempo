@@ -118,18 +118,20 @@ function resultSummary(state, result) {
   const base = currentKpis(state, live);
   const rate = live ? result.estimate.rate : k.breach_rate;
   const upper = live ? result.estimate.upper : k.breach_upper;
-  const over = upper > base.epsilon;
+  const certified = !live && result.certification?.passed;
+  const certBound = certified ? result.certification.steps.find((s) => s.passed)?.cert_upper : null;
+  const over = upper > base.epsilon && !certified; // a certified plan's seed-C bound is a check, not a failure
   const exact = (c) => html`<span title="${moneyExact(c)}">${money(c)}</span>`;
   return html`<div class="flex flex-col gap-3">
     <div class="flex flex-wrap items-center gap-2">
       ${live
         ? html`<span class="chip chip-review">${icon("circle-alert")}Estimate on seed B, not certified</span>
-          <span class="text-sm text-ink-2">Both columns are scored on the same ${count(result.estimate.n)} seed-B scenarios. Solved live in <span class="num font-medium text-ink">${seconds(result.total_seconds)}</span>${result.time_limit_reached ? html`; <span class="text-review font-medium">time limit reached, best plan found</span>` : ""}.</span>`
-        : html`<span class="chip chip-solid">${icon("shield-check")}Certified</span>
+          <span class="text-sm text-ink-2">Live estimate: ${count(result.n)} planning scenarios; both columns scored on the same ${count(result.estimate.n)} seed-B check scenarios. Solved live in <span class="num font-medium text-ink">${seconds(result.total_seconds)}</span>${result.time_limit_reached ? html`; <span class="text-review font-medium">time limit reached, best plan found</span>` : ""}.</span>`
+        : html`<span class="chip chip-solid">${icon("shield-check")}Certified: seed-B bound ${pct(certBound)}</span>
           <span class="text-sm text-ink-2">Precomputed: certified on seed B; both columns reported on the same ${count(result.certification.reported.n)} fresh seed-C scenarios.</span>`}
     </div>
     <table class="tbl">
-      <thead><tr><th scope="col">Measure</th><th scope="col" class="r">Current plan</th><th scope="col" class="r">What-if plan</th><th scope="col" class="r">Change</th></tr></thead>
+      <thead><tr><th scope="col">Measure</th><th scope="col" class="r">Current plan <span class="font-normal text-ink-3">(${live ? "seed B" : "seed C"})</span></th><th scope="col" class="r">What-if plan <span class="font-normal text-ink-3">(${live ? "seed B" : "seed C"})</span></th><th scope="col" class="r">Change</th></tr></thead>
       <tbody>
         ${valueRows(base, k, exact)}
         ${compareRow("Chance below buffer", base.breach_rate, rate, (x) => pct(x), { tone: "rate" })}
@@ -137,7 +139,7 @@ function resultSummary(state, result) {
       </tbody>
     </table>
     <div class="flex flex-col gap-1">
-      <p class="text-sm text-ink-2">Chance of dipping below the buffer: <span class="num font-medium ${over ? "risk" : "text-ink"}">${pct(rate)}</span>, upper bound <span class="num">${pct(upper)}</span>.</p>
+      <p class="text-sm text-ink-2">Chance of dipping below the buffer: <span class="num font-medium ${over ? "risk" : "text-ink"}">${pct(rate)}</span>, upper bound <span class="num">${pct(upper)}</span>${live ? " (live estimate)" : " (seed-C check at z = 1.645; certification is decided on seed B)"}.</p>
       ${riskMeter({ rate, upper, target: base.epsilon })}
     </div>
     ${latenessNotice(k)}
@@ -160,17 +162,17 @@ function tradeoffBox(t, epsilon, live) {
   const a = t.accept_risk;
   const target = pct(epsilon, 0);
   const value = (side) => html`plan value <span class="num font-medium text-ink" title="${moneyExact(side.value_cents)}">${money(side.value_cents, { signed: true })}</span>`;
-  const rate = (side) => html`breach <span class="num">${pct(side.breach_rate)}</span> (bound <span class="num">${pct(side.breach_upper)}</span>)`;
+  const rate = (side) => html`breach <span class="num">${pct(side.breach_rate)}</span> (bound <span class="num">${pct(side.breach_upper)}</span>)${side.certified ? "; this is the certified what-if plan (seed B)" : ""}`;
   const finBody = f.under_target
     ? html`${value(f)} after <span class="num" title="${moneyExact(f.fees_cents)}">${money(f.fees_cents)}</span> in assumed Flex-style fees on ${count(f.financed_count)} ${f.financed_count === 1 ? "bill" : "bills"}, no late payments; ${rate(f)}.`
-    : html`Financing alone can't keep the breach rate under ${target}${f.credit_drawn_cents ? html`: you would still need ${money(f.credit_drawn_cents)} of extra credit` : html`: ${rate(f)}`}.`;
+    : html`${live ? "In this live estimate, financing" : "Financing"} alone doesn't keep the breach rate under ${target}${f.credit_drawn_cents ? html`: you would still need ${money(f.credit_drawn_cents)} of extra credit` : html`: ${rate(f)}`}.`;
   const lateBody = l.under_target
     ? l.late_count
       ? html`${value(l)} with <span class="num font-medium text-ink">${count(l.late_count)}</span> ${l.late_count === 1 ? "bill" : "bills"} paid late (<span class="num" title="${moneyExact(l.fees_cents)}">${money(l.fees_cents)}</span> in late fees), no financing; ${rate(l)}.`
       : html`${value(l)} with no late payments and no financing; ${rate(l)}.`
-    : html`Late payments alone can't keep the breach rate under ${target}${l.credit_drawn_cents ? html`: you would still need ${money(l.credit_drawn_cents)} of extra credit` : html`: ${rate(l)}`}.`;
+    : html`${live ? "In this live estimate, the plan without financing" : "Without financing, late payments"} don't keep the breach rate under ${target}${l.credit_drawn_cents ? html`: you would still need ${money(l.credit_drawn_cents)} of extra credit` : html`: ${rate(l)}`}.`;
   const short = a.worst_shortfall_cents
-    ? html` The worst scenario falls <span class="num font-medium" title="${moneyExact(a.worst_shortfall_cents)}">${money(a.worst_shortfall_cents)}</span> short of the buffer on ${shortDate(a.worst_shortfall_date)}.`
+    ? html` The single worst of the ${count(t.n)} scenarios falls <span class="num font-medium" title="${moneyExact(a.worst_shortfall_cents)}">${money(a.worst_shortfall_cents)}</span> short of the buffer on ${shortDate(a.worst_shortfall_date)} (a tail case, not a forecast).`
     : "";
   const riskBody = html`Breach rate <span class="num font-medium ${a.breach_upper > epsilon ? "risk" : "text-ink"}">${pct(a.breach_rate)}</span> (bound <span class="num">${pct(a.breach_upper)}</span>) if you keep the current plan unchanged.${short}`;
   return html`<div class="rounded-md border border-line">
@@ -181,6 +183,7 @@ function tradeoffBox(t, epsilon, live) {
       ${optionLine(2, `Stay under ${target} without financing (late payments if needed)`, lateBody, l.under_target)}
       ${optionLine(3, "Accept the risk", riskBody)}
     </ol>
+    ${!f.under_target && !l.under_target ? html`<p class="border-t border-line px-3 py-2 text-sm text-ink-2">Neither lever alone is enough here; the what-if plan above uses financing first and pays late only where financing runs out.</p>` : ""}
   </div>`;
 }
 
@@ -190,7 +193,7 @@ function latenessNotice(k) {
   const arriving = k.arrive_after_due_count ?? 0;
   if (!byChoice && !arriving) return "";
   const worst = byChoice && k.worst_shortfall_cents
-    ? html`; financing is used first, and even so the worst scenario falls <span class="num font-medium" title="${moneyExact(k.worst_shortfall_cents)}">${money(k.worst_shortfall_cents)}</span> short of the buffer on ${shortDate(k.worst_shortfall_date)}`
+    ? html`; financing is used first, and even so the single worst scenario falls <span class="num font-medium" title="${moneyExact(k.worst_shortfall_cents)}">${money(k.worst_shortfall_cents)}</span> short of the buffer on ${shortDate(k.worst_shortfall_date)}`
     : "";
   const parts = [
     byChoice && html`<span class="num font-medium">${count(byChoice)}</span> ${byChoice === 1 ? "bill is" : "bills are"} paid late by choice to stay above the buffer${worst}`,

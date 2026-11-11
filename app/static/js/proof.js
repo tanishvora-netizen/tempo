@@ -184,7 +184,7 @@ function frontierSection(ev) {
       <table class="tbl"><caption class="sr-only">Tempo certified at each risk target</caption>
         <thead><tr><th scope="col">Target</th><th scope="col" class="r">Ladder stop</th><th scope="col" class="r">Value</th><th scope="col" class="r">Breach</th><th scope="col" class="r">95% bound</th><th scope="col">Seed B</th></tr></thead>
         <tbody>${rows}</tbody></table>
-      <p class="mt-2 text-xs text-ink-3">Blue: Tempo, each point labeled with its risk target; grey: baselines. Each target runs the same ladder (start at the target times N, walk down to 0) with its own Bonferroni z, certified on seed B; dots are seed C. Bars run to the one-sided 95% bound. No financing.</p>
+      <p class="mt-2 text-xs text-ink-3">Blue: Tempo, each point labeled with its risk target; grey: baselines. Each target runs the same ladder (start at the target times N, walk down to 0) with its own Bonferroni z, certified on seed B; dots are seed C. Bars run to the one-sided 95% bound. No financing. A red bound is seed C's bound above that target: certification is decided on seed B, and seed C is an independent check that can land slightly higher.</p>
     </div>
   </div>`;
   return section("frontier", "Risk vs value", "Tempo at five risk targets against every baseline, on the same fresh scenarios", body);
