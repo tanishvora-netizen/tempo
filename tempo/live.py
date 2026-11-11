@@ -32,8 +32,11 @@ from tempo.report import bill_rows, diff_plans, kpis
 from tempo.whatif import tradeoff
 
 # Live jobs on Render's free tier (0.1 CPU) use a lighter scenario set than presets, so a custom solve can reach
-# its gap inside the time limit. K keeps the base plan's share of unprotected scenarios (10 of 200 -> 5 of 100).
+# its gap inside the time limit.
 LIVE_N_SCENARIOS = 100
+LIVE_K_SHARE = (
+    0.03  # unprotected share on the live set: 3 of 100 (chosen from a probe on the live seed-B set)
+)
 LIVE_CHECK_SCENARIOS = 5_000
 
 
@@ -75,7 +78,9 @@ def live_solve(
     base_k = base_plan.k if base_plan.k is not None else 0
     base_n = base_plan.n_scenarios or N_OPT_SCENARIOS
     n = n_scenarios
-    k = floor(base_k * n / base_n)  # same share of unprotected scenarios as the certified base plan
+    # At full size, the certified base K. On the lighter live set, a smaller share: with only 100 planning
+    # scenarios the SAA is more optimistic, and K = 5% of N overshot 5% out of sample (DECISIONS.md).
+    k = base_k if n == base_n else floor(LIVE_K_SHARE * n)
     head_a = inputs.headroom_a_fallback[:n]
     plan = solve_plan(inputs.bills, inputs.options, head_a, inputs.as_of, k, time_limit=time_limit)
     c = dataset.company
