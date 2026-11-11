@@ -93,7 +93,10 @@ def main() -> None:
         f"- Tempo captures **{usd(tempo['value_cents'])}** over 13 weeks versus paying every bill on its due date. "
         f"Under the fitted forecast model, its chance of any end-of-day balance below the buffer is "
         f"**{pct(tempo['breach_rate'])}** (one-sided 95% upper bound {pct(tempo['breach_upper'])}) against a "
-        f"{pct(k['epsilon'], 0)} target, on {cert['reported']['n']:,} fresh scenarios (seed C) no decision saw. "
+        f"{pct(k['epsilon'], 0)} target, on {cert['reported']['n']:,} fresh scenarios (seed C) that no optimization "
+        "or certification step used. (The ladder's starting point was changed after earlier results were seen; "
+        "docs/DECISIONS.md discloses it. Every certification here, headline, presets, frontier and financing, "
+        "uses the same 10,000-scenario seed-B draw, so their errors are correlated, not independent.) "
         f"Under the generator's true payment model it is {pct(true_pol['tempo']['breach_rate'])} "
         f"(bound {pct(true_pol['tempo']['breach_upper'])}).",
         f"- Today's weekly AP run captures {usd(weekly['value_cents'])} and breaches in "

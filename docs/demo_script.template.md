@@ -22,15 +22,15 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Before each reh
 
 **Click:** Payment run (left nav) → click the first discounted row. Read the reason sentence aloud, e.g. "Paid early ... saves $X (2% of the subtotal) for paying 20 days early, a ...%/yr return on the cash actually paid, vs your ⟨COST_OF_CASH⟩ cost of cash." The return column uses the same number. If a row says "skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day", read that one: it is the chance constraint binding.
 
-> "One MILP decides all 212 bills jointly. Three exact reductions take it from ⟨ROWS_NAIVE⟩ rows to ⟨ROWS⟩, and it solves in under a second."
+> "One MILP decides all 212 bills jointly. Three exact reductions take it from ⟨ROWS_NAIVE⟩ rows to ⟨ROWS⟩, and the certified plan solves in about ⟨SOLVE_S⟩ seconds."
 
 **Click:** What-if → preset "⟨PRESET_LABEL⟩". The chart redraws instantly (precomputed and certified).
 
 > "Our biggest customer pays two weeks late. Tempo re-forecast and re-solved, and ⟨FLIPS⟩ decisions flipped, each with a reason. It can use Flex-style financing before it ever pays a vendor late, and the box below prices the three ways to respond on the same 10,000 scenarios: stay under 5% with financing, ⟨PRESET_FIN⟩; stay under 5% without financing, ⟨PRESET_LATE_ONLY⟩; or keep today's plan and accept a ⟨PRESET_KEEP⟩ chance of breaching."
 
-**Click:** "An unexpected payment" → type 420,000 → Re-solve plan. While it solves (the progress line counts the seconds; on the hosted free tier it takes longer than on a laptop):
+**Click:** "An unexpected payment" → type 420,000 → Re-solve plan, before you start talking (on the hosted demo it takes the better part of a minute). While it solves (the progress line counts the seconds; on the hosted free tier it takes longer than on a laptop):
 
-> "This one isn't precomputed. One MILP decides all 212 bills jointly: date and rail for each, with a joint chance constraint on the buffer. Three exact reductions take it from ⟨ROWS_NAIVE⟩ rows to ⟨ROWS⟩, so on a laptop it solves in about ⟨SOLVE_S⟩ seconds. Custom answers are scored on a separate seed and labeled as estimates, not certified."
+> "This one isn't precomputed. One MILP decides all 212 bills jointly: date and rail for each, with a joint chance constraint on the buffer. Three exact reductions take it from ⟨ROWS_NAIVE⟩ rows to ⟨ROWS⟩, so a laptop answers a custom scenario in several seconds (the plan plus two tradeoff variants); this free hosting tier is slower, so it runs as a background job on a lighter scenario set, labeled as a live estimate, not certified."
 
 **Click:** Proof → the risk-vs-value chart.
 
@@ -86,4 +86,4 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Before each reh
 10. **Isn't the data rigged?** It's synthetic and says so everywhere. The only tuned parameter is starting cash, from six values pre-registered in DECISIONS.md and swept on a seed we never report. We missed the directive's own 15% greedy-breach target and said so. Two realism fixes to the generator are disclosed.
 11. **What about RTP: it isn't in Ramp's request enum?** Right. Plans assume Ramp Checking pays RTP-eligible vendors by RTP. Where an ACH can still meet the date, the preview sends ACH that many business days earlier. Where no ACH date can (⟨MANUAL_RTP⟩ bills in this week's run), it sends no API request and says "send by RTP in Ramp"; the approve dialog shows that count before anyone signs.
 12a. **What are the operating limits?** This week ⟨MANUAL_RTP⟩ of ⟨WEEK_BILLS⟩ bills can only meet their dates by RTP, which Ramp's API can't request, so someone sends those in Ramp. The auto-schedule threshold sums each vendor's bills per week, but an invoice split across weeks or across duplicate vendor records could still slip under it, and there is no maker-checker in the demo: Ramp's approval chain is the real control. With the common timing factor doubled, every policy breaches (Tempo ⟨STRESS_TEMPO⟩, paying on due dates ⟨STRESS_POD⟩), so the guarantee is only as good as the forecast.
-12. **How fast is it?** The certified plan solves in ⟨SOLVE_S⟩ s. Presets are precomputed. A custom what-if re-solves in about a second locally; on Render's free 0.1 CPU it is slower, so live solves are cached and throttled.
+12. **How fast is it?** The certified plan solves in ⟨SOLVE_S⟩ s. Presets are precomputed. A custom what-if takes several seconds locally (the plan plus two tradeoff variants); on Render's free 0.1 CPU it runs as a background job on a lighter scenario set with a 40-second solver limit, one at a time, cached by input.
