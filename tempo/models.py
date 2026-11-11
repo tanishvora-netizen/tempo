@@ -240,7 +240,7 @@ class PaymentOption:
     """One way to pay one bill: when cash leaves, when the vendor receives it, and what it is worth."""
 
     bill_id: str
-    kind: Literal["BANK_DUE", "BANK_EARLY", "CARD", "CARD_EARLY", "FINANCE_EARLY", "LATE"]
+    kind: Literal["BANK_DUE", "BANK_EARLY", "CARD", "CARD_EARLY", "FINANCE_EARLY", "FINANCE_DUE", "LATE"]
     rail: Literal["RTP", "ACH", "CARD", "FINANCE"]
     send_date: date  # the date sent to Ramp as payment_date (or charged, for card)
     arrival_date: date  # when the vendor receives funds

@@ -48,7 +48,9 @@ export const editReview = (billId, terms) =>
 export const getForecast = () => request("GET", "/api/forecast");
 export const getPresets = () => request("GET", "/api/whatif/presets");
 export const runWhatIf = (whatIf) => request("POST", "/api/optimize", { what_if: whatIf });
+export const getJob = (jobId) => request("GET", `/api/jobs/${encodeURIComponent(jobId)}`);
 export const getEvaluate = () => request("GET", "/api/evaluate");
+export const getFinancingPlan = () => request("GET", "/api/plan/financing");
 
 /** Read terms from a PDF invoice (multipart field "file"); never changes the plan. */
 export function uploadInvoice(file) {

@@ -1,7 +1,7 @@
 // Side panel for one bill: the decision and why it won, every option's value, and the
 // invoice text with highlighted evidence.
 import { html, icon, setHTML } from "./dom.js";
-import { longDate, money, moneyExact, perYear, sentence, shortDate, termsText } from "./format.js";
+import { invoiceId, longDate, money, moneyExact, perYear, sentence, shortDate, termsText } from "./format.js";
 import { chip, EXPECTED_NOTE, modelCheckText, OPTION_LABEL, RAIL_LABEL, STATUS_LABEL, valueCell } from "./labels.js";
 import { documentView, evidenceLegend, methodsText } from "./evidence.js";
 import { openDrawer } from "./drawer.js";
@@ -123,7 +123,7 @@ export async function openBillPanel(billId) {
   setHTML(body, loadingBlock("Loading bill", 8));
   try {
     const b = await loadBill(billId);
-    setHTML(drawer.querySelector("#drawer-title"), html`${b.vendor} <span class="font-normal text-ink-2">${b.invoice_number}</span>`);
+    setHTML(drawer.querySelector("#drawer-title"), html`${b.vendor} <span class="font-normal text-ink-2">${invoiceId(b.invoice_number)}</span>`);
     setHTML(
       body,
       html`<div class="flex flex-col gap-6">

@@ -17,6 +17,7 @@ from pathlib import Path
 
 import numpy as np
 
+from tempo.assumptions import SOLVER_TIME_LIMIT_S
 from tempo.data.store import load_dataset
 from tempo.forecast.simulate import WhatIf
 from tempo.live import LiveResult, live_solve
@@ -93,13 +94,26 @@ class AppState:
     def is_cached(self, what_if: WhatIf | None, overrides: dict[str, TermsRecord]) -> bool:
         return self._key(what_if, overrides) in self._live_cache
 
-    def solve_live(self, what_if: WhatIf | None, overrides: dict[str, TermsRecord]) -> LiveResult:
+    def solve_live(
+        self,
+        what_if: WhatIf | None,
+        overrides: dict[str, TermsRecord],
+        time_limit: float = SOLVER_TIME_LIMIT_S,
+    ) -> LiveResult:
         """Live re-solve with a small LRU cache (identical requests are answered instantly)."""
         key = self._key(what_if, overrides)
         if key in self._live_cache:
             self._live_cache.move_to_end(key)
             return self._live_cache[key]
-        result = live_solve(self.dataset, self.ingest, self.base_plan, self.cash_value, what_if, overrides)
+        result = live_solve(
+            self.dataset,
+            self.ingest,
+            self.base_plan,
+            self.cash_value,
+            what_if,
+            overrides,
+            time_limit=time_limit,
+        )
         self._live_cache[key] = result
         if len(self._live_cache) > LIVE_CACHE_SIZE:
             self._live_cache.popitem(last=False)

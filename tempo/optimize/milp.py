@@ -32,6 +32,7 @@ from tempo.models import PaymentOption
 from tempo.optimize.cash import day_index
 
 CENTS = 100.0
+MIN_PHASE_SECONDS = 1.0  # the second phase always gets at least this long to return a feasible plan
 CREDIT_TOLERANCE = 0.01  # dollars: below one cent, phase-1 credit is numerical noise
 NODE_LIMIT = 200_000  # branch-and-bound nodes: bounds effort independently of CPU speed (council C1, R3)
 
@@ -132,12 +133,22 @@ def solve(
     constraints = LinearConstraint(a, rows.lb, rows.ub)
     g_cols = slice(layout.g_col(0), layout.g_col(0) + layout.n_d)
     started = time.perf_counter()
-    ub[g_cols] = _minimum_credit(constraints, integrality, lb, ub, layout, time_limit)
-    res = _run(objective, constraints, integrality, Bounds(lb, ub), time_limit, mip_rel_gap)
+    ub[g_cols], phase1_x = _minimum_credit(constraints, integrality, lb, ub, layout, time_limit / 2)
+    remaining = max(
+        MIN_PHASE_SECONDS, time_limit - (time.perf_counter() - started)
+    )  # one budget for both phases
+    try:
+        res = _run(objective, constraints, integrality, Bounds(lb, ub), remaining, mip_rel_gap)
+        x, fun, status = res.x, float(res.fun), "optimal" if res.status == 0 else "time_limit"
+        gap = None if getattr(res, "mip_gap", None) is None else float(res.mip_gap)
+    except SolverError:
+        # Out of time before phase 2 found any plan: phase 1's plan is feasible under the same credit cap, so
+        # return it (labeled "time limit reached") rather than an error.
+        x, fun, status, gap = phase1_x, float(objective @ phase1_x), "time_limit", None
     elapsed = time.perf_counter() - started
     stats = MilpStats(
-        status="optimal" if res.status == 0 else "time_limit",
-        mip_gap=None if getattr(res, "mip_gap", None) is None else float(res.mip_gap),
+        status=status,
+        mip_gap=gap,
         solve_seconds=elapsed,
         rows=a.shape[0],
         cols=n_cols,
@@ -147,9 +158,7 @@ def solve(
         scenario_rows=scenario_rows,
         reduced=reduced,
     )
-    return MilpResult(
-        _choices(res.x, layout, len(bill_options)), _credit(res.x, layout, horizon), -float(res.fun), stats
-    )
+    return MilpResult(_choices(x, layout, len(bill_options)), _credit(x, layout, horizon), -fun, stats)
 
 
 def _run(objective, constraints, integrality, bounds, time_limit: float, mip_rel_gap: float):
@@ -170,19 +179,21 @@ def _run(objective, constraints, integrality, bounds, time_limit: float, mip_rel
     return res
 
 
-def _minimum_credit(constraints, integrality, lb, ub, layout: "_Layout", time_limit: float) -> float:
+def _minimum_credit(
+    constraints, integrality, lb, ub, layout: "_Layout", time_limit: float
+) -> tuple[float, np.ndarray]:
     """Phase 1 of a lexicographic solve: the least backstop credit any plan needs (dollars).
 
     The backstop exists only to keep the model feasible. Priced in the objective alone, a few cents of credit
     can unlock a large early payment, so credit would be used to buy value. Phase 1 minimizes credit; phase 2
     maximizes value with credit capped at that minimum (plus one cent of numerical tolerance), and any credit
-    left over is exactly what feasibility requires.
+    left over is exactly what feasibility requires. Also returns phase 1's plan, a feasible fallback for phase 2.
     """
     phase1 = np.zeros(len(lb))
     phase1[layout.g_col(layout.n_d - 1)] = 1.0
     res = _run(phase1, constraints, integrality, Bounds(lb, ub), time_limit, 0.0)
     needed = float(res.fun)
-    return 0.0 if needed < CREDIT_TOLERANCE else needed + CREDIT_TOLERANCE
+    return (0.0 if needed < CREDIT_TOLERANCE else needed + CREDIT_TOLERANCE), res.x
 
 
 class _Rows:

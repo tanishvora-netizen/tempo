@@ -1,6 +1,7 @@
 """API smoke tests for every route (no Ollama, no network: TEMPO_PROVIDER=cached)."""
 
 import os
+import time
 from collections.abc import Iterator
 
 import pytest
@@ -9,6 +10,15 @@ from fastapi.testclient import TestClient
 os.environ.setdefault("TEMPO_PROVIDER", "cached")
 
 from app.main import app
+
+
+@pytest.fixture(autouse=True)
+def _fresh_throttle() -> None:
+    """Each test starts with an empty per-IP solve budget (the job tests would otherwise use it up)."""
+    import app.main as main
+
+    main.THROTTLE.hits.clear()
+    main.THROTTLE.all_hits.clear()
 
 
 @pytest.fixture(scope="module")
@@ -31,6 +41,7 @@ def client(tmp_path_factory: pytest.TempPathFactory) -> Iterator[TestClient]:
         "/api/evaluate",
         "/api/cash-value",
         "/api/negotiate",
+        "/api/plan/financing",
         "/api/audit",
         "/api/ramp/payload-preview",
     ],
@@ -71,16 +82,68 @@ def test_preset_what_if_is_instant_and_precomputed(client: TestClient) -> None:
     assert "diff" in data
 
 
-@pytest.mark.slow
-def test_custom_what_if_solves_live_and_labels_the_estimate(client: TestClient) -> None:
-    customer = client.get("/api/whatif/presets").json()["data"]["customers"][0]["id"]
+def _wait(client: TestClient, job: dict, timeout_s: float = 120.0) -> dict:
+    """Poll a job the way the page does, until it is done or failed."""
+    deadline = time.monotonic() + timeout_s
+    seen = {job["status"]}
+    while job["status"] in ("queued", "running"):
+        assert time.monotonic() < deadline, "job did not finish"
+        time.sleep(0.2)
+        job = client.get(f"/api/jobs/{job['job_id']}").json()["data"]
+        seen.add(job["status"])
+    job["seen"] = seen
+    return job
 
-    data = client.post("/api/optimize", json={"what_if": {"customer_id": customer, "delay_days": 10}}).json()[
+
+@pytest.mark.slow
+def test_custom_what_if_runs_as_a_job_and_repeats_from_cache(client: TestClient) -> None:
+    customer = client.get("/api/whatif/presets").json()["data"]["customers"][0]["id"]
+    body = {"what_if": {"customer_id": customer, "delay_days": 11}}
+
+    first = client.post("/api/optimize", json=body).json()["data"]
+    assert first["source"] == "job" and first["status"] in ("queued", "running", "done")
+    done = _wait(client, first)
+
+    assert done["status"] == "done" and not done["cached"]
+    result = done["result"]
+    assert result["source"] == "live"
+    assert "not re-certified" in result["estimate"]["label"]
+    assert set(result["tradeoff"]) >= {"financing", "late_only", "accept_risk"}
+
+    again = client.post("/api/optimize", json=body).json()["data"]
+    assert again["status"] == "done" and again["cached"]
+    assert again["result"]["plan_hash"] == result["plan_hash"]
+
+
+@pytest.mark.slow
+def test_jobs_queue_one_at_a_time(client: TestClient) -> None:
+    customer = client.get("/api/whatif/presets").json()["data"]["customers"][1]["id"]
+    a = client.post("/api/optimize", json={"what_if": {"customer_id": customer, "delay_days": 9}}).json()[
+        "data"
+    ]
+    b = client.post("/api/optimize", json={"what_if": {"customer_id": customer, "delay_days": 19}}).json()[
         "data"
     ]
 
-    assert data["source"] == "live"
-    assert "not re-certified" in data["estimate"]["label"]
+    assert b["status"] == "queued" and b["position"] >= 1
+    assert _wait(client, a)["status"] == "done"
+    assert _wait(client, b)["status"] == "done"
+
+
+@pytest.mark.slow
+def test_extreme_shock_returns_a_plan_with_the_financing_message_not_an_error(client: TestClient) -> None:
+    job = client.post("/api/optimize", json={"what_if": {"shock_cents": 200_000_000}}).json()["data"]
+    done = _wait(client, job)
+
+    assert done["status"] == "done"
+    kpis = done["result"]["kpis"]
+    assert kpis["credit_drawn_cents"] >= 0
+    if kpis["credit_drawn_cents"]:
+        assert kpis["credit_first_date"]
+
+
+def test_unknown_job_is_404(client: TestClient) -> None:
+    assert client.get("/api/jobs/nope").status_code == 404
 
 
 @pytest.mark.parametrize(
@@ -89,6 +152,10 @@ def test_custom_what_if_solves_live_and_labels_the_estimate(client: TestClient) 
         {"what_if": {}},
         {"what_if": {"customer_id": "c", "delay_days": 999}},
         {"what_if": {"shock_cents": -5}},
+        {"what_if": {"shock_cents": 99_999}},
+        {"what_if": {"shock_cents": 200_000_001}},
+        {"what_if": {"customer_id": "c", "delay_days": 0}},
+        {"what_if": {"customer_id": "c", "delay_days": 61}},
         {"bogus": 1},
     ],
 )
@@ -96,9 +163,10 @@ def test_bad_optimize_input_is_rejected(client: TestClient, body: dict) -> None:
     assert client.post("/api/optimize", json=body).status_code == 422
 
 
-def test_unknown_customer_is_404(client: TestClient) -> None:
+def test_unknown_customer_is_a_clear_422(client: TestClient) -> None:
     r = client.post("/api/optimize", json={"what_if": {"customer_id": "cus_999", "delay_days": 5}})
-    assert r.status_code == 404
+    assert r.status_code == 422
+    assert "listed customers" in r.json()["detail"]
 
 
 def test_review_accept_and_validation(client: TestClient) -> None:
@@ -174,3 +242,21 @@ def test_an_approval_survives_the_idle_reset(client: TestClient) -> None:
     assert approved.status_code == 200
     assert preview["scope"] == "last approval"
     assert preview["counts"]["bills"] == 3
+
+
+def test_financing_plan_is_labeled_and_certified(client: TestClient) -> None:
+    fin = client.get("/api/plan/financing").json()["data"]
+
+    assert "assumption" in fin["label"]
+    assert fin["certification"]["reported"]["n"] == 10_000
+    assert fin["kpis"]["financed_count"] == fin["financed_count"]
+
+
+def test_offers_carry_annual_value(client: TestClient) -> None:
+    offers = client.get("/api/negotiate").json()["data"]["offers"]
+
+    assert offers
+    for o in offers:
+        assert o["annual_value_cents"] == round(
+            o["vendor_spend_13w_cents"] * 365 / 91 * o["offer_bps"] / 10_000
+        )

@@ -24,13 +24,17 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Before each reh
 
 > "One MILP decides all 212 bills jointly. Three exact reductions take it from ⟨ROWS_NAIVE⟩ rows to ⟨ROWS⟩, and it solves in under a second."
 
-**Click:** What-if → preset "⟨PRESET_LABEL⟩". The chart redraws.
+**Click:** What-if → preset "⟨PRESET_LABEL⟩". The chart redraws instantly (precomputed and certified).
 
-> "Our biggest customer pays two weeks late. Tempo re-forecast and re-solved, and ⟨FLIPS⟩ decisions flipped. Each one has a reason. The risk is still certified under 5%. Where cash gets too tight, it says so: ⟨PRESET_LATE⟩ bills would be paid late by choice, flagged in red, never hidden; separately, ⟨PRESET_AFTER⟩ bills can't arrive by their due date from today whatever we do. It pays them late even with risk well under 5% because the certified plan protects all but 2% of sampled scenarios: deliberately conservative."
+> "Our biggest customer pays two weeks late. Tempo re-forecast and re-solved, and ⟨FLIPS⟩ decisions flipped, each with a reason. It can use Flex-style financing before it ever pays a vendor late, and the box below prices the three ways to respond on the same 10,000 scenarios: stay under 5% with financing, ⟨PRESET_FIN⟩; stay under 5% without financing, ⟨PRESET_LATE_ONLY⟩; or keep today's plan and accept a ⟨PRESET_KEEP⟩ chance of breaching."
 
-**Click:** Proof.
+**Click:** "An unexpected payment" → type 420,000 → Re-solve plan. While it solves (the progress line counts the seconds; on the hosted free tier it takes longer than on a laptop):
 
-> "Every number here is out of sample: 10,000 fresh scenarios that no decision saw. A separate 10,000 decide certification, with a Bonferroni correction because we test up to six plans. The smart-spreadsheet rule, which checks the 5th percentile day by day, lands at ⟨P05_BREACH⟩ with an upper bound of ⟨P05_BOUND⟩, and ⟨P05_TRUE⟩ under the true model. It can't certify itself, because per-day checks don't bound the chance of a breach on any day. That's why the constraint has to be joint. And here's the same table under the generator's true payment model: our honest check on model error."
+> "This one isn't precomputed. One MILP decides all 212 bills jointly: date and rail for each, with a joint chance constraint on the buffer. Three exact reductions take it from ⟨ROWS_NAIVE⟩ rows to ⟨ROWS⟩, so on a laptop it solves in about ⟨SOLVE_S⟩ seconds. Custom answers are scored on a separate seed and labeled as estimates, not certified."
+
+**Click:** Proof → the risk-vs-value chart.
+
+> "Every number here is out of sample: 10,000 fresh scenarios that no decision saw. This curve is Tempo certified at five risk targets; the grey points are the other policies. ⟨FRONTIER_SENTENCE⟩ A separate 10,000 scenarios decide certification, with a Bonferroni correction because we test up to nine plans. The smart-spreadsheet rule, which checks the 5th percentile day by day, lands at ⟨P05_BREACH⟩ with an upper bound of ⟨P05_BOUND⟩, and ⟨P05_TRUE⟩ under the true model. It can't certify itself, because per-day checks don't bound the chance of a breach on any day. That's why the constraint has to be joint. And here's the same table under the generator's true payment model: our honest check on model error."
 
 ## 2:20 to 3:50: Namith (the AI layer, controls, Ramp)
 

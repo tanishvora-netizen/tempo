@@ -44,34 +44,40 @@
    "diff": [
     {
      "after": {
+      "arrival_date": "2026-11-13",
       "option": "CARD_EARLY",
       "send_date": "2026-11-13",
       "value_cents": 54539
      },
      "amount_cents": 1608050,
      "before": {
+      "arrival_date": "2026-12-03",
       "option": "CARD",
       "send_date": "2026-12-03",
       "value_cents": 30818
      },
      "bill_id": "0e6682e4-7bb8-4ba1-919b-4e75dade8bc6",
+     "invoice_label": "BFW-59587",
      "invoice_number": "BFW-59587",
      "reason": "Paid early by card Nov 13: saves $297 (2% of the subtotal) plus 1.5% cashback; cash leaves Dec 10 with the statement.",
      "vendor": "Basalt Fastener Works"
     },
     {
      "after": {
+      "arrival_date": "2026-12-18",
       "option": "BANK_DUE",
       "send_date": "2026-12-18",
       "value_cents": 0
      },
      "amount_cents": 1678682,
      "before": {
+      "arrival_date": "2026-11-20",
       "option": "BANK_EARLY",
       "send_date": "2026-11-20",
       "value_cents": 11396
      },
      "bill_id": "977161ad-6381-4ae3-9343-ee997499b953",
+     "invoice_label": "NWC-30794",
      "invoice_number": "NWC-30794",
      "reason": "Paid on the due date Dec 20 by RTP: the 1/15 net 45 discount (12.1%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
      "vendor": "Nettlefield Wire & Cable"
@@ -131,51 +137,60 @@
    "diff": [
     {
      "after": {
+      "arrival_date": "2026-12-04",
       "option": "CARD",
       "send_date": "2026-12-04",
       "value_cents": -3000
      },
      "amount_cents": 548651,
      "before": {
+      "arrival_date": "2026-12-04",
       "option": "BANK_DUE",
       "send_date": "2026-12-04",
       "value_cents": 0
      },
      "bill_id": "948ea49a-26b5-4528-b601-57730a1559d5",
+     "invoice_label": "OC-15734",
      "invoice_number": "OC-15734",
      "reason": "Paid by card Dec 4 to keep cash above the buffer: the surcharge costs $53 more than the 1.5% cashback, but cash leaves Jan 10 with the statement (+37 days).",
      "vendor": "Ospreyline Courier"
     },
     {
      "after": {
+      "arrival_date": "2026-12-31",
       "option": "BANK_DUE",
       "send_date": "2026-12-31",
       "value_cents": 0
      },
      "amount_cents": 1368911,
      "before": {
+      "arrival_date": "2026-12-03",
       "option": "BANK_EARLY",
       "send_date": "2026-12-03",
       "value_cents": 9385
      },
      "bill_id": "48ce6641-2143-44aa-912b-04b1d70994c6",
+     "invoice_label": "NWC-30795",
      "invoice_number": "NWC-30795",
      "reason": "Paid on the due date Jan 2 by RTP: the 1/15 net 45 discount (12.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
      "vendor": "Nettlefield Wire & Cable"
     },
     {
      "after": {
+      "arrival_date": "2026-12-10",
       "option": "BANK_EARLY",
       "send_date": "2026-12-04",
       "value_cents": 14210
      },
      "amount_cents": 1859853,
      "before": {
+      "arrival_date": "2026-12-30",
       "option": "BANK_DUE",
       "send_date": "2026-12-24",
       "value_cents": 0
      },
      "bill_id": "6592d666-09b8-4d73-ad7b-a205967ed91f",
+     "invoice_label": "TBS-37750",
      "invoice_number": "TBS-37750",
      "reason": "Paid early Dec 4 by ACH: saves $182 (1% of the subtotal) for paying 20 days early, a 18.1%/yr return on the cash, vs your 9.2%/yr cost of cash.",
      "vendor": "Tidewater Bearing Supply"
@@ -196,17 +211,20 @@
    "diff": [
     {
      "after": {
+      "arrival_date": "2026-12-15",
       "option": "BANK_EARLY",
       "send_date": "2026-12-15",
       "value_cents": 32663
      },
      "amount_cents": 1890316,
      "before": {
+      "arrival_date": "2027-01-04",
       "option": "BANK_DUE",
       "send_date": "2027-01-04",
       "value_cents": 0
      },
      "bill_id": "4c011f93-ce45-4c05-a537-9e711372e296",
+     "invoice_label": "RH-89172",
      "invoice_number": "RH-89172",
      "reason": "Paid early Dec 15 by RTP: saves $367 (2% of the subtotal) for paying 20 days early, a 36.2%/yr return on the cash, vs your 9.3%/yr cost of cash.",
      "vendor": "Redfield Hydraulics"
@@ -253,17 +271,20 @@
    "diff": [
     {
      "after": {
+      "arrival_date": "2026-12-21",
       "option": "BANK_EARLY",
       "send_date": "2026-12-21",
       "value_cents": 52900
      },
      "amount_cents": 6573804,
      "before": {
+      "arrival_date": "2027-01-08",
       "option": "BANK_DUE",
       "send_date": "2027-01-08",
       "value_cents": 0
      },
      "bill_id": "f417a814-d122-43fc-bd51-ada0d300b822",
+     "invoice_label": "SBP-40097",
      "invoice_number": "SBP-40097",
      "reason": "Paid early Dec 21 by RTP: saves $657 (1% of the subtotal) for paying 20 days early, a 18.4%/yr return on the cash, vs your 9.6%/yr cost of cash.",
      "vendor": "Sorrel Bay Plastics"
@@ -284,102 +305,120 @@
    "diff": [
     {
      "after": {
+      "arrival_date": "2027-01-04",
       "option": "BANK_DUE",
       "send_date": "2026-12-29",
       "value_cents": 0
      },
      "amount_cents": 333624,
      "before": {
+      "arrival_date": "2027-01-04",
       "option": "CARD",
       "send_date": "2027-01-04",
       "value_cents": -3236
      },
      "bill_id": "fb06ece7-ac93-4b33-b5c5-e7a939b05e67",
+     "invoice_label": "VOS-85895",
      "invoice_number": "VOS-85895",
      "reason": "Paid on the due date Jan 4 by ACH: the card surcharge outweighs the cashback, and no discount is offered.",
      "vendor": "Vireo Office Supply"
     },
     {
      "after": {
+      "arrival_date": "2027-01-12",
       "option": "CARD",
       "send_date": "2027-01-12",
       "value_cents": 33126
      },
      "amount_cents": 1822320,
      "before": {
+      "arrival_date": "2026-12-23",
       "option": "CARD_EARLY",
       "send_date": "2026-12-23",
       "value_cents": 60256
      },
      "bill_id": "9cbfae0c-5b04-470c-bb1d-84e851d8b219",
+     "invoice_label": "BFW-59590",
      "invoice_number": "BFW-59590",
      "reason": "Paid by card Jan 12: 1.5% cashback; cash leaves Feb 10 with the statement (+29 days).",
      "vendor": "Basalt Fastener Works"
     },
     {
      "after": {
+      "arrival_date": "2027-01-25",
       "option": "BANK_DUE",
       "send_date": "2027-01-25",
       "value_cents": 0
      },
      "amount_cents": 3520994,
      "before": {
+      "arrival_date": "2027-01-05",
       "option": "BANK_EARLY",
       "send_date": "2027-01-05",
       "value_cents": 27570
      },
      "bill_id": "9cee9b4e-e76d-4b16-9c42-4fad7366a6d6",
+     "invoice_label": "SBP-40098",
      "invoice_number": "SBP-40098",
      "reason": "Paid on the due date Jan 25 by RTP: the 1/10 net 30 discount (18.4%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Jan 10.",
      "vendor": "Sorrel Bay Plastics"
     },
     {
      "after": {
+      "arrival_date": "2027-01-07",
       "option": "BANK_EARLY",
       "send_date": "2026-12-31",
       "value_cents": 114617
      },
      "amount_cents": 7039480,
      "before": {
+      "arrival_date": "2027-01-27",
       "option": "BANK_DUE",
       "send_date": "2027-01-22",
       "value_cents": 0
      },
      "bill_id": "2ad37740-e6e8-4838-9e7a-bbf5c7d7b31e",
+     "invoice_label": "SC-65351",
      "invoice_number": "SC-65351",
      "reason": "Paid early Dec 31 by ACH: saves $1,313 (2% of the subtotal) for paying 20 days early, a 34.7%/yr return on the cash, vs your 11.7%/yr cost of cash.",
      "vendor": "Saltmarsh Coatings"
     },
     {
      "after": {
+      "arrival_date": "2027-01-28",
       "option": "BANK_DUE",
       "send_date": "2027-01-25",
       "value_cents": 0
      },
      "amount_cents": 1326549,
      "before": {
+      "arrival_date": "2027-01-08",
       "option": "BANK_EARLY",
       "send_date": "2027-01-04",
       "value_cents": 10243
      },
      "bill_id": "4d9fd82d-51d6-498d-975e-7b4ff3865d3f",
+     "invoice_label": "DCS-33223",
      "invoice_number": "DCS-33223",
      "reason": "Paid on the due date Jan 28 by ACH: the 1/10 net 30 discount (18.4%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Jan 10.",
      "vendor": "Dunmore Conveyor Systems"
     },
     {
      "after": {
+      "arrival_date": "2027-01-04",
       "option": "CARD",
       "send_date": "2027-01-04",
       "value_cents": -5502
      },
      "amount_cents": 530480,
      "before": {
+      "arrival_date": "2027-01-07",
       "option": "BANK_DUE",
       "send_date": "2027-01-04",
       "value_cents": 0
      },
      "bill_id": "a17f3611-e71c-4ba2-8187-0cb6cbb8476d",
+     "invoice_label": "HL-45783",
      "invoice_number": "HL-45783",
      "reason": "Paid by card Jan 4 to keep cash above the buffer: the surcharge costs $77 more than the 1.5% cashback, but cash leaves Feb 10 with the statement (+37 days).",
      "vendor": "Harborline Logistics"
@@ -400,170 +439,200 @@
    "diff": [
     {
      "after": {
+      "arrival_date": "2026-12-04",
       "option": "CARD",
       "send_date": "2026-12-04",
       "value_cents": -3000
      },
      "amount_cents": 548651,
      "before": {
+      "arrival_date": "2026-12-04",
       "option": "BANK_DUE",
       "send_date": "2026-12-04",
       "value_cents": 0
      },
      "bill_id": "948ea49a-26b5-4528-b601-57730a1559d5",
+     "invoice_label": "OC-15734",
      "invoice_number": "OC-15734",
      "reason": "Paid by card Dec 4 to keep cash above the buffer: the surcharge costs $53 more than the 1.5% cashback, but cash leaves Jan 10 with the statement (+37 days).",
      "vendor": "Ospreyline Courier"
     },
     {
      "after": {
+      "arrival_date": "2026-12-10",
       "option": "BANK_DUE",
       "send_date": "2026-12-10",
       "value_cents": 0
      },
      "amount_cents": 418025,
      "before": {
+      "arrival_date": "2026-12-10",
       "option": "CARD",
       "send_date": "2026-12-10",
       "value_cents": -2568
      },
      "bill_id": "e612a631-7af1-4e9a-ad8f-944195dc727e",
+     "invoice_label": "OC-15735",
      "invoice_number": "OC-15735",
      "reason": "Paid on the due date Dec 10 by RTP: the card surcharge outweighs the cashback, and no discount is offered.",
      "vendor": "Ospreyline Courier"
     },
     {
      "after": {
+      "arrival_date": "2026-12-31",
       "option": "BANK_DUE",
       "send_date": "2026-12-31",
       "value_cents": 0
      },
      "amount_cents": 1368911,
      "before": {
+      "arrival_date": "2026-12-03",
       "option": "BANK_EARLY",
       "send_date": "2026-12-03",
       "value_cents": 9385
      },
      "bill_id": "48ce6641-2143-44aa-912b-04b1d70994c6",
+     "invoice_label": "NWC-30795",
      "invoice_number": "NWC-30795",
      "reason": "Paid on the due date Jan 2 by RTP: the 1/15 net 45 discount (12.2%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is payroll day, Dec 11.",
      "vendor": "Nettlefield Wire & Cable"
     },
     {
      "after": {
+      "arrival_date": "2027-01-04",
       "option": "BANK_DUE",
       "send_date": "2026-12-29",
       "value_cents": 0
      },
      "amount_cents": 333624,
      "before": {
+      "arrival_date": "2027-01-04",
       "option": "CARD",
       "send_date": "2027-01-04",
       "value_cents": -3236
      },
      "bill_id": "fb06ece7-ac93-4b33-b5c5-e7a939b05e67",
+     "invoice_label": "VOS-85895",
      "invoice_number": "VOS-85895",
      "reason": "Paid on the due date Jan 4 by ACH: the card surcharge outweighs the cashback, and no discount is offered.",
      "vendor": "Vireo Office Supply"
     },
     {
      "after": {
+      "arrival_date": "2026-12-10",
       "option": "BANK_EARLY",
       "send_date": "2026-12-10",
       "value_cents": 24398
      },
      "amount_cents": 1478898,
      "before": {
+      "arrival_date": "2026-12-10",
       "option": "CARD_EARLY",
       "send_date": "2026-12-10",
       "value_cents": 15403
      },
      "bill_id": "77884509-109f-4073-ac16-df92d4838323",
+     "invoice_label": "HVC-70915",
      "invoice_number": "HVC-70915",
      "reason": "Paid early Dec 10 by RTP: saves $276 (2% of the subtotal) for paying 20 days early, a 34.7%/yr return on the cash, vs your 9.9%/yr cost of cash.",
      "vendor": "Hollisford Valve Co."
     },
     {
      "after": {
+      "arrival_date": "2027-01-08",
       "option": "BANK_DUE",
       "send_date": "2027-01-08",
       "value_cents": 0
      },
      "amount_cents": 641969,
      "before": {
+      "arrival_date": "2027-01-08",
       "option": "CARD",
       "send_date": "2027-01-08",
       "value_cents": -3799
      },
      "bill_id": "07b85191-7f3c-4f43-8ddd-f05b0e9a32f1",
+     "invoice_label": "OC-15739",
      "invoice_number": "OC-15739",
      "reason": "Paid on the due date Jan 9 by RTP: the card surcharge outweighs the cashback, and no discount is offered.",
      "vendor": "Ospreyline Courier"
     },
     {
      "after": {
+      "arrival_date": "2026-12-24",
       "option": "BANK_EARLY",
       "send_date": "2026-12-24",
       "value_cents": 8646
      },
      "amount_cents": 3725976,
      "before": {
+      "arrival_date": "2027-01-14",
       "option": "BANK_DUE",
       "send_date": "2027-01-14",
       "value_cents": 0
      },
      "bill_id": "54e896ff-73dd-464c-bd19-a354a1b52915",
+     "invoice_label": "CF-5388",
      "invoice_number": "CF-5388",
      "reason": "Paid early Dec 24 by RTP: saves $172 (0.5% of the subtotal) for paying 21 days early, a 8.1%/yr return on the cash, vs your 9.9%/yr cost of cash.",
      "vendor": "Cinderhill Foundry"
     },
     {
      "after": {
+      "arrival_date": "2027-01-25",
       "option": "BANK_DUE",
       "send_date": "2027-01-25",
       "value_cents": 0
      },
      "amount_cents": 3520994,
      "before": {
+      "arrival_date": "2027-01-05",
       "option": "BANK_EARLY",
       "send_date": "2027-01-05",
       "value_cents": 27570
      },
      "bill_id": "9cee9b4e-e76d-4b16-9c42-4fad7366a6d6",
+     "invoice_label": "SBP-40098",
      "invoice_number": "SBP-40098",
      "reason": "Paid on the due date Jan 25 by RTP: the 1/10 net 30 discount (18.4%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Jan 10.",
      "vendor": "Sorrel Bay Plastics"
     },
     {
      "after": {
+      "arrival_date": "2027-01-28",
       "option": "BANK_DUE",
       "send_date": "2027-01-25",
       "value_cents": 0
      },
      "amount_cents": 1326549,
      "before": {
+      "arrival_date": "2027-01-08",
       "option": "BANK_EARLY",
       "send_date": "2027-01-04",
       "value_cents": 10243
      },
      "bill_id": "4d9fd82d-51d6-498d-975e-7b4ff3865d3f",
+     "invoice_label": "DCS-33223",
      "invoice_number": "DCS-33223",
      "reason": "Paid on the due date Jan 28 by ACH: the 1/10 net 30 discount (18.4%/yr) was skipped because paying early pushes the chance of dropping below the $500,000 buffer past 5%; the first new shortfall is Jan 12.",
      "vendor": "Dunmore Conveyor Systems"
     },
     {
      "after": {
+      "arrival_date": "2027-01-15",
       "option": "BANK_EARLY",
       "send_date": "2027-01-15",
       "value_cents": 71534
      },
      "amount_cents": 4088105,
      "before": {
+      "arrival_date": "2027-02-05",
       "option": "BANK_DUE",
       "send_date": "2027-02-05",
       "value_cents": 0
      },
      "bill_id": "7b079154-e1c8-4519-997d-65498fba8870",
+     "invoice_label": "BC-47343",
      "invoice_number": "BC-47343",
      "reason": "Paid early Jan 15 by RTP: saves $808 (2% of the subtotal) for paying 22 days early, a 33.4%/yr return on the cash, vs your 9.9%/yr cost of cash.",
      "vendor": "Bramblewood Chemicals"
@@ -580,5 +649,5 @@
    "value_delta_cents": 48580
   }
  ],
- "input_hash": "43ffd149e239cbfb"
+ "input_hash": "d48ff842b48300ba"
 }

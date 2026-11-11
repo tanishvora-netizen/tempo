@@ -1,6 +1,6 @@
 // Payment run: every bill with its decision. Sortable columns, combinable filters, row -> side panel.
 import { $, $$, html, icon, onActivate, setHTML } from "./dom.js";
-import { count, money, moneyExact, perYear, shortDate } from "./format.js";
+import { count, invoiceId, money, moneyExact, perYear, shortDate } from "./format.js";
 import { arrivesLateChip, chip, expectedChip, optionCell, railCell, railIcon, valueCell } from "./labels.js";
 import { openBillPanel } from "./billpanel.js";
 import { emptyBlock } from "./states.js";
@@ -20,10 +20,11 @@ const COLUMNS = [
   { id: "amount", label: "Amount", key: (b) => b.amount_cents, right: true },
   { id: "terms", label: "Terms", key: (b) => b.terms.toLowerCase() },
   { id: "option", label: "Decision", key: (b) => b.option },
-  { id: "cash_out", label: "Cash leaves", key: (b) => b.cash_out_date },
+  { id: "send", label: "Sends", key: (b) => b.send_date },
+  { id: "arrive", label: "Arrives", key: (b) => b.arrival_date },
   { id: "rail", label: "Rail", key: (b) => b.rail, narrowHide: true },
   { id: "value", label: "Value", key: (b) => b.value_cents, right: true },
-  { id: "return", label: "Return", key: (b) => b.annualized_return ?? -1, right: true, narrowHide: true },
+  { id: "return", label: "Return", key: (b) => b.annualized_return ?? -1, right: true, narrowHide: true, title: "Simple annualized return on the days actually paid early, after rail timing. 2/10 net 30 is 37.2% at the full 20 days." },
   { id: "reason", label: "Why", key: (b) => b.reason, sortable: false, narrowHide: true },
 ];
 
@@ -62,7 +63,7 @@ function headerCell(col, sort) {
   const active = sort.id === col.id;
   const ariaSort = active ? (sort.dir === "asc" ? "ascending" : "descending") : "none";
   const glyph = active ? (sort.dir === "asc" ? "chevron-up" : "chevron-down") : "chevrons-up-down";
-  return html`<th scope="col" class="${col.right ? "r" : ""} ${narrow}" aria-sort="${ariaSort}">
+  return html`<th scope="col" class="${col.right ? "r" : ""} ${narrow}" aria-sort="${ariaSort}" title="${col.title ?? ""}">
     <button type="button" class="sort-btn" data-sort="${col.id}">${col.label}${icon(glyph)}</button>
   </th>`;
 }
@@ -78,17 +79,18 @@ function decisionCell(b) {
 }
 
 function row(b) {
-  return html`<tr class="clickable" tabindex="0" data-bill="${b.bill_id}" aria-label="${b.vendor} ${b.invoice_number}, open details">
-    <td class="max-w-[220px] max-[1200px]:max-w-[150px]"><div class="truncate font-medium" title="${b.vendor}">${b.vendor}</div>
-      <div class="meta flex flex-wrap items-center gap-1.5">${b.invoice_number}${expectedChip(b)}</div></td>
+  return html`<tr class="clickable" tabindex="0" data-bill="${b.bill_id}" aria-label="${b.vendor} ${invoiceId(b.invoice_number)}, open details">
+    <td class="max-w-[170px] max-[1200px]:max-w-[150px]"><div class="truncate font-medium" title="${b.vendor}">${b.vendor}</div>
+      <div class="meta flex flex-wrap items-center gap-1.5">${invoiceId(b.invoice_number)}${expectedChip(b)}</div></td>
     <td class="r num" title="${moneyExact(b.amount_cents)}">${money(b.amount_cents)}</td>
     <td><div class="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 min-[1201px]:flex-nowrap"><span class="whitespace-nowrap">${b.terms}</span>${chip(b.chip)}</div></td>
     ${decisionCell(b)}
-    <td class="num" title="Send ${shortDate(b.send_date)}">${shortDate(b.cash_out_date)}</td>
+    <td class="num" title="${b.cash_out_date !== b.send_date ? `Cash leaves ${shortDate(b.cash_out_date)}` : ""}">${shortDate(b.send_date)}${b.cash_out_date !== b.send_date ? html`<div class="meta">cash ${shortDate(b.cash_out_date)}</div>` : ""}</td>
+    <td class="num ${b.arrives_after_due ? "text-review" : ""}">${shortDate(b.arrival_date)}</td>
     <td class="max-[1200px]:hidden">${railCell(b.rail)}</td>
     <td class="r">${valueCell(b.value_cents)}<div class="meta num min-[1201px]:hidden">${b.annualized_return === null ? "" : returnText(b)}</div></td>
-    <td class="r num text-ink-2 max-[1200px]:hidden">${returnText(b)}</td>
-    <td class="max-[1200px]:hidden"><p class="max-w-[180px] truncate text-ink-2" title="${b.reason}">${b.reason}</p></td>
+    <td class="r num text-ink-2 max-[1200px]:hidden" title="Simple annualized return on the days actually paid early, after rail timing. 2/10 net 30 is 37.2% at the full 20 days.">${returnText(b)}</td>
+    <td class="max-[1200px]:hidden"><p class="max-w-[130px] truncate text-ink-2" title="${b.reason}">${b.reason}</p></td>
   </tr>`;
 }
 

@@ -24,13 +24,17 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Before each reh
 
 > "One MILP decides all 212 bills jointly. Three exact reductions take it from 18,413 rows to 989, and it solves in under a second."
 
-**Click:** What-if → preset "Bluefin Marine Outfitters pays 14 days late". The chart redraws.
+**Click:** What-if → preset "Bluefin Marine Outfitters pays 14 days late". The chart redraws instantly (precomputed and certified).
 
-> "Our biggest customer pays two weeks late. Tempo re-forecast and re-solved, and 24 decisions flipped. Each one has a reason. The risk is still certified under 5%. Where cash gets too tight, it says so: 0 bills would be paid late by choice, flagged in red, never hidden; separately, 13 bills can't arrive by their due date from today whatever we do. It pays them late even with risk well under 5% because the certified plan protects all but 2% of sampled scenarios: deliberately conservative."
+> "Our biggest customer pays two weeks late. Tempo re-forecast and re-solved, and 37 decisions flipped, each with a reason. It can use Flex-style financing before it ever pays a vendor late, and the box below prices the three ways to respond on the same 10,000 scenarios: stay under 5% with financing, a plan worth $47,761 after $8,480 in assumed fees; stay under 5% without financing, a plan worth $42,417 with 0 bills paid late; or keep today's plan and accept a 8.12% chance of breaching."
 
-**Click:** Proof.
+**Click:** "An unexpected payment" → type 420,000 → Re-solve plan. While it solves (the progress line counts the seconds; on the hosted free tier it takes longer than on a laptop):
 
-> "Every number here is out of sample: 10,000 fresh scenarios that no decision saw. A separate 10,000 decide certification, with a Bonferroni correction because we test up to six plans. The smart-spreadsheet rule, which checks the 5th percentile day by day, lands at 5.61% with an upper bound of 6.00%, and 6.21% under the true model. It can't certify itself, because per-day checks don't bound the chance of a breach on any day. That's why the constraint has to be joint. And here's the same table under the generator's true payment model: our honest check on model error."
+> "This one isn't precomputed. One MILP decides all 212 bills jointly: date and rail for each, with a joint chance constraint on the buffer. Three exact reductions take it from 18,413 rows to 989, so on a laptop it solves in about 1.30 seconds. Custom answers are scored on a separate seed and labeled as estimates, not certified."
+
+**Click:** Proof → the risk-vs-value chart.
+
+> "Every number here is out of sample: 10,000 fresh scenarios that no decision saw. This curve is Tempo certified at five risk targets; the grey points are the other policies. At the same risk as greedy discount-taking (7.92%), Tempo adds $0 over 13 weeks. A separate 10,000 scenarios decide certification, with a Bonferroni correction because we test up to nine plans. The smart-spreadsheet rule, which checks the 5th percentile day by day, lands at 5.61% with an upper bound of 6.00%, and 6.21% under the true model. It can't certify itself, because per-day checks don't bound the chance of a breach on any day. That's why the constraint has to be joint. And here's the same table under the generator's true payment model: our honest check on model error."
 
 ## 2:20 to 3:50: Namith (the AI layer, controls, Ramp)
 
@@ -82,4 +86,4 @@ Setup: open the app at 1440x900 on the Overview (`/#/overview`). Before each reh
 10. **Isn't the data rigged?** It's synthetic and says so everywhere. The only tuned parameter is starting cash, from six values pre-registered in DECISIONS.md and swept on a seed we never report. We missed the directive's own 15% greedy-breach target and said so. Two realism fixes to the generator are disclosed.
 11. **What about RTP: it isn't in Ramp's request enum?** Right. Plans assume Ramp Checking pays RTP-eligible vendors by RTP. Where an ACH can still meet the date, the preview sends ACH that many business days earlier. Where no ACH date can (12 bills in this week's run), it sends no API request and says "send by RTP in Ramp"; the approve dialog shows that count before anyone signs.
 12a. **What are the operating limits?** This week 12 of 24 bills can only meet their dates by RTP, which Ramp's API can't request, so someone sends those in Ramp. The auto-schedule threshold sums each vendor's bills per week, but an invoice split across weeks or across duplicate vendor records could still slip under it, and there is no maker-checker in the demo: Ramp's approval chain is the real control. With the common timing factor doubled, every policy breaches (Tempo 17.85%, paying on due dates 13.02%), so the guarantee is only as good as the forecast.
-12. **How fast is it?** The certified plan solves in 1.29 s. Presets are precomputed. A custom what-if re-solves in about a second locally; on Render's free 0.1 CPU it is slower, so live solves are cached and throttled.
+12. **How fast is it?** The certified plan solves in 1.30 s. Presets are precomputed. A custom what-if re-solves in about a second locally; on Render's free 0.1 CPU it is slower, so live solves are cached and throttled.

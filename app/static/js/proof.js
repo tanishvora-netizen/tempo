@@ -3,7 +3,7 @@
 // /api/state, and /api/cash-value.
 import { $, $$, html, icon, setHTML } from "./dom.js";
 import { count, money, moneyExact, pct, perYear, seconds, shortDate } from "./format.js";
-import { breachChart } from "./charts.js";
+import { breachChart, frontierChart } from "./charts.js";
 import { loadCashValue, loadEvaluate, loadState } from "./store.js";
 import { extractionSection, wireExtraction } from "./extraction.js";
 
@@ -45,7 +45,7 @@ function policyRow(p, epsilon) {
   const tempo = p.policy === "tempo";
   const over = p.breach_upper > epsilon;
   return html`<tr class="${tempo ? "is-selected" : ""}">
-    <td class="min-w-[170px]" title="${POLICY[p.policy]?.[1] ?? ""}"><div class="${tempo ? "font-semibold" : "font-medium"}">${policyName(p.policy)}</div><div class="meta max-w-[360px] max-[1200px]:hidden">${POLICY[p.policy]?.[1] ?? ""}</div></td>
+    <td class="min-w-[170px]" title="${POLICY[p.policy]?.[1] ?? ""}"><div class="${tempo ? "font-semibold" : "font-medium"}">${policyLabel(p)}</div><div class="meta max-w-[360px] max-[1200px]:hidden">${p.also?.length ? "These policies produce the identical plan: the same payments on the same dates, so they score the same." : POLICY[p.policy]?.[1] ?? ""}</div></td>
     <td class="r num ${p.value_cents > 0 ? "gain" : ""}" title="${moneyExact(p.value_cents)}">${money(p.value_cents, { signed: true })}</td>
     <td class="r num max-[1200px]:hidden">${count(p.discount_count)}</td>
     <td class="r num max-[1200px]:hidden">${count(p.card_count)}</td>
@@ -58,6 +58,25 @@ function policyRow(p, epsilon) {
   </tr>`;
 }
 
+/**
+ * Policies that produce the identical plan (same payments on the same dates; e.g. the optimizer on the median
+ * finds greedy's plan because nothing binds on the median path) are one row with both names.
+ */
+export function mergeIdentical(policies) {
+  const out = [];
+  policies.forEach((p) => {
+    const twin = p.plan_hash && out.find((q) => q.plan_hash === p.plan_hash);
+    if (twin) twin.also = [...(twin.also ?? []), p.policy];
+    else out.push({ ...p });
+  });
+  return out;
+}
+
+function policyLabel(p) {
+  const names = [p.policy, ...(p.also ?? [])].map(policyName);
+  return names.join(" = ");
+}
+
 function policyTable(policies, epsilon, caption) {
   return html`<table class="tbl">
     <caption class="sr-only">${caption}</caption>
@@ -66,7 +85,7 @@ function policyTable(policies, epsilon, caption) {
       <th scope="col" class="r">Breach rate</th><th scope="col" class="r">95% bound</th><th scope="col" class="r">Lowest P10 cash</th>
       <th scope="col" class="r !whitespace-normal leading-tight">Late by choice</th><th scope="col" class="r !whitespace-normal leading-tight">Arrives after due</th><th scope="col" class="r !whitespace-normal leading-tight">Credit drawn</th>
     </tr></thead>
-    <tbody>${policies.map((p) => policyRow(p, epsilon))}</tbody>
+    <tbody>${mergeIdentical(policies).map((p) => policyRow(p, epsilon))}</tbody>
   </table>`;
 }
 
@@ -138,6 +157,39 @@ function certificationSection(state) {
   return section("certification", "How the 5% holds", "Tempo lowers K until the plan passes on scenarios it was not built on", body);
 }
 
+const FRONTIER_NAMES = {
+  weekly_run: "Weekly AP run",
+  greedy_discount: "Greedy discounts",
+  greedy_p05: "Smart spreadsheet",
+  pay_on_due: "Pay on due date",
+};
+
+function frontierSection(ev) {
+  const f = ev.frontier;
+  if (!f) return "";
+  const rows = f.points.map((p) => html`<tr>
+    <td class="num">${pct(p.epsilon, p.epsilon * 100 % 1 ? 1 : 0)}</td><td class="r num">K = ${p.k} of ${count(p.n)}</td>
+    <td class="r num ${p.value_cents > 0 ? "gain" : ""}" title="${moneyExact(p.value_cents)}">${money(p.value_cents, { signed: true })}</td>
+    <td class="r num">${pct(p.breach_rate)}</td><td class="r num ${p.breach_upper > p.epsilon ? "risk" : ""}">${pct(p.breach_upper)}</td>
+    <td>${p.certified ? html`<span class="chip chip-solid">${icon("check")}Certified</span>` : html`<span class="chip chip-risk">${icon("x")}Not certified</span>`}</td>
+  </tr>`);
+  const above = f.baselines.filter((b) => b.above_curve);
+  const body = html`<div class="grid grid-cols-12 gap-4 p-4">
+    <div class="col-span-7 max-[1180px]:col-span-12">
+      <div class="relative h-[300px]"><canvas id="frontier-canvas" role="img" aria-label="Value against breach rate for Tempo at several risk targets, with baselines as points and the 5% target line"></canvas></div>
+      <p class="mt-2 text-sm font-medium text-ink">${f.sentence}</p>
+      ${above.length ? html`<p class="mt-1 text-sm text-ink-2">${above.map((b) => FRONTIER_NAMES[b.policy]).join(", ")} ${above.length === 1 ? "sits" : "sit"} above Tempo's curve; why is in docs/DECISIONS.md.</p>` : ""}
+    </div>
+    <div class="col-span-5 overflow-x-auto max-[1180px]:col-span-12">
+      <table class="tbl"><caption class="sr-only">Tempo certified at each risk target</caption>
+        <thead><tr><th scope="col">Target</th><th scope="col" class="r">Ladder stop</th><th scope="col" class="r">Value</th><th scope="col" class="r">Breach</th><th scope="col" class="r">95% bound</th><th scope="col">Seed B</th></tr></thead>
+        <tbody>${rows}</tbody></table>
+      <p class="mt-2 text-xs text-ink-3">Blue: Tempo, each point labeled with its risk target; grey: baselines. Each target runs the same ladder (start at the target times N, walk down to 0) with its own Bonferroni z, certified on seed B; dots are seed C. Bars run to the one-sided 95% bound. No financing.</p>
+    </div>
+  </div>`;
+  return section("frontier", "Risk vs value", "Tempo at five risk targets against every baseline, on the same fresh scenarios", body);
+}
+
 function ablationSection(ev, state) {
   const body = html`<div class="overflow-x-auto">${policyTable(ev.ablations, state.kpis.epsilon, "Joint versus per-day chance constraints")}</div>
     <p class="border-t border-line px-4 py-3 text-sm text-ink-2">A per-day limit checks each day on its own, so the chance of a breach on some day adds up past the target. Guarding every day against its worst scenario is safe but gives up most of the value. The joint constraint bounds the 13 weeks at once.</p>`;
@@ -200,9 +252,9 @@ function solverSection(solver) {
 }
 
 function drawBreach(ev, state, which) {
-  const policies = scoredPolicies(ev, which);
+  const policies = mergeIdentical(scoredPolicies(ev, which));
   return breachChart($("#breach-canvas"), {
-    labels: policies.map((p) => twoLines(policyName(p.policy))),
+    labels: policies.map((p) => twoLines(policyLabel(p))),
     rates: policies.map((p) => p.breach_rate),
     uppers: policies.map((p) => p.breach_upper),
     target: state.kpis.epsilon,
@@ -220,6 +272,7 @@ export async function render(main, params) {
         <p class="text-sm text-ink-2">How Tempo compares with simpler policies on scenarios it never saw, how the risk limit is certified, and how well terms are read.</p>
       </div>
       ${policiesSection(ev, state)}
+      ${frontierSection(ev)}
       ${certificationSection(state)}
       ${ablationSection(ev, state)}
       ${sensitivitySection(ev, state)}
@@ -231,6 +284,9 @@ export async function render(main, params) {
     </div>`,
   );
   let chart = drawBreach(ev, state, "fitted");
+  const frontier = ev.frontier
+    ? frontierChart($("#frontier-canvas", main), { points: ev.frontier.points, baselines: ev.frontier.baselines, target: state.kpis.epsilon, names: FRONTIER_NAMES })
+    : null;
   $$("[data-model]", main).forEach((btn) =>
     btn.addEventListener("click", () => {
       const which = btn.dataset.model;
@@ -247,5 +303,8 @@ export async function render(main, params) {
     target.scrollIntoView({ block: "start" });
     target.focus({ preventScroll: true });
   }
-  return () => chart.destroy();
+  return () => {
+    chart.destroy();
+    frontier?.destroy();
+  };
 }

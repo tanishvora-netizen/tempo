@@ -25,7 +25,21 @@ def pct(x: float | None, digits: int = 2) -> str:
     return "n/a" if x is None else f"{x * 100:.{digits}f}%"
 
 
+def merge_identical(rows: list[dict]) -> list[dict]:
+    """One row per distinct plan; policies with the identical plan (same plan hash) share a row."""
+    out: list[dict] = []
+    for r in rows:
+        twin = next((q for q in out if r.get("plan_hash") and q.get("plan_hash") == r.get("plan_hash")), None)
+        if twin is not None:
+            twin["policy"] = f"{twin['policy']}` = `{r['policy']}"
+            twin.setdefault("also", []).append(r["policy"])
+        else:
+            out.append(dict(r))
+    return out
+
+
 def policy_table(rows: list[dict], label: str) -> list[str]:
+    rows = merge_identical(rows)
     out = [
         "| Policy | Value vs pay on due | Discounts taken | Card | Breach rate | 95% upper bound | Worst P10 balance | Late by choice | Arrives after due | Credit drawn |",
         "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
@@ -146,9 +160,36 @@ def main() -> None:
         "`per_day_worst_case` is Bonferroni at 0.05 / 91 per day, which at 1,000 planning scenarios reduces to "
         "the pointwise minimum. Both are planned on the same 1,000 seed-A scenarios.",
         "",
-        "## Sensitivity: Flex-style financing on",
+        "## Risk vs value frontier",
         "",
-        "Off in the headline (council C2): the fee is an assumption and Flex has no public API.",
+        "Tempo without financing, certified at each target with the same ladder shape (start at the target x 200, "
+        "walk down to 0) and its own Bonferroni z; values and breach rates on seed C.",
+        "",
+        "| Target | Ladder stop | Value | Breach (seed C) | 95% bound | Certified on seed B |",
+        "|---:|---:|---:|---:|---:|---|",
+        *[
+            f"| {pct(p['epsilon'], 1)} | K = {p['k']} of {p['n']} | {usd(p['value_cents'])} | {pct(p['breach_rate'])} | "
+            f"{pct(p['breach_upper'])} | {'yes' if p['certified'] else 'no'} |"
+            for p in proof["frontier"]["points"]
+        ],
+        "",
+        "Baselines at their own risk, with Tempo's interpolated value at the same breach rate:",
+        "",
+        "| Baseline | Value | Breach (seed C) | Tempo at the same risk | Above Tempo's curve |",
+        "|---|---:|---:|---:|---|",
+        *[
+            f"| `{b['policy']}` | {usd(b['value_cents'])} | {pct(b['breach_rate'])} | "
+            f"{usd(b['tempo_value_at_same_risk_cents']) if b['tempo_value_at_same_risk_cents'] is not None else 'outside the frontier'} | "
+            f"{'yes' if b['above_curve'] else 'no'} |"
+            for b in proof["frontier"]["baselines"]
+        ],
+        "",
+        proof["frontier"]["sentence"],
+        "",
+        "## Flex-style financing on (the Overview toggle)",
+        "",
+        "Off in the headline (council C2): the fee is an assumption and Flex has no public API. The Overview toggle "
+        "shows this plan; total financing outstanding on any day is capped at FLEX_LIMIT ($500,000, an assumption).",
         "",
     ]
     fin = proof["financing_sensitivity"]
@@ -179,14 +220,31 @@ def main() -> None:
         "",
         "## What-if presets",
         "",
-        "| Scenario | Value | Decisions changed | Breach (seed C) | Bound | K |",
-        "|---|---:|---:|---:|---:|---:|",
+        "Every preset allows Flex-style financing before any late payment. The three right-hand columns are the "
+        "tradeoff box: stay under 5% with financing only (fees), with late payments only (late fees, bills late), "
+        "or keep the current plan and accept its breach rate.",
+        "",
+        "| Scenario | Value | Decisions changed | Late | Financed | Breach (seed C) | Bound | K | Financing only | Late only | Keep current plan |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for p in whatifs["presets"]:
         r = p["certification"]["reported"]
+        t = p["tradeoff"]
+        fin = (
+            f"{usd(t['financing']['value_cents'])} after {usd(t['financing']['fees_cents'])} fees"
+            if t["financing"]["under_target"]
+            else "can't stay under"
+        )
+        late = (
+            f"{usd(t['late_only']['value_cents'])}, {t['late_only']['late_count']} late"
+            if t["late_only"]["under_target"]
+            else "can't stay under"
+        )
         lines.append(
             f"| {p['label']} | {usd(p['kpis']['value_vs_pay_on_due_cents'])} | {len(p['diff'])} | "
-            f"{pct(r['rate'])} | {pct(r['upper'])} | {p['certification']['k']} |"
+            f"{p['kpis']['late_count']} | {p['kpis']['financed_count']} | "
+            f"{pct(r['rate'])} | {pct(r['upper'])} | {p['certification']['k']} | {fin} | {late} | "
+            f"{pct(t['accept_risk']['breach_rate'])} |"
         )
     lines += [
         "",
@@ -275,7 +333,12 @@ def update_readme(bundle: dict, proof: dict) -> None:
         "| Policy (13 weeks, 212 bills) | Value vs paying on due date | Breach probability (95% bound) | Under the true model |",
         "|---|---:|---:|---:|",
     ]
+    merged = {r["policy"].split("`")[0]: r.get("also", []) for r in merge_identical(proof["policies"])}
     for key, label in LABELS.items():
+        if key not in merged:
+            continue  # shown in its twin's row
+        if merged[key]:
+            label = " = ".join([label, *(LABELS[a] for a in merged[key])]) + " (identical plans)"
         f, t = fitted[key], true[key]
         rows.append(
             f"| {label} | {usd(f['value_cents'])} | {pct(f['breach_rate'])} ({pct(f['breach_upper'])}) | "
@@ -346,6 +409,20 @@ def demo_tokens(bundle: dict, proof: dict, whatifs: dict, review_effects: dict) 
         "ROWS": f"{bundle['solver']['rows']:,}",
         "SOLVE_S": f"{bundle['solver']['solve_seconds']:.2f}",
         "PRESET_LABEL": preset["label"],
+        "PRESET_FIN": (
+            f"a plan worth {usd(preset['tradeoff']['financing']['value_cents'])} after "
+            f"{usd(preset['tradeoff']['financing']['fees_cents'])} in assumed fees"
+            if preset["tradeoff"]["financing"]["under_target"]
+            else "no plan: financing alone can't do it"
+        ),
+        "PRESET_LATE_ONLY": (
+            f"a plan worth {usd(preset['tradeoff']['late_only']['value_cents'])} with "
+            f"{preset['tradeoff']['late_only']['late_count']} bills paid late"
+            if preset["tradeoff"]["late_only"]["under_target"]
+            else "no plan: late payments alone can't do it"
+        ),
+        "PRESET_KEEP": pct(preset["tradeoff"]["accept_risk"]["breach_rate"]),
+        "FRONTIER_SENTENCE": proof["frontier"]["sentence"],
         "FLIPS": str(len(preset["diff"])),
         "P05_GAP": usd(fitted["greedy_p05"]["value_cents"] - fitted["tempo"]["value_cents"]),
         "STRESS_TEMPO": pct(stress["tempo"]["breach_rate"]),

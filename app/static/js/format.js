@@ -7,7 +7,6 @@ const MINUS = "−";
 const HALF_DOLLAR_CENTS = 50;
 
 const whole = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
-const cents2 = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 /** Table money: whole dollars ($1,234); pair with moneyExact in a tooltip. Under 50 cents reads "<$1". */
 export function money(centsValue, { signed = false } = {}) {
@@ -30,11 +29,11 @@ export function parseDollars(text) {
   return Math.round(Number(cleaned) * 100);
 }
 
-/** Exact money with cents, for tooltips: $48,750.14 */
+/** Money for tooltips and charts: whole dollars with thousands separators, $48,750 (never cents). */
 export function moneyExact(centsValue) {
   if (centsValue === null || centsValue === undefined) return "—";
   const sign = centsValue < 0 ? MINUS : "";
-  return `${sign}$${cents2.format(Math.abs(centsValue) / 100)}`;
+  return `${sign}$${whole.format(Math.round(Math.abs(centsValue) / 100))}`;
 }
 
 /**
@@ -61,6 +60,16 @@ export function pct(fraction, digits = 2) {
 export function perYear(fraction) {
   if (fraction === null || fraction === undefined) return "—";
   return `${(fraction * 100).toFixed(1)}%/yr`;
+}
+
+// Mirrors tempo.report.invoice_label: some vendors number invoices by date ("10/14/2026"), which must never
+// read as a date in a table of dates.
+const DATE_LIKE_ID = /^\s*\d{1,4}[/.-]\d{1,2}[/.-]\d{1,4}\s*$/;
+
+/** Invoice number for display: "Invoice no. 10/14/2026" when the number looks like a date. */
+export function invoiceId(number) {
+  if (number === null || number === undefined) return "—";
+  return DATE_LIKE_ID.test(number) ? `Invoice no. ${number}` : number;
 }
 
 export function count(n) {

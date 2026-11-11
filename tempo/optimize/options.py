@@ -169,6 +169,8 @@ def build_options(bill: PlannableBill, ctx: RailContext) -> tuple[PaymentOption,
         options.append(
             _card(bill, "CARD", _charge_day(bill, bill.due_date, ctx), bill.total_cents, base_send)
         )
+    if ctx.finance_enabled:
+        options.append(_finance_due(bill, ctx, base_send))
     options.append(_late(bill, ctx, base_send))
     return tuple(options)
 
@@ -249,6 +251,26 @@ def _card(bill: PlannableBill, kind: str, charge_day: date, amount: int, base_se
         discount=bill.total_cents - amount,
         surcharge=surcharge,
         rewards=apply_rate(charge, CARD_CASHBACK),
+    )
+
+
+def _finance_due(bill: PlannableBill, ctx: RailContext, base_send: date) -> PaymentOption:
+    """Flex-style financing that pays the vendor on the due date and is repaid FINANCE_TERM_DAYS later.
+
+    A liquidity option, not a value option: its fee exceeds the yield it keeps, so the optimizer uses it only
+    to stay above the buffer, and always before paying late (LATE costs more; tests assert the order)."""
+    charge = _charge_day(bill, bill.due_date, ctx)
+    fee = apply_rate(bill.total_cents, FINANCE_FEE_PER_30_DAYS * FINANCE_TERM_DAYS / 30)
+    return _option(
+        bill,
+        "FINANCE_DUE",
+        "FINANCE",
+        charge,
+        charge,
+        charge + timedelta(days=FINANCE_TERM_DAYS),
+        bill.total_cents + fee,
+        base_send,
+        fee_in_cash=fee,
     )
 
 

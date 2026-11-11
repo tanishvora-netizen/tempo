@@ -28,6 +28,10 @@ class PolicyResult:
     credit_drawn_cents: int
     discount_count: int
     card_count: int
+    worst_shortfall_cents: int = (
+        0  # how far the worst scenario's lowest balance falls below the buffer (0 if none)
+    )
+    worst_shortfall_date: date | None = None  # the day it happens
 
 
 def evaluate(
@@ -37,6 +41,8 @@ def evaluate(
     plan_cum = plan.outflow_cum(as_of, headroom.shape[1])
     s = slack(headroom, plan_cum, plan.credit_cum_cents)
     breached = (s < 0).any(axis=1)
+    lowest = float(s.min()) if s.size else 0.0
+    worst_day = int(np.unravel_index(int(np.argmin(s)), s.shape)[1]) if lowest < 0 else None
     p10 = np.percentile(s, 10, axis=0) + buffer_cents  # P10 of end-of-day balance per day
     worst = int(np.argmin(p10))
     chosen = plan.chosen()
@@ -59,6 +65,8 @@ def evaluate(
         credit_drawn_cents=plan.credit_drawn_cents(),
         discount_count=sum(o.takes_discount for o in chosen),
         card_count=sum(o.rail == "CARD" for o in chosen),
+        worst_shortfall_cents=round(-lowest) if lowest < 0 else 0,
+        worst_shortfall_date=as_of + timedelta(days=worst_day) if worst_day is not None else None,
     )
 
 

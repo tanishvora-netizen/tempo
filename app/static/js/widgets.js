@@ -1,6 +1,6 @@
 // Small shared view pieces: the risk meter and the flipped-decisions diff table.
 import { html } from "./dom.js";
-import { money, moneyExact, pct, shortDate } from "./format.js";
+import { invoiceId, money, moneyExact, pct, shortDate } from "./format.js";
 import { OPTION_SHORT, valueCell } from "./labels.js";
 
 const METER_HEADROOM = 1.5; // the scale runs to 1.5x the target so the target line sits at two thirds
@@ -26,13 +26,13 @@ export function riskMeter({ rate, upper, target }) {
 function optionChange(side) {
   const late = side.option === "LATE";
   return html`<span class="whitespace-nowrap ${late ? "risk font-medium" : ""}">${OPTION_SHORT[side.option] ?? side.option}</span>
-    <span class="num whitespace-nowrap text-ink-3"> ${shortDate(side.send_date)}</span>`;
+    <span class="num block whitespace-nowrap text-xs text-ink-3">sends ${shortDate(side.send_date)}${side.arrival_date ? `, arrives ${shortDate(side.arrival_date)}` : ""}</span>`;
 }
 
 function diffRow(d, compact) {
   const reason = html`<p class="line-clamp-2 text-ink-2 ${compact ? "mt-0.5 text-xs" : ""}" title="${d.reason}">${d.reason}</p>`;
   return html`<tr>
-    <td class="${compact ? "max-w-[340px]" : ""}"><div class="font-medium">${d.vendor} <span class="meta whitespace-nowrap font-normal">${d.invoice_number}</span></div>${compact ? reason : ""}</td>
+    <td class="${compact ? "max-w-[340px]" : ""}"><div class="font-medium">${d.vendor} <span class="meta whitespace-nowrap font-normal">${invoiceId(d.invoice_number)}</span></div>${compact ? reason : ""}</td>
     <td class="r num" title="${moneyExact(d.amount_cents)}">${money(d.amount_cents)}</td>
     <td class="text-ink-2">${optionChange(d.before)}</td>
     <td>${optionChange(d.after)}</td>

@@ -10,14 +10,48 @@ Seed C is never used here.
 
 from dataclasses import dataclass
 from datetime import date
+from math import floor
+from statistics import NormalDist
 
 import numpy as np
 
-from tempo.assumptions import EPSILON, FALLBACK_K, FALLBACK_N, K_LADDER, N_OPT_SCENARIOS, WILSON_Z_CERTIFY
+from tempo.assumptions import (
+    CERT_ALPHA,
+    EPSILON,
+    FALLBACK_K,
+    FALLBACK_N,
+    K_LADDER,
+    N_OPT_SCENARIOS,
+    SOLVER_TIME_LIMIT_S,
+    WILSON_Z_CERTIFY,
+)
 from tempo.models import PaymentOption
 from tempo.optimize.engine import Plan, solve_plan
 from tempo.optimize.options import PlannableBill
 from tempo.optimize.stats import wilson_upper
+
+LADDER_FRACTIONS = (
+    1.0,
+    0.8,
+    0.6,
+    0.4,
+    0.3,
+    0.2,
+    0.1,
+    0.0,
+)  # of K0 = floor(epsilon * N); gives K_LADDER at 5%
+
+
+def ladder_for(epsilon: float, n: int = N_OPT_SCENARIOS) -> tuple[int, ...]:
+    """The headline ladder's shape for any target: start at floor(epsilon * N) and walk down to 0."""
+    k0 = floor(epsilon * n + 1e-9)
+    rungs = sorted({int(f * k0 + 0.5) for f in LADDER_FRACTIONS}, reverse=True)
+    return tuple(rungs)
+
+
+def z_for(ladder: tuple[int, ...], alpha: float = CERT_ALPHA) -> float:
+    """Bonferroni z over every step the ladder can try (its rungs plus the fallback)."""
+    return NormalDist().inv_cdf(1 - alpha / (len(ladder) + 1))
 
 
 @dataclass(frozen=True)
@@ -57,6 +91,7 @@ def certify(
     epsilon: float = EPSILON,
     z: float = WILSON_Z_CERTIFY,
     ladder: tuple[int, ...] = K_LADDER,
+    time_limit: float = SOLVER_TIME_LIMIT_S,
 ) -> tuple[Plan, Certification]:
     """Walk the K ladder (then the fallback) until a plan passes on seed B; return it with the record."""
     steps: list[CertStep] = []
@@ -67,7 +102,7 @@ def certify(
     if not attempts:
         raise ValueError("the K ladder is empty")
     for headroom, k in attempts:
-        plan = solve_plan(bills, options, headroom, as_of, k)
+        plan = solve_plan(bills, options, headroom, as_of, k, time_limit=time_limit)
         step = _step(plan, headroom, headroom_b, as_of, k, epsilon, z)
         steps.append(step)
         tried.append(plan)

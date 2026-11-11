@@ -9,7 +9,7 @@ the precomputed presets; a live plan whose seed-B bound exceeds EPSILON is label
 import time
 from dataclasses import dataclass
 
-from tempo.assumptions import EPSILON, N_FAN_SCENARIOS, SEED_FAN, WILSON_Z_REPORT
+from tempo.assumptions import EPSILON, N_FAN_SCENARIOS, SEED_FAN, SOLVER_TIME_LIMIT_S, WILSON_Z_REPORT
 from tempo.forecast.simulate import WhatIf
 from tempo.models import Dataset, TermsRecord
 from tempo.optimize.cash_value import CashValue
@@ -19,6 +19,7 @@ from tempo.optimize.explain import ExplainContext, explain_all
 from tempo.optimize.run import baseline_plans, prepare
 from tempo.pipeline import IngestResult
 from tempo.report import bill_rows, diff_plans, kpis
+from tempo.whatif import tradeoff
 
 
 @dataclass(frozen=True)
@@ -35,16 +36,28 @@ def live_solve(
     cash_value: CashValue,
     what_if: WhatIf | None = None,
     overrides: dict[str, TermsRecord] | None = None,
+    time_limit: float = SOLVER_TIME_LIMIT_S,
 ) -> LiveResult:
-    """Re-solve at the base plan's K and N; report the seed-B estimate (not a fresh certification)."""
+    """Re-solve at the base plan's K and N; report the seed-B estimate (not a fresh certification).
+
+    What-ifs allow Flex-style financing (within FLEX_LIMIT) before any late payment, exactly as the presets do;
+    review edits change the headline plan, so they keep financing off."""
     started = time.perf_counter()
-    inputs = prepare(dataset, ingest_result, what_if, overrides)
+    stressed = what_if is not None and not what_if.is_empty()
+    inputs = prepare(dataset, ingest_result, what_if, overrides, finance_enabled=stressed)
     k = base_plan.k if base_plan.k is not None else 0
     n = base_plan.n_scenarios or inputs.headroom_a.shape[0]
     head_a = inputs.headroom_a_fallback[:n]
-    plan = solve_plan(inputs.bills, inputs.options, head_a, inputs.as_of, k)
+    plan = solve_plan(inputs.bills, inputs.options, head_a, inputs.as_of, k, time_limit=time_limit)
     c = dataset.company
-    est = evaluate(plan, inputs.headroom_b, c.as_of, c.buffer_cents, WILSON_Z_REPORT)
+    head_b = inputs.headroom_b  # integer cents (ADR-14); float32 would round cents and save only ~4 MB
+    est = evaluate(plan, head_b, c.as_of, c.buffer_cents, WILSON_Z_REPORT)
+    box = (
+        tradeoff(plan, est, base_plan, head_a, head_b, c.as_of, c.buffer_cents, time_limit=time_limit / 2)
+        if stressed
+        else None
+    )
+    timed_out = plan.stats is not None and plan.stats.status == "time_limit"
     fan_head = inputs.forecast.headroom(inputs.forecast.scenarios(N_FAN_SCENARIOS, SEED_FAN))
     pay_on_due = baseline_plans(inputs)["pay_on_due"]
     ctx = ExplainContext(
@@ -69,6 +82,9 @@ def live_solve(
         "fan_before": balance_fan(pay_on_due, fan_head, c.as_of, c.buffer_cents),
         "diff": diff_plans(base_plan, plan, decisions),
         "bills": bill_rows(plan, decisions, ingest_result.reconciled, c.as_of),
+        "tradeoff": box,
+        "time_limit_reached": timed_out,
+        "solver_status": "time limit reached, best plan found" if timed_out else "optimal",
         "solve_seconds": plan.stats.solve_seconds if plan.stats else None,
         "total_seconds": seconds,
         "plan_hash": plan.plan_hash(),

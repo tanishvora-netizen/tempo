@@ -17,6 +17,7 @@ from tempo.assumptions import (
     N_OPT_SCENARIOS,
     SEED_A,
     SEED_B,
+    SOLVER_TIME_LIMIT_S,
     YIELD_ON_CASH,
 )
 from tempo.forecast.simulate import WhatIf
@@ -69,7 +70,7 @@ def prepare(
     return RunInputs(dataset, bills, options, forecast, head_a, fallback, head_b)
 
 
-def run_tempo(inputs: RunInputs) -> tuple[Plan, Certification]:
+def run_tempo(inputs: RunInputs, time_limit: float = SOLVER_TIME_LIMIT_S) -> tuple[Plan, Certification]:
     return certify(
         inputs.bills,
         inputs.options,
@@ -77,6 +78,7 @@ def run_tempo(inputs: RunInputs) -> tuple[Plan, Certification]:
         inputs.headroom_b,
         inputs.as_of,
         inputs.headroom_a_fallback,
+        time_limit=time_limit,
     )
 
 

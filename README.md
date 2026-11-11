@@ -22,6 +22,8 @@ To avoid that, we use [UptimeRobot](https://uptimerobot.com) (free plan). It req
 
 If the site still takes a moment on first load, the free tier is waking it up. Presets are instant once it's awake; custom what-if scenarios solve live and take longer on the free plan's small CPU.
 
+For custom scenarios at full speed, run it locally: `make setup`, then `make dev` (http://127.0.0.1:8000); the same solve takes a few seconds on a laptop.
+
 ## The workflow it replaces
 
 Every week an AP lead exports open bills to Excel, eyeballs due dates, checks a separate 13-week cash forecast, and guesses which bills to pay early. Terms like "2/10 net 30" hide in PDFs and email threads. Discounts get missed, or get taken right before payroll and leave the account too thin. Asking a vendor for an early-pay discount is a one-off email nobody tracks.
@@ -66,13 +68,12 @@ Breach = any end-of-day balance below the $500,000 buffer in 13 weeks, measured 
 |---|---:|---:|---:|
 | Pay every bill on its due date | $0 | 1.65% (1.87%) | 2.26% |
 | Weekly AP run, take discounts in the window (today's workflow) | $34,394 | 10.48% (10.99%) | 11.36% |
-| Greedy: take every discount the median forecast allows | $52,835 | 7.92% (8.38%) | 8.57% |
+| Greedy: take every discount the median forecast allows = Same optimizer on the median forecast only (identical plans) | $52,835 | 7.92% (8.38%) | 8.57% |
 | Smart spreadsheet: greedy on the P5 path, return beats cost of cash | $50,297 | 5.61% (6.00%) | 6.21% |
-| Same optimizer on the median forecast only | $52,835 | 7.92% (8.38%) | 8.57% |
 | **Tempo** (chance-constrained, certified) | $49,384 | 4.16% (4.50%) | 4.80% |
 
 - Certified with N = 200, K = 10 on a separate 10,000-scenario set (Bonferroni-corrected Wilson bound).
-- Solver: 989 rows instead of 18,413, 1.29 s, gap 0.009%.
+- Solver: 989 rows instead of 18,413, 1.30 s, gap 0.009%.
 - Extraction (synthetic, held-out split): Tempo auto-accepts 89% of invoices' terms at 100.0% precision and routes the rest to Needs review.
 
 Full tables, certification steps, ablations, what-ifs, and the extraction eval: [docs/RESULTS.md](docs/RESULTS.md).
