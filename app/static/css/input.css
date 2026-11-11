@@ -578,6 +578,73 @@
     background: var(--color-review-tint);
     color: var(--color-review);
   }
+  /* Design pass (sidebar variants): neutral counts, quiet group labels, flat blocks split by rules. */
+  .nav-count {
+    margin-left: auto;
+    font-size: var(--text-2xs);
+    font-weight: 500;
+    color: var(--color-ink-3);
+    white-space: nowrap;
+  }
+  .nav-item[aria-current="page"] .nav-count {
+    color: var(--color-ink-2);
+  }
+  .nav-group-label {
+    padding: 0 10px 4px;
+    font-size: var(--text-2xs);
+    font-weight: 500;
+    color: var(--color-ink-3);
+  }
+  .side-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 10px;
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .side-block-top {
+    gap: 6px;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .side-link {
+    border-radius: 0;
+    transition: background-color 150ms ease;
+  }
+  .side-link:hover {
+    background: var(--color-sunken);
+  }
+  .side-dl {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    gap: 2px 8px;
+    font-size: var(--text-xs);
+  }
+  .side-dl dt {
+    color: var(--color-ink-2);
+  }
+  .side-dl dd {
+    text-align: right;
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+  .side-dl dd.gain {
+    color: var(--color-gain);
+  }
+  .side-dl dd.risk {
+    color: var(--color-risk);
+  }
+  .side-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: auto;
+    padding: 12px 10px 0;
+    border-top: 1px solid var(--color-line);
+    font-size: var(--text-2xs);
+    color: var(--color-ink-3);
+  }
 
   .callout {
     display: flex;

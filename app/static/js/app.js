@@ -2,7 +2,9 @@
 import { $, $$, html, hydrateIcons, icon, setHTML } from "./dom.js";
 import { weekdayDate } from "./format.js";
 import { loadingScreen, errorBlock } from "./states.js";
-import { invalidate, loadState, STATE_CHANGED } from "./store.js";
+import { invalidate, loadBills, loadPresets, loadState, STATE_CHANGED } from "./store.js";
+import { getAudit } from "./api.js";
+import { renderSidebar } from "./sidebar.js";
 import { openAuditDrawer, openNegotiateDrawer } from "./drawers.js";
 import * as overview from "./overview.js";
 import * as run from "./run.js";
@@ -28,30 +30,33 @@ function parseRoute() {
   return { screen, params: Object.fromEntries(new URLSearchParams(query)) };
 }
 
-function renderNav(activeId, reviewCount) {
-  setHTML(
-    $("#nav"),
-    html`${SCREENS.map(
-      (s) => html`<li><a class="nav-item" href="#/${s.id}" ${s.id === activeId ? html`aria-current="page"` : ""}>
-        ${icon(s.icon)}<span>${s.label}</span>
-        ${s.id === "review" && reviewCount ? html`<span class="nav-badge num" aria-label="${reviewCount} bills need review">${reviewCount}</span>` : ""}
-      </a></li>`,
-    )}`,
-  );
+/** What the sidebar shows; each part is optional, so a failed call only hides its badge or block. */
+async function sidebarData() {
+  const [state, presets, bills, audit] = await Promise.all([
+    loadState().catch(() => null),
+    loadPresets().catch(() => null),
+    loadBills().catch(() => null),
+    getAudit().catch(() => null),
+  ]);
+  return { state, presets, bills, audit };
+}
+
+function renderNav(activeId) {
+  sidebarData()
+    .then((data) => {
+      renderSidebar(SCREENS, activeId, data);
+      wireLaunchers();
+    })
+    .catch((err) => console.error(err));
 }
 
 function renderHeader(state) {
-  const { company, provider, provenance } = state;
+  const { company, provenance } = state;
+  // The sidebar carries the company, the AI provider, and "Synthetic data", so the header keeps only the date.
   setHTML(
     $("#header"),
-    html`<div class="mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-6 py-3 max-[1100px]:px-4">
-      <div class="min-w-0">
-        <p class="truncate text-base font-semibold">${company.name}</p>
-        <p class="text-xs text-ink-2">Plan as of ${weekdayDate(company.as_of)} (synthetic)</p>
-      </div>
-      <span class="chip max-w-[46%] truncate" title="AI provider: ${provider.name}, model: ${provider.model}">
-        ${icon("lock")}<span class="truncate">AI: ${provider.label}</span>
-      </span>
+    html`<div class="mx-auto flex max-w-[1280px] items-center gap-4 px-6 py-3 max-[1100px]:px-4">
+      <p class="text-sm font-medium text-ink">Plan as of ${weekdayDate(company.as_of)}</p>
     </div>`,
   );
   if (!provenance.hash_ok) {
@@ -82,8 +87,8 @@ async function route() {
   setHTML(main, loadingScreen(`Loading ${screen.label}`));
   document.title = `${screen.label}: Tempo`;
   loadState()
-    .then((state) => renderNav(screen.id, state.review_count))
-    .catch(() => renderNav(screen.id, 0));
+    .then(() => renderNav(screen.id))
+    .catch(() => renderNav(screen.id));
   if (!firstRender) main.focus({ preventScroll: true });
   firstRender = false;
   window.scrollTo(0, 0);
@@ -98,12 +103,17 @@ async function route() {
 
 function wireLaunchers() {
   $$("[data-open]").forEach((el) => {
+    if (el.dataset.wired) return;
+    el.dataset.wired = "1";
     el.addEventListener("click", () => {
       if (el.dataset.open === "negotiate") openNegotiateDrawer();
       if (el.dataset.open === "audit") openAuditDrawer();
     });
   });
-  $('a[href="#main"]')?.addEventListener("click", (event) => {
+  const skip = $('a[href="#main"]');
+  if (!skip || skip.dataset.wired) return;
+  skip.dataset.wired = "1";
+  skip.addEventListener("click", (event) => {
     event.preventDefault();
     $("#main").focus();
   });
@@ -119,10 +129,10 @@ async function boot() {
 
 /** Refetch /api/state and redraw the nav so the Needs review badge reflects accepted items. */
 function refreshNav() {
-  invalidate("state");
+  invalidate("state", "bills");
   const { screen } = parseRoute();
   loadState()
-    .then((state) => renderNav(screen.id, state.review_count))
+    .then(() => renderNav(screen.id))
     .catch((err) => console.error(err));
 }
 

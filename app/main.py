@@ -2,6 +2,8 @@
 
 import hashlib
 import logging
+import os
+import subprocess
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Annotated
@@ -34,6 +36,27 @@ from tempo.serde import from_jsonable
 from tempo.views import assumptions_catalog, bill_detail, review_items
 
 STATIC_DIR = Path(__file__).parent / "static"
+
+
+def _build_commit() -> str | None:
+    """Short hash of the deployed commit: Render's RENDER_GIT_COMMIT, else the local checkout's HEAD, else None."""
+    sha = os.environ.get("RENDER_GIT_COMMIT", "").strip()
+    if not sha:
+        try:
+            sha = subprocess.run(
+                ["git", "rev-parse", "HEAD"],
+                cwd=Path(__file__).resolve().parents[1],
+                capture_output=True,
+                text=True,
+                timeout=5,
+                check=True,
+            ).stdout.strip()
+        except (OSError, subprocess.SubprocessError):
+            return None
+    return sha[:7] if sha else None
+
+
+BUILD_COMMIT = _build_commit()
 log = logging.getLogger("tempo")
 STATE: dict[str, AppState] = {}
 JOBS: dict[str, JobRunner] = {}
@@ -120,6 +143,7 @@ def get_state() -> Payload:
             "review_count": sum(r["needs_review"] and r["bill_id"] not in s.overrides for r in b["bills"]),
             "assumptions": assumptions_catalog(),
             "synthetic": True,
+            "build_commit": BUILD_COMMIT,
             "bill_count": len(b["bills"]),
         }
     )

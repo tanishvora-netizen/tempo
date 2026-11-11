@@ -314,7 +314,7 @@ function fanVisible(ds, view) {
   return tempo || ds.role === "median";
 }
 
-export async function render(main) {
+export async function render(main, params = {}) {
   // The policy comparison is supplementary: if /api/evaluate fails the rest of Overview still renders.
   const [state, forecast, billsData, evaluate] = await Promise.all([
     loadState(),
@@ -376,5 +376,6 @@ export async function render(main) {
   });
   wireApproval(main, state, rows, bills);
   $$("[data-bill]", main).forEach((tr) => onActivate(tr, () => openBillPanel(tr.dataset.bill)));
+  if (params.section === "approve") $("[data-approval]", main)?.scrollIntoView({ block: "center" });
   return () => holder.chart?.destroy();
 }
