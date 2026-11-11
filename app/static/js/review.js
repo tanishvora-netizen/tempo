@@ -2,7 +2,7 @@
 // reason, suggested terms, and Accept or Edit. After a change the plan is re-solved and the
 // effect (value change and flipped decisions) is shown.
 import { $, $$, html, icon, setHTML } from "./dom.js";
-import { longDate, money, moneyExact, sentence, termsText } from "./format.js";
+import { invoiceId, longDate, money, moneyExact, sentence, termsText } from "./format.js";
 import { EXPECTED_NOTE, modelCheckText, STATUS_LABEL, valueCell } from "./labels.js";
 import { documentView, evidenceLegend, highlight, sourceLabel } from "./evidence.js";
 import { emptyBlock, errorBlock } from "./states.js";
@@ -21,7 +21,7 @@ function listItem(item, selected, accepted) {
         <span class="num text-sm" title="${moneyExact(item.amount_cents)}">${money(item.amount_cents)}</span>
       </span>
       <span class="flex items-center justify-between gap-2 text-xs text-ink-2">
-        <span class="truncate">${item.invoice_number}: ${sentence(item.review_reason)}</span>
+        <span class="truncate">${invoiceId(item.invoice_number)}: ${sentence(item.review_reason)}</span>
         ${accepted ? html`<span class="chip chip-solid">${icon("user-check")}Accepted</span>` : ""}
       </span>
     </button>
@@ -89,7 +89,7 @@ function detailView(item, accepted) {
   return html`<div class="flex flex-col gap-4">
     <div class="flex flex-wrap items-start justify-between gap-3">
       <div>
-        <h2 class="text-lg font-semibold">${item.vendor} <span class="font-normal text-ink-2">${item.invoice_number}</span></h2>
+        <h2 class="text-lg font-semibold">${item.vendor} <span class="font-normal text-ink-2">${invoiceId(item.invoice_number)}</span></h2>
         <p class="text-sm text-ink-2"><span class="num font-medium text-ink" title="${moneyExact(item.amount_cents)}">${money(item.amount_cents)}</span>, currently planned with ${item.terms}</p>
       </div>
       <span class="chip chip-review">${icon("circle-alert")}${STATUS_LABEL[r.status] ?? r.status}</span>

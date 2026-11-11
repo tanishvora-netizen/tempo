@@ -8,6 +8,7 @@ export const OPTION_LABEL = {
   CARD: "Pay by card",
   CARD_EARLY: "Card early for discount",
   FINANCE_EARLY: "Finance early for discount",
+  FINANCE_DUE: "Finance on due date",
   LATE: "Pay late",
 };
 
@@ -17,6 +18,7 @@ export const OPTION_SHORT = {
   CARD: "Card",
   CARD_EARLY: "Card, discount",
   FINANCE_EARLY: "Financed, discount",
+  FINANCE_DUE: "Financed, on time",
   LATE: "Late by choice",
 };
 

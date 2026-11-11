@@ -17,6 +17,7 @@ export const PALETTE = {
   whatIfBand: "rgba(28, 28, 26, 0.10)",
   risk: "#b3261e",
   riskBand: "rgba(179, 38, 30, 0.10)",
+  lowPath: "rgba(179, 38, 30, 0.55)",
 };
 
 const FONT = { family: '"IBM Plex Sans", system-ui, sans-serif', size: 12 };
@@ -32,12 +33,12 @@ function chartLib() {
 
 const toDollars = (arr) => arr.map((c) => (c === null || c === undefined ? null : c / 100));
 
+const wholeDollars = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
+
+/** Chart money (axes, labels): whole dollars with thousands separators, e.g. $1,500,000. */
 function compactDollars(value) {
-  const abs = Math.abs(value);
   const sign = value < 0 ? "−" : "";
-  if (abs >= 1_000_000) return `${sign}$${(abs / 1_000_000).toFixed(1)}M`;
-  if (abs >= 1_000) return `${sign}$${Math.round(abs / 1_000)}K`;
-  return `${sign}$${Math.round(abs)}`;
+  return `${sign}$${wholeDollars.format(Math.round(Math.abs(value)))}`;
 }
 
 /** Pointwise 1st-99th percentile band, drawn first so it sits behind the 10th-90th band. */
@@ -130,9 +131,20 @@ function tooltipLabel(item) {
  * Fan chart: pointwise P10-P90 band of end-of-day cash, P50 line, dashed buffer line.
  * series = [{key, label, data:{p10,p50,p90}, style}], markers optional.
  */
-export function fanChart(canvas, { dates, series, bufferCents, markers = [], worst = null }) {
+export function fanChart(canvas, { dates, series, bufferCents, markers = [], worst = null, lowPaths = [], lowPathsLabel = "Tempo plan" }) {
   const Chart = chartLib();
   const datasets = series.flatMap((s) => band(s.label, s.data, s.style));
+  lowPaths.forEach((p, i) => {
+    datasets.push({
+      label: `${lowPathsLabel}, low scenario ${i + 1}`,
+      data: toDollars(p.path),
+      borderColor: PALETTE.lowPath,
+      borderWidth: 1,
+      pointRadius: 0,
+      fill: false,
+      role: "scenario",
+    });
+  });
   datasets.push({
     label: "Buffer",
     data: dates.map(() => bufferCents / 100),
@@ -147,6 +159,11 @@ export function fanChart(canvas, { dates, series, bufferCents, markers = [], wor
   if (markers.length) datasets.push(markerDataset(dates, markers, primary.data));
 
   const vLines = worst ? [{ index: dates.indexOf(worst.date), text: worst.text, color: PALETTE.ink2 }] : [];
+  // Keep the axis on the bands and the buffer: the lowest scenarios can fall far below them; their lines are
+  // clipped at the bottom edge and the legend states how low the lowest one goes.
+  const bandLows = series.filter((s) => !s.style.hidden).flatMap((s) => (s.data.p1 ?? s.data.p10).map((c) => c / 100));
+  const floor = Math.min(bufferCents / 100, ...bandLows);
+  const yMin = lowPaths.length ? (floor > 0 ? 0 : Math.floor((floor * 1.25) / 100_000) * 100_000) : undefined;
   return new Chart(canvas, {
     type: "line",
     data: { labels: dates, datasets },
@@ -167,6 +184,7 @@ export function fanChart(canvas, { dates, series, bufferCents, markers = [], wor
           },
         },
         y: {
+          min: yMin,
           grid: { color: PALETTE.line },
           border: { display: false },
           ticks: { callback: (v) => compactDollars(v), maxTicksLimit: 7 },
@@ -184,7 +202,7 @@ export function fanChart(canvas, { dates, series, bufferCents, markers = [], wor
           bodyFont: FONT,
           padding: 10,
           boxPadding: 4,
-          filter: (item) => !item.dataset.hidden && item.raw !== null && item.dataset.role !== "band" && item.dataset.role !== "outer",
+          filter: (item) => !item.dataset.hidden && item.raw !== null && !["band", "outer", "scenario"].includes(item.dataset.role),
           callbacks: { title: (items) => longDate(dates[items[0].dataIndex]), label: tooltipLabel },
         },
       },
@@ -250,6 +268,116 @@ const errorBarPlugin = {
     ctx.restore();
   },
 };
+
+const frontierPlugin = {
+  id: "tempoFrontier",
+  afterDatasetsDraw(chart, _args, opts) {
+    if (!opts) return;
+    const { ctx, chartArea, scales } = chart;
+    ctx.save();
+    ctx.font = `500 11px ${FONT.family}`;
+    (opts.bars || []).forEach(({ x0, x1, y, color }) => {
+      const px0 = scales.x.getPixelForValue(x0);
+      const px1 = scales.x.getPixelForValue(x1);
+      const py = scales.y.getPixelForValue(y);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(px0, py);
+      ctx.lineTo(px1, py);
+      ctx.moveTo(px1, py - 4);
+      ctx.lineTo(px1, py + 4);
+      ctx.stroke();
+    });
+    (opts.labels || []).forEach(({ x, y, text, below = false }) => {
+      const px = scales.x.getPixelForValue(x);
+      const py = scales.y.getPixelForValue(y);
+      ctx.fillStyle = PALETTE.ink;
+      ctx.textAlign = px > chartArea.right - 150 ? "right" : "left";
+      ctx.fillText(text, px + (ctx.textAlign === "left" ? 8 : -8), below ? py + 16 : py - 8);
+    });
+    if (opts.target !== undefined) {
+      const x = scales.x.getPixelForValue(opts.target);
+      ctx.strokeStyle = PALETTE.ink3;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(x, chartArea.top);
+      ctx.lineTo(x, chartArea.bottom);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = PALETTE.ink2;
+      ctx.textAlign = "left";
+      ctx.fillText(`Target ${opts.target}%`, x + 4, chartArea.top + 11);
+    }
+    ctx.restore();
+  },
+};
+
+/**
+ * Risk-vs-value frontier: Tempo certified at several targets (line + points), each point's one-sided 95% bound
+ * as a horizontal bar, and every baseline as a labeled point. x = seed-C breach rate (%), y = value ($).
+ */
+export function frontierChart(canvas, { points, baselines, target, names }) {
+  const Chart = chartLib();
+  const tempo = points.map((p) => ({ x: p.breach_rate * 100, y: p.value_cents / 100, eps: p.epsilon, upper: p.breach_upper }));
+  const base = baselines.map((b) => ({ x: b.breach_rate * 100, y: b.value_cents / 100, name: names[b.policy] ?? b.policy, upper: b.breach_upper }));
+  const maxX = Math.max(target * 100, ...points.map((p) => p.breach_upper * 100), ...baselines.map((b) => b.breach_upper * 100));
+  return new Chart(canvas, {
+    type: "scatter",
+    data: {
+      datasets: [
+        { label: "Tempo", data: tempo, showLine: true, borderColor: PALETTE.data, backgroundColor: PALETTE.data, pointRadius: 4, pointHoverRadius: 6, borderWidth: 2 },
+        { label: "Baselines", data: base, showLine: false, backgroundColor: PALETTE.before, borderColor: "#fff", borderWidth: 1, pointRadius: 5, pointStyle: "rectRot" },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: prefersReducedMotion() ? false : { duration: 400 },
+      layout: { padding: { top: 6, right: 12 } },
+      scales: {
+        x: {
+          min: 0,
+          suggestedMax: Math.ceil(maxX + 1),
+          title: { display: true, text: "Chance of any buffer breach in 13 weeks (seed C)", color: PALETTE.ink2 },
+          grid: { color: PALETTE.line },
+          ticks: { callback: (v) => `${v}%` },
+        },
+        y: {
+          title: { display: true, text: "Value vs paying on due dates", color: PALETTE.ink2 },
+          grid: { color: PALETTE.line },
+          border: { display: false },
+          ticks: { callback: (v) => compactDollars(v), maxTicksLimit: 6 },
+        },
+      },
+      plugins: {
+        legend: { display: false },
+        tempoFrontier: {
+          target: target * 100,
+          bars: [
+            ...tempo.map((p) => ({ x0: p.x, x1: p.upper * 100, y: p.y, color: PALETTE.data })),
+            ...base.map((p) => ({ x0: p.x, x1: p.upper * 100, y: p.y, color: PALETTE.before })),
+          ],
+          labels: [
+            ...tempo.map((p) => ({ x: p.x, y: p.y, below: true, text: pct(p.eps, (p.eps * 100) % 1 ? 1 : 0) })),
+            ...base.map((p) => ({ x: p.x, y: p.y, text: p.name })),
+          ],
+        },
+        tooltip: {
+          backgroundColor: PALETTE.ink,
+          callbacks: {
+            label: (item) => {
+              const p = item.raw;
+              const who = p.name ?? `Tempo certified at ${pct(p.eps, 1)}`;
+              return [`${who}: ${moneyExact(Math.round(p.y * 100))}`, `Breach ${pct(p.x / 100)}, 95% bound ${pct(p.upper)}`];
+            },
+          },
+        },
+      },
+    },
+    plugins: [frontierPlugin],
+  });
+}
 
 /** Out-of-sample breach rate per policy with the one-sided 95% upper bound as an error tick. */
 export function breachChart(canvas, { labels, rates, uppers, target, highlight }) {

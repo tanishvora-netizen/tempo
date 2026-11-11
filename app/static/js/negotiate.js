@@ -2,7 +2,7 @@
 // the drafted offer (numbers filled by code, never by the model), a simulated vendor reply
 // parsed back into terms, and a human Accept. Nothing is ever sent.
 import { html, icon, raw, esc, setHTML } from "./dom.js";
-import { count, longDate, money, moneyExact, pct, perYear, sentence, termsText } from "./format.js";
+import { count, invoiceId, longDate, money, moneyExact, pct, perYear, sentence, termsText } from "./format.js";
 import { modelCheckText, STATUS_LABEL } from "./labels.js";
 import { openDrawer } from "./drawer.js";
 import { emptyBlock, errorBlock, loadingBlock } from "./states.js";
@@ -30,13 +30,14 @@ function rankedTable(offers, negotiated) {
   return html`<div class="overflow-hidden rounded-md border border-line">
     <table class="tbl">
       <caption class="sr-only">Offers Tempo would take, ranked by value to the plan</caption>
-      <thead><tr><th scope="col">Vendor</th><th scope="col" class="r">Bill</th><th scope="col" class="r">Offer</th><th scope="col" class="r">If accepted</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
+      <thead><tr><th scope="col">Vendor</th><th scope="col" class="r">Bill</th><th scope="col" class="r">Offer</th><th scope="col" class="r">This bill</th><th scope="col" class="r" title="This vendor's bill spend in the 13 weeks of data x 365/91 x the offer discount">Annual value if accepted</th><th scope="col"><span class="sr-only">Action</span></th></tr></thead>
       <tbody>${offers.map(
         (o) => html`<tr>
-          <td><div class="font-medium">${o.vendor_name}</div><div class="meta">${o.invoice_number}, pay ${longDate(o.proposed_date)} (${count(o.days_early)} days early)</div></td>
+          <td><div class="font-medium">${o.vendor_name}</div><div class="meta">${invoiceId(o.invoice_number)}, pay ${longDate(o.proposed_date)} (${count(o.days_early)} days early)</div></td>
           <td class="r num" title="${moneyExact(o.amount_cents)}">${money(o.amount_cents)}</td>
           <td class="r num">${offerPct(o)}</td>
           <td class="r num gain" title="${moneyExact(o.value_delta_cents)}">${money(o.value_delta_cents, { signed: true })}</td>
+          <td class="r num" title="${moneyExact(o.vendor_spend_13w_cents)} of bills in 13 weeks x 365/91 x ${offerPct(o)}">${money(o.annual_value_cents)}<div class="meta">estimate from 13 weeks of bills</div></td>
           <td class="r">${negotiated[o.vendor_id]
             ? html`<span class="chip chip-solid">${icon("user-check")}Terms saved</span>`
             : html`<button type="button" class="btn btn-sm" data-vendor="${o.vendor_id}" data-name="${o.vendor_name}">Draft offer</button>`}</td>
@@ -52,7 +53,7 @@ function declinedList(offers) {
     <summary class="px-4 py-2.5 text-sm font-medium">Tempo would not take these (${offers.length})</summary>
     <ul class="flex flex-col border-t border-line">${offers.map(
       (o) => html`<li class="border-b border-line px-4 py-2.5 text-sm last:border-b-0">
-        <span class="font-medium">${o.vendor_name}</span> <span class="text-ink-3">${o.invoice_number}, offer ${offerPct(o)}</span>
+        <span class="font-medium">${o.vendor_name}</span> <span class="text-ink-3">${invoiceId(o.invoice_number)}, offer ${offerPct(o)}</span>
         <p class="text-ink-2">${o.verdict}</p>
       </li>`,
     )}</ul>
@@ -64,10 +65,10 @@ function listView(data) {
   if (!offers.length) {
     return emptyBlock("No offers yet", "Tempo prices an early-payment offer for each vendor without discount terms when the plan is precomputed. None are in this build.");
   }
-  const ranked = offers.filter((o) => o.tempo_takes_it).sort((a, b) => b.value_delta_cents - a.value_delta_cents);
+  const ranked = offers.filter((o) => o.tempo_takes_it).sort((a, b) => (b.annual_value_cents ?? 0) - (a.annual_value_cents ?? 0) || b.value_delta_cents - a.value_delta_cents);
   const rest = offers.filter((o) => !o.tempo_takes_it);
   return html`<div class="flex flex-col gap-4">
-    <p class="text-sm text-ink-2">Vendors without discount terms, ranked by what an accepted offer adds to the plan. Each offer is priced from your
+    <p class="text-sm text-ink-2">Vendors without discount terms, ranked by annual value if the offer is accepted (an estimate from 13 weeks of bills). Each offer is priced from your
       <span class="num font-medium text-ink">${perYear(data.cost_of_cash)}</span> cost of cash, then re-solved to confirm Tempo would take it.</p>
     ${ranked.length ? rankedTable(ranked, data.negotiated ?? {}) : html`<p class="callout">Tempo would not take any of the priced offers.</p>`}
     ${declinedList(rest)}
@@ -161,7 +162,7 @@ async function acceptTerms(button, el, vendorId, terms) {
 
 function vendorView(draft) {
   return html`<div class="flex flex-col gap-5">
-    <section class="flex flex-col gap-3"><h3 class="section-title">Offer for ${draft.offer.invoice_number}</h3>${offerFacts(draft.offer)}</section>
+    <section class="flex flex-col gap-3"><h3 class="section-title">Offer for ${invoiceId(draft.offer.invoice_number)}</h3>${offerFacts(draft.offer)}</section>
     <section class="flex flex-col gap-2"><h3 class="section-title">Email draft</h3>${emailView(draft.email)}</section>
     <section class="flex flex-col gap-3">
       <h3 class="section-title">Simulate the vendor's reply</h3>

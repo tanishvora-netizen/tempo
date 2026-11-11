@@ -11,6 +11,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.concurrency import run_in_threadpool
 
+from app.jobs import JobRunner, QueueFull
 from app.schemas import (
     ApproveRequest,
     NegotiatedTerms,
@@ -23,7 +24,7 @@ from app.schemas import (
 from app.security import SecurityHeaders, Throttle
 from app.state import AppState, load_state
 from tempo import audit
-from tempo.agent.negotiation import Offer, draft_email, parse_reply
+from tempo.agent.negotiation import Offer, annual_value_cents, draft_email, parse_reply, vendor_spend_cents
 from tempo.extract.upload import MAX_BYTES as MAX_UPLOAD_BYTES
 from tempo.extract.upload import UploadRejected, read_upload
 from tempo.forecast.simulate import WhatIf
@@ -35,11 +36,21 @@ from tempo.views import assumptions_catalog, bill_detail, review_items
 STATIC_DIR = Path(__file__).parent / "static"
 log = logging.getLogger("tempo")
 STATE: dict[str, AppState] = {}
+JOBS: dict[str, JobRunner] = {}
+LIVE_SOLVE_LIMIT_S = 20.0  # what-if plan; the two tradeoff variants get half each, so solving stops by 40 s
+
+
+def _solve_job(what_if: WhatIf, overrides: dict) -> dict:
+    """Run one custom solve in the worker thread (never under the shared state lock)."""
+    s = STATE["app"]
+    result = s.solve_live(what_if, overrides, time_limit=LIVE_SOLVE_LIMIT_S)
+    return {"source": "live", **result.payload}
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     STATE["app"] = load_state()
+    JOBS["runner"] = JobRunner(_solve_job)
     yield
 
 
@@ -100,6 +111,7 @@ def get_state() -> Payload:
                 "built_at": b["built_at"],
             },
             "kpis": b["kpis"],
+            "kpis_seed_b": b.get("kpis_seed_b"),
             "certification": b["certification"],
             "cash_value": b["cash_value"],
             "solver": b["solver"],
@@ -108,6 +120,7 @@ def get_state() -> Payload:
             "review_count": sum(r["needs_review"] and r["bill_id"] not in s.overrides for r in b["bills"]),
             "assumptions": assumptions_catalog(),
             "synthetic": True,
+            "bill_count": len(b["bills"]),
         }
     )
 
@@ -193,6 +206,16 @@ def get_forecast() -> Payload:
     )
 
 
+@app.get("/api/plan/financing", response_model=Payload)
+def get_financing_plan() -> Payload:
+    """The precomputed plan with Flex-style financing on (Overview toggle). Its fee is an assumption, so the
+    headline plan never uses it; this view is certified the same way and labeled as such."""
+    fin = state().bundle.get("financing")
+    if not fin:
+        raise HTTPException(status_code=404, detail="no financing plan in this build")
+    return Payload(data=fin)
+
+
 @app.get("/api/whatif/presets", response_model=Payload)
 def get_presets() -> Payload:
     w = state().whatifs
@@ -214,13 +237,29 @@ def post_optimize(body: OptimizeRequest, request: Request) -> Payload:
         return Payload(data={"source": "precomputed", **preset})
     known = {c.id for c in s.dataset.customers}
     if wi.customer_id is not None and wi.customer_id not in known:
-        raise HTTPException(status_code=404, detail="unknown customer")
+        raise HTTPException(status_code=422, detail="unknown customer: pick one of the listed customers")
     what_if = WhatIf(wi.customer_id, wi.delay_days, wi.shock_cents, wi.shock_day)
+    runner = JOBS["runner"]
     with s.lock:
-        if not s.is_cached(what_if, s.overrides):
-            THROTTLE.check(request)
-        result = s.solve_live(what_if, dict(s.overrides))
-    return Payload(data={"source": "live", **result.payload})
+        overrides = dict(s.overrides)
+    if not runner.is_cached(what_if, overrides):
+        THROTTLE.check(request)
+    try:
+        job = runner.submit(what_if, overrides)
+    except QueueFull as exc:
+        raise HTTPException(
+            status_code=503, detail="Too many scenarios are waiting. Please retry in a minute."
+        ) from exc
+    return Payload(data={"source": "job", **job})
+
+
+@app.get("/api/jobs/{job_id}", response_model=Payload)
+def get_job(job_id: str) -> Payload:
+    """Poll a custom solve: queued (with how many are ahead), running, done (with the result), or error."""
+    job = JOBS["runner"].get(job_id[:40])
+    if job is None:
+        raise HTTPException(status_code=404, detail="unknown or expired job")
+    return Payload(data=job)
 
 
 @app.get("/api/evaluate", response_model=Payload)
@@ -235,8 +274,19 @@ def get_cash_value() -> Payload:
 
 @app.get("/api/negotiate", response_model=Payload)
 def get_offers() -> Payload:
+    """Offers with "annual value if accepted" (13-week spend x 365/91 x offer), computed from the committed data."""
     s = state()
-    return Payload(data={**s.offers, "negotiated": s.negotiated})
+    spend = vendor_spend_cents(s.base_plan.bills)
+    horizon = s.dataset.company.horizon_days
+    offers = [
+        {
+            **o,
+            "annual_value_cents": annual_value_cents(spend.get(o["vendor_id"], 0), o["offer_bps"], horizon),
+            "vendor_spend_13w_cents": spend.get(o["vendor_id"], 0),
+        }
+        for o in s.offers.get("offers", [])
+    ]
+    return Payload(data={**s.offers, "offers": offers, "negotiated": s.negotiated})
 
 
 def _offer_raw(vendor_id: str) -> dict:

@@ -1,10 +1,10 @@
 // Overview: KPI strip, fan chart with the any-day breach probability, and this week's run.
 import { $, $$, html, icon, onActivate, setHTML } from "./dom.js";
-import { addDays, count, longDate, money, moneyExact, moneyShort, pct, perYear, shortDate } from "./format.js";
+import { addDays, count, invoiceId, longDate, money, moneyExact, moneyShort, pct, perYear, shortDate } from "./format.js";
 import { chip, OPTION_SHORT, railCell, valueCell } from "./labels.js";
 import { applyVisibility, fanChart, PALETTE } from "./charts.js";
 import { riskMeter } from "./widgets.js";
-import { loadBills, loadEvaluate, loadForecast, loadState } from "./store.js";
+import { loadBills, loadEvaluate, loadFinancing, loadForecast, loadState } from "./store.js";
 import { approvalPanel, wireApproval } from "./approval.js";
 import { openBillPanel } from "./billpanel.js";
 import { openNegotiateDrawer } from "./drawers.js";
@@ -129,6 +129,7 @@ function fanPanel(forecast) {
       ${legendItem(line(PALETTE.data), "Tempo plan, median")}
       ${legendItem(line(PALETTE.before, true), "Pay every bill on its due date, median")}
       ${legendItem(line(PALETTE.ink3, true), "Buffer")}
+      ${forecast.fan.low_paths?.length ? legendItem(html`<span class="inline-block w-5 border-t" style="border-color:${PALETTE.lowPath}"></span>`, `The ${count(forecast.fan.low_paths.length)} lowest of ${count(forecast.fan.low_paths_n)} fresh scenarios (lowest reaches ${moneyShort(Math.min(...forecast.fan.low_paths.map((p) => p.min_cents)))} on ${shortDate(forecast.fan.low_paths[0].min_date)}; clipped)`) : ""}
       ${legendItem(html`<span class="text-ink" aria-hidden="true">▼</span>`, "Large payment")}
     </div>
   </section>`;
@@ -157,7 +158,7 @@ function riskPanel(state, evaluate, vendorsWithoutTerms) {
   const k = state.kpis;
   const c = state.certification;
   const over = k.breach_upper > k.epsilon;
-  return html`<section class="panel col-span-4 flex flex-col max-[1180px]:col-span-12" aria-labelledby="risk-title">
+  return html`<section class="panel flex w-full flex-col" aria-labelledby="risk-title">
     <div class="flex flex-col gap-3 p-4">
       <h2 id="risk-title" class="section-title">Chance cash drops below the buffer on any day in the 13 weeks</h2>
       <p class="text-[34px] font-semibold leading-none tracking-[-0.02em] num ${over ? "risk" : ""}">${pct(k.breach_rate)}</p>
@@ -211,18 +212,20 @@ function weekTable(rows) {
       <th scope="col" class="r">Amount</th>
       <th scope="col">Terms</th>
       <th scope="col">Decision</th>
-      <th scope="col">Send</th>
+      <th scope="col">Sends</th>
+      <th scope="col">Arrives</th>
       <th scope="col" class="max-[1180px]:hidden">Rail</th>
       <th scope="col" class="r">Value</th>
     </tr></thead>
     <tbody>
       ${rows.map(
         (b) => html`<tr class="clickable" tabindex="0" data-bill="${b.bill_id}">
-          <td><div class="font-medium">${b.vendor}</div><div class="meta">${b.invoice_number}</div></td>
+          <td><div class="font-medium">${b.vendor}</div><div class="meta">${invoiceId(b.invoice_number)}</div></td>
           <td class="r num" title="${moneyExact(b.amount_cents)}">${money(b.amount_cents)}</td>
           <td><div class="flex flex-wrap items-center gap-1.5"><span class="whitespace-nowrap">${b.terms}</span>${chip(b.chip)}</div></td>
           <td>${b.option === "LATE" ? html`<span class="risk font-medium">Late</span>` : OPTION_SHORT[b.option]}</td>
           <td class="num">${shortDate(b.send_date)}</td>
+          <td class="num ${b.arrives_after_due ? "text-review" : ""}">${shortDate(b.arrival_date)}</td>
           <td class="max-[1180px]:hidden">${railCell(b.rail)}</td>
           <td class="r">${valueCell(b.value_cents)}</td>
         </tr>`,
@@ -260,26 +263,46 @@ function vendorsWithoutDiscount(bills) {
   return new Set(bills.filter((b) => !withTerms.has(b.vendor_id)).map((b) => b.vendor_id)).size;
 }
 
-function wireFan(main, forecast, state) {
-  const { fan, markers } = forecast;
-  const chart = fanChart($("#fan-canvas", main), {
+/** Draw (or redraw) the fan for one plan view: the headline plan or the financing plan. */
+function drawFan(main, holder, src) {
+  const { fan, markers, kpis } = src;
+  holder.chart?.destroy();
+  holder.chart = fanChart($("#fan-canvas", main), {
     dates: fan.dates,
     bufferCents: fan.buffer_cents,
     markers,
-    worst: { date: state.kpis.worst_p10_date, text: `Lowest P10 ${moneyShort(state.kpis.worst_p10_balance_cents)}, ${shortDate(state.kpis.worst_p10_date)}` },
+    lowPaths: fan.low_paths ?? [],
+    worst: { date: kpis.worst_p10_date, text: `Lowest P10 ${moneyShort(kpis.worst_p10_balance_cents)}, ${shortDate(kpis.worst_p10_date)}` },
     series: [
       { label: "Pay on due date", data: fan.before, style: { line: PALETTE.before, fill: PALETTE.beforeBand, outerFill: PALETTE.beforeOuterBand, dash: [5, 4], width: 1.5 } },
       { label: "Tempo plan", data: fan.after, style: { line: PALETTE.data, fill: PALETTE.dataBand, outerFill: PALETTE.dataOuterBand } },
     ],
   });
-  applyVisibility(chart, (ds) => fanVisible(ds, DEFAULT_FAN_VIEW), { animate: false });
+  applyVisibility(holder.chart, (ds) => fanVisible(ds, holder.view), { animate: false });
+}
+
+function wireFanViews(main, holder) {
   $$("[data-view]", main).forEach((btn) => {
     btn.addEventListener("click", () => {
+      holder.view = btn.dataset.view;
       $$("[data-view]", main).forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
-      applyVisibility(chart, (ds) => fanVisible(ds, btn.dataset.view));
+      applyVisibility(holder.chart, (ds) => fanVisible(ds, holder.view));
     });
   });
-  return chart;
+}
+
+function financingToggle() {
+  return html`<label class="inline-flex cursor-pointer items-center gap-2 text-sm text-ink-2">
+    <input type="checkbox" class="h-4 w-4" style="accent-color:#2E4BB8" data-financing>
+    <span>With Flex-style financing <span class="text-ink-3">(fee is an assumption)</span></span>
+  </label>`;
+}
+
+function financingNote(fin) {
+  return html`<p class="callout items-start">${icon("info", "icon mt-0.5 flex-none")}<span>
+    Showing the plan with Flex-style financing: <span class="num font-medium">${count(fin.financed_count)}</span> ${fin.financed_count === 1 ? "bill" : "bills"} financed,
+    <span class="num font-medium" title="${moneyExact(fin.financed_cents)}">${money(fin.financed_cents)}</span> repaid, certified the same way as the headline.
+    The fee is an assumption (Ramp's Flex pricing is not public), so the headline plan and the approval below never use it.</span></p>`;
 }
 
 /** Compare shows Tempo's band with both medians; the pay-on-due band only shows on its own. */
@@ -301,24 +324,57 @@ export async function render(main) {
   ]);
   const bills = billsData.bills;
   const rows = weekRows(state, bills);
+  const noDiscount = vendorsWithoutDiscount(bills);
   setHTML(
     main,
     html`<div class="flex flex-col gap-4">
-      <div>
-        <h1 class="text-xl">Overview</h1>
-        <p class="text-sm text-ink-2">When and how to pay ${count(bills.length)} open bills, keeping cash above the ${money(state.company.buffer_cents)} buffer.</p>
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 class="text-xl">Overview</h1>
+          <p class="text-sm text-ink-2">When and how to pay ${count(bills.length)} open bills, keeping cash above the ${money(state.company.buffer_cents)} buffer.</p>
+        </div>
+        ${financingToggle()}
       </div>
-      ${kpiStrip(state)}
+      <div data-financing-note hidden></div>
+      <div data-kpis>${kpiStrip(state)}</div>
       <div class="grid grid-cols-12 gap-4">
         ${fanPanel(forecast)}
-        ${riskPanel(state, evaluate, vendorsWithoutDiscount(bills))}
+        <div class="col-span-4 flex max-[1180px]:col-span-12" data-risk>${riskPanel(state, evaluate, noDiscount)}</div>
         ${weekPanel(state, rows, bills)}
       </div>
     </div>`,
   );
-  const chart = wireFan(main, forecast, state);
+  const holder = { chart: null, view: DEFAULT_FAN_VIEW };
+  const headline = { fan: forecast.fan, markers: forecast.markers, kpis: state.kpis };
+  drawFan(main, holder, headline);
+  wireFanViews(main, holder);
+  const wireNegotiate = () => $("[data-negotiate]", main).addEventListener("click", () => openNegotiateDrawer());
+  wireNegotiate();
+  $("[data-financing]", main).addEventListener("change", async (event) => {
+    const on = event.target.checked;
+    const note = $("[data-financing-note]", main);
+    let view = state;
+    let src = headline;
+    if (on) {
+      try {
+        const fin = await loadFinancing();
+        view = { ...state, kpis: fin.kpis, certification: fin.certification, cash_value: fin.cash_value };
+        src = { fan: fin.fan, markers: fin.markers, kpis: fin.kpis };
+        setHTML(note, financingNote(fin));
+      } catch (err) {
+        event.target.checked = false;
+        setHTML(note, html`<p class="callout callout-risk">${icon("triangle-alert", "icon flex-none")}${err.message}</p>`);
+        note.hidden = false;
+        return;
+      }
+    }
+    note.hidden = !on;
+    setHTML($("[data-kpis]", main), kpiStrip(view));
+    setHTML($("[data-risk]", main), riskPanel(view, on ? null : evaluate, noDiscount));
+    wireNegotiate();
+    drawFan(main, holder, src);
+  });
   wireApproval(main, state, rows, bills);
   $$("[data-bill]", main).forEach((tr) => onActivate(tr, () => openBillPanel(tr.dataset.bill)));
-  $("[data-negotiate]", main).addEventListener("click", () => openNegotiateDrawer());
-  return () => chart.destroy();
+  return () => holder.chart?.destroy();
 }

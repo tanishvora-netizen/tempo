@@ -6,8 +6,8 @@ from collections import defaultdict, deque
 from fastapi import HTTPException, Request
 from starlette.middleware.base import BaseHTTPMiddleware
 
-LIVE_SOLVES_PER_MINUTE = 6
-GLOBAL_SOLVES_PER_MINUTE = 20
+LIVE_SOLVES_PER_MINUTE = 40  # one shared IP at a live final: about 10 judges x a few custom solves each
+GLOBAL_SOLVES_PER_MINUTE = 60  # memory is protected by the one-solve-at-a-time job queue, not this cap
 WINDOW_S = 60.0
 CSP = (
     "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; "

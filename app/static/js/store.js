@@ -19,6 +19,7 @@ export const loadBills = () => once("bills", api.getBills);
 export const loadForecast = () => once("forecast", api.getForecast);
 export const loadPresets = () => once("presets", api.getPresets);
 export const loadEvaluate = () => once("evaluate", api.getEvaluate);
+export const loadFinancing = () => once("financing", api.getFinancingPlan);
 export const loadCashValue = () => once("cash-value", api.getCashValue);
 export const loadReview = () => once("review", api.getReview);
 export const loadBill = (billId) => once(`bill:${billId}`, () => api.getBill(billId));

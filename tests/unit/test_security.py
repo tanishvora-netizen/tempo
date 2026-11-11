@@ -35,3 +35,9 @@ def test_ach_lead_rule_is_shared() -> None:
     assert ach_lead(False, False) == 3
     assert ach_lead(True, False) == 4
     assert ach_lead(True, True) == 5 and ach_lead(False, True) == 5
+
+
+def test_ten_judges_on_one_ip_can_each_run_three_custom_solves() -> None:
+    throttle = Throttle()  # the defaults the server uses
+    for _ in range(10 * 3):
+        throttle.check(_request("203.0.113.7"))  # one shared conference IP; must not raise 429

@@ -1,7 +1,7 @@
 // Audit drawer: hash-chain status, approval entries, and the Ramp payload preview
 // (filterable, downloadable as JSON). Tempo never calls Ramp's API.
 import { $, $$, html, icon, setHTML } from "./dom.js";
-import { count, money, moneyExact, pct } from "./format.js";
+import { count, invoiceId, money, moneyExact, pct } from "./format.js";
 import { OPTION_SHORT } from "./labels.js";
 import { openDrawer } from "./drawer.js";
 import { errorBlock, loadingBlock } from "./states.js";
@@ -104,7 +104,7 @@ function payloadRows(bills) {
   return html`<ul>${bills.map(
     (b) => html`<li class="flex flex-col gap-1 border-b border-line px-4 py-2.5 last:border-b-0">
       <div class="flex items-center justify-between gap-3 text-sm">
-        <span><span class="font-medium">${b.vendor}</span> <span class="text-ink-3">${b.invoice_number}</span></span>
+        <span><span class="font-medium">${b.vendor}</span> <span class="text-ink-3">${invoiceId(b.invoice_number)}</span></span>
         <span class="flex items-center gap-2">${b.auto_scheduled ? html`<span class="chip chip-solid">Auto-scheduled</span>` : ""}
           <span class="text-xs text-ink-2">${OPTION_SHORT[b.option] ?? b.option}</span>
           <span class="num" title="${moneyExact(b.amount_cents)}">${money(b.amount_cents)}</span></span>

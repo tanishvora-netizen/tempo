@@ -5,7 +5,9 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 MAX_DELAY_DAYS = 60
+MIN_DELAY_DAYS = 1
 MAX_SHOCK_CENTS = 200_000_000  # $2M
+MIN_SHOCK_CENTS = 100_000  # $1,000
 
 
 class Strict(BaseModel):
@@ -15,14 +17,18 @@ class Strict(BaseModel):
 class WhatIfRequest(Strict):
     preset_id: str | None = Field(default=None, max_length=80)
     customer_id: str | None = Field(default=None, max_length=40)
-    delay_days: int = Field(default=0, ge=0, le=MAX_DELAY_DAYS)
-    shock_cents: int = Field(default=0, ge=0, le=MAX_SHOCK_CENTS)
+    delay_days: int = Field(default=0, ge=0, le=MAX_DELAY_DAYS, description="1 to 60 days with a customer")
+    shock_cents: int = Field(default=0, ge=0, le=MAX_SHOCK_CENTS, description="$1,000 to $2,000,000 in cents")
     shock_day: int = Field(default=0, ge=0, le=90)
 
     @model_validator(mode="after")
     def one_kind(self) -> "WhatIfRequest":
         if self.preset_id is None and self.customer_id is None and self.shock_cents == 0:
             raise ValueError("give a preset_id, a customer_id with delay_days, or a shock_cents")
+        if self.preset_id is None and self.customer_id is not None and self.delay_days < MIN_DELAY_DAYS:
+            raise ValueError(f"the delay must be {MIN_DELAY_DAYS} to {MAX_DELAY_DAYS} days")
+        if self.preset_id is None and self.shock_cents and self.shock_cents < MIN_SHOCK_CENTS:
+            raise ValueError("an unexpected payment must be $1,000 to $2,000,000")
         return self
 
 
