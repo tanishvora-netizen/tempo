@@ -199,6 +199,9 @@ def capture_whatif(page: Page, base: str, width: int, live: bool) -> None:
 def capture_proof(page: Page, base: str, width: int) -> None:
     goto(page, base, "proof", "#breach-canvas")
     shoot(page, "proof", width)
+    if width == max(VIEWPORTS):  # the README's frontier image: the Risk vs value panel alone
+        page.wait_for_timeout(SETTLE_MS * 2)
+        page.locator("#frontier").screenshot(path=str(OUT_DIR / "frontier.png"))
 
 
 def capture_negotiate(page: Page, base: str, width: int) -> None:

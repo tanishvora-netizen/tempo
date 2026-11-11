@@ -5,15 +5,20 @@ BUILD STATUS: IN PROGRESS (final fix pass)
 Built autonomously on Nov 10, 2026 (about 01:50 to 05:35 PT) from `docs/BUILD_DIRECTIVE.md`. Every phase (P0 to P6) is complete, councils C1 to C4 are recorded in `docs/council/`, and C4 closed with no open BLOCK.
 
 ## Human actions (the remaining steps, in order)
-1. **Done: deployed on Render.** render.com → sign in with GitHub → **New** → **Blueprint** → pick `tanishvora-netizen/tempo` → **Apply**. Render reads `render.yaml` (Python 3.12.8, `TEMPO_PROVIDER=cached`, health check `/health`, proxy headers on). Every later push to `main` redeploys. Paste the URL here and into README.md (line "Live demo") and SUBMISSION.md, then run `make verify-live URL=<url>`.
-   - Live URL: https://tempo-kor8.onrender.com (deployed Nov 10; `make verify-live` passed: all 6 endpoints return 200, provenance hash matches, provider `cached`)
-2. **Keep it awake for judging week (pick one).** The $7/mo `0.5c-512mb` plan is recommended: 0.5 CPU, no sleep. Custom what-ifs solve live, and the free plan's 0.1 CPU makes them slow; presets are always instant. Alternatively:
-   - **done:** the GitHub repo variable `TEMPO_URL` is set, so `.github/workflows/keepwarm.yml` pings `/health` about every 15 minutes (first manual run returned `{"status":"ok"}`; GitHub may delay or skip scheduled runs, so the $7 plan is still the sure option);
-   - add a free UptimeRobot 5-minute monitor on `https://tempo-kor8.onrender.com/health`.
-3. **Voice over the backup video.** `docs/demo/tempo-demo.webm` is 1440x900, about 2.5 minutes, silent, and follows `docs/DEMO_SCRIPT.md`. Re-record any time with `make demo-video`.
-4. **Rehearse with `docs/DEMO_SCRIPT.md`.** It covers three speakers, exact clicks, and 13 judge Q&As; all its numbers are generated. Before each rehearsal and before the live demo, run `curl -X POST https://tempo-kor8.onrender.com/api/reset`. The hosted audit log starts empty after every cold start.
-5. **Submit the form** at https://forms.gle/FxUVTm6Z75f121ov5 using `SUBMISSION.md`. It has the repo link, the 143-word description, the stack, and the "decisions behind our tools" answer; paste the live and video links first.
-6. Optional skill, not needed: `npx skills add anthropics/skills@webapp-testing` (201.6K installs). It overlaps ECC `e2e-testing`.
+1. **Record the voiceover** for `docs/demo/tempo-demo.webm` (silent, 1440x900, follows `docs/DEMO_SCRIPT.md`; re-record with `make demo-video`).
+2. **Submit the form** at https://forms.gle/FxUVTm6Z75f121ov5 using `SUBMISSION.md` (repo link, description, stack, tool decisions; paste the live and video links first).
+3. Before rehearsals and the live demo, reset shared state: `curl -X POST https://tempo-kor8.onrender.com/api/reset`.
+4. Live demo on Render's free plan (kept awake by UptimeRobot every 5 minutes). Presets are instant; custom what-ifs solve live and run as background jobs (see the What-if notice for measured times).
+
+## Final fix pass (Nov 10, afternoon)
+Items 1 to 8 and sections A to C of the final fix pass are done; rulings are at the end of `docs/DECISIONS.md` and the reviewer round is `docs/council/C5.md`.
+- Starting-cash sweep: no value met both breach thresholds; cash kept at $3.6M (disclosed).
+- Certification ladder starts at K = 10 (5% of N) and walks down to 0 (Bonferroni z over nine steps).
+- Financing toggle on Overview (FLEX_LIMIT caps outstanding financing); what-ifs use financing before any late payment, with a three-way tradeoff box.
+- Risk-vs-value frontier on Proof; the five lowest scenarios on the Overview chart.
+- Sends and Arrives columns, merged identical policies, whole-dollar tooltips, date-like invoice numbers labeled.
+- Annual value if accepted on Negotiate.
+- Custom what-ifs run as background jobs (one at a time, cached, 40 s solver limit), with a hosting notice and footer.
 
 ## What works end to end
 - **Synthetic company:** Kestrel Ridge Manufacturing, with 212 bills from 40 vendors and 25 customers. Invoice documents include tagged hard cases, among them a prompt-injection invoice, with ground truth. Starting cash comes from a pre-registered calibration rule.
@@ -37,16 +42,8 @@ Built autonomously on Nov 10, 2026 (about 01:50 to 05:35 PT) from `docs/BUILD_DI
   - Ramp payload preview (PATCH, hold, release, manual-RTP bucket), never sent.
 - **UI:** five screens plus the Negotiate and Audit drawers. Zero external requests and zero console errors (Playwright), usable at 1440 and 1024 px.
 
-## Headline numbers (from docs/RESULTS.md; 10,000 fresh scenarios, seed C)
-
-| Policy | Value | Breach probability |
-|---|---:|---:|
-| Tempo | $41,143 | 2.18% (bound 2.43%); 2.71% under the true model |
-| Weekly AP run (today) | $34,394 | 10.48% |
-| Greedy discount-taking | $52,835 | 7.92% |
-| Smart spreadsheet (uncertified) | $50,316 | 4.78% (bound 5.14%) |
-
-Cost of cash is 17.9%/yr.
+## Headline numbers
+Generated, never hand-edited: see the README results block and `docs/RESULTS.md` (`make results` renders both from `data/precomputed/`).
 
 ## What is stubbed or simplified
 - **No real integrations:** the Ramp API is previewed, never called, and there are no bank, Ramp, or email connections (out of scope).
@@ -56,7 +53,7 @@ Cost of cash is 17.9%/yr.
 
 ## Open risks (named in the README "Limits" section)
 - **Forecast model risk.** Certification covers sampling error only. Every policy breaches more under a doubled common factor; Tempo stays near pay-on-due.
-- **The headline is conservative** (K ladder from 4). The smart spreadsheet earns more but is not certified. A disclosed sensitivity row shows a ladder starting at K = 10.
+- **The certified bound is under the fitted model.** The ladder now starts at K = 10, so the plan sits closer to 5%; under the generator's true model its bound can exceed 5% (RESULTS.md).
 - **Manual RTP sends.** 12 of this week's 24 bills can only meet their dates by RTP, which Ramp's API cannot request.
 - **The extraction eval is synthetic** and flatters the parser.
 

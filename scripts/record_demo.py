@@ -66,6 +66,9 @@ def click_first(page: Page, selector: str, wait_ms: int = BEAT_MS) -> bool:
     return True
 
 
+CUSTOM_SOLVE_MS = 120_000
+
+
 def pause(page: Page, beats: float = 1.0, scroll: int = 0) -> None:
     if scroll:
         page.mouse.wheel(0, scroll)
@@ -85,9 +88,16 @@ def walk(page: Page, base: str) -> None:
     pause(page, 1.5)
     page.locator("[data-preset]").nth(1).click()  # biggest customer pays 14 days late
     pause(page, 4)
-    pause(page, 3, scroll=700)  # decisions that flipped, with reasons
-    page.goto(f"{base}/#/proof")
+    pause(page, 4, scroll=450)  # the tradeoff box: financing, late only, or accept the risk
+    page.mouse.wheel(0, -450)
+    click_first(page, '[data-mode="shock"]', BEAT_MS)  # a custom scenario, solved live
+    page.locator('[name="shock"]').fill("420,000")
+    page.locator("[data-run]").click()
+    page.wait_for_function("() => !document.querySelector('[data-run]').disabled", timeout=CUSTOM_SOLVE_MS)
     pause(page, 3)
+    pause(page, 3, scroll=700)  # decisions that flipped, with reasons
+    page.goto(f"{base}/#/proof?section=frontier")  # the risk-vs-value frontier
+    pause(page, 5)
     pause(page, 3, scroll=800)
     click_first(page, '[data-model="true"]', BEAT_MS * 3)  # the true-model check
     pause(page, 3, scroll=1200)  # ablations and extraction accuracy
