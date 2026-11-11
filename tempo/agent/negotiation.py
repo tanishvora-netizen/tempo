@@ -14,7 +14,7 @@ yes is "paid early, instantly by RTP, no fee to you". Nothing is ever sent.
 from dataclasses import asdict, dataclass, replace
 from datetime import date, datetime, timedelta
 
-from tempo.assumptions import OFFER_DAYS, OFFER_MARGIN, OFFER_ROUNDING
+from tempo.assumptions import DAYS_IN_YEAR, OFFER_DAYS, OFFER_MARGIN, OFFER_ROUNDING
 from tempo.business_days import next_business_day
 from tempo.economics import annualized_return, break_even_discount
 from tempo.extract.reconcile import decide_terms
@@ -53,6 +53,20 @@ class Offer:
     tempo_takes_it: bool
     value_delta_cents: int
     verdict: str
+
+
+def vendor_spend_cents(bills: tuple[PlannableBill, ...]) -> dict[str, int]:
+    """Each vendor's bill spend (subtotals: the base a discount applies to) in the 13-week data."""
+    out: dict[str, int] = {}
+    for b in bills:
+        out[b.vendor_id] = out.get(b.vendor_id, 0) + b.subtotal_cents
+    return out
+
+
+def annual_value_cents(spend_cents: int, offer_bps: int, horizon_days: int) -> int:
+    """Annual value if the vendor accepts: 13-week spend x (365 / horizon) x offer discount. An estimate that
+    assumes the next 39 weeks look like these 13; labeled as such in the UI."""
+    return round(spend_cents * (DAYS_IN_YEAR / horizon_days) * offer_bps / BPS_PER_UNIT)
 
 
 def price(cost_of_cash: float, days_early: int) -> tuple[float, int]:

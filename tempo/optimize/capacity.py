@@ -3,13 +3,15 @@
 Card charges and Flex-style financing move cash later, so the chance constraint alone would let a plan use
 unlimited credit. Two caps, each a linear row over option indices (flat order, bill by bill):
 - card: sum of card charges in one statement cycle <= CARD_LIMIT_PER_CYCLE_CENTS
-- financing: principal financed with send dates inside any 30-day window <= FINANCE_LINE_LIMIT_CENTS
+- financing: total outstanding on any day <= FLEX_LIMIT_CENTS. Every draw is repaid after FINANCE_TERM_DAYS,
+  so the amount outstanding on day t is the sum financed with send dates in (t - term, t]; checking every
+  window that starts at a send date covers every day's maximum.
 """
 
 from collections import defaultdict
 from datetime import timedelta
 
-from tempo.assumptions import CARD_LIMIT_PER_CYCLE_CENTS, FINANCE_LINE_LIMIT_CENTS, FINANCE_TERM_DAYS
+from tempo.assumptions import CARD_LIMIT_PER_CYCLE_CENTS, FINANCE_TERM_DAYS, FLEX_LIMIT_CENTS
 from tempo.models import PaymentOption
 
 Capacity = tuple[tuple[tuple[int, ...], int], ...]
@@ -22,7 +24,7 @@ def flat_options(options: tuple[tuple[PaymentOption, ...], ...]) -> list[Payment
 def capacity_groups(
     options: tuple[tuple[PaymentOption, ...], ...],
     card_limit_cents: int = CARD_LIMIT_PER_CYCLE_CENTS,
-    finance_limit_cents: int = FINANCE_LINE_LIMIT_CENTS,
+    finance_limit_cents: int = FLEX_LIMIT_CENTS,
 ) -> Capacity:
     """Card-cycle and financing-window rows as (flat option indices, cap in cents)."""
     flat = flat_options(options)

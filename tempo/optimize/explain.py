@@ -116,6 +116,12 @@ def _reason(
         return _early_reason(ctx, bill, o), None
     if o.kind == "CARD":
         return _card_reason(o), None
+    if o.kind == "FINANCE_DUE":
+        return (
+            f"Financed {fmt_date(o.send_date)} so the vendor is paid on time while cash stays above the "
+            f"{format_usd(ctx.buffer_cents)} buffer: assumed Flex-style fee {format_usd(o.fee_cents)}; you repay "
+            f"{fmt_date(o.cash_out_date)}. Cheaper than paying late."
+        ), None
     return _due_reason(ctx, bill, opts, o, base_cum, base_breaches)
 
 

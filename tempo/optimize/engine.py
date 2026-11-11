@@ -11,7 +11,7 @@ from datetime import date
 
 import numpy as np
 
-from tempo.assumptions import CREDIT_COST, N_OPT_SCENARIOS, SIGMA_MACRO
+from tempo.assumptions import CREDIT_COST, N_OPT_SCENARIOS, SIGMA_MACRO, SOLVER_TIME_LIMIT_S
 from tempo.forecast.fit import PoolFit, fit_days_to_pay
 from tempo.forecast.simulate import Receipt, ScenarioSet, WhatIf, receipts_from, simulate
 from tempo.models import Dataset, PaymentOption
@@ -129,9 +129,10 @@ def solve_plan(
     as_of: date,
     k: int,
     policy: str = "tempo",
+    time_limit: float = SOLVER_TIME_LIMIT_S,
 ) -> Plan:
     """Solve the chance-constrained MILP on the given optimizer scenarios, within the credit caps."""
-    result = solve(options, headroom, as_of, k, capacity=capacity_groups(options))
+    result = solve(options, headroom, as_of, k, capacity=capacity_groups(options), time_limit=time_limit)
     return Plan(
         policy, bills, options, result.choice, result.credit_cum_cents, k, headroom.shape[0], result.stats
     )

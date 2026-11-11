@@ -46,8 +46,10 @@ FINANCE_ENABLED = (
     False  # bool. ASSUMPTION: off for the headline (council C2): the fee is assumed and Flex has
 )
 #   no public API. RESULTS.md reports a sensitivity run with it on.
-FINANCE_LINE_LIMIT_CENTS = 50_000_000  # cents ($500,000). ASSUMPTION: cap on principal financed within any
-#   30-day window when financing is on.
+FLEX_LIMIT_CENTS = 50_000_000  # cents ($500,000). ASSUMPTION: Flex-style line limit. Total financing
+#   outstanding on any day (financed amounts not yet repaid) can never exceed it. With a fixed 30-day term this
+#   is the sum financed with send dates inside any 30-day window (tempo/optimize/capacity.py).
+FINANCE_LINE_LIMIT_CENTS = FLEX_LIMIT_CENTS  # kept as an alias for older call sites.
 CARD_LIMIT_PER_CYCLE_CENTS = 50_000_000  # cents ($500,000). ASSUMPTION: card charges allowed per monthly
 #   statement cycle (card credit sits outside the cash constraint, so it needs its own cap; council C2).
 
@@ -89,8 +91,11 @@ K_LADDER = (10, 8, 6, 4, 3, 2, 1, 0)  # unprotected scenarios allowed, tried in 
 FALLBACK_N = 1_000  # scenarios if K = 0 fails at N = 200. ASSUMPTION (council C1, quant).
 FALLBACK_K = 5  # unprotected scenarios in the fallback. ASSUMPTION (council C1, quant).
 WILSON_Z_REPORT = 1.645  # one-sided 95% normal quantile, for reported bounds.
+CERT_ALPHA = 0.05  # the certification test's error rate (95% confidence); equals EPSILON only by coincidence.
 CERT_STEPS = len(K_LADDER) + 1  # every plan the ladder can test: its rungs plus the N = 1,000 fallback.
-WILSON_Z_CERTIFY = NormalDist().inv_cdf(1 - EPSILON / CERT_STEPS)  # one-sided quantile at 0.05 / 9 = 2.539:
+WILSON_Z_CERTIFY = NormalDist().inv_cdf(
+    1 - CERT_ALPHA / CERT_STEPS
+)  # one-sided quantile at 0.05 / 9 = 2.539:
 #   Bonferroni over every step the ladder can try.
 SOLVER_TIME_LIMIT_S = 10.0  # seconds. ASSUMPTION: safety net; the reduced model solves well within it.
 SOLVER_MIP_REL_GAP = 1e-4  # relative gap. ASSUMPTION.

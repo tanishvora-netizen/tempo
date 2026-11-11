@@ -2,6 +2,7 @@
 assumptions.py, or the solver; nothing is invented.
 """
 
+import re
 from dataclasses import asdict
 from datetime import date, timedelta
 
@@ -21,6 +22,15 @@ from tempo.optimize.evaluate import PolicyResult
 from tempo.optimize.explain import terms_label
 from tempo.optimize.options import PlannableBill, ach_lead
 from tempo.serde import to_jsonable
+
+DATE_LIKE = re.compile(r"^\s*(\d{1,4}[/.-]\d{1,2}[/.-]\d{1,4})\s*$")
+
+
+def invoice_label(number: str) -> str:
+    """How an invoice number is shown. Some vendors number invoices by date ("10/14/2026"); shown bare, that
+    reads as a date in a table full of dates, so date-like numbers get an explicit "Invoice no." prefix."""
+    return f"Invoice no. {number}" if DATE_LIKE.match(number) else number
+
 
 STATUS_CHIPS = {
     "verified": "Verified",
@@ -79,6 +89,7 @@ def _row(bill: PlannableBill, opts, c: int, d: Decision, r: Reconciled | None, a
         "vendor_id": bill.vendor_id,
         "vendor": bill.vendor_name,
         "invoice_number": bill.invoice_number,
+        "invoice_label": invoice_label(bill.invoice_number),
         "issued_at": bill.issued_at.isoformat(),
         "amount_cents": bill.total_cents,
         "subtotal_cents": bill.subtotal_cents,
@@ -118,6 +129,7 @@ def _row(bill: PlannableBill, opts, c: int, d: Decision, r: Reconciled | None, a
 def policy_view(r: PolicyResult) -> dict:
     out = to_jsonable(asdict(r))
     out["worst_p10_date"] = r.worst_p10_date.isoformat()
+    out["worst_shortfall_date"] = r.worst_shortfall_date.isoformat() if r.worst_shortfall_date else None
     return out
 
 
@@ -165,6 +177,11 @@ def kpis(plan: Plan, oos: PolicyResult, cv: CashValue, buffer_cents: int, as_of:
         "cost_of_cash": cv.cost_of_cash,
         "cost_of_cash_credit_bound": cv.credit_bound,
         "late_count": oos.late_count,
+        "late_fees_cents": sum(o.fee_cents for o in chosen if o.kind == "LATE"),
+        "financed_count": sum(o.rail == "FINANCE" for o in chosen),
+        "finance_fees_cents": sum(o.fee_cents for o in chosen if o.rail == "FINANCE"),
+        "worst_shortfall_cents": oos.worst_shortfall_cents,
+        "worst_shortfall_date": oos.worst_shortfall_date.isoformat() if oos.worst_shortfall_date else None,
         "arrive_after_due_count": sum(
             o.arrival_date > b.due_date for b, o in zip(plan.bills, chosen, strict=True)
         ),
@@ -195,10 +212,12 @@ def diff_plans(before: Plan, after: Plan, after_decisions: tuple[Decision, ...])
                     "bill_id": bill.id,
                     "vendor": bill.vendor_name,
                     "invoice_number": bill.invoice_number,
+                    "invoice_label": invoice_label(bill.invoice_number),
                     "amount_cents": bill.total_cents,
                     "before": {
                         "option": b.kind,
                         "send_date": b.send_date.isoformat(),
+                        "arrival_date": b.arrival_date.isoformat(),
                         "value_cents": b.value_cents,
                     }
                     if b
@@ -206,6 +225,7 @@ def diff_plans(before: Plan, after: Plan, after_decisions: tuple[Decision, ...])
                     "after": {
                         "option": o.kind,
                         "send_date": o.send_date.isoformat(),
+                        "arrival_date": o.arrival_date.isoformat(),
                         "value_cents": o.value_cents,
                     },
                     "reason": reasons.get(bill.id, ""),

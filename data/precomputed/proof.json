@@ -11,11 +11,14 @@
    "discounts_cents": 4094083,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "d38226fa816cbaefc9e5af56dae82edd24e80df24d0c24589bd0584a32f26357",
    "policy": "tempo",
    "rewards_cents": 1451020,
    "value_cents": 4938374,
    "worst_p10_balance_cents": 110419983,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 237965888,
+   "worst_shortfall_date": "2027-01-15"
   },
   {
    "arrive_after_due_count": 15,
@@ -28,11 +31,14 @@
    "discounts_cents": 4492751,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "71a28294da076b4d4b000e52814fa85af21ffb73c973a33daad882b99401623a",
    "policy": "per_day_5pct",
    "rewards_cents": 1283691,
    "value_cents": 5264539,
    "worst_p10_balance_cents": 84573881,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 269915746,
+   "worst_shortfall_date": "2027-01-15"
   },
   {
    "arrive_after_due_count": 12,
@@ -45,11 +51,14 @@
    "discounts_cents": 2225196,
    "late_count": 41,
    "n_scenarios": 10000,
+   "plan_hash": "da3672a8db7686392831c762dd5e9802b0929b8b41e6662a19423674548bca4e",
    "policy": "per_day_worst_case",
    "rewards_cents": 1411629,
    "value_cents": 663772,
    "worst_p10_balance_cents": 228983617,
-   "worst_p10_date": "2026-11-27"
+   "worst_p10_date": "2026-11-27",
+   "worst_shortfall_cents": 73819101,
+   "worst_shortfall_date": "2027-01-15"
   },
   {
    "arrive_after_due_count": 15,
@@ -62,11 +71,14 @@
    "discounts_cents": 4529228,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "fee2702ffe13599660043fb72a3bc621d206dedce4e4725b5b132c656e4a842b",
    "policy": "deterministic_p50",
    "rewards_cents": 1283691,
    "value_cents": 5283516,
    "worst_p10_balance_cents": 76589560,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 269879269,
+   "worst_shortfall_date": "2027-01-15"
   }
  ],
  "extraction": {
@@ -766,25 +778,111 @@
  },
  "financing_sensitivity": {
   "arrive_after_due_count": 15,
-  "breach_rate": 0.0429,
-  "breach_upper": 0.0463587921358912,
-  "breaches": 429,
+  "breach_rate": 0.0427,
+  "breach_upper": 0.04615142283207815,
+  "breaches": 427,
   "card_count": 38,
   "certified": true,
   "credit_drawn_cents": 0,
   "discount_count": 75,
-  "discounts_cents": 4543193,
-  "financed_cents": 38134849,
-  "financed_count": 10,
+  "discounts_cents": 4531211,
+  "financed_cents": 35902613,
+  "financed_count": 15,
   "late_count": 0,
   "n_scenarios": 10000,
   "policy": "tempo_with_financing",
-  "rewards_cents": 1403911,
-  "value_cents": 5087336,
-  "worst_p10_balance_cents": 110422664,
-  "worst_p10_date": "2026-12-11"
+  "rewards_cents": 1400803,
+  "value_cents": 5094788,
+  "worst_p10_balance_cents": 110411279,
+  "worst_p10_date": "2026-12-11",
+  "worst_shortfall_cents": 237846621,
+  "worst_shortfall_date": "2027-01-15"
  },
- "input_hash": "43ffd149e239cbfb",
+ "frontier": {
+  "baselines": [
+   {
+    "above_curve": false,
+    "breach_rate": 0.1048,
+    "breach_upper": 0.10994592760353143,
+    "policy": "weekly_run",
+    "tempo_value_at_same_risk_cents": null,
+    "value_cents": 3439357
+   },
+   {
+    "above_curve": false,
+    "breach_rate": 0.0792,
+    "breach_upper": 0.08375702975108376,
+    "policy": "greedy_discount",
+    "tempo_value_at_same_risk_cents": 5283516,
+    "value_cents": 5283516
+   },
+   {
+    "above_curve": false,
+    "breach_rate": 0.0561,
+    "breach_upper": 0.0600068678542725,
+    "policy": "greedy_p05",
+    "tempo_value_at_same_risk_cents": 5119456,
+    "value_cents": 5029667
+   },
+   {
+    "above_curve": false,
+    "breach_rate": 0.0165,
+    "breach_upper": 0.018730131909823155,
+    "policy": "pay_on_due",
+    "tempo_value_at_same_risk_cents": 2504856,
+    "value_cents": 0
+   }
+  ],
+  "points": [
+   {
+    "breach_rate": 0.0019,
+    "breach_upper": 0.00276357626071625,
+    "certified": true,
+    "epsilon": 0.01,
+    "k": 0,
+    "n": 200,
+    "value_cents": -464767
+   },
+   {
+    "breach_rate": 0.0249,
+    "breach_upper": 0.02759464774045053,
+    "certified": true,
+    "epsilon": 0.025,
+    "k": 5,
+    "n": 200,
+    "value_cents": 4213406
+   },
+   {
+    "breach_rate": 0.0416,
+    "breach_upper": 0.04501053312113933,
+    "certified": true,
+    "epsilon": 0.05,
+    "k": 10,
+    "n": 200,
+    "value_cents": 4938374
+   },
+   {
+    "breach_rate": 0.0657,
+    "breach_upper": 0.06989423488383784,
+    "certified": true,
+    "epsilon": 0.075,
+    "k": 15,
+    "n": 200,
+    "value_cents": 5239345
+   },
+   {
+    "breach_rate": 0.0792,
+    "breach_upper": 0.08375702975108376,
+    "certified": true,
+    "epsilon": 0.1,
+    "k": 20,
+    "n": 200,
+    "value_cents": 5283516
+   }
+  ],
+  "sentence": "At the risk of greedy discount-taking (7.92%) it finds the same plan; at the risk of the smart spreadsheet (5.61%) Tempo adds $898; at the risk of paying on due dates (1.65%) Tempo adds $25,049 over 13 weeks. (The weekly AP run: riskier than any target certified here.)"
+ },
+ "input_hash": "d48ff842b48300ba",
  "policies": [
   {
    "arrive_after_due_count": 15,
@@ -797,11 +895,14 @@
    "discounts_cents": 0,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "64a0d454420c3d3ab8c7e413988559919d4846baada30bddc68bfe345a65d719",
    "policy": "pay_on_due",
    "rewards_cents": 0,
    "value_cents": 0,
    "worst_p10_balance_cents": 167444159,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 195641068,
+   "worst_shortfall_date": "2027-02-05"
   },
   {
    "arrive_after_due_count": 11,
@@ -814,11 +915,14 @@
    "discounts_cents": 4250397,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "c2589eec5a91f4568629234489f33664b87aee6afddcd3b0b05b76b3449dd26e",
    "policy": "weekly_run",
    "rewards_cents": 0,
    "value_cents": 3439357,
    "worst_p10_balance_cents": 60907903,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 271374642,
+   "worst_shortfall_date": "2027-01-15"
   },
   {
    "arrive_after_due_count": 15,
@@ -831,11 +935,14 @@
    "discounts_cents": 4529228,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "fee2702ffe13599660043fb72a3bc621d206dedce4e4725b5b132c656e4a842b",
    "policy": "greedy_discount",
    "rewards_cents": 1283691,
    "value_cents": 5283516,
    "worst_p10_balance_cents": 76589560,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 269879269,
+   "worst_shortfall_date": "2027-01-15"
   },
   {
    "arrive_after_due_count": 15,
@@ -848,11 +955,14 @@
    "discounts_cents": 4175426,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "eff5bf509a77ed909506104130f5ba0749043f5a138942566127fc9c651e23f0",
    "policy": "greedy_p05",
    "rewards_cents": 1283691,
    "value_cents": 5029667,
    "worst_p10_balance_cents": 106388202,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 266454812,
+   "worst_shortfall_date": "2027-01-15"
   },
   {
    "arrive_after_due_count": 15,
@@ -865,11 +975,14 @@
    "discounts_cents": 4529228,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "fee2702ffe13599660043fb72a3bc621d206dedce4e4725b5b132c656e4a842b",
    "policy": "deterministic_p50",
    "rewards_cents": 1283691,
    "value_cents": 5283516,
    "worst_p10_balance_cents": 76589560,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 269879269,
+   "worst_shortfall_date": "2027-01-15"
   },
   {
    "arrive_after_due_count": 15,
@@ -882,11 +995,14 @@
    "discounts_cents": 4094083,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "d38226fa816cbaefc9e5af56dae82edd24e80df24d0c24589bd0584a32f26357",
    "policy": "tempo",
    "rewards_cents": 1451020,
    "value_cents": 4938374,
    "worst_p10_balance_cents": 110419983,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 237965888,
+   "worst_shortfall_date": "2027-01-15"
   }
  ],
  "policies_macro_stress": {
@@ -902,11 +1018,14 @@
     "discounts_cents": 0,
     "late_count": 0,
     "n_scenarios": 10000,
+    "plan_hash": "64a0d454420c3d3ab8c7e413988559919d4846baada30bddc68bfe345a65d719",
     "policy": "pay_on_due",
     "rewards_cents": 0,
     "value_cents": 0,
     "worst_p10_balance_cents": 56828062,
-    "worst_p10_date": "2027-02-05"
+    "worst_p10_date": "2027-02-05",
+    "worst_shortfall_cents": 677090368,
+    "worst_shortfall_date": "2027-02-05"
    },
    {
     "arrive_after_due_count": 11,
@@ -919,11 +1038,14 @@
     "discounts_cents": 4250397,
     "late_count": 0,
     "n_scenarios": 10000,
+    "plan_hash": "c2589eec5a91f4568629234489f33664b87aee6afddcd3b0b05b76b3449dd26e",
     "policy": "weekly_run",
     "rewards_cents": 0,
     "value_cents": 3439357,
     "worst_p10_balance_cents": -34480347,
-    "worst_p10_date": "2026-12-11"
+    "worst_p10_date": "2026-12-11",
+    "worst_shortfall_cents": 681229375,
+    "worst_shortfall_date": "2027-01-26"
    },
    {
     "arrive_after_due_count": 15,
@@ -936,11 +1058,14 @@
     "discounts_cents": 4529228,
     "late_count": 0,
     "n_scenarios": 10000,
+    "plan_hash": "fee2702ffe13599660043fb72a3bc621d206dedce4e4725b5b132c656e4a842b",
     "policy": "greedy_discount",
     "rewards_cents": 1283691,
     "value_cents": 5283516,
     "worst_p10_balance_cents": -18798690,
-    "worst_p10_date": "2026-12-11"
+    "worst_p10_date": "2026-12-11",
+    "worst_shortfall_cents": 671608880,
+    "worst_shortfall_date": "2027-01-22"
    },
    {
     "arrive_after_due_count": 15,
@@ -953,11 +1078,14 @@
     "discounts_cents": 4175426,
     "late_count": 0,
     "n_scenarios": 10000,
+    "plan_hash": "eff5bf509a77ed909506104130f5ba0749043f5a138942566127fc9c651e23f0",
     "policy": "greedy_p05",
     "rewards_cents": 1283691,
     "value_cents": 5029667,
     "worst_p10_balance_cents": -13933922,
-    "worst_p10_date": "2027-01-15"
+    "worst_p10_date": "2027-01-15",
+    "worst_shortfall_cents": 668184423,
+    "worst_shortfall_date": "2027-01-22"
    },
    {
     "arrive_after_due_count": 15,
@@ -970,11 +1098,14 @@
     "discounts_cents": 4529228,
     "late_count": 0,
     "n_scenarios": 10000,
+    "plan_hash": "fee2702ffe13599660043fb72a3bc621d206dedce4e4725b5b132c656e4a842b",
     "policy": "deterministic_p50",
     "rewards_cents": 1283691,
     "value_cents": 5283516,
     "worst_p10_balance_cents": -18798690,
-    "worst_p10_date": "2026-12-11"
+    "worst_p10_date": "2026-12-11",
+    "worst_shortfall_cents": 671608880,
+    "worst_shortfall_date": "2027-01-22"
    },
    {
     "arrive_after_due_count": 15,
@@ -987,11 +1118,14 @@
     "discounts_cents": 4094083,
     "late_count": 0,
     "n_scenarios": 10000,
+    "plan_hash": "d38226fa816cbaefc9e5af56dae82edd24e80df24d0c24589bd0584a32f26357",
     "policy": "tempo",
     "rewards_cents": 1451020,
     "value_cents": 4938374,
     "worst_p10_balance_cents": 14555002,
-    "worst_p10_date": "2027-01-15"
+    "worst_p10_date": "2027-01-15",
+    "worst_shortfall_cents": 650333331,
+    "worst_shortfall_date": "2027-02-08"
    }
   ],
   "sigma_macro": 0.3
@@ -1008,11 +1142,14 @@
    "discounts_cents": 0,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "64a0d454420c3d3ab8c7e413988559919d4846baada30bddc68bfe345a65d719",
    "policy": "pay_on_due",
    "rewards_cents": 0,
    "value_cents": 0,
    "worst_p10_balance_cents": 151761802,
-   "worst_p10_date": "2027-02-05"
+   "worst_p10_date": "2027-02-05",
+   "worst_shortfall_cents": 174282368,
+   "worst_shortfall_date": "2027-02-05"
   },
   {
    "arrive_after_due_count": 11,
@@ -1025,11 +1162,14 @@
    "discounts_cents": 4250397,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "c2589eec5a91f4568629234489f33664b87aee6afddcd3b0b05b76b3449dd26e",
    "policy": "weekly_run",
    "rewards_cents": 0,
    "value_cents": 3439357,
    "worst_p10_balance_cents": 58646613,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 247411642,
+   "worst_shortfall_date": "2027-01-15"
   },
   {
    "arrive_after_due_count": 15,
@@ -1042,11 +1182,14 @@
    "discounts_cents": 4529228,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "fee2702ffe13599660043fb72a3bc621d206dedce4e4725b5b132c656e4a842b",
    "policy": "greedy_discount",
    "rewards_cents": 1283691,
    "value_cents": 5283516,
    "worst_p10_balance_cents": 74328270,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 245916269,
+   "worst_shortfall_date": "2027-01-15"
   },
   {
    "arrive_after_due_count": 15,
@@ -1059,11 +1202,14 @@
    "discounts_cents": 4175426,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "eff5bf509a77ed909506104130f5ba0749043f5a138942566127fc9c651e23f0",
    "policy": "greedy_p05",
    "rewards_cents": 1283691,
    "value_cents": 5029667,
    "worst_p10_balance_cents": 104126912,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 242491812,
+   "worst_shortfall_date": "2027-01-15"
   },
   {
    "arrive_after_due_count": 15,
@@ -1076,11 +1222,14 @@
    "discounts_cents": 4529228,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "fee2702ffe13599660043fb72a3bc621d206dedce4e4725b5b132c656e4a842b",
    "policy": "deterministic_p50",
    "rewards_cents": 1283691,
    "value_cents": 5283516,
    "worst_p10_balance_cents": 74328270,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 245916269,
+   "worst_shortfall_date": "2027-01-15"
   },
   {
    "arrive_after_due_count": 15,
@@ -1093,11 +1242,14 @@
    "discounts_cents": 4094083,
    "late_count": 0,
    "n_scenarios": 10000,
+   "plan_hash": "d38226fa816cbaefc9e5af56dae82edd24e80df24d0c24589bd0584a32f26357",
    "policy": "tempo",
    "rewards_cents": 1451020,
    "value_cents": 4938374,
    "worst_p10_balance_cents": 108158693,
-   "worst_p10_date": "2026-12-11"
+   "worst_p10_date": "2026-12-11",
+   "worst_shortfall_cents": 214002888,
+   "worst_shortfall_date": "2027-01-15"
   }
  ],
  "seed_c": 22261139
