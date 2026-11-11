@@ -8,18 +8,33 @@ the precomputed presets; a live plan whose seed-B bound exceeds EPSILON is label
 
 import time
 from dataclasses import dataclass
+from math import floor
 
-from tempo.assumptions import EPSILON, N_FAN_SCENARIOS, SEED_FAN, SOLVER_TIME_LIMIT_S, WILSON_Z_REPORT
+from tempo.assumptions import (
+    EPSILON,
+    FALLBACK_N,
+    N_FAN_SCENARIOS,
+    N_OPT_SCENARIOS,
+    SEED_FAN,
+    SOLVER_TIME_LIMIT_S,
+    WILSON_Z_REPORT,
+)
 from tempo.forecast.simulate import WhatIf
 from tempo.models import Dataset, TermsRecord
 from tempo.optimize.cash_value import CashValue
 from tempo.optimize.engine import Plan, solve_plan
 from tempo.optimize.evaluate import balance_fan, evaluate
 from tempo.optimize.explain import ExplainContext, explain_all
+from tempo.optimize.options import FINANCE_KINDS_LIQUIDITY
 from tempo.optimize.run import baseline_plans, prepare
 from tempo.pipeline import IngestResult
 from tempo.report import bill_rows, diff_plans, kpis
 from tempo.whatif import tradeoff
+
+# Live jobs on Render's free tier (0.1 CPU) use a lighter scenario set than presets, so a custom solve can reach
+# its gap inside the time limit. K keeps the base plan's share of unprotected scenarios (10 of 200 -> 5 of 100).
+LIVE_N_SCENARIOS = 100
+LIVE_CHECK_SCENARIOS = 5_000
 
 
 @dataclass(frozen=True)
@@ -37,6 +52,8 @@ def live_solve(
     what_if: WhatIf | None = None,
     overrides: dict[str, TermsRecord] | None = None,
     time_limit: float = SOLVER_TIME_LIMIT_S,
+    n_scenarios: int = LIVE_N_SCENARIOS,
+    n_check: int = LIVE_CHECK_SCENARIOS,
 ) -> LiveResult:
     """Re-solve at the base plan's K and N; report the seed-B estimate (not a fresh certification).
 
@@ -44,9 +61,21 @@ def live_solve(
     review edits change the headline plan, so they keep financing off."""
     started = time.perf_counter()
     stressed = what_if is not None and not what_if.is_empty()
-    inputs = prepare(dataset, ingest_result, what_if, overrides, finance_enabled=stressed)
-    k = base_plan.k if base_plan.k is not None else 0
-    n = base_plan.n_scenarios or inputs.headroom_a.shape[0]
+    inputs = prepare(
+        dataset,
+        ingest_result,
+        what_if,
+        overrides,
+        finance_enabled=stressed,
+        finance_kinds=FINANCE_KINDS_LIQUIDITY,
+        n_opt=n_scenarios,
+        n_fallback=max(n_scenarios, FALLBACK_N) if n_scenarios == N_OPT_SCENARIOS else n_scenarios,
+        n_cert=n_check,
+    )
+    base_k = base_plan.k if base_plan.k is not None else 0
+    base_n = base_plan.n_scenarios or N_OPT_SCENARIOS
+    n = n_scenarios
+    k = floor(base_k * n / base_n)  # same share of unprotected scenarios as the certified base plan
     head_a = inputs.headroom_a_fallback[:n]
     plan = solve_plan(inputs.bills, inputs.options, head_a, inputs.as_of, k, time_limit=time_limit)
     c = dataset.company
@@ -74,7 +103,7 @@ def live_solve(
             "rate": est.breach_rate,
             "upper": est.breach_upper,
             "within_target": est.breach_upper <= EPSILON,
-            "label": "out-of-sample estimate on seed B at the base plan's K; not re-certified",
+            "label": f"live estimate: {n} planning scenarios, {inputs.headroom_b.shape[0]:,} check scenarios, not certified",
         },
         "k": k,
         "n": n,
@@ -85,6 +114,7 @@ def live_solve(
         "tradeoff": box,
         "time_limit_reached": timed_out,
         "solver_status": "time limit reached, best plan found" if timed_out else "optimal",
+        "mip_gap": plan.stats.mip_gap if plan.stats else None,
         "solve_seconds": plan.stats.solve_seconds if plan.stats else None,
         "total_seconds": seconds,
         "plan_hash": plan.plan_hash(),

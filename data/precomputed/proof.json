@@ -778,24 +778,24 @@
  },
  "financing_sensitivity": {
   "arrive_after_due_count": 15,
-  "breach_rate": 0.0427,
-  "breach_upper": 0.04615142283207815,
-  "breaches": 427,
-  "card_count": 38,
+  "breach_rate": 0.0417,
+  "breach_upper": 0.045114275782357674,
+  "breaches": 417,
+  "card_count": 39,
   "certified": true,
   "credit_drawn_cents": 0,
-  "discount_count": 75,
-  "discounts_cents": 4531211,
-  "financed_cents": 35902613,
-  "financed_count": 15,
+  "discount_count": 69,
+  "discounts_cents": 4223287,
+  "financed_cents": 14834819,
+  "financed_count": 9,
   "late_count": 0,
   "n_scenarios": 10000,
   "policy": "tempo_with_financing",
-  "rewards_cents": 1400803,
-  "value_cents": 5094788,
-  "worst_p10_balance_cents": 110411279,
+  "rewards_cents": 1424551,
+  "value_cents": 4951321,
+  "worst_p10_balance_cents": 110419983,
   "worst_p10_date": "2026-12-11",
-  "worst_shortfall_cents": 237846621,
+  "worst_shortfall_cents": 238061216,
   "worst_shortfall_date": "2027-01-15"
  },
  "frontier": {
@@ -880,7 +880,7 @@
     "value_cents": 5283516
    }
   ],
-  "sentence": "At the risk of greedy discount-taking (7.92%) it finds the same plan; at the risk of the smart spreadsheet (5.61%) Tempo adds $898; at the risk of paying on due dates (1.65%) Tempo adds $25,049 over 13 weeks. (The weekly AP run: riskier than any target certified here.)"
+  "sentence": "At the risk of greedy discount-taking (7.92%) it finds the same plan; at the risk of the smart spreadsheet (5.61%) Tempo adds about $898; at the risk of paying on due dates (1.65%) Tempo adds about $25,049 over 13 weeks (interpolated between certified points). (The weekly AP run: riskier than any target certified here.)"
  },
  "input_hash": "d48ff842b48300ba",
  "policies": [

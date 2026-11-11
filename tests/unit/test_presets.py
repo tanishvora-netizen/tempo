@@ -163,7 +163,9 @@ def test_value_does_not_rise_as_the_delay_grows(customer: str) -> None:
 @pytest.mark.slow
 def test_a_preset_rerun_live_gives_the_committed_plan_hash() -> None:
     from app.state import load_state
+    from tempo.assumptions import N_CERT_SCENARIOS, N_OPT_SCENARIOS
     from tempo.forecast.simulate import WhatIf
+    from tempo.live import live_solve
 
     k_base = BUNDLE["certification"]["k"]
     preset = next(
@@ -174,7 +176,17 @@ def test_a_preset_rerun_live_gives_the_committed_plan_hash() -> None:
     w = preset["what_if"]
     s = load_state()
 
-    live = s.solve_live(WhatIf(w["customer_id"], w["delay_days"], w["shock_cents"]), {})
+    live = live_solve(
+        s.dataset,
+        s.ingest,
+        s.base_plan,
+        s.cash_value,
+        WhatIf(w["customer_id"], w["delay_days"], w["shock_cents"]),
+        {},
+        time_limit=120.0,
+        n_scenarios=N_OPT_SCENARIOS,
+        n_check=N_CERT_SCENARIOS,
+    )
 
     assert live.payload["plan_hash"] == preset["plan_hash"]
 

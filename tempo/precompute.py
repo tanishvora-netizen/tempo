@@ -14,10 +14,11 @@ from pathlib import Path
 import numpy as np
 
 from tempo.agent.negotiation import plan_offers
-from tempo.assumptions import EPSILON, N_EVAL_SCENARIOS, N_FAN_SCENARIOS, SEED, SEED_C, SEED_FAN
+from tempo.assumptions import EPSILON, N_EVAL_SCENARIOS, N_FAN_SCENARIOS, SEED, SEED_B, SEED_C, SEED_FAN
 from tempo.extract.eval import evaluate_extraction
 from tempo.extract.reconcile import Reconciled, sanity_problem
 from tempo.forecast.simulate import WhatIf
+from tempo.live import LIVE_CHECK_SCENARIOS
 from tempo.models import Dataset, Decision, TermsRecord
 from tempo.optimize import baselines as bl
 from tempo.optimize.cash import slack
@@ -26,6 +27,7 @@ from tempo.optimize.certify import Certification, certify, ladder_for, z_for
 from tempo.optimize.engine import Plan, true_params
 from tempo.optimize.evaluate import balance_fan, evaluate
 from tempo.optimize.explain import ExplainContext, explain_all
+from tempo.optimize.options import FINANCE_KINDS_ALL, FINANCE_KINDS_LIQUIDITY
 from tempo.optimize.run import (
     POLICY_ORDER,
     RunInputs,
@@ -146,10 +148,18 @@ def solve_case(
     what_if: WhatIf | None = None,
     overrides: dict[str, TermsRecord] | None = None,
     finance_enabled: bool = False,
+    finance_kinds: tuple[str, ...] = FINANCE_KINDS_ALL,
 ) -> Solved:
     """Prepare, certify, value cash, and draw the reporting (C) and fan scenarios for one case."""
     started = time.perf_counter()
-    inputs = prepare(dataset, ingest_result, what_if, overrides, finance_enabled=finance_enabled)
+    inputs = prepare(
+        dataset,
+        ingest_result,
+        what_if,
+        overrides,
+        finance_enabled=finance_enabled,
+        finance_kinds=finance_kinds,
+    )
     plan, cert = run_tempo(inputs, time_limit=PRECOMPUTE_TIME_LIMIT_S)
     cv = marginal_value_of_cash(inputs, plan)
     head_c = inputs.forecast.headroom(inputs.forecast.scenarios(N_EVAL_SCENARIOS, SEED_C))
@@ -224,10 +234,12 @@ def plan_summary(s: Solved, pay_on_due: Plan) -> dict:
 
 
 def seed_b_kpis(s: Solved) -> dict:
-    """The current plan scored on seed B, so live what-ifs (scored on seed B) compare like with like."""
+    """The current plan scored on the live path's seed-B check set (LIVE_CHECK_SCENARIOS, same seed and draw),
+    so a live what-if's "current plan" column is scored on exactly the same scenarios as its what-if column."""
     c = s.inputs.dataset.company
-    est = evaluate(s.plan, s.inputs.headroom_b, c.as_of, c.buffer_cents)
-    return kpis(s.plan, est, s.cash_value, c.buffer_cents, c.as_of)
+    head = s.inputs.forecast.headroom(s.inputs.forecast.scenarios(LIVE_CHECK_SCENARIOS, SEED_B))
+    est = evaluate(s.plan, head, c.as_of, c.buffer_cents)
+    return {**kpis(s.plan, est, s.cash_value, c.buffer_cents, c.as_of), "n_check": int(head.shape[0])}
 
 
 def markers(plan: Plan) -> list[dict]:
@@ -365,7 +377,7 @@ def frontier_sentence(baselines: list[dict]) -> str:
         if abs(gap) < 100:
             parts.append(f"at the risk of {name} ({risk}) it finds the same plan")
         elif gap > 0:
-            parts.append(f"at the risk of {name} ({risk}) Tempo adds ${gap / 100:,.0f}")
+            parts.append(f"at the risk of {name} ({risk}) Tempo adds about ${gap / 100:,.0f}")
         else:
             parts.append(
                 f"at the risk of {name} ({risk}) Tempo earns ${-gap / 100:,.0f} less (docs/DECISIONS.md)"
@@ -374,7 +386,7 @@ def frontier_sentence(baselines: list[dict]) -> str:
     if not parts:
         return "No baseline's breach rate falls inside the range Tempo was certified at."
     text = "; ".join(parts)
-    text = text[0].upper() + text[1:] + " over 13 weeks."
+    text = text[0].upper() + text[1:] + " over 13 weeks (interpolated between certified points)."
     if outside:
         names = ", ".join(outside)
         text += f" ({names[0].upper() + names[1:]}: riskier than any target certified here.)"
@@ -452,6 +464,7 @@ def whatif_tradeoff(s: Solved, current: Plan) -> dict:
         c.as_of,
         c.buffer_cents,
         time_limit=PRECOMPUTE_TIME_LIMIT_S,
+        main_certified=s.cert.passed,
     )
 
 
@@ -461,7 +474,9 @@ def build_whatifs(dataset: Dataset, ingest_result: IngestResult, base: Solved) -
     scenarios in the tradeoff box ("accept the risk")."""
     out = []
     for preset_id, label, wi in what_if_presets(dataset):
-        s = solve_case(dataset, ingest_result, wi, finance_enabled=True)
+        s = solve_case(
+            dataset, ingest_result, wi, finance_enabled=True, finance_kinds=FINANCE_KINDS_LIQUIDITY
+        )
         pay_on_due = pay_on_due_plan(s.inputs)
         decisions = decisions_for(s)
         out.append(

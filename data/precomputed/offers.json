@@ -363,6 +363,26 @@
    "verdict": "Tempo would not take it: card is still better or cash does not allow it"
   },
   {
+   "amount_cents": 333624,
+   "annualized_return": 0.13200723327305605,
+   "bill_id": "fb06ece7-ac93-4b33-b5c5-e7a939b05e67",
+   "break_even": 0.008777882874479004,
+   "cost_of_cash": 0.09235142857142857,
+   "days_early": 35,
+   "due_date": "2027-01-04",
+   "invoice_number": "VOS-85895",
+   "issued_at": "2026-11-20",
+   "offer_bps": 125,
+   "proposed_date": "2026-11-30",
+   "savings_cents": 4170,
+   "subtotal_cents": 333624,
+   "tempo_takes_it": false,
+   "value_delta_cents": 0,
+   "vendor_id": "ven_021",
+   "vendor_name": "Vireo Office Supply",
+   "verdict": "Tempo would not take it: card is still better or cash does not allow it"
+  },
+  {
    "amount_cents": 3308669,
    "annualized_return": 0.11116751269035532,
    "bill_id": "2e590aac-cd3c-454e-86ca-6104aa95c040",
@@ -380,26 +400,6 @@
    "value_delta_cents": 0,
    "vendor_id": "ven_024",
    "vendor_name": "Zephyr Point Utilities Brokerage",
-   "verdict": "Tempo would not take it: bank due is still better or cash does not allow it"
-  },
-  {
-   "amount_cents": 333624,
-   "annualized_return": 0.13200723327305605,
-   "bill_id": "fb06ece7-ac93-4b33-b5c5-e7a939b05e67",
-   "break_even": 0.008777882874479004,
-   "cost_of_cash": 0.09235142857142857,
-   "days_early": 35,
-   "due_date": "2027-01-04",
-   "invoice_number": "VOS-85895",
-   "issued_at": "2026-11-20",
-   "offer_bps": 125,
-   "proposed_date": "2026-11-30",
-   "savings_cents": 4170,
-   "subtotal_cents": 333624,
-   "tempo_takes_it": false,
-   "value_delta_cents": -47666,
-   "vendor_id": "ven_021",
-   "vendor_name": "Vireo Office Supply",
    "verdict": "Tempo would not take it: bank due is still better or cash does not allow it"
   }
  ]

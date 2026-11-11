@@ -66,7 +66,9 @@ def _variant(
     return Variant(plan, evaluate(plan, head_eval, as_of, buffer_cents, WILSON_Z_REPORT))
 
 
-def _side(v: Variant, fee_cents: int, epsilon: float) -> dict:
+def _side(v: Variant, fee_cents: int, epsilon: float, certified: bool = False) -> dict:
+    """One option of the box. `certified` marks the option that IS the certified what-if plan: it is under the
+    target by certification on seed B, even when its seed-C check lands a little above it."""
     r = v.result
     return {
         "fees_cents": fee_cents,
@@ -78,7 +80,8 @@ def _side(v: Variant, fee_cents: int, epsilon: float) -> dict:
         "credit_drawn_cents": v.plan.credit_drawn_cents(),
         # measured rate on the shared scenarios (the bound is shown too): the what-if plan itself is certified on
         # seed B, and its seed-C bound can sit just above 5% while its rate is under it
-        "under_target": r.breach_rate <= epsilon and v.plan.credit_drawn_cents() == 0,
+        "under_target": (certified or r.breach_rate <= epsilon) and v.plan.credit_drawn_cents() == 0,
+        "certified": certified,
     }
 
 
@@ -92,6 +95,7 @@ def tradeoff(
     buffer_cents: int,
     epsilon: float = EPSILON,
     time_limit: float = SOLVER_TIME_LIMIT_S,
+    main_certified: bool = False,
 ) -> dict:
     """The three-way tradeoff box. Re-uses the what-if plan wherever it already is that variant."""
     k = main.k if main.k is not None else 0
@@ -112,8 +116,8 @@ def tradeoff(
     )
     keep = evaluate(current, head_eval, as_of, buffer_cents, WILSON_Z_REPORT)
     return {
-        "financing": _side(fin, finance_fees_cents(fin.plan), epsilon),
-        "late_only": _side(late, late_fees_cents(late.plan), epsilon),
+        "financing": _side(fin, finance_fees_cents(fin.plan), epsilon, main_certified and fin is main_v),
+        "late_only": _side(late, late_fees_cents(late.plan), epsilon, main_certified and late is main_v),
         "accept_risk": {
             "breach_rate": keep.breach_rate,
             "breach_upper": keep.breach_upper,

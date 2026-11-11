@@ -107,7 +107,8 @@ def test_custom_what_if_runs_as_a_job_and_repeats_from_cache(client: TestClient)
     assert done["status"] == "done" and not done["cached"]
     result = done["result"]
     assert result["source"] == "live"
-    assert "not re-certified" in result["estimate"]["label"]
+    assert "not certified" in result["estimate"]["label"]
+    assert "planning scenarios" in result["estimate"]["label"]
     assert set(result["tradeoff"]) >= {"financing", "late_only", "accept_risk"}
 
     again = client.post("/api/optimize", json=body).json()["data"]

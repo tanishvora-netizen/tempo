@@ -26,7 +26,7 @@ from tempo.optimize import baselines as bl
 from tempo.optimize.certify import Certification, certify
 from tempo.optimize.engine import Forecast, Plan, build_forecast, option_sets
 from tempo.optimize.evaluate import PolicyResult, evaluate
-from tempo.optimize.options import PlannableBill, RailContext
+from tempo.optimize.options import FINANCE_KINDS_ALL, PlannableBill, RailContext
 from tempo.pipeline import IngestResult, plannable_bills
 
 POLICY_ORDER = ("pay_on_due", "weekly_run", "greedy_discount", "greedy_p05", "deterministic_p50", "tempo")
@@ -58,15 +58,21 @@ def prepare(
     overrides: dict[str, TermsRecord] | None = None,
     cash_delta_cents: int = 0,
     finance_enabled: bool = FINANCE_ENABLED,
+    finance_kinds: tuple[str, ...] = FINANCE_KINDS_ALL,
+    n_opt: int = N_OPT_SCENARIOS,
+    n_fallback: int = FALLBACK_N,
+    n_cert: int = N_CERT_SCENARIOS,
 ) -> RunInputs:
-    """Resolve bills and options and draw the optimizer (A) and certification (B) scenarios."""
+    """Resolve bills and options and draw the optimizer (A) and certification (B) scenarios.
+
+    The sizes default to the certified ones; only the live path on the small host passes smaller ones."""
     bills = plannable_bills(dataset, ingest_result, overrides)
-    ctx = RailContext(dataset.company.as_of, dataset.company.funding_account, finance_enabled)
+    ctx = RailContext(dataset.company.as_of, dataset.company.funding_account, finance_enabled, finance_kinds)
     options = option_sets(bills, ctx)
     forecast = build_forecast(dataset, what_if, cash_delta_cents)
-    fallback = forecast.headroom(forecast.scenarios(FALLBACK_N, SEED_A))
-    head_a = fallback[:N_OPT_SCENARIOS]
-    head_b = forecast.headroom(forecast.scenarios(N_CERT_SCENARIOS, SEED_B))
+    fallback = forecast.headroom(forecast.scenarios(n_fallback, SEED_A))
+    head_a = fallback[:n_opt]
+    head_b = forecast.headroom(forecast.scenarios(n_cert, SEED_B))
     return RunInputs(dataset, bills, options, forecast, head_a, fallback, head_b)
 
 

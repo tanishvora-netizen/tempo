@@ -67,11 +67,16 @@ class PlannableBill:
     status: str  # reconciliation status chip
 
 
+FINANCE_KINDS_ALL = ("FINANCE_EARLY", "FINANCE_DUE")
+FINANCE_KINDS_LIQUIDITY = ("FINANCE_DUE",)  # what-ifs: financing only to pay on time, never to buy a discount
+
+
 @dataclass(frozen=True)
 class RailContext:
     as_of: date
     funding_account: str = "ramp_checking"
     finance_enabled: bool = FINANCE_ENABLED
+    finance_kinds: tuple[str, ...] = FINANCE_KINDS_ALL
 
 
 @dataclass(frozen=True)
@@ -169,8 +174,8 @@ def build_options(bill: PlannableBill, ctx: RailContext) -> tuple[PaymentOption,
         options.append(
             _card(bill, "CARD", _charge_day(bill, bill.due_date, ctx), bill.total_cents, base_send)
         )
-    if ctx.finance_enabled:
-        options.append(_finance_due(bill, ctx, base_send))
+    if ctx.finance_enabled and "FINANCE_DUE" in ctx.finance_kinds:
+        options.append(_finance_due(bill, due_leg, base_send))
     options.append(_late(bill, ctx, base_send))
     return tuple(options)
 
@@ -216,19 +221,22 @@ def _discount_options(bill: PlannableBill, ctx: RailContext, base_send: date) ->
     charge = previous_business_day(deadline)
     if bill.accepts_card and bill.card_discount_allowed and charge >= earliest_send(bill, ctx):
         out.append(_card(bill, "CARD_EARLY", charge, paid, base_send))
-    if ctx.finance_enabled and charge >= earliest_send(bill, ctx):
-        repay = charge + timedelta(days=FINANCE_TERM_DAYS)
+    if ctx.finance_enabled and "FINANCE_EARLY" in ctx.finance_kinds and _on_time(leg, deadline):
+        # Flex-style financing pays the vendor through the normal bill-pay rail (same send and arrival as the
+        # bank payment); it only moves when the company's cash leaves, FINANCE_TERM_DAYS later.
+        repay = leg.send + timedelta(days=FINANCE_TERM_DAYS)
         fee = apply_rate(paid, FINANCE_FEE_PER_30_DAYS * FINANCE_TERM_DAYS / 30)
         out.append(
             _option(
                 bill,
                 "FINANCE_EARLY",
                 "FINANCE",
-                charge,
-                charge,
+                leg.send,
+                leg.arrival,
                 repay,
                 paid + fee,
                 base_send,
+                rail_fee=leg.fee_cents,
                 fee_in_cash=fee,
                 discount=discount,
             )
@@ -254,22 +262,23 @@ def _card(bill: PlannableBill, kind: str, charge_day: date, amount: int, base_se
     )
 
 
-def _finance_due(bill: PlannableBill, ctx: RailContext, base_send: date) -> PaymentOption:
-    """Flex-style financing that pays the vendor on the due date and is repaid FINANCE_TERM_DAYS later.
+def _finance_due(bill: PlannableBill, due_leg: _BankLeg, base_send: date) -> PaymentOption:
+    """Flex-style financing of the due-date payment: the vendor is paid exactly as BANK_DUE pays it (same rail,
+    send and arrival); the company repays FINANCE_TERM_DAYS after the send date.
 
     A liquidity option, not a value option: its fee exceeds the yield it keeps, so the optimizer uses it only
     to stay above the buffer, and always before paying late (LATE costs more; tests assert the order)."""
-    charge = _charge_day(bill, bill.due_date, ctx)
     fee = apply_rate(bill.total_cents, FINANCE_FEE_PER_30_DAYS * FINANCE_TERM_DAYS / 30)
     return _option(
         bill,
         "FINANCE_DUE",
         "FINANCE",
-        charge,
-        charge,
-        charge + timedelta(days=FINANCE_TERM_DAYS),
+        due_leg.send,
+        due_leg.arrival,
+        due_leg.send + timedelta(days=FINANCE_TERM_DAYS),
         bill.total_cents + fee,
         base_send,
+        rail_fee=due_leg.fee_cents,
         fee_in_cash=fee,
     )
 

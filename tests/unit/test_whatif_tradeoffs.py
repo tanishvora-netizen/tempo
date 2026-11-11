@@ -19,7 +19,7 @@ from tempo.models import PaymentOption
 from tempo.optimize.capacity import capacity_groups, flat_options, within_capacity
 from tempo.optimize.engine import solve_plan
 from tempo.optimize.evaluate import evaluate
-from tempo.optimize.options import RailContext, build_options
+from tempo.optimize.options import FINANCE_KINDS_LIQUIDITY, RailContext, build_options
 from tempo.optimize.run import prepare
 from tempo.pipeline import ingest, plannable_bills
 from tempo.precompute import top_customers
@@ -117,3 +117,27 @@ def test_tradeoff_variants_use_only_their_lever() -> None:
     assert 0 <= box["accept_risk"]["breach_rate"] <= 1
     assert box["accept_risk"]["breach_rate"] >= res.breach_rate - 0.02  # re-planning should not be much worse
     assert all(o.kind != "LATE" for opts in drop_kinds(inputs.options, ("LATE",)) for o in opts)
+
+
+def test_financed_payments_reach_the_vendor_on_the_bank_rail() -> None:
+    ds, ing = _demo()
+    ctx = RailContext(ds.company.as_of, ds.company.funding_account, finance_enabled=True)
+    for bill in plannable_bills(ds, ing):
+        opts = {o.kind: o for o in build_options(bill, ctx)}
+        due, fin = opts["BANK_DUE"], opts["FINANCE_DUE"]
+        assert (fin.send_date, fin.arrival_date) == (due.send_date, due.arrival_date)
+        assert fin.cash_out_date == fin.send_date + timedelta(days=FINANCE_TERM_DAYS)
+        if "FINANCE_EARLY" in opts:
+            early = opts["BANK_EARLY"]
+            assert (opts["FINANCE_EARLY"].send_date, opts["FINANCE_EARLY"].arrival_date) == (
+                early.send_date,
+                early.arrival_date,
+            )
+
+
+def test_what_ifs_finance_only_on_the_due_date() -> None:
+    ds, ing = _demo()
+    cid, _ = top_customers(ds)[0]
+    inputs = prepare(ds, ing, WhatIf(cid, 7), finance_enabled=True, finance_kinds=FINANCE_KINDS_LIQUIDITY)
+    kinds = {o.kind for opts in inputs.options for o in opts}
+    assert "FINANCE_DUE" in kinds and "FINANCE_EARLY" not in kinds
