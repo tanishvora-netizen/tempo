@@ -18,7 +18,7 @@ const TICK_MS = 100;
 const POLL_MS = 1000;
 const NOTICE_KEY = "tempo.hostingNotice.dismissed";
 // Measured custom-solve times on the hosted free tier (seconds), filled in from the deploy check; null until then.
-const HOSTED_SOLVE_SECONDS = null;
+const HOSTED_SOLVE_SECONDS = [30, 35]; // measured on Render Nov 10 (two custom what-ifs; DECISIONS.md)
 
 function controls(presets) {
   return html`<section class="panel" aria-labelledby="wi-controls">
